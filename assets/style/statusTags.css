@@ -1,0 +1,19 @@
+.open {
+    background: #DCEAFF;
+    color: #0066FF;
+}
+
+.applied {
+    background: #FFF7D9;
+    color: #A38418;
+}
+
+.ongoing {
+    background: #E3F5F1;
+    color: #009974;
+}
+
+.completed {
+    background: #F4E5FF;
+    color: #8B1EE0;
+}
