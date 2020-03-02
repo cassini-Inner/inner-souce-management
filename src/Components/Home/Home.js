@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
+import Content from "./Content";
 
 class Home extends Component {
     render() {
         return (
-            <div className="flex flex-wrap w-full">
+            <div className="flex">
                 <Sidebar />
-                <Navbar />
-                <div className="w-4/5 h-auto">
-                    
+                <div className="w-4/5 bg-nebula-primary">
+                    <Navbar />
+                    <Content />
                 </div>
             </div>
         );
