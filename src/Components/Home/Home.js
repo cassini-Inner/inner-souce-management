@@ -8,7 +8,7 @@ class Home extends Component {
         return (
             <div className="flex">
                 <Sidebar />
-                <div className="w-4/5 bg-nebula-primary">
+                <div className="w-4/5 bg-nebula-grey-200">
                     <Navbar />
                     <Content />
                 </div>

@@ -2,20 +2,19 @@ import React, { Component } from 'react';
 import "../../assets/style/tailwind.css";
 
 class Sidebar extends Component {
-
     state = {
         navList: ['Home', 'Ongoing Jobs', 'Manage Jobs'],
         svgClasses: "w-1/6 pl-3 h-12 pt-2 pb-2 stroke-current"
     }  
     render() {
         return (    
-            <div className="w-1/5 h-screen sticky top-0 text-white bg-nebula-grey">
+            <div className="w-1/5 h-screen sticky top-0 text-white bg-nebula-grey-800">
                 <div className="w-full">
                     <div className="text-xl pt-12 pb-6 pl-3">
                         Nebula
                     </div>
                 </div>
-                <div className="flex hover:bg-nebula-hover-grey">
+                <div className="flex hover:bg-nebula-grey-700">
                     <svg className={this.state.svgClasses} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g opacity="0.4">
                             <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -24,7 +23,7 @@ class Sidebar extends Component {
                     </svg>
                     <div className="w-5/6 h-12 pt-3 pl-10">Home</div>
                 </div>
-                <div className="flex hover:bg-nebula-hover-grey">
+                <div className="flex hover:bg-nebula-grey-700">
                     <svg className={this.state.svgClasses} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g opacity="0.4">
                             <path d="M18 21C19.6569 21 21 19.6569 21 18C21 16.3431 19.6569 15 18 15C16.3431 15 15 16.3431 15 18C15 19.6569 16.3431 21 18 21Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -36,11 +35,11 @@ class Sidebar extends Component {
                     <div className="w-5/6 h-12 pt-3 pl-10">Your Jobs</div>
                 </div>
                 <div id="yourJobs" className="block">
-                    <div className="hover:bg-nebula-hover-grey w-full h-12 pt-3 pl-24">Ongoing</div>
-                    <div className="hover:bg-nebula-hover-grey w-full h-12 pt-3 pl-24">Applications</div>
-                    <div className="hover:bg-nebula-hover-grey w-full h-12 pt-3 pl-24">Complete</div>
+                    <div className="hover:bg-nebula-grey-700 w-full h-12 pt-3 pl-24">Ongoing</div>
+                    <div className="hover:bg-nebula-grey-700 w-full h-12 pt-3 pl-24">Applications</div>
+                    <div className="hover:bg-nebula-grey-700 w-full h-12 pt-3 pl-24">Complete</div>
                 </div>
-                <div className="flex hover:bg-nebula-hover-grey">
+                <div className="flex hover:bg-nebula-grey-700">
                     <svg className={this.state.svgClasses} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <g opacity="0.4">
                             <path d="M12 20H21" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
