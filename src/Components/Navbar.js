@@ -18,8 +18,8 @@ class Navbar extends Component {
                         <filter id="filter0_d" x="-1" y="0" width="24" height="24" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                             <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
-                            <feOffset dy="4"/>
-                            <feGaussianBlur stdDeviation="2"/>
+                            {/* <feOffset dy="4"/> */}
+                            {/* <feGaussianBlur stdDeviation="2"/> */}
                             <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
                             <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
                             <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
@@ -29,7 +29,7 @@ class Navbar extends Component {
 
                     {/* Input for Search */}
 
-                    <input type="text" className="p-3 mt-1 h-10 w-4/5 bg-nebula-grey-400 placeholder-nebula-grey-600 stroke-current text-nebula-grey-600" placeholder="Search for jobs and projects by name, creator and skills required"></input>
+                    <input type="text" className="p-3 mt-1 h-10 w-4/5 bg-nebula-grey-400 placeholder-nebula-grey-600 stroke-current text-nebula-grey-600 focus:outline-none" placeholder="Search for jobs and projects by name, creator and skills required"></input>
                 </div>
 
                 {/* Svg for notifications */}

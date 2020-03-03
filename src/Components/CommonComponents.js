@@ -13,12 +13,12 @@ export const StatusTag = (props) => {
 }
 
 export const InfoTag = (props) => {
-    let content;
+    let content="";
     if(Array.isArray(props.data)) {
-        length = props.data.length - 1;
-        for(const [index,value] of props.data) {
-            content += value + index<length?", ":"";
-        }                   
+        length = props.data.length -1;
+        for(let [index,value] of props.data.entries()) {
+            content += value + (index<length?", ":"");
+        }            
     }
     else 
         content = props.data;
@@ -50,3 +50,8 @@ export const AuthorInfo = () => {
         </div>
     );
 } 
+
+
+// export const modal = (props) => {
+
+// }
