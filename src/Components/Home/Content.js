@@ -4,10 +4,10 @@ import OngoingJobs from '../YourJobs/OngoingJobs';
 
 class Content extends Component {
     render() {
-        return(
-            <div className="h-auto ml-10 mt-4 mr-24">
+        return (
+            <div className="h-auto mt-4">
                 <OngoingJobs />
-                <JobList title="Explore Jobs"/>
+                <JobList title="Explore Jobs" />
             </div>
         );
     }
