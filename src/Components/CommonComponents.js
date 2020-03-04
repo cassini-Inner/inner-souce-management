@@ -58,13 +58,3 @@ export const AuthorInfo = () => {
 } 
 
 
-export const Modal = (props) => {
-    return (
-        <div className="bg-black opacity-50">
-            <div id="modal" className="bg-nebula-grey-200 fixed">
-                <div id="header" className="flex my-4 pl-2">{props.header}</div>
-                <div id="content" className="mb-4 p-2 bg-white">{props.content}</div>
-            </div>
-        </div>
-    );
-}

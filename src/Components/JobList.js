@@ -2,13 +2,11 @@ import React,{ Component } from 'react';
 import { PrimaryButton, InfoTag, AuthorInfo, StatusTag } from './CommonComponents';
 import { exploreJobs } from "../../assets/placeholder";
 import { FilterIcon } from "./Icons";
-import { Modal } from "./CommonComponents";
 
 class JobList extends Component {
     render() {
         return (
             <div>
-                <Modal header={<h4 className="text-lg">Filter Jobs</h4>} content={<div>Hiii</div>} />
                 <div className="flex w-full mt-6">
                     <h1 className="text-2xl flex-1">{this.props.title}</h1>
                 </div>
