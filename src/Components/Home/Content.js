@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import JobList from './JobList';
+import JobList from '../JobList';
 import OngoingJobs from '../YourJobs/OngoingJobs';
 
 class Content extends Component {

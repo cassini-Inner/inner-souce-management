@@ -1,11 +1,14 @@
 import React,{ Component } from 'react';
-import { PrimaryButton, InfoTag, AuthorInfo, StatusTag } from '../CommonComponents';
-import { exploreJobs } from "../../../assets/placeholder";
+import { PrimaryButton, InfoTag, AuthorInfo, StatusTag } from './CommonComponents';
+import { exploreJobs } from "../../assets/placeholder";
+import { FilterIcon } from "./Icons";
+import { Modal } from "./CommonComponents";
 
 class JobList extends Component {
     render() {
         return (
             <div>
+                <Modal header={<h4 className="text-lg">Filter Jobs</h4>} content={<div>Hiii</div>} />
                 <div className="flex w-full mt-6">
                     <h1 className="text-2xl flex-1">{this.props.title}</h1>
                 </div>
@@ -13,7 +16,7 @@ class JobList extends Component {
                 {
                     exploreJobs.map(data => {
                         return(
-                            <div className="w-full p-6 bg-white mt-4" key={data.title}>
+                            <div className="w-full p-6 bg-white mt-5" key={data.title}>
                                 <h1 className="text-xl font-semibold">{data.title}</h1>
                                 <div className="mt-2 text-nebula-grey-600 mb-8">
                                     {data.description}
@@ -45,7 +48,7 @@ class JobList extends Component {
                                             <div className="text-nebula-grey-600 ml-6 text-sm">{"created on " + data.date}</div>
                                         </div>
                                     </div>
-                                    <h1 className="cursor-pointer text-sm font-semibold text-nebula-blue-main hover:text-blue-700">View Details</h1>
+                                    <h1 className="cursor-pointer text-sm font-semibold text-nebula-blue hover:text-blue-700">View Details</h1>
                                 </div>
                             </div>
                         );
@@ -58,25 +61,12 @@ class JobList extends Component {
 
 const Options = () => {
     return(
-        <div className="flex mt-4">
-            <div className="flex-1">
-                <div className="flex">
-                    <div className="bg-white pt-1 pl-2 pr-2 flex rounded-sm">
-                        <div>
-                            <p className="text-nebula-grey-600 text-xs">Sort By</p>
-                            <h4 className="text-lg font-semi-bold">Oldest</h4>
-                        </div>
-                        <p className="pt-6 text-lg pl-12">^</p>
-                    </div>
-                    <div className="bg-white pt-1 pl-2 pr-2 ml-6 flex rounded-sm">
-                        <div>
-                            <p className="text-nebula-grey-600 text-xs">Job Status</p>
-                            <h4 className="text-lg font-semi-bold">Open</h4>
-                        </div>
-                        <p className="pt-6 text-lg pl-12">^</p>
-                    </div>
+        <div className="flex mt-4 h-12">
+                <div className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer hover:bg-nebula-blue-light hover:text-nebula-blue">
+                    <h4 className="text-lg font-semi-bold pr-1">Filter Jobs</h4>
+                    <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue"/>
                 </div>
-            </div>
+                <div className="flex-1" />
             <PrimaryButton name="Add a new Job" />
         </div>
     );

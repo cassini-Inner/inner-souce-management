@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SearchIcon } from "./Icons";
 
 class Navbar extends Component {
     
@@ -6,27 +7,7 @@ class Navbar extends Component {
         return(
             <div className="flex h-20">
                 <div className="w-4/5 ml-10 h-12 my-4 flex rounded-md bg-nebula-grey-400">
-
-                    {/* Svg for Search Icon */}
-
-                    <svg className="ml-5 mt-5 w-4 h-4 fill-current text-nebula-grey-600" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g opacity="0.3" filter="url(#filter0_d)">
-                        <path d="M10.3333 12.6667C13.2789 12.6667 15.6667 10.2789 15.6667 7.33333C15.6667 4.38781 13.2789 2 10.3333 2C7.38781 2 5 4.38781 5 7.33333C5 10.2789 7.38781 12.6667 10.3333 12.6667Z" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M17 14.0001L14.1 11.1001" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        </g>
-                        <defs>
-                        <filter id="filter0_d" x="-1" y="0" width="24" height="24" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
-                            {/* <feOffset dy="4"/> */}
-                            {/* <feGaussianBlur stdDeviation="2"/> */}
-                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-                        </filter>
-                        </defs>
-                    </svg>
-
+                    <SearchIcon />
                     {/* Input for Search */}
 
                     <input type="text" className="p-3 mt-1 h-10 w-4/5 bg-nebula-grey-400 placeholder-nebula-grey-600 stroke-current text-nebula-grey-600 focus:outline-none" placeholder="Search for jobs and projects by name, creator and skills required"></input>

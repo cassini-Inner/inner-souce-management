@@ -20,8 +20,16 @@ module.exports = {
     },
     extend: {
       colors: {
-        'nebula-blue-main':"#0066FF",
-        'nebula-blue-secondary':"#DCEAFF",
+        'nebula-blue':"#0066FF",
+        'nebula-blue-light':"#DCEAFF",
+        'nebula-red':"#FF6363",
+        'nebula-red-light':"#FFF8F8",
+        'nebula-purple':"#9837E4",
+        'nebula-purple-light':"#F4E5FF",
+        'nebula-green':"#009974",
+        'nebula-green-light':"#E3F5F1",
+        'nebula-yellow':"#A38418",
+        'nebula-yellow-light':"#FFF7D9",
         'nebula-grey-100':"#FCFCFC",
         'nebula-grey-200':"#F6F6F6",
         'nebula-grey-300':"#F1F1F1",

@@ -11,14 +11,14 @@ class OngoingJobs extends Component {
             <div>
                 <div className="flex w-full">
                     <h1 className="text-2xl flex-1">Ongoing Jobs</h1>
-                    <h1 className="cursor-pointer text-sm font-semibold text-nebula-blue-main mt-3 hover:text-blue-700">SEE ALL JOBS</h1>
+                    <h1 className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700">SEE ALL JOBS</h1>
                 </div>
                 <div className="flex mt-4">
                      {ongoingJobs.map( data => { 
                         return(
                             <div className="bg-white w-1/2 p-6 mr-4" key={data.title}>
                                 <h2 className="text-lg font-semibold mb-4">{data.title}</h2>
-                                <StatusTag statusTag="ongoing" />
+                                <StatusTag statusTag={["ongoing"]} />
                                 <div className="flex">
                                     <div className="w-1/2 mt-8">
                                         <p className="text-nebula-grey-600 font-semibold">PROGRESS</p>

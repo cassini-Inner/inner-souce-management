@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import '../../assets/style/CommonComponents.css';
 
 export const PrimaryButton = (props) => {
     return(
-        <button className="rounded-md pl-6 pr-6 text-center bg-nebula-blue-main text-white text-lg">{props.name}</button>
+        <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>
     );
 }
 
+
 export const StatusTag = (props) => {
-    let status = props.statusTag;
-    return <div className={status + " p-1 font-semibold rounded-lg tracking-widest w-3 inline text-xs"}>{status.toUpperCase()}</div>
+    let statusTags = [...props.statusTag];
+    const style = {
+        open: "bg-nebula-blue-light text-nebula-blue",
+        applied: "bg-nebula-yellow-light text-nebula-yellow",
+        ongoing: "bg-nebula-green-light text-nebula-green",
+        completed: "bg-nebula-purple-light text-nebula-purple",
+    }
+    return statusTags.map((tag) => <div key={tag} className={style[tag] + " px-2 py-1 mr-2 font-semibold rounded tracking-widest w-3 inline text-xs"}>{tag.toUpperCase()}</div>);
 }
 
 export const InfoTag = (props) => {
@@ -52,6 +58,13 @@ export const AuthorInfo = () => {
 } 
 
 
-// export const modal = (props) => {
-
-// }
+export const Modal = (props) => {
+    return (
+        <div className="bg-black opacity-50">
+            <div id="modal" className="bg-nebula-grey-200 fixed">
+                <div id="header" className="flex my-4 pl-2">{props.header}</div>
+                <div id="content" className="mb-4 p-2 bg-white">{props.content}</div>
+            </div>
+        </div>
+    );
+}
