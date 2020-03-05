@@ -1,18 +1,48 @@
 import React, { Component } from 'react';
-import { PrimaryButton, InfoTag, AuthorInfo, StatusTag } from './CommonComponents';
+import { Button, InfoTag, AuthorInfo, StatusTag, Dropdown } from './CommonComponents';
 import { exploreJobs } from "../../assets/placeholder";
 import { FilterIcon } from "./Icons";
 
+
+
 class JobList extends Component {
+
+    state = {
+        filterModal: false,
+    }
+
+    modalHeader = <h1 className="text-2xl">Filter Jobs</h1>;
+    modalContent = <div className="flex-col w-full">
+        <Dropdown title="Sort By" name="Oldest" />
+    </div>;
+
+    closeFilterModal = () => {
+        this.props.setModalState({
+            display: false,
+            header: null,
+            content: null,
+            information: null,
+            buttons: null,
+        });
+    }
+
+    openFilterModal = () => {
+        this.props.setModalState({
+            display: true,
+            header: this.modalHeader,
+            content: this.modalContent,
+            information: "Some other info ",
+            buttons: <button onClick={this.closeFilterModal}>Close modal</button>,
+        });
+    }
+
     render() {
         return (
             <div>
                 <div className="flex w-full mt-6 px-4 md:px-0">
                     <h1 className="text-2xl flex-1 ">{this.props.title}</h1>
                 </div>
-                <div className="px-4 md:px-0">
-                    <Options />
-                </div>
+                {this.props.title == "Explore Jobs" ? <Options setModalState={this.openFilterModal} /> : ""}
                 {
                     exploreJobs.map(data => {
                         return (
@@ -57,17 +87,19 @@ class JobList extends Component {
     }
 }
 
-const Options = () => {
+const Options = (props) => {
     return (
         <div className="flex mt-4 h-12">
-            <div className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer hover:bg-nebula-blue-light hover:text-nebula-blue">
+            <div className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer hover:bg-nebula-blue-light hover:text-nebula-blue" onClick={props.setModalState}>
                 <h4 className="text-lg font-semi-bold pr-1">Filter Jobs</h4>
                 <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
             </div>
             <div className="flex-1" />
-            <PrimaryButton name="Add a new Job" />
+            <Button name="Add a new Job" type="primary" />
         </div>
     );
 }
+
+
 
 export default JobList;

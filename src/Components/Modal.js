@@ -2,23 +2,51 @@ import React from "react";
 
 const ModalContainer = (props) => {
     if(props.state.display) {
+        disableScroll();
         return (
                 <div>
-                    <div className="fixed bg-black opacity-50 w-screen h-screen z-30" />
-                        <div id="modal" className="bg-nebula-grey-200 fixed z-40">
-                        <div id="header" className="flex my-4 pl-2">Hiii</div>
-                        <div id="content" className="mb-4 p-2 bg-white">Helloo</div>
+                    <div className="fixed flex flex-wrap bg-black opacity-50 w-screen h-screen z-30" />
+                        <div id="modal" className="flex-col bg-white fixed z-40 p-6 ml-64 mt-64">
+                        <div id="header" className="text-lg mb-2">{props.state.header}</div>
+                        <hr />
+                        <div id="content" className="mt-4 mb-4 bg-white">{props.state.content}</div>
+                        <hr />
+                        <div id="footer" className="mt-2 flex">
+                            <div id="information" className="flex-1 p-2">
+                                {props.state.information}
+                                Some information displayed dynamically
+                            </div>
+                            <div id="buttons" className="p-2">
+                                {props.state.buttons}
+                            </div>
+                        </div>
                     </div>
                 </div>
         );
     }
-    else
+    else {
+        enableScroll();
         return("");
+    }
 }
 
+const disableScroll = () => {
+    let name = "overflow-y-hidden";
+    let arr = document.body.className.split(" ");
+    if (arr.indexOf(name) == -1) {
+        document.body.className += " " + name;
+    }
+}
+
+const enableScroll = () => {
+    let name = "overflow-y-hidden";
+    let arr = document.body.className.split(" ");
+    arr[arr.indexOf(name)] = "overflow-y-scroll";
+    document.body.className = arr.join('');
+}
+
+
+
+// const setInformation
 export default ModalContainer;
 
-
-// const FilterModal = () => {
-
-// }

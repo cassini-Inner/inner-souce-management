@@ -10,7 +10,7 @@ class Home extends Component {
                 <Sidebar />
                 <div className="w-full lg:w-4/5 lg:mx-10">
                     <Navbar />
-                    <Content />
+                    <Content setModalState = { this.props.setModalState }/>
                 </div>
             </div>
         );
