@@ -48,7 +48,7 @@ class JobList extends Component {
                 {
                     exploreJobs.map(data => {
                         return (
-                            <div className="w-full p-6 bg-white mt-5" key={data.title}>
+                            <div className="w-full p-6 bg-white mt-5  border border-transparent hover:border-nebula-grey-400" key={data.title}>
                                 <h1 className="text-xl font-semibold">{data.title}</h1>
                                 <div className="mt-2 text-nebula-grey-600 mb-8">
                                     {data.description}
