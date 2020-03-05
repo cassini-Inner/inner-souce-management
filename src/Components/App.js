@@ -1,12 +1,13 @@
-import React, {  useState, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import Routes from "./Routes";
 import Modal from "./Modal";
 
 
-const App  = () => {
+const App = () => {
 
-    const [ modalState, setModalState] = useState({
+    const [modalState, setModalState] = useState({
         display: false,
+        class: null,
         header: null,
         content: null,
         information: null,
@@ -15,22 +16,23 @@ const App  = () => {
 
     const changeModalState = (newState) => {
         setModalState({
-                display: false,
-                header: null,
-                content: null,
-                information: null,
-                buttons: null,
-                ...newState
-            }
+            display: false,
+            class: null,
+            header: null,
+            content: null,
+            information: null,
+            buttons: null,
+            ...newState
+        }
         );
     }
 
     return (
         <Fragment>
-            <Modal state = { modalState } />
+            <Modal state={modalState} />
             <div className=" bg-nebula-grey-200 w-full h-full">
                 <div className="flex flex-col lg:flex-row container mx-auto">
-                    <Routes setModalState = { changeModalState } />
+                    <Routes setModalState={changeModalState} />
                 </div>
             </div>
         </Fragment>

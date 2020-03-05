@@ -90,3 +90,4 @@ export const ongoing = "Ongoing";
 export const applications = "Applications";
 export const completed = "Completed";
 export const manageJobs = "Manage Jobs";
+export const explore = "Explore Jobs";

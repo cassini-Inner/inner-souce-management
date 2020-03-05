@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
-import { Button, InfoTag, AuthorInfo, StatusTag, Dropdown } from './CommonComponents';
-import { exploreJobs } from "../../assets/placeholder";
+import { Button, InfoTag, AuthorInfo, StatusTag, Dropdown, SearchBar } from './CommonComponents';
+import { exploreJobs, explore } from "../../assets/placeholder";
 import { FilterIcon } from "./Icons";
-
 
 class JobList extends Component {
 
     state = {
         filterModal: false,
     }
-
-    modalHeader = <h1 className="text-2xl">Filter Jobs</h1>;
-    modalContent =  <div className="flex w-full my-2">
-                        <Dropdown title="Sort By" name="Oldest" />
-                        <Dropdown title="Job status" name="Open" />
-                    </div>;
-
+   
     closeFilterModal = () => {
         this.props.setModalState({
             display: false,
@@ -25,12 +18,48 @@ class JobList extends Component {
     openFilterModal = () => {
         this.props.setModalState({
             display: true,
-            header: this.modalHeader,
-            content: this.modalContent,
-            information: "Some other info ",
-            buttons: <button onClick={this.closeFilterModal}>Close modal</button>,
+            header: this.getModalHeader(),
+            content: this.getModalContent(),
+            buttons: this.getModalButtons(),
         });
     }
+
+    getModalHeader = () =>{
+        return(
+            <h1 className="text-2xl">Filter Jobs</h1>
+        );
+    }
+
+    getModalButtons = () =>{
+        return(
+            <div className="flex">
+                {/* <div className="flex-1"></div> */}
+                <div className="flex-1">
+                    <div className="flex">
+                        <Button type="secondary" label="Cancel" onClick={ this.closeFilterModal } />
+                        <div className="m-1"></div>
+                        <Button type="primary" label="Apply Filter"/>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    getModalContent = () =>{
+        return(
+            <div className="flex-col w-full my-2">
+                <div className="flex mr-64">
+                    <Dropdown title="Sort By" name="Oldest" />
+                    <div className="m-4"></div>
+                    <Dropdown title="Job status" name="Open" />
+                </div>
+                <h2 className="text-lg mt-6">Job Tags</h2>
+                <p className="text-nebula-grey-600 my-2">No tags added</p>
+                <SearchBar className="mt-2 mb-40 bg-nebula-grey-200" inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" />
+            </div>
+        );
+    }
+    
 
     render() {
         return (
@@ -39,7 +68,7 @@ class JobList extends Component {
                     <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
                 </div>
                 <div className=" px-4 md:px-0">
-                    {this.props.title == "Explore Jobs" ? <Options setModalState={this.openFilterModal} /> : ""}
+                    {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
                 </div>
                 {
                     exploreJobs.map(data => {
@@ -93,11 +122,10 @@ const Options = (props) => {
                 <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
             </div>
             <div className="flex-1" />
-            <Button name="Add a new Job" type="primary" />
+            <Button label="Add a new Job" type="primary" />
         </div>
     );
 }
-
 
 
 export default JobList;
