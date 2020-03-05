@@ -1,10 +1,17 @@
 export const ongoingJobs = [
     {
-    "title": "Change to new Service API for immediate payment",
-    "status": ["ongoing","open"],
-    "noMilestones": 4,
-    "completedMilestones": 2,
-    "postedBy": "Hu, Xinyun"
+        "title": "Change to new Service API for immediate payment",
+        "status": ["ongoing", "open"],
+        "noMilestones": 4,
+        "completedMilestones": 2,
+        "postedBy": "Hu, Xinyun"
+    },
+    {
+        "title": "Change to new Service API for immediate paymentimmediate paymentimmediate payment",
+        "status": ["ongoing"],
+        "noMilestones": 4,
+        "completedMilestones": 2,
+        "postedBy": "Hu, Xinyun"
     },
     {
         "title": "Change to new Service API for immediate payment",
@@ -12,7 +19,22 @@ export const ongoingJobs = [
         "noMilestones": 4,
         "completedMilestones": 2,
         "postedBy": "Hu, Xinyun"
-        }
+    },
+    {
+        "title": "Change to new Service API forimmediate payment immediate paymentimmediate payment",
+        "status": ["ongoing"],
+        "noMilestones": 4,
+        "completedMilestones": 2,
+        "postedBy": "Hu, Xinyun"
+    },
+    {
+        "title": "Change to new Service API for immediate paymentimmediate paymentimmediate payment",
+        "status": ["ongoing"],
+        "noMilestones": 4,
+        "completedMilestones": 2,
+        "postedBy": "Hu, Xinyun"
+    },
+
 ];
 
 export const exploreJobs = [
@@ -30,7 +52,7 @@ export const exploreJobs = [
     {
         "title": "Explain Activity lifting requirement doesn't allow selection of current date",
         "description": "In the limitation flow when selecting the \"explain activity\" lifting requirement the calendar does not allow selection of the current date. This seems to be a new feature that was implemented in a recent push and it is important for the fraud dept to be able to select the current date since they review accounts real time.",
-        "status": ["applied","completed"],
+        "status": ["applied", "completed"],
         "noMilestones": 5,
         "difficulty": "Intermediate",
         "duration": "1 Week",
@@ -56,7 +78,7 @@ export const exploreJobs = [
         "noMilestones": 1,
         "difficulty": "Easy",
         "duration": "4 Week",
-        "skills": ["HTML", "CSS","Spring","Node"],
+        "skills": ["HTML", "CSS", "Spring", "Node"],
         "postedBy": "Hu, Xinyun",
         "date": "17/01/2019",
     }

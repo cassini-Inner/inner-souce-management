@@ -6,9 +6,9 @@ import Content from "./Content";
 class Home extends Component {
     render() {
         return (
-            <div className="flex">
+            <div className="flex flex-col lg:flex-row container mx-auto bg-nebula-grey-200">
                 <Sidebar />
-                <div className="w-4/5 bg-nebula-grey-200">
+                <div className="w-full lg:w-4/5 lg:mx-10">
                     <Navbar />
                     <Content setModalState = { this.props.setModalState }/>
                 </div>

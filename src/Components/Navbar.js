@@ -5,7 +5,7 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div className="h-24 bg-nebula-grey-200 items-center flex ml-10 ">
+            <div className="h-24 bg-nebula-grey-200 items-center flex">
                 <div className="flex-1 flex items-center h-12">
                     <div className="flex-1 flex items-center bg-nebula-grey-400 h-12 rounded mr-4">
                         <SearchIcon className="h-4 w-4 stroke-current text-nebula-grey-500 mx-5" />
