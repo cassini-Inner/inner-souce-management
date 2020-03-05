@@ -33,11 +33,11 @@ class Sidebar extends Component {
     render() {
 
         return (
-            <div className="w-1/5 px-2 h-screen sticky top-0 text-black bg-nebula-grey-200 border border-r-1 border-l-0 border-nebula-grey-400">
-                <div className="w-full">
-                    <div className="text-2xl pt-12 pb-6 pl-3 font-bold">
+            <div className="w-full lg:w-1/5 px-2 lg:h-screen sticky top-0 text-black bg-nebula-grey-200 border border-r-1 border-l-0 border-nebula-grey-400">
+                <div className="w-full h-24 flex items-center ">
+                    <p className="text-2xl pl-3 font-bold">
                         Nebula
-                    </div>
+                    </p>
                 </div>
                 <div data-id="home" className={"flex rounded mb-2 items-center h-12" + (this.state.currentPage == "home" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                     <Icons.HomeIcon currentPage={this.state.currentPage} className="ml-6" />

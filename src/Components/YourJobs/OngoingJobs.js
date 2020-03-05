@@ -15,17 +15,17 @@ const OngoingJobs = (props) => {
         let job2 = jobs[i + 1];
 
         jobsRow.push(
-            <div className="flex w-full mb-4">
-                {job1 != null && <OngoingJobCard job={job1} className="w-1/2"></OngoingJobCard>}
+            <div className="flex w-full mb-4 flex-wrap lg:flex-no-wrap">
+                {job1 != null && <OngoingJobCard job={job1} className="w-full mb-4 lg:mb-0 lg:w-1/2"></OngoingJobCard>}
                 <div className="w-4"></div>
                 {/* Blank div in case job count is even, otherwise the last card is out of place */}
-                {job2 != null ? <OngoingJobCard job={job2} className="w-1/2"></OngoingJobCard> : <div className="w-1/2"></div>}
+                {job2 != null ? <OngoingJobCard job={job2} className="w-full mb-4 lg:mb-0 lg:w-1/2"></OngoingJobCard> : <div className="w-1/2"></div>}
             </div>
         );
     }
 
     return (
-        <div>
+        <div className="px-4 md:px-0">
             <div className="flex w-full">
                 <h1 className="text-2xl flex-1">Ongoing Jobs</h1>
                 <h1 className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL JOBS</h1>

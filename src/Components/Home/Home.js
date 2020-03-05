@@ -6,9 +6,9 @@ import Content from "./Content";
 class Home extends Component {
     render() {
         return (
-            <div className="flex container mx-auto bg-nebula-grey-200">
+            <div className="flex flex-col lg:flex-row container mx-auto bg-nebula-grey-200">
                 <Sidebar />
-                <div className="w-full md:w-4/5 mx-10">
+                <div className="w-full lg:w-4/5 lg:mx-10">
                     <Navbar />
                     <Content />
                 </div>
