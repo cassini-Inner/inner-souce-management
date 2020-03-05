@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DropdownIcon } from './Icons';
+import { DropdownIcon, SearchIcon } from './Icons';
 
 
 export const Button = (props) => {
@@ -65,17 +65,34 @@ export const AuthorInfo = () => {
 export const Dropdown = (props) => {
     return(
         <div className="flex flex-wrap w-auto">
-            <div className="flex text-md px-2">
-                { props.title }
-            </div>
-            <div className="flex p-2">
-                <div className="text-lg flex-1 bg-nebula-grey-200">
-                    { props.name }
+            <div className="flex-col p-2">
+                <div className="flex text-md">
+                    { props.title }
                 </div>
-                <div className="flex">
-                    <DropdownIcon />
+                <div className="flex bg-nebula-grey-200 p-2">
+                    <div className="flex">
+                        <div className="text-lg">
+                            { props.name }
+                        </div>
+                            <DropdownIcon className="h-2 w-2 mt-1 ml-5" />
+                    </div>
                 </div>
             </div>
+        </div>
+    );
+}
+
+export const SearchBar = (props) => {
+    return(
+        <div className={"flex-1 flex items-center bg-nebula-grey-400 rounded "+props.className }>
+            <SearchIcon className="h-4 w-4 stroke-current text-nebula-grey-500 mx-5" />
+            {/* Input for Search */}
+
+            <input
+                type="text"
+                className="h-12 bg-nebula-grey-400 focus:outline-none rounded py-2 block w-full appearance-none leading-normal placeholder-nebula-grey-500"
+                placeholder="Search for jobs and projects by name, creator and skills needed"
+            />
         </div>
     );
 }

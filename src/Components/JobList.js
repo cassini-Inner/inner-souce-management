@@ -12,17 +12,14 @@ class JobList extends Component {
     }
 
     modalHeader = <h1 className="text-2xl">Filter Jobs</h1>;
-    modalContent = <div className="flex-col w-full">
-        <Dropdown title="Sort By" name="Oldest" />
-    </div>;
+    modalContent =  <div className="flex w-full my-2">
+                        <Dropdown title="Sort By" name="Oldest" />
+                        <Dropdown title="Job status" name="Open" />
+                    </div>;
 
     closeFilterModal = () => {
         this.props.setModalState({
             display: false,
-            header: null,
-            content: null,
-            information: null,
-            buttons: null,
         });
     }
 

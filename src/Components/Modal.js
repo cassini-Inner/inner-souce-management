@@ -14,7 +14,6 @@ const ModalContainer = (props) => {
                         <div id="footer" className="mt-2 flex">
                             <div id="information" className="flex-1 p-2">
                                 {props.state.information}
-                                Some information displayed dynamically
                             </div>
                             <div id="buttons" className="p-2">
                                 {props.state.buttons}

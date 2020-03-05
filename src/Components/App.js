@@ -12,10 +12,22 @@ const App  = () => {
         buttons: null,
     });
 
+    const changeModalState = (newState) => {
+        setModalState({
+                display: false,
+                header: null,
+                content: null,
+                information: null,
+                buttons: null,
+                ...newState
+            }
+        );
+    }
+
     return (
         <Fragment>
             <Modal state = { modalState } />
-            <Routes setModalState = { setModalState } />
+            <Routes setModalState = { changeModalState } />
         </Fragment>
     );
 };
