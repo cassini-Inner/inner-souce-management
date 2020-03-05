@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { DropdownIcon } from './Icons';
 
-export const PrimaryButton = (props) => {
-    return(
-        <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>
-    );
+
+export const Button = (props) => {
+    switch(props.type) {
+        case "primary": return <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
+        case "secondary": return <button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light text-white text-md">{props.name}</button>;
+        default : <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
+    }
 }
 
 
@@ -58,3 +62,20 @@ export const AuthorInfo = () => {
 } 
 
 
+export const Dropdown = (props) => {
+    return(
+        <div className="flex flex-wrap w-auto">
+            <div className="flex text-md px-2">
+                { props.title }
+            </div>
+            <div className="flex p-2">
+                <div className="text-lg flex-1 bg-nebula-grey-200">
+                    { props.name }
+                </div>
+                <div className="flex">
+                    <DropdownIcon />
+                </div>
+            </div>
+        </div>
+    );
+}

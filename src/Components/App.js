@@ -3,11 +3,13 @@ import Routes from "./Routes";
 import Modal from "./Modal";
 
 const App  = () => {
+
     const [ modalState, setModalState] = useState({
-        modal: {
-            display: false,
-            type: "",
-        }
+        display: false,
+        header: null,
+        content: null,
+        information: null,
+        buttons: null,
     });
 
     return (

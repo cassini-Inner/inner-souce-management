@@ -7,7 +7,7 @@ class Content extends Component {
         return(
             <div className="h-auto ml-10 mt-4 mr-24">
                 <OngoingJobs />
-                <JobList title="Explore Jobs"/>
+                <JobList title="Explore Jobs" setModalState={ this.props.setModalState }/>
             </div>
         );
     }
