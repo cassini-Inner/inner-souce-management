@@ -83,3 +83,10 @@ export const exploreJobs = [
         "date": "17/01/2019",
     }
 ];
+
+export const home = "Home";
+export const yourJobs = "Your Jobs";
+export const ongoing = "Ongoing";
+export const applications = "Applications";
+export const completed = "Completed";
+export const manageJobs = "Manage Jobs";

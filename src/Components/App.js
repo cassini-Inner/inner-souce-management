@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, {  useState, Fragment } from 'react';
 import Routes from "./Routes";
 import Modal from "./Modal";
 
@@ -26,12 +26,14 @@ const App  = () => {
     }
 
     return (
-        <div className=" bg-nebula-grey-200 w-full h-full">
-            <div className="flex flex-col lg:flex-row container mx-auto">
-                <Modal state = { modalState } />
-                <Routes setModalState = { changeModalState } />
+        <Fragment>
+            <Modal state = { modalState } />
+            <div className=" bg-nebula-grey-200 w-full h-full">
+                <div className="flex flex-col lg:flex-row container mx-auto">
+                    <Routes setModalState = { changeModalState } />
+                </div>
             </div>
-        </div>
+        </Fragment>
     );
 };
 export default App;

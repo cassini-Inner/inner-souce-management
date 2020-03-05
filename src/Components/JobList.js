@@ -4,7 +4,6 @@ import { exploreJobs } from "../../assets/placeholder";
 import { FilterIcon } from "./Icons";
 
 
-
 class JobList extends Component {
 
     state = {
@@ -37,7 +36,7 @@ class JobList extends Component {
         return (
             <div>
                 <div className="flex w-full mt-6 px-4 md:px-0">
-                    <h1 className="text-2xl flex-1 ">{this.props.title}</h1>
+                    <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
                 </div>
                 <div className=" px-4 md:px-0">
                     {this.props.title == "Explore Jobs" ? <Options setModalState={this.openFilterModal} /> : ""}
