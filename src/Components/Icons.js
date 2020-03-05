@@ -64,9 +64,9 @@ export const SearchIcon = (props) => {
 
 export const MenuIcon = (props) => {
     return (
-        <svg width="25" className={props.className} height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18.7308 6.27295L6.7308 18.2729" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M6.7308 6.27295L18.7308 18.2729" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <svg className={iconClasses + " " + props.className} width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.7308 6.27295L6.7308 18.2729" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M6.7308 6.27295L18.7308 18.2729" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
 }
@@ -74,10 +74,10 @@ export const MenuIcon = (props) => {
 
 export const CloseIcon = (props) => {
     return (
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 12H21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M3 6H21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M3 18H21" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <svg className={iconClasses + " " + props.className} width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 12H21" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M3 6H21" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M3 18H21" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
 }

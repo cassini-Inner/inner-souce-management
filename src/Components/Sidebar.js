@@ -52,9 +52,9 @@ class Sidebar extends Component {
                         {
                             this.state.expanded
                                 ?
-                                <Icons.MenuIcon />
+                                <Icons.MenuIcon className="h-6 w-6 text-nebula-blue stroke-current" />
                                 :
-                                <Icons.SearchIcon />
+                                <Icons.CloseIcon className="h-6 w-6 text-nebula-blue stroke-current" />
 
                         }
                     </button>
