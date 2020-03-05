@@ -1,6 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, {  useState } from 'react';
 import Routes from "./Routes";
 import Modal from "./Modal";
+
 
 const App  = () => {
 
@@ -25,10 +26,12 @@ const App  = () => {
     }
 
     return (
-        <Fragment>
-            <Modal state = { modalState } />
-            <Routes setModalState = { changeModalState } />
-        </Fragment>
+        <div className=" bg-nebula-grey-200 w-full h-full">
+            <div className="flex flex-col lg:flex-row container mx-auto">
+                <Modal state = { modalState } />
+                <Routes setModalState = { changeModalState } />
+            </div>
+        </div>
     );
 };
 export default App;
