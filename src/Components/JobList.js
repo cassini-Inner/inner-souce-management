@@ -42,7 +42,9 @@ class JobList extends Component {
                 <div className="flex w-full mt-6 px-4 md:px-0">
                     <h1 className="text-2xl flex-1 ">{this.props.title}</h1>
                 </div>
-                {this.props.title == "Explore Jobs" ? <Options setModalState={this.openFilterModal} /> : ""}
+                <div className=" px-4 md:px-0">
+                    {this.props.title == "Explore Jobs" ? <Options setModalState={this.openFilterModal} /> : ""}
+                </div>
                 {
                     exploreJobs.map(data => {
                         return (
