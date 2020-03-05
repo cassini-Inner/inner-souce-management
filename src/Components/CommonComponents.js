@@ -4,8 +4,8 @@ import { DropdownIcon, SearchIcon } from './Icons';
 
 export const Button = (props) => {
     switch(props.type) {
-        case "primary": return <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
-        case "secondary": return <button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light text-white text-md">{props.name}</button>;
+        case "primary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md h-12" onClick={ props.onClick } >{props.label}</button>);
+        case "secondary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light text-nebula-blue border border-nebula-blue text-md h-12" onClick = { props.onClick } >{props.label}</button>);
         default : <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
     }
 }
@@ -65,8 +65,8 @@ export const AuthorInfo = () => {
 export const Dropdown = (props) => {
     return(
         <div className="flex flex-wrap w-auto">
-            <div className="flex-col p-2">
-                <div className="flex text-md">
+            <div className="flex-col pr-2 pt-2">
+                <div className="flex text-lg fmb-1">
                     { props.title }
                 </div>
                 <div className="flex bg-nebula-grey-200 p-2">
@@ -83,15 +83,16 @@ export const Dropdown = (props) => {
 }
 
 export const SearchBar = (props) => {
+    let inputClasses = "h-12 focus:outline-none rounded py-2 block w-full appearance-none leading-normal ";
     return(
-        <div className={"flex-1 flex items-center bg-nebula-grey-400 rounded "+props.className }>
+        <div className={"flex-1 flex items-center rounded "+props.className }>
             <SearchIcon className="h-4 w-4 stroke-current text-nebula-grey-500 mx-5" />
             {/* Input for Search */}
 
             <input
                 type="text"
-                className="h-12 bg-nebula-grey-400 focus:outline-none rounded py-2 block w-full appearance-none leading-normal placeholder-nebula-grey-500"
-                placeholder="Search for jobs and projects by name, creator and skills needed"
+                className={ props.inputClass? inputClasses + props.inputClass : inputClasses }
+                placeholder={ props.placeholder? props.placeholder : "Search for jobs and projects by name, creator and skills needed" }
             />
         </div>
     );

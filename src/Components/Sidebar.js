@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import "../../assets/style/tailwind.css";
 import * as Icons from "./Icons";
+import * as config from "../../assets/placeholder";
 
 class Sidebar extends Component {
-
+    
     state = {
-        currentPage: "home",
+        currentPage: this.props.page?this.props.page:"home",
         yourJobsToggle: false,
         hover: false,
         expanded: false,
+    }
+
+    componentDidMount() {
+        if(this.props.page=="yourJobs")
+        { 
+            this.setState({
+                yourJobsToggle: true  
+            })
+        }
     }
 
     iconClasses = "w-1/6 pl-3 h-10 pt-3 pb-1 stroke-current text-black";
@@ -41,11 +51,10 @@ class Sidebar extends Component {
     }
 
     render() {
-
         return (
             <div className="w-full border-l-0 sticky top-0 text-black bg-nebula-grey-200 border-nebula-grey-400 border border-r-0 px-2 lg:w-1/5 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-l-0">
                 <div className="w-full h-16 lg:h-24 flex items-center ">
-                    <a className="flex-1 text-2xl pl-3 font-bold hover:text-nebula-blue cursor-default outline-none" href="/">
+                    <a className="flex-1 text-2xl pl-3 font-bold hover:text-nebula-blue outline-none cursor-default" href="/">
                         Nebula
                     </a>
                     <button className="lg:hidden focus:outline-none" onClick={this.expandCollapseSidebar}>
@@ -61,41 +70,41 @@ class Sidebar extends Component {
                 </div>
 
                 <div className={this.state.expanded ? "block" : "hidden lg:block "}>
-                    <div data-id="home" className={"flex rounded mb-2 items-center h-12" + (this.state.currentPage == "home" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                    <a href="/" data-id="home" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "home" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                         <Icons.HomeIcon currentPage={this.state.currentPage} className="ml-6" />
-                        <div className="ml-10">Home</div>
-                    </div>
-                    <div data-id="yourJobs" className={"flex rounded mb-2 items-center h-12" + (this.state.currentPage == "yourJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                        <div className="ml-10">{config.home}</div>
+                    </a>
+                    <a href="/yourJobs" data-id="yourJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "yourJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                         <Icons.YourJobsIcon currentPage={this.state.currentPage} className="ml-6" />
-                        <div className="ml-10">Your Jobs</div>
+                        <div className="ml-10">{config.yourJobs}</div>
                         <Icons.DropdownIcon currentPage={this.state.currentPage} className="ml-6" />
-                    </div>
+                    </a>
                     <div id="yourJobsList" className={(this.state.yourJobsToggle ? "block" : "hidden")}>
-                        <div data-id="ongoingJobs" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "ongoingJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                        <a href = { "#"+config.ongoing } data-id="ongoingJobs" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "ongoingJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                             <div className="w-6 h-6 ml-6"></div>
                             <p className="ml-10">
-                                Ongoing
+                                { config.ongoing }
                         </p>
-                        </div>
+                        </a>
 
-                        <div data-id="applications" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "applications" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                        <a href = { "#"+config.applications } data-id="applications" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "applications" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                             <div className="w-6 h-6 ml-6"></div>
                             <p className="ml-10">
-                                Applications
+                                { config.applications }
                         </p>
-                        </div>
+                        </a>
 
-                        <div data-id="completed" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "completed" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                        <a href = { "#"+config.completed } data-id="completed" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "completed" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                             <div className="w-6 h-6 ml-6"></div>
                             <p className="ml-10">
-                                Completed
+                                {config.completed}
                         </p>
-                        </div>
+                        </a>
 
                     </div>
                     <div data-id="manageJobs" className={"flex rounded mb-2 items-center h-12" + (this.state.currentPage == "manageJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                         <Icons.ManageJobsIcon currentPage={this.state.currentPage} className="ml-6" />
-                        <div className="ml-10">Manage Jobs</div>
+                    <div className="ml-10">{config.manageJobs}</div>
                     </div>
                 </div>
             </div >
