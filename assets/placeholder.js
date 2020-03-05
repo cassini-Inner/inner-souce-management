@@ -7,7 +7,7 @@ export const ongoingJobs = [
         "postedBy": "Hu, Xinyun"
     },
     {
-        "title": "Change to new Service API for immediate paymentimmediate paymentimmediate payment",
+        "title": "Change to new Service API for immediate paymentimmediate paymentimmediate paymen",
         "status": ["ongoing"],
         "noMilestones": 4,
         "completedMilestones": 2,

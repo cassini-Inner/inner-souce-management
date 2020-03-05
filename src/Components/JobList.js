@@ -39,11 +39,13 @@ class JobList extends Component {
                 <div className="flex w-full mt-6 px-4 md:px-0">
                     <h1 className="text-2xl flex-1 ">{this.props.title}</h1>
                 </div>
-                {this.props.title == "Explore Jobs" ? <Options setModalState={this.openFilterModal} /> : ""}
+                <div className=" px-4 md:px-0">
+                    {this.props.title == "Explore Jobs" ? <Options setModalState={this.openFilterModal} /> : ""}
+                </div>
                 {
                     exploreJobs.map(data => {
                         return (
-                            <div className="w-full p-6 bg-white mt-5" key={data.title}>
+                            <div className="w-full p-6 bg-white mt-5  border border-transparent hover:border-nebula-grey-400" key={data.title}>
                                 <h1 className="text-xl font-semibold">{data.title}</h1>
                                 <div className="mt-2 text-nebula-grey-600 mb-8">
                                     {data.description}
