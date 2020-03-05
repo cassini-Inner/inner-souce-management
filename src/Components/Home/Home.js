@@ -9,8 +9,10 @@ class Home extends Component {
             <div className="flex flex-col lg:flex-row container mx-auto bg-nebula-grey-200">
                 <Sidebar />
                 <div className="w-full lg:w-4/5 lg:mx-10">
-                    <Navbar />
-                    <Content setModalState = { this.props.setModalState }/>
+                    <div className="px-4 md:px-0">
+                        <Navbar />
+                    </div>
+                    <Content setModalState={this.props.setModalState} />
                 </div>
             </div>
         );
