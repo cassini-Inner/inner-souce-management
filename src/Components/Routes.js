@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home/Home';
 import YourJobs from "./YourJobs/YourJobs";
 import CreateJob from "./CreateJob/CreateJob";
+import JobDetailsPage from './JobDetails/JobDetailsPage';
 
 const Routes = (props) => {
     const parentProps = props;
