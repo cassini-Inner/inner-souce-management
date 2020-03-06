@@ -34,7 +34,9 @@ const App = () => {
             <div className=" bg-nebula-grey-200 w-full h-full subpixel-antialiased">
                 <div className="flex flex-col lg:flex-row justify-center">
                     <Sidebar />
-                    <Routes setModalState={changeModalState} />
+                    <div className="w-full lg:flex-row lg:max-w-screen-xl">
+                        <Routes setModalState={changeModalState} />
+                    </div>
                 </div>
             </div>
         </Fragment>

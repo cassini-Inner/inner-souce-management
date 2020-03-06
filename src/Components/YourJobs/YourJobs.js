@@ -9,11 +9,8 @@ class YourJobs extends Component {
     render() {
         return (
             <Fragment>
-                <Sidebar page="yourJobs" />
-                <div className="w-full lg:w-4/5 lg:mx-10">
-                    <div className="px-4 lg:px-0">
-                        <Navbar />
-                    </div>
+                <div className="px-4 lg:px-10">
+                    <Navbar />
                     <div className="h-auto mt-4">
                         <OngoingJobs title={ongoing} />
                         <JobList title={applications} setModalState={this.props.setModalState} />
