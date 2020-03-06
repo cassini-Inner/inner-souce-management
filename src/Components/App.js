@@ -29,8 +29,8 @@ const App = () => {
 
     return (
         <Fragment>
-            <Modal state={modalState} />
             <div className=" bg-nebula-grey-200 w-full h-full">
+            <Modal state={modalState} />
                 <div className="flex flex-col lg:flex-row container mx-auto">
                     <Routes setModalState={changeModalState} />
                 </div>

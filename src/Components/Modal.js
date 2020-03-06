@@ -6,7 +6,7 @@ const ModalContainer = (props) => {
         return (
                 <div>
                     <div className="fixed flex flex-wrap bg-black opacity-50 w-full h-full z-30" />
-                        <div id="modal" className={ "flex-col bg-white fixed z-40 p-6 ml-16 mt-16 " +props.state.class }>
+                        <div id="modal" className={ "flex-col bg-white fixed z-40 p-6 ml-64 mt-16 " +props.state.class }>
                         <div id="header" className="text-lg mb-2">{props.state.header}</div>
                         <hr />
                         <div id="content" className="mt-4 mb-4 bg-white w-auto">{props.state.content}</div>
