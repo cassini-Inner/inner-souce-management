@@ -6,7 +6,7 @@ export const Button = (props) => {
     switch(props.type) {
         case "primary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md h-12" onClick={ props.onClick } >{props.label}</button>);
         case "secondary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light text-nebula-blue border border-nebula-blue text-md h-12" onClick = { props.onClick } >{props.label}</button>);
-        default : <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
+        default : <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.label}</button>;
     }
 }
 
@@ -48,14 +48,14 @@ export const InfoTag = (props) => {
     );
 }
 
-export const AuthorInfo = () => {
+export const AuthorInfo = (props) => {
     return(
-        <div className="flex">
-             <img src="../assets/icons/image 1.png" className="mt-1 w-10 h-10 "/>
+        <div className = { "flex " + (props.className ? props.className : "") } >
+             <img src="../assets/icons/image 1.png" className={"mt-1 "+ (props.iconClass ? props.iconClass : "")} />
             <div className="pl-2">
                 <p className="font-semibold">Carl Johnson</p>
                 <p className="leading-tight text-s text-nebula-grey-600">Risk Analysis</p>
-                {/* <p className="leading-tight text-s ">created on 17/01/2020</p> */}
+                {props.date? <p className="leading-tight text-s ">created on 17/01/2020</p> : "" }
             </div>
         </div>
     );

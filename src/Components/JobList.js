@@ -120,7 +120,7 @@ const Options = (props) => {
                 <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
             </div>
             <div className="flex-1" />
-            <Button label="Create a new Job" type="primary" />
+            <a href="/createJob"><Button label="Create a new Job" type="primary" /></a>
         </div>
     );
 }
