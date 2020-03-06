@@ -11,7 +11,7 @@ class YourJobs extends Component {
             <Fragment>
                 <Sidebar page="yourJobs" />
                 <div className="w-full lg:w-4/5 lg:mx-10">
-                    <div className="px-4 md:px-0">
+                    <div className="px-4 lg:px-0">
                         <Navbar />
                     </div>
                     <div className="h-auto mt-4">

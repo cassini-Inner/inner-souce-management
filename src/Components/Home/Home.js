@@ -6,15 +6,12 @@ import Content from "./Content";
 class Home extends Component {
     render() {
         return (
-            <Fragment>
-                <Sidebar page="home" />
-                <div className="w-full lg:w-4/5 lg:mx-10">
-                    <div className="px-4 md:px-0">
-                        <Navbar />
-                    </div>
-                    <Content setModalState={this.props.setModalState} />
+            <div className="w-full lg:flex-row lg:max-w-screen-xl ">
+                <div className="px-4 lg:px-0">
+                    <Navbar />
                 </div>
-            </Fragment>
+                <Content setModalState={this.props.setModalState} />
+            </div>
         );
     }
 }

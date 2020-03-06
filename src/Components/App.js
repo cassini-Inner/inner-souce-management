@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import Routes from "./Routes";
+import Sidebar from './Sidebar';
 import Modal from "./Modal";
 
 
@@ -30,8 +31,9 @@ const App = () => {
     return (
         <Fragment>
             <Modal state={modalState} />
-            <div className=" bg-nebula-grey-200 w-full h-full">
-                <div className="flex flex-col lg:flex-row container mx-auto">
+            <div className=" bg-nebula-grey-200 w-full h-full subpixel-antialiased">
+                <div className="flex flex-col lg:flex-row justify-center">
+                    <Sidebar />
                     <Routes setModalState={changeModalState} />
                 </div>
             </div>

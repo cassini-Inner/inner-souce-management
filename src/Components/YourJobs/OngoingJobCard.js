@@ -4,7 +4,7 @@ import { AuthorInfo, StatusTag } from '../CommonComponents';
 const OngoingJobCard = (props) => {
     return (
         <div className={"bg-white p-6 flex border border-transparent hover:border-nebula-grey-400  " + props.className} key={props.job.title}>
-            <div className="flex flex-col">
+            <div className="flex flex-col flex-1">
                 <div className="flex-1">
                     <h2 className="text-lg font-semibold mb-4">{props.job.title}</h2>
                     <StatusTag statusTag={["ongoing"]} />

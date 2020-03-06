@@ -23,7 +23,7 @@ const OngoingJobs = (props) => {
         }
 
         return (
-            <div id={props.title} className="px-4 md:px-0">
+            <div id={props.title} className="px-4 lg:px-0">
                 <div className="flex w-full">
                     <h1 className="text-2xl flex-1">Ongoing Jobs</h1>
                     <h1 className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL JOBS</h1>
