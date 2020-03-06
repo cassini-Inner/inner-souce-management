@@ -41,7 +41,7 @@ class Sidebar extends Component {
     mobileExpandCollapseSidebar = () => {
         const currentState = this.state.mobileExpanded;
         this.setState({
-            expanded: !currentState,
+            mobileExpanded: !currentState,
         });
     }
 
@@ -58,9 +58,9 @@ class Sidebar extends Component {
                         {
                             this.state.mobileExpanded
                                 ?
-                                <Icons.MenuIcon className="h-6 w-6 text-nebula-blue stroke-current" />
+                                <Icons.MenuIcon className="h-8 w-8 text-nebula-blue stroke-current p-1" />
                                 :
-                                <Icons.CloseIcon className="h-6 w-6 text-nebula-blue stroke-current" />
+                                <Icons.CloseIcon className="h-8 w-8 text-nebula-blue stroke-current p-1" />
                         }
                     </button>
                 </div>
@@ -72,8 +72,8 @@ class Sidebar extends Component {
                     </a>
                     <a href="/yourJobs" data-id="yourJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "yourJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                         <Icons.YourJobsIcon currentPage={this.state.currentPage} className="ml-6" />
-                        <div className="ml-10">{config.yourJobs}</div>
-                        <Icons.DropdownIcon currentPage={this.state.currentPage} className="ml-6" />
+                        <div className="ml-10 flex-1">{config.yourJobs}</div>
+                        <Icons.DropdownIcon currentPage={this.state.currentPage} className="ml-6 h-8 w-8 p-1" />
                     </a>
                     <div id="yourJobsList" className={(this.state.yourJobsToggle ? "block" : "hidden")}>
                         <a href={"#" + config.ongoing} data-id="ongoingJobs" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "ongoingJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>

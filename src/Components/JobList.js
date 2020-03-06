@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Button, InfoTag, AuthorInfo, StatusTag, Dropdown, SearchBar } from './CommonComponents';
 import { exploreJobs, explore } from "../../assets/placeholder";
 import { FilterIcon } from "./Icons";
@@ -63,11 +63,9 @@ class JobList extends Component {
 
     render() {
         return (
-            <div>
-                <div className="flex w-full mt-6 px-4 lg:px-0">
+            <Fragment>
+                <div className=" w-full mt-6 ">
                     <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
-                </div>
-                <div className=" px-4 lg:px-0">
                     {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
                 </div>
                 {
@@ -109,14 +107,14 @@ class JobList extends Component {
                         );
                     })
                 }
-            </div>
+            </Fragment>
         );
     }
 }
 
 const Options = (props) => {
     return (
-        <div className="flex mt-4 h-12">
+        <div className="flex mt-4 h-12 w-full">
             <div className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer hover:bg-nebula-blue-light hover:text-nebula-blue" onClick={props.setModalState}>
                 <h4 className="text-lg font-semi-bold pr-1">Filter Jobs</h4>
                 <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
