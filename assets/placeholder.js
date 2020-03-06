@@ -88,6 +88,7 @@ export const milestones = [
 
 ];
 
+export const appName = "Nebula";
 export const home = "Home";
 export const yourJobs = "Your Jobs";
 export const ongoing = "Ongoing";
@@ -95,3 +96,4 @@ export const applications = "Applications";
 export const completed = "Completed";
 export const manageJobs = "Manage Jobs";
 export const explore = "Explore Jobs";
+

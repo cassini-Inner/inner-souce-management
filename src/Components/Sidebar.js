@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import "../../assets/style/tailwind.css";
 import * as Icons from "./Icons";
 import * as config from "../../assets/placeholder";
-
 class Sidebar extends Component {
 
     state = {
@@ -12,7 +11,6 @@ class Sidebar extends Component {
         mobileExpanded: false,
         desktopExpanded: false,
     }
-
     componentDidMount() {
         if (this.props.page == "yourJobs") {
             this.setState({
@@ -20,11 +18,9 @@ class Sidebar extends Component {
             })
         }
     }
-
     iconClasses = "w-1/6 pl-3 h-10 pt-3 pb-1 stroke-current text-black";
     selectedClasses = " font-semibold  text-nebula-blue  bg-nebula-blue-light border-l-4 border-nebula-blue  hover:border-nebula-blue";
     unselectedClasses = " font-semibold  text-nebula-grey-700  hover:bg-nebula-grey-400 hover:border-nebula-grey-400 border-l-4 border-nebula-grey-200 ";
-
     selectRouteHandler = (e) => {
         let currentPage = e.currentTarget.dataset.id;
         if (currentPage == "yourJobs") {
@@ -65,7 +61,6 @@ class Sidebar extends Component {
                                 <Icons.MenuIcon className="h-6 w-6 text-nebula-blue stroke-current" />
                                 :
                                 <Icons.CloseIcon className="h-6 w-6 text-nebula-blue stroke-current" />
-
                         }
                     </button>
                 </div>
@@ -101,9 +96,8 @@ class Sidebar extends Component {
                                 {config.completed}
                             </p>
                         </a>
-
                     </div>
-                    <div data-id="manageJobs" className={"flex rounded mb-2 items-center h-12" + (this.state.currentPage == "manageJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                    <div data-id="manageJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "manageJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                         <Icons.ManageJobsIcon currentPage={this.state.currentPage} className="ml-6" />
                         <div className="ml-10">{config.manageJobs}</div>
                     </div>
@@ -112,5 +106,4 @@ class Sidebar extends Component {
         );
     }
 }
-
 export default Sidebar;

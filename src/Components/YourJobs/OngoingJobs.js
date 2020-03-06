@@ -26,7 +26,7 @@ const OngoingJobs = (props) => {
             <div id={props.title} className="px-4 lg:px-0">
                 <div className="flex w-full">
                     <h1 className="text-2xl flex-1">Ongoing Jobs</h1>
-                    <h1 className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL JOBS</h1>
+                    <a href = "/yourJobs" className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL JOBS</a>
                 </div>
                 <div className="flex flex-wrap mt-4">
                     {jobsRow}
