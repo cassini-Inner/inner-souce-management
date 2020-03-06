@@ -8,7 +8,7 @@ class JobList extends Component {
     state = {
         filterModal: false,
     }
-   
+
     closeFilterModal = () => {
         this.props.setModalState({
             display: false,
@@ -24,29 +24,29 @@ class JobList extends Component {
         });
     }
 
-    getModalHeader = () =>{
-        return(
+    getModalHeader = () => {
+        return (
             <h1 className="text-2xl">Filter Jobs</h1>
         );
     }
 
-    getModalButtons = () =>{
-        return(
+    getModalButtons = () => {
+        return (
             <div className="flex">
                 {/* <div className="flex-1"></div> */}
                 <div className="flex-1">
                     <div className="flex">
-                        <Button type="secondary" label="Cancel" onClick={ this.closeFilterModal } />
+                        <Button type="secondary" label="Cancel" onClick={this.closeFilterModal} />
                         <div className="m-1"></div>
-                        <Button type="primary" label="Apply Filter"/>
+                        <Button type="primary" label="Apply Filter" />
                     </div>
                 </div>
             </div>
         );
     }
 
-    getModalContent = () =>{
-        return(
+    getModalContent = () => {
+        return (
             <div className="flex-col w-full my-2">
                 <div className="flex mr-64">
                     <Dropdown title="Sort By" name="Oldest" />
@@ -59,15 +59,15 @@ class JobList extends Component {
             </div>
         );
     }
-    
+
 
     render() {
         return (
             <div>
-                <div className="flex w-full mt-6 px-4 md:px-0">
+                <div className="flex w-full mt-6 px-4 lg:px-0">
                     <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
                 </div>
-                <div className=" px-4 md:px-0">
+                <div className=" px-4 lg:px-0">
                     {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
                 </div>
                 {
