@@ -63,7 +63,7 @@ class JobList extends Component {
 
     render() {
         return (
-            <Fragment>
+            <div className="cursor-pointer ">
                 <div className=" w-full mt-6 ">
                     <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
                     {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
@@ -107,7 +107,7 @@ class JobList extends Component {
                         );
                     })
                 }
-            </Fragment>
+            </div>
         );
     }
 }

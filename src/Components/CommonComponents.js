@@ -3,10 +3,10 @@ import { DropdownIcon, SearchIcon } from './Icons';
 
 
 export const Button = (props) => {
-    switch(props.type) {
-        case "primary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md h-12" onClick={ props.onClick } >{props.label}</button>);
-        case "secondary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light text-nebula-blue border border-nebula-blue text-md h-12" onClick = { props.onClick } >{props.label}</button>);
-        default : <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
+    switch (props.type) {
+        case "primary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md h-12" onClick={props.onClick} >{props.label}</button>);
+        case "secondary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light text-nebula-blue border-2 border-nebula-blue text-md h-12" onClick={props.onClick} >{props.label}</button>);
+        default: <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
     }
 }
 
@@ -23,19 +23,19 @@ export const StatusTag = (props) => {
 }
 
 export const InfoTag = (props) => {
-    let content="";
-    if(Array.isArray(props.data)) {
-        length = props.data.length -1;
-        for(let [index,value] of props.data.entries()) {
-            content += value + (index<length?", ":"");
-        }            
+    let content = "";
+    if (Array.isArray(props.data)) {
+        length = props.data.length - 1;
+        for (let [index, value] of props.data.entries()) {
+            content += value + (index < length ? ", " : "");
+        }
     }
-    else 
+    else
         content = props.data;
     return (
-        <div>
+        <div className={props.className}>
             <div>
-                <p className="font-semibold leading-tight tracking-widest text-xs text-nebula-grey-600 mb-2">
+                <p className="font-semibold leading-tight tracking-widest text-xs text-nebula-grey-600 mb-2" >
                     {props.title}
                 </p>
             </div>
@@ -49,9 +49,9 @@ export const InfoTag = (props) => {
 }
 
 export const AuthorInfo = () => {
-    return(
+    return (
         <div className="flex">
-             <img src="../assets/icons/image 1.png" className="mt-1 w-10 h-10 "/>
+            <img src="../assets/icons/image 1.png" className="mt-1 w-10 h-10 " />
             <div className="pl-2">
                 <p className="font-semibold">Carl Johnson</p>
                 <p className="leading-tight text-s text-nebula-grey-600">Risk Analysis</p>
@@ -59,22 +59,22 @@ export const AuthorInfo = () => {
             </div>
         </div>
     );
-} 
+}
 
 
 export const Dropdown = (props) => {
-    return(
+    return (
         <div className="flex flex-wrap w-auto">
             <div className="flex-col pr-2 pt-2">
                 <div className="flex text-lg fmb-1">
-                    { props.title }
+                    {props.title}
                 </div>
                 <div className="flex bg-nebula-grey-200 p-2">
                     <div className="flex">
                         <div className="text-lg">
-                            { props.name }
+                            {props.name}
                         </div>
-                            <DropdownIcon className="h-2 w-2 mt-1 ml-5" />
+                        <DropdownIcon className="h-2 w-2 mt-1 ml-5" />
                     </div>
                 </div>
             </div>
@@ -84,15 +84,15 @@ export const Dropdown = (props) => {
 
 export const SearchBar = (props) => {
     let inputClasses = "h-12 focus:outline-none rounded py-2 block w-full appearance-none leading-normal ";
-    return(
-        <div className={"flex-1 flex items-center rounded "+props.className }>
+    return (
+        <div className={"flex-1 flex items-center rounded " + props.className}>
             <SearchIcon className="h-4 w-4 stroke-current text-nebula-grey-500 mx-5" />
             {/* Input for Search */}
 
             <input
                 type="text"
-                className={ props.inputClass? inputClasses + props.inputClass : inputClasses }
-                placeholder={ props.placeholder? props.placeholder : "Search for jobs and projects by name, creator and skills needed" }
+                className={props.inputClass ? inputClasses + props.inputClass : inputClasses}
+                placeholder={props.placeholder ? props.placeholder : "Search for jobs and projects by name, creator and skills needed"}
             />
         </div>
     );
