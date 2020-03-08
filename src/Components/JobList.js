@@ -53,9 +53,9 @@ class JobList extends Component {
                     <div className="m-4"></div>
                     <Dropdown title="Job status" name="Open" />
                 </div>
-                <h2 className="text-lg mt-6">Job Tags</h2>
-                <p className="text-nebula-grey-600 my-2">No tags added</p>
-                <SearchBar className="mt-2 mb-40 bg-nebula-grey-200" inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" />
+                <h2 className="text-base mt-6">Job Tags</h2>
+                <p className="text-nebula-grey-500 mt-1 mb-2 text-sm">No tags added</p>
+                <SearchBar className="mt-2 mb-40 bg-nebula-grey-200 focus:shadow" inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" />
             </div>
         );
     }
@@ -72,8 +72,8 @@ class JobList extends Component {
                     exploreJobs.map(data => {
                         return (
                             <div className="w-full p-6 bg-white mt-5  border border-transparent hover:border-nebula-grey-400" key={data.title}>
-                                <h1 className="text-xl font-semibold">{data.title}</h1>
-                                <div className="mt-2 text-nebula-grey-600 mb-8">
+                                <h1 className="text-lg font-semibold">{data.title}</h1>
+                                <div className="mt-2 text-base leading-normal text-nebula-grey-600 mb-8">
                                     {data.description}
                                 </div>
                                 <div className="flex mb-4 flex-wrap">

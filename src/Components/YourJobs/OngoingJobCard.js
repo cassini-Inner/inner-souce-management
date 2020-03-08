@@ -11,12 +11,12 @@ const OngoingJobCard = (props) => {
                 </div>
                 <div className="flex">
                     <div className="w-1/2 mt-8">
-                        <p className="text-nebula-grey-600 font-semibold">PROGRESS</p>
+                        <p className="text-nebula-grey-600 text-xs font-semibold pb-0">JOB PROGRESS</p>
                         <h1 className="text-lg font-semibold">{(props.job.completedMilestones / props.job.noMilestones * 100) + "%"}</h1>
-                        <p className="text-nebula-grey-600 font-semibold">{props.job.completedMilestones + " of " + props.job.noMilestones + " milestones"}</p>
+                        <p className="text-nebula-grey-600 text-xs font-semibold">{props.job.completedMilestones + " of " + props.job.noMilestones + " milestones"}</p>
                     </div>
                     <div className="w-1/2 mt-8">
-                        <p className="text-nebula-grey-600 font-semibold">POSTED BY</p>
+                        <p className="text-nebula-grey-600 text-xs font-semibold pb-0">POSTED BY</p>
                         <AuthorInfo />
                     </div>
                 </div>
