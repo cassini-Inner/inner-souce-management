@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DropdownIcon, SearchIcon } from './Icons';
 
 
@@ -63,16 +63,50 @@ export const AuthorInfo = () => {
 
 
 export const Dropdown = (props) => {
+
+    let dropdownList =  props.list.map((label) => { 
+        return (
+                <div className = "py-1 px-6 transition duration-150 hover:bg-nebula-grey-400"> 
+                    { label } 
+                </div>
+            )
+        });
+
+    const [state, setState] = useState({
+        display: false,
+        
+    });
+
+    const dropdownToggle = () => {
+        setState({
+            display: !state.display,
+        });
+    }
+
 	return (
 		<div className="flex flex-wrap w-auto">
-			<div className="flex-col pr-2 pt-2">
-				<div className="flex text-base mb-2">
-					{props.title}
-				</div>
-				<div className="flex bg-nebula-grey-200 p-2">
+            <div className="pr-2 pt-2">
+            {
+                props.title ? 
+                    <div className="flex text-base mb-2">
+                        { props.title }
+                    </div>
+                : ""
+            }
+                <div 
+                    className = { "rounded border boder-2 border-nebula-grey-200 flex bg-white p-2 h cursor-pointer " + (!state.display ? "transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue hover:border-nebula-blue" : "") }
+                    onClick = { dropdownToggle } >
 					<div className="flex">
-						<div className="text-lg font-semibold">
-							{props.name}
+						<div className="flex-col text-lg font-semibold">
+							{ props.label }
+                        { 
+                            state.display ?
+                                <div className = "py-2 bg-white rounded absolute flex-col border border-2 border-t-0 border-nebula-grey-300">
+                                { dropdownList }
+                                </div>
+                            : ""
+                        }
+
 						</div>
 						<DropdownIcon className="h-2 w-2 mt-1 ml-5" />
 					</div>
@@ -97,3 +131,15 @@ export const SearchBar = (props) => {
 		</div>
 	);
 };
+
+export const TextInput = (props) => {
+	return (
+        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } />
+	);
+};
+
+export const SkillTag = (props) => {
+    return(
+        <div className="bg-nebula-blue-light text-nebula-blue px-2 py-1 mr-2 font-semibold rounded tracking-widest w-3 inline text-xs">{ props.skill.toUpperCase() + 'X'}</div>
+    );
+}

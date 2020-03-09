@@ -6,8 +6,8 @@ class Content extends Component {
     render() {
         return (
             <div className="h-auto mt-4">
-                <OngoingJobs maxCount={1} />
-                <JobList title="Explore Jobs" setModalState={this.props.setModalState} />
+                <OngoingJobs maxCount = {1} location = "home" />
+                <JobList title = "Explore Jobs" setModalState = { this.props.setModalState } />
             </div>
         );
     }
