@@ -18,6 +18,7 @@ class CreateJob extends Component {
                     </div>
                     <div className = "flex">
                         <TextInput placeholder = "Duration" /> 
+                        
                     </div>
                 </div>
             </div>
