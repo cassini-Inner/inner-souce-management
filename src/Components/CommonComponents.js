@@ -97,3 +97,9 @@ export const SearchBar = (props) => {
 		</div>
 	);
 };
+
+export const TextInput = (props) => {
+	return (
+        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } />
+	);
+};
