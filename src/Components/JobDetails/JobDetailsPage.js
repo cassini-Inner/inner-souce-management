@@ -28,14 +28,18 @@ class JobDetailsPage extends Component {
         const rightView = (
             <div>
                 <h2 className="text-2xl">Milestones</h2>
-                {
-                    milestones.map(
-                        (milestone, index) => {
-                            return (
-                                <MilestoneCard key={milestone.id} milestone={milestone} isEditMode={this.props.isEditMode} index={index} />
-                            );
-                        })
-                }
+                <ul className="">
+                    {
+                        milestones.map(
+                            (milestone, index) => {
+                                return (
+                                    <li key={milestone.id}>
+                                        <MilestoneCard milestone={milestone} isEditMode={this.props.isEditMode} index={index} lastIndex={milestones.length} />
+                                    </li>
+                                );
+                            })
+                    }
+                </ul>
             </div>
         );
         return (
