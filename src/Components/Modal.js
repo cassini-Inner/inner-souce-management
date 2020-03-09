@@ -32,12 +32,10 @@ const ModalContainer = (props) => {
 };
 
 const disableScroll = () => {
-	let name = 'overflow-y-hidden';
-	let arr = document.body.className.split(' ');
-	if (arr.indexOf(name) == -1) {
-		document.body.className += ' ' + name;
-	}
-};
+	let name = "overflow-y-hidden";
+	let arr = document.body.className.split(" ");
+	document.body.className += " " + name;
+}
 
 const enableScroll = () => {
 	let name = 'overflow-y-hidden';
