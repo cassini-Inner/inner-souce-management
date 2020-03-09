@@ -4,9 +4,9 @@ import { DropdownIcon, SearchIcon } from './Icons';
 
 export const Button = (props) => {
 	switch (props.type) {
-		case "primary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white transition duration-150 shadow-none hover:shadow-lg text-md h-12" onClick={props.onClick} >{props.label}</button>);
-		case "secondary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue text-md h-12" onClick={props.onClick} >{props.label}</button>);
-		default: <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
+		case "primary": return (<button className="rounded font-semibold px-4 py-2 text-center bg-nebula-blue text-white transition duration-150 shadow-none hover:shadow-lg text-sm h-12" onClick={props.onClick} >{props.label}</button>);
+		case "secondary": return (<button className="rounded font-semibold px-4 py-2 text-center bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue text-sm h-12" onClick={props.onClick} >{props.label}</button>);
+		default: <button className="rounded font-semibold px-4 py-2 text-center bg-nebula-blue text-white text-sm">{props.label}</button>;
 	}
 };
 
@@ -19,7 +19,7 @@ export const StatusTag = (props) => {
 		ongoing: "bg-nebula-green-light text-nebula-green",
 		completed: "bg-nebula-purple-light text-nebula-purple",
 	};
-	return statusTags.map((tag) => <div key={tag} className={style[tag] + " px-2 py-1 mr-2 font-semibold rounded tracking-widest w-3 inline text-xs"}>{tag.toUpperCase()}</div>);
+	return statusTags.map((tag) => <div key={tag} className={style[tag] + " px-2 py-1 mr-2 font-bold rounded tracking-widest w-3 inline text-xs"}>{tag.toUpperCase()}</div>);
 };
 
 export const InfoTag = (props) => {
