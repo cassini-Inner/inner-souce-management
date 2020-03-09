@@ -1,7 +1,9 @@
 import React, { Fragment, Component } from 'react';
 import { milestones } from '../../../assets/placeholder';
 import MilestoneCard from './MilestoneCard';
-import JobDetails from "./JobContainer";
+import SplitContainer from './SplitContainer';
+import JobInformation from './JobInformation';
+import { Button } from '../CommonComponents';
 
 class JobDetailsPage extends Component {
 
@@ -9,7 +11,7 @@ class JobDetailsPage extends Component {
         super(props);
 
         this.state = {
-            "isEditMode": true,
+            isEditMode: true,
         }
     }
 
@@ -17,8 +19,31 @@ class JobDetailsPage extends Component {
 
     render() {
         const isEditMode = this.state.isEditMode;
+
+        const actions = [
+            (<Button type="secondary" label="Apply to Milestones"></Button>),
+            (<Button type="primary" label="Apply to Job"></Button>),
+        ];
+
+        const rightView = (
+            <div>
+                <h2 className="text-2xl">Milestones</h2>
+                {
+                    milestones.map(
+                        (milestone, index) => {
+                            return (
+                                <MilestoneCard key={milestone.id} milestone={milestone} isEditMode={this.props.isEditMode} index={index} />
+                            );
+                        })
+                }
+            </div>
+        );
         return (
-            < JobDetails ></JobDetails >
+            <SplitContainer
+                leftView={< JobInformation />}
+                actions={actions}
+                rightView={rightView}
+            />
         );
     }
 }

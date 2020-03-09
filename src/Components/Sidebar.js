@@ -62,9 +62,8 @@ class Sidebar extends Component {
         const desktopExpanded = this.state.desktopExpanded;
 
         return (
-            <div className="w-auto border-l-0 sticky top-0 text-black bg-nebula-grey-200 border-nebula-grey-400 border border-r-0 px-2 lg:w-84 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-l-0">
+            <div className={"w-auto border-l-0 z-50 sticky top-0 text-black bg-nebula-grey-200 border-nebula-grey-400 border border-r-0 px-2 lg:z-10 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-l-0 " + (desktopExpanded ? "lg:w-84 " : "lg:w-auto")}>
                 <div className="w-full h-16 lg:h-24 flex items-center ">
-
                     <NavLink exact className="flex-1 text-2xl pl-3 font-bold hover:text-nebula-blue outline-none cursor-default" to={'/'}>
                         Nebula
                     </NavLink>
