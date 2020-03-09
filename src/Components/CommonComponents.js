@@ -137,3 +137,9 @@ export const TextInput = (props) => {
         <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } />
 	);
 };
+
+export const SkillTag = (props) => {
+    return(
+        <div className="bg-nebula-blue-light text-nebula-blue px-2 py-1 mr-2 font-semibold rounded tracking-widest w-3 inline text-xs">{ props.skill.toUpperCase() + 'X'}</div>
+    );
+}
