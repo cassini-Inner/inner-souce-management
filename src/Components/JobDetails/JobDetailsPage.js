@@ -5,7 +5,6 @@ import { Button } from '../CommonComponents';
 import MilestonesList from './MilestonesList';
 
 class JobDetailsPage extends Component {
-
     constructor(props) {
         super(props);
 
@@ -13,8 +12,6 @@ class JobDetailsPage extends Component {
             isEditMode: true,
         }
     }
-
-
 
     render() {
         const isEditMode = this.state.isEditMode;
