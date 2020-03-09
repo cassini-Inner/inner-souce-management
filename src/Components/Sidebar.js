@@ -89,7 +89,7 @@ class Sidebar extends Component {
                             <NavLink exact to="/yourJobs" data-id="yourJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "yourJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                                 <Icons.YourJobsIcon currentPage={this.state.currentPage} className="ml-6" />
                                 {desktopExpanded && <div className="ml-10 flex-1" >{config.yourJobs}</div>}
-                                {desktopExpanded && <Icons.DropdownIcon currentPage={this.state.currentPage} className={this.state.yourJobsToggle ? "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-0" : "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-180"} />}
+                                {desktopExpanded && <Icons.ChevronDownIcon currentPage={this.state.currentPage} className={this.state.yourJobsToggle ? "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-0" : "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-180"} />}
                             </NavLink>
                         </li>
                         <li>

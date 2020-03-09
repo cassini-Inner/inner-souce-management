@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DropdownIcon, SearchIcon } from './Icons';
+import { ChevronDownIcon, SearchIcon, CloseIcon } from './Icons';
 
 
 export const Button = (props) => {
@@ -19,7 +19,7 @@ export const StatusTag = (props) => {
 		ongoing: "bg-nebula-green-light text-nebula-green",
 		completed: "bg-nebula-purple-light text-nebula-purple",
 	};
-	return statusTags.map((tag) => <div key={tag} className={style[tag] + " px-2 py-1 mr-2 font-bold rounded tracking-widest w-3 inline text-xs"}>{tag.toUpperCase()}</div>);
+	return statusTags.map((tag) => <div key={tag} className={style[tag] + " px-2 py-1 mr-2 font-bold rounded tracking-widest inline text-xs"}>{tag.toUpperCase()}</div>);
 };
 
 export const InfoTag = (props) => {
@@ -108,7 +108,7 @@ export const Dropdown = (props) => {
                         }
 
 						</div>
-						<DropdownIcon className="h-2 w-2 mt-1 ml-5" />
+						<ChevronDownIcon className="h-2 w-2 mt-1 ml-5" />
 					</div>
 				</div>
 			</div>
@@ -140,6 +140,19 @@ export const TextInput = (props) => {
 
 export const SkillTag = (props) => {
     return(
-        <div className="bg-nebula-blue-light text-nebula-blue px-2 py-1 mr-2 font-semibold rounded tracking-widest w-3 inline text-xs">{ props.skill.toUpperCase() + 'X'}</div>
+        <div className="flex bg-nebula-blue-light text-nebula-blue font-semibold px-2 py-1 font-semibold rounded tracking-widest inline text-xs">
+            { props.skill.toUpperCase()}
+            <div className = "hover:text-nebula-grey-800" onClick = { props.click } >
+                <CloseIcon className = "pl-1 pb-1" />
+            </div>
+        </div>
     );
 }
+
+
+export const SearchTags = (props) => {
+    return(
+        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } />
+    );
+}
+
