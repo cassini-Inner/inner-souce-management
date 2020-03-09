@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import "../../assets/style/tailwind.css";
 import * as Icons from "./Icons";
 import * as config from "../../assets/placeholder";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 class Sidebar extends Component {
 
@@ -15,32 +15,29 @@ class Sidebar extends Component {
     }
 
 
-    shouldComponentUpdate(newProps, newState) {
-        if (this.state.page != - newState.page) {
-            return true;
-        }
-        return false;
-    }
 
     iconClasses = "w-1/6 pl-3 h-10 pt-3 pb-1 stroke-current text-black";
     selectedClasses = " font-semibold transition duration-300  text-nebula-blue  bg-nebula-blue-light border-l-4 border-nebula-blue  hover:border-nebula-blue cursor-pointer ";
     unselectedClasses = " font-semibold transition duration-300  text-nebula-grey-700  hover:bg-nebula-grey-400 hover:border-nebula-grey-400 border-l-4 border-nebula-grey-200 cursor-pointer ";
-    selectRouteHandler = (e) => {
-        let currentPage = e.currentTarget.dataset.id;
-        let currentJobToggleStatus = this.state.currentJobsToggle;
-        if (currentPage.includes("yourJobs")) {
-            this.setState({
-                currentPage: currentPage,
-                yourJobsToggle: true,
-            });
-        }
-        else {
-            this.setState({
-                yourJobsToggle: currentJobToggleStatus === false ? false : true,
-                currentPage: currentPage,
-            });
 
-            this.mobileExpandCollapseSidebar();
+    selectRouteHandler = (e) => {
+        console.log(e.currentTarget.dataset.id);
+        const currentPage = e.currentTarget.dataset.id;
+        const yourJobsToggleState = this.state.yourJobsToggle;
+        if (currentPage === "home" || currentPage === "manageJobs") {
+            this.setState({
+                yourJobsToggle: false,
+                currentPage: currentPage,
+            });
+        } else if (currentPage === "yourJobs") {
+            this.setState({
+                yourJobsToggle: !yourJobsToggleState,
+                currentPage: currentPage,
+            });
+        } else {
+            this.setState({
+                currentPage: currentPage,
+            });
         }
     }
 
@@ -53,7 +50,6 @@ class Sidebar extends Component {
 
     desktopExpandCollapseSidebar = () => {
         const currentDesktopState = this.state.desktopExpanded;
-        console.log(currentDesktopState);
         this.setState({ desktopExpanded: !currentDesktopState });
     }
 
@@ -97,30 +93,30 @@ class Sidebar extends Component {
                             <div id="yourJobsList" className={(this.state.yourJobsToggle ? "block" : "hidden")}>
                                 <ul>
                                     <li>
-                                        <NavLink exact to={"/yourJobs#" + config.ongoing} data-id="ongoingJobs" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "ongoingJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                                        <Link to={{ pathname: "/yourJobs", hash: ("#" + config.ongoing) }} data-id="ongoingJobs" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "ongoingJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                                             <div className="w-6 h-6 ml-6"></div>
                                             <p className="ml-10">
                                                 {config.ongoing}
                                             </p>
-                                        </NavLink>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <NavLink exact to={"/yourJobs#" + config.applications} data-id="applications" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "applications" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                                        <Link to={{ pathname: "/yourJobs", hash: ("#" + config.applications) }} data-id="applications" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "applications" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                                             <div className="w-6 h-6 ml-6"></div>
                                             <p className="ml-10">
                                                 {config.applications}
                                             </p>
-                                        </NavLink>
+                                        </Link>
                                     </li>
 
                                     <li>
-                                        <NavLink exact to={"#" + config.completed} data-id="completed" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "completed" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
+                                        <Link to={{ pathname: "/yourJobs", hash: ("#" + config.completed) }} data-id="completed" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "completed" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                                             <div className="w-6 h-6 ml-6"></div>
                                             <p className="ml-10">
                                                 {config.completed}
                                             </p>
-                                        </NavLink>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>

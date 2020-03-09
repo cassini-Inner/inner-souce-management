@@ -5,8 +5,6 @@ const SplitContainer = (props) => {
     const goBack = props => {
         //go to previous page
     }
-
-    console.log(props);
     return (
         <div className="bg-white lg:flex-row lg:max-w-screen-xl mx-auto ">
             <div className="md:flex">
@@ -32,7 +30,6 @@ const SplitContainer = (props) => {
 
                             {
                                 props.actions.map((button) => {
-                                    console.log(button);
                                     return (
                                         <div className="ml-2">
                                             {button}
