@@ -25,8 +25,8 @@ const SplitContainer = (props) => {
                     <div className="sticky bottom-0 bg-nebula-grey-100 px-6 py-6 justify-end">
                         <hr></hr>
                         <div className="mt-5">
-                            <div className="text-nebula-blue font-semibold leading-tight">{props.statusTitle}</div>
-                            <div className="text-nebula-grey-600 leading-tight">{props.statusSubtitle}</div>
+                            <div className="text-nebula-blue text-base font-semibold leading-tight">{props.statusTitle}</div>
+                            <div className="text-nebula-grey-800 text-sm leading-tight">{props.statusSubtitle}</div>
                         </div>
                         <div className="flex w-full justify-end">
 
