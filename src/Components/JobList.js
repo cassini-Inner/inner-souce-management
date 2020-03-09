@@ -123,7 +123,7 @@ class JobList extends Component {
 const Options = (props) => {
     return (
         <div className="flex mt-4 h-12 w-full">
-            <div className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer hover:bg-nebula-blue-light hover:text-nebula-blue" onClick={props.setModalState}>
+            <div className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue" onClick={props.setModalState}>
                 <h4 className="text-lg font-semi-bold pr-1">Filter Jobs</h4>
                 <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
             </div>

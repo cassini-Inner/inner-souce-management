@@ -4,8 +4,8 @@ import { DropdownIcon, SearchIcon } from './Icons';
 
 export const Button = (props) => {
 	switch (props.type) {
-		case "primary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md h-12" onClick={props.onClick} >{props.label}</button>);
-		case "secondary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light text-nebula-blue border-2 border-nebula-blue text-md h-12" onClick={props.onClick} >{props.label}</button>);
+		case "primary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white transition duration-150 shadow-none hover:shadow-lg text-md h-12" onClick={props.onClick} >{props.label}</button>);
+		case "secondary": return (<button className="rounded pl-6 pr-6 text-center bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue text-md h-12" onClick={props.onClick} >{props.label}</button>);
 		default: <button className="rounded pl-6 pr-6 text-center bg-nebula-blue text-white text-md">{props.name}</button>;
 	}
 };

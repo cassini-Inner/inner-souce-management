@@ -4,10 +4,10 @@ const ModalContainer = (props) => {
 	if (props.state.display) {
 		disableScroll();
 		return (
-			<div className="fixed pin w-screen h-screen flex justify-center items-center z-10">
-				<div className="w-full h-full pin fixed bg-black opacity-25 ">
+			<div className="fixed w-screen h-screen flex justify-center items-center z-10">
+				<div className="w-full h-full fixed bg-black opacity-25 ">
 				</div>
-				<div id="modal" className={'flex-col bg-white z-40 p-6 ' + props.state.class}>
+				<div id="modal" className={'flex-col fixed  w-screen h-screen  bg-white z-40 p-6 justify-end items-end md:w-auto md:h-auto ' + props.state.class}>
 					<div id="header" className="text-lg mb-2">{props.state.header}</div>
 					<hr />
 					<div id="content" className="mt-4 mb-4 bg-white w-auto">{props.state.content}</div>
