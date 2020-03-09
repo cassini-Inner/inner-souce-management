@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { TextInput, Dropdown, Button, SkillTag } from "../CommonComponents";
+import { TextInput, Dropdown, Button, Tag, SearchTags } from "../CommonComponents";
 import SplitContainer from '../JobDetails/SplitContainer';
 
 class CreateJob extends Component {
@@ -39,10 +39,11 @@ const JobForm = () => {
                 <Dropdown list = {["Some", "Random", "List"]} label="Intermediate" />
             </div>
             <h2 className = "text-xl font-semibold mt-10">Skills required</h2>
-            <TextInput className="mt-2 w-full mb-4" placeholder = "Type and press enter to add skills" /> 
+            {/* <TextInput className="mt-2 w-full mb-4" placeholder = "Type and press enter to add skills" /> 
             <div className="flex flex-row flex-wrap">
-            <SkillTag skill = "Nodejs" />
-            </div>
+            <Tag label = "Nodejs" /> 
+            </div>*/}
+            <SearchTags className = "w-full" placeholder = "Type and press enter to add skills" />
         </div>
     );
 

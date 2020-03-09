@@ -134,15 +134,15 @@ export const SearchBar = (props) => {
 
 export const TextInput = (props) => {
 	return (
-        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } />
+        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } onKeyDown = { props.onKeyDown } />
 	);
 };
 
-export const SkillTag = (props) => {
+export const Tag = (props) => {
     return(
-        <div className="flex bg-nebula-blue-light text-nebula-blue font-semibold px-2 py-1 font-semibold rounded tracking-widest inline text-xs">
-            { props.skill.toUpperCase()}
-            <div className = "hover:text-nebula-grey-800" onClick = { props.click } >
+        <div className = {"flex bg-nebula-blue-light text-nebula-blue font-semibold px-2 py-1 font-semibold rounded tracking-widest inline text-xs " + props.className}>
+            { props.label.toUpperCase()}
+            <div id = { props.label } className = "hover:text-nebula-grey-800" onClick = { props.onClick } >
                 <CloseIcon className = "pl-1 pb-1" />
             </div>
         </div>
@@ -151,8 +151,44 @@ export const SkillTag = (props) => {
 
 
 export const SearchTags = (props) => {
+    const [ state, setState ] = useState({
+        tagList: [],
+        input: "",
+    });
+    
+    const addTag = (event) => {
+        state.input = event.target.value;
+        if (event.key === 'Enter' && state.input.trim() !== "") {
+            setState({
+                tagList: [...state.tagList, state.input],
+                input:"",
+            })
+            event.target.value = "";
+        }
+    }
+
+    const removeTag = (event) => {
+        let temp = [...state.tagList];
+        temp.splice(temp.indexOf(event.currentTarget.id), 1);
+        setState({
+            tagList: temp,
+            input: state.input,
+        })
+    }
+
     return(
-        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } />
+        <div className = { props.className } >
+            <TextInput className = "w-full" placeholder = { props.placeholder } onKeyDown = { addTag } />
+            <div className="flex flex-row flex-wrap">
+                {
+                    state.tagList.map( (tag) => { 
+                        return(
+                            <Tag key = { tag } id = { tag } label = { tag } onClick = { removeTag } className="m-1 ml-0" />
+                        );
+                    })
+                }
+            </div>
+        </div>
     );
 }
 
