@@ -1,9 +1,5 @@
 import React, { Fragment } from "react";
 import { BackIcon } from "../Icons";
-import { StatusTag, AuthorInfo } from "../CommonComponents";
-import { exploreJobs, milestones } from "../../../assets/placeholder";
-import { Button } from "../CommonComponents";
-import MilestoneCard from "./MilestoneCard";
 
 const SplitContainer = (props) => {
     const goBack = props => {
@@ -25,25 +21,33 @@ const SplitContainer = (props) => {
                         </div>
                         {props.leftView}
                     </div>
-                    <hr></hr>
-                    <div className="sticky bottom-0 bg-nebula-grey-100 px-6 py-6 flex justify-end">
-                        {
-                            props.actions.map((button) => {
-                                console.log(button);
-                                return (
-                                    <div className="ml-2">
-                                        {button}
-                                    </div>
-                                );
-                            })
-                        }
+
+                    <div className="sticky bottom-0 bg-nebula-grey-100 px-6 py-6 justify-end">
+                        <hr></hr>
+                        <div className="mt-5">
+                            <div className="text-nebula-blue font-semibold leading-tight">{props.statusTitle}</div>
+                            <div className="text-nebula-grey-600 leading-tight">{props.statusSubtitle}</div>
+                        </div>
+                        <div className="flex w-full justify-end">
+
+                            {
+                                props.actions.map((button) => {
+                                    console.log(button);
+                                    return (
+                                        <div className="ml-2">
+                                            {button}
+                                        </div>
+                                    );
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
                 <div className="w-full px-4 lg:h-screen md:w-1/2 md:overflow-y-auto bg-white lg:w-2/3 lg:px-10 py-12">
                     {props.rightView}
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 export default SplitContainer;
