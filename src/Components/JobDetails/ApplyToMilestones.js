@@ -27,14 +27,13 @@ class ApplyToMilestones extends Component {
 
     render() {
         return (
-            <div>
+            <div className="">
                 <ul>
                     {milestones.map(
                         (milestone, index) => {
                             return (
-                                <div className="flex flex-row">
+                                <div className="w-full">
                                     <MilestoneCard index={index} milestone={milestone} />
-                                    <CheckBox></CheckBox>
                                 </div>
                             );
                         }

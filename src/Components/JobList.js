@@ -7,13 +7,13 @@ class JobList extends Component {
 
     state = {
         filterModal: false,
-    }
+    };
 
     closeFilterModal = () => {
         this.props.setModalState({
             display: false,
         });
-    }
+    };
 
     openFilterModal = () => {
         this.props.setModalState({
@@ -22,13 +22,13 @@ class JobList extends Component {
             content: this.getModalContent(),
             buttons: this.getModalButtons(),
         });
-    }
+    };
 
     getModalHeader = () => {
         return (
             <h1 className="text-2xl">Filter Jobs</h1>
         );
-    }
+    };
 
     getModalButtons = () => {
         return (
@@ -37,20 +37,20 @@ class JobList extends Component {
                 <div className="flex-1">
                     <div className="flex">
                         <Button type="secondary" label="Cancel" onClick={this.closeFilterModal} />
-                        <div className="m-1"></div>
+                        <div className="m-1"/>
                         <Button type="primary" label="Apply Filter" />
                     </div>
                 </div>
             </div>
         );
-    }
+    };
 
     getModalContent = () => {
         return (
             <div className="flex-col w-full my-2">
                 <div className="flex mr-64">
                     <Dropdown title="Sort By" label="Oldest" list = {["Some", "Sample", "Data"]} />
-                    <div className="m-4"></div>
+                    <div className="m-4"/>
                     <Dropdown title="Job status" label="Open" list = {["Some", "Sample", "Data"]} />
                 </div>
                 <h2 className="text-base mt-6">Job Tags</h2>
@@ -59,7 +59,7 @@ class JobList extends Component {
                 <SearchTags placeholder = "Search for tags to add" className = "mb-16" />
             </div>
         );
-    }
+    };
 
 
     render() {
@@ -72,7 +72,7 @@ class JobList extends Component {
                 {
                     exploreJobs.map(data => {
                         return (
-                            <div className="w-full p-6 bg-white mt-5 transition duration-300 shadow-none hover:shadow-lg " key={data.title}>
+                            <div className="w-full p-6 bg-white mt-5 transition duration-300 shadow-none hover:shadow-lg cursor-pointer" key={data.title}>
                                 <h1 className="text-lg font-semibold">{data.title}</h1>
                                 <div className="mt-2 text-base leading-normal text-nebula-grey-600 mb-8">
                                     {data.description}
@@ -132,7 +132,7 @@ const Options = (props) => {
             <a href="/createJob"><Button label="Create a new Job" type="primary" /></a>
         </div>
     );
-}
+};
 
 
 export default JobList;
