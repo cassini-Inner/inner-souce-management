@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DropdownIcon, SearchIcon } from './Icons';
+import { ChevronDownIcon, SearchIcon, CloseIcon } from './Icons';
 
 
 export const Button = (props) => {
@@ -19,7 +19,7 @@ export const StatusTag = (props) => {
 		ongoing: "bg-nebula-green-light text-nebula-green",
 		completed: "bg-nebula-purple-light text-nebula-purple",
 	};
-	return statusTags.map((tag) => <div key={tag} className={style[tag] + " px-2 py-1 mr-2 font-bold rounded tracking-widest w-3 inline text-xs"}>{tag.toUpperCase()}</div>);
+	return statusTags.map((tag) => <div key={tag} className={style[tag] + " px-2 py-1 mr-2 font-bold rounded tracking-widest inline text-xs"}>{tag.toUpperCase()}</div>);
 };
 
 export const InfoTag = (props) => {
@@ -64,26 +64,64 @@ export const AuthorInfo = () => {
 
 export const Dropdown = (props) => {
 
-    let dropdownList =  props.list.map((label) => { 
-        return (
-                <div className = "py-1 px-6 transition duration-150 hover:bg-nebula-grey-400"> 
-                    { label } 
-                </div>
-            )
-        });
+    let dropdownList = props.list.map((label) => { 
+            return (
+                <option value = { label } > { label } </option>
+                )
+            });
 
-    const [state, setState] = useState({
-        display: false,
+    // let dropdownList =  props.list.map((label) => { 
+    //     return (
+    //             <div className = "py-1 px-6 transition duration-150 hover:bg-nebula-grey-400"> 
+    //                 { label } 
+    //             </div>
+    //         )
+    //     });
+
+    // const [state, setState] = useState({
+    //     display: false,
         
-    });
+    // });
 
-    const dropdownToggle = () => {
-        setState({
-            display: !state.display,
-        });
-    }
+    // const dropdownToggle = () => {
+    //     setState({
+    //         display: !state.display,
+    //     });
+    // }
 
-	return (
+	// return (
+	// 	<div className="flex flex-wrap w-auto">
+    //         <div className="pr-2 pt-2">
+    //         {
+    //             props.title ? 
+    //                 <div className="flex text-base mb-2">
+    //                     { props.title }
+    //                 </div>
+    //             : ""
+    //         }
+    //             <div 
+    //                 className = { "rounded border boder-2 border-nebula-grey-200 flex bg-white p-2 h cursor-pointer " + (!state.display ? "transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue hover:border-nebula-blue" : "") }
+    //                 onClick = { dropdownToggle } >
+	// 				<div className="flex">
+	// 					<div className="flex-col text-lg font-semibold">
+	// 						{ props.label }
+    //                     { 
+    //                         state.display ?
+    //                             <div className = "py-2 bg-white rounded absolute flex-col border border-2 border-t-0 border-nebula-grey-300">
+    //                             { dropdownList }
+    //                             </div>
+    //                         : ""
+    //                     }
+
+	// 					</div>
+	// 					<ChevronDownIcon className="h-2 w-2 mt-1 ml-5" />
+	// 				</div>
+	// 			</div>
+	// 		</div>
+	// 	</div>
+    // );
+
+return (
 		<div className="flex flex-wrap w-auto">
             <div className="pr-2 pt-2">
             {
@@ -93,27 +131,12 @@ export const Dropdown = (props) => {
                     </div>
                 : ""
             }
-                <div 
-                    className = { "rounded border boder-2 border-nebula-grey-200 flex bg-white p-2 h cursor-pointer " + (!state.display ? "transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue hover:border-nebula-blue" : "") }
-                    onClick = { dropdownToggle } >
-					<div className="flex">
-						<div className="flex-col text-lg font-semibold">
-							{ props.label }
-                        { 
-                            state.display ?
-                                <div className = "py-2 bg-white rounded absolute flex-col border border-2 border-t-0 border-nebula-grey-300">
-                                { dropdownList }
-                                </div>
-                            : ""
-                        }
-
-						</div>
-						<DropdownIcon className="h-2 w-2 mt-1 ml-5" />
-					</div>
-				</div>
+            <select id = { props.title } className = "rounded border border-2 border-nebula-grey-800 outline-none p-2 leading-tight">
+                { dropdownList }
+            </select>
 			</div>
 		</div>
-	);
+    );
 };
 
 export const SearchBar = (props) => {
@@ -134,12 +157,61 @@ export const SearchBar = (props) => {
 
 export const TextInput = (props) => {
 	return (
-        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } />
+        <input type = "text" className =  { "pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className } placeholder = { props.placeholder } onKeyDown = { props.onKeyDown } />
 	);
 };
 
-export const SkillTag = (props) => {
+export const Tag = (props) => {
     return(
-        <div className="bg-nebula-blue-light text-nebula-blue px-2 py-1 mr-2 font-semibold rounded tracking-widest w-3 inline text-xs">{ props.skill.toUpperCase() + 'X'}</div>
+        <div className = {"flex bg-nebula-blue-light text-nebula-blue font-semibold px-2 py-1 font-semibold rounded tracking-widest inline text-xs " + props.className}>
+            { props.label.toUpperCase()}
+            <div id = { props.label } className = "hover:text-nebula-grey-800" onClick = { props.onClick } >
+                <CloseIcon className = "pl-1 pb-1" />
+            </div>
+        </div>
     );
 }
+
+
+export const SearchTags = (props) => {
+    const [ state, setState ] = useState({
+        tagList: [],
+        input: "",
+    });
+    
+    const addTag = (event) => {
+        state.input = event.target.value;
+        if (event.key === 'Enter' && state.input.trim() !== "") {
+            setState({
+                tagList: [...state.tagList, state.input],
+                input:"",
+            })
+            event.target.value = "";
+        }
+    }
+
+    const removeTag = (event) => {
+        let temp = [...state.tagList];
+        temp.splice(temp.indexOf(event.currentTarget.id), 1);
+        setState({
+            tagList: temp,
+            input: state.input,
+        })
+    }
+
+    return(
+        <div className = { props.className } >
+            <TextInput className = "w-full" placeholder = { props.placeholder } onKeyDown = { addTag } />
+            <div className="flex flex-row flex-wrap">
+                {
+                    state.tagList.map( (tag) => { 
+                        return(
+                            <Tag key = { tag } id = { tag } label = { tag } onClick = { removeTag } className="m-1 ml-0" />
+                        );
+                    })
+                }
+            </div>
+        </div>
+    );
+}
+

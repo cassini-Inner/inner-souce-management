@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, InfoTag, AuthorInfo, StatusTag, Dropdown, SearchBar } from './CommonComponents';
+import { Button, InfoTag, AuthorInfo, StatusTag, Dropdown, SearchTags } from './CommonComponents';
 import { exploreJobs, explore } from "../../assets/placeholder";
 import { FilterIcon } from "./Icons";
 
@@ -54,8 +54,9 @@ class JobList extends Component {
                     <Dropdown title="Job status" label="Open" list = {["Some", "Sample", "Data"]} />
                 </div>
                 <h2 className="text-base mt-6">Job Tags</h2>
-                <p className="text-nebula-grey-500 mt-1 mb-2 text-sm">No tags added</p>
-                <SearchBar className="mt-2 mb-40 bg-nebula-grey-200 " inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" />
+                {/* <p className="text-nebula-grey-500 mt-1 mb-2 text-sm">No tags added</p>
+                <SearchBar className="mt-2 mb-40 bg-nebula-grey-200 " inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" /> */}
+                <SearchTags placeholder = "Search for tags to add" className = "mb-16" />
             </div>
         );
     }
