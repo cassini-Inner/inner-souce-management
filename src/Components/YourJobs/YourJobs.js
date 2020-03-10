@@ -35,7 +35,6 @@ class YourJobs extends Component {
         const elementId = [...sectionId];
         elementId.splice(0, 1);
         const element = document.getElementById(elementId.join(''));
-        console.log(elementId.join(''));
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }

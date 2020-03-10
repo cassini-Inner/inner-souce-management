@@ -21,7 +21,6 @@ class Sidebar extends Component {
     unselectedClasses = " font-semibold transition duration-300  text-nebula-grey-700  hover:bg-nebula-grey-400 hover:border-nebula-grey-400 border-l-4 border-nebula-grey-200 cursor-pointer ";
 
     selectRouteHandler = (e) => {
-        console.log(e.currentTarget.dataset.id);
         const currentPage = e.currentTarget.dataset.id;
         const yourJobsToggleState = this.state.yourJobsToggle;
         if (currentPage === "home" || currentPage === "manageJobs") {
