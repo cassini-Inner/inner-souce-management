@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { ongoingJobs } from '../../../assets/placeholder';
 import OngoingJobCard from "./OngoingJobCard";
 
+
 const OngoingJobs = (props) => {
     // const ongoingJobsGrid = getongoingJobsGrid(ongoingJobs); 
     let maxCount = props.maxCount ? props.maxCount : ongoingJobs.length / 2 + 1; // +1 to ensure even odd number of cards are printed 
@@ -26,7 +27,7 @@ const OngoingJobs = (props) => {
             <div id={props.title} className="">
                 <div className="flex w-full">
                     <h1 className="text-2xl flex-1">Ongoing Jobs</h1>
-                    { props.location === "home" ? <a href="/yourJobs" className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL JOBS</a> : ""}
+                    {props.location === "home" ? <a href="/yourJobs" className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL JOBS</a> : ""}
                 </div>
                 <div className="flex flex-wrap mt-4">
                     {jobsRow}
