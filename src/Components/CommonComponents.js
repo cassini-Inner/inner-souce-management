@@ -64,26 +64,64 @@ export const AuthorInfo = () => {
 
 export const Dropdown = (props) => {
 
-    let dropdownList =  props.list.map((label) => { 
-        return (
-                <div className = "py-1 px-6 transition duration-150 hover:bg-nebula-grey-400"> 
-                    { label } 
-                </div>
-            )
-        });
+    let dropdownList = props.list.map((label) => { 
+            return (
+                <option value = { label } > { label } </option>
+                )
+            });
 
-    const [state, setState] = useState({
-        display: false,
+    // let dropdownList =  props.list.map((label) => { 
+    //     return (
+    //             <div className = "py-1 px-6 transition duration-150 hover:bg-nebula-grey-400"> 
+    //                 { label } 
+    //             </div>
+    //         )
+    //     });
+
+    // const [state, setState] = useState({
+    //     display: false,
         
-    });
+    // });
 
-    const dropdownToggle = () => {
-        setState({
-            display: !state.display,
-        });
-    }
+    // const dropdownToggle = () => {
+    //     setState({
+    //         display: !state.display,
+    //     });
+    // }
 
-	return (
+	// return (
+	// 	<div className="flex flex-wrap w-auto">
+    //         <div className="pr-2 pt-2">
+    //         {
+    //             props.title ? 
+    //                 <div className="flex text-base mb-2">
+    //                     { props.title }
+    //                 </div>
+    //             : ""
+    //         }
+    //             <div 
+    //                 className = { "rounded border boder-2 border-nebula-grey-200 flex bg-white p-2 h cursor-pointer " + (!state.display ? "transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue hover:border-nebula-blue" : "") }
+    //                 onClick = { dropdownToggle } >
+	// 				<div className="flex">
+	// 					<div className="flex-col text-lg font-semibold">
+	// 						{ props.label }
+    //                     { 
+    //                         state.display ?
+    //                             <div className = "py-2 bg-white rounded absolute flex-col border border-2 border-t-0 border-nebula-grey-300">
+    //                             { dropdownList }
+    //                             </div>
+    //                         : ""
+    //                     }
+
+	// 					</div>
+	// 					<ChevronDownIcon className="h-2 w-2 mt-1 ml-5" />
+	// 				</div>
+	// 			</div>
+	// 		</div>
+	// 	</div>
+    // );
+
+return (
 		<div className="flex flex-wrap w-auto">
             <div className="pr-2 pt-2">
             {
@@ -93,27 +131,12 @@ export const Dropdown = (props) => {
                     </div>
                 : ""
             }
-                <div 
-                    className = { "rounded border boder-2 border-nebula-grey-200 flex bg-white p-2 h cursor-pointer " + (!state.display ? "transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue hover:border-nebula-blue" : "") }
-                    onClick = { dropdownToggle } >
-					<div className="flex">
-						<div className="flex-col text-lg font-semibold">
-							{ props.label }
-                        { 
-                            state.display ?
-                                <div className = "py-2 bg-white rounded absolute flex-col border border-2 border-t-0 border-nebula-grey-300">
-                                { dropdownList }
-                                </div>
-                            : ""
-                        }
-
-						</div>
-						<ChevronDownIcon className="h-2 w-2 mt-1 ml-5" />
-					</div>
-				</div>
+            <select id = { props.title } className = "rounded border border-2 border-nebula-grey-800 outline-none p-2 leading-tight">
+                { dropdownList }
+            </select>
 			</div>
 		</div>
-	);
+    );
 };
 
 export const SearchBar = (props) => {
