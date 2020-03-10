@@ -1,15 +1,35 @@
 import React, { Component } from "react";
 import { TextInput, Dropdown, Button, SearchTags } from "../CommonComponents";
-import SplitContainer from '../SplitContainer';
+import SplitContainer from "../SplitContainer";
+import CreateMilestoneForm from "./CreateMilestoneForm";
 
 class CreateJob extends Component {
+    
+    closeMilestoneModal = () => {
+        this.props.setModalState({
+            display: false,
+        });
+    }
+
+    milestoneModal = CreateMilestoneForm(1,this.closeMilestoneModal);
+
+    openMilestoneModal = () => {
+        this.props.setModalState({
+            display: true,
+            header: this.milestoneModal.title,
+            content: this.milestoneModal.content,
+            buttons: this.milestoneModal.actions,
+        });
+    }    
+
     ButtonRow = [
         <Button type = "secondary" label = "Cancel Job Creation" />,
         <Button type = "primary" label = "Submit Job" />
     ]
+
     render() {
         return (
-            <SplitContainer leftView = { <JobForm /> } rightView = { <Milestones /> } actions = { this.ButtonRow }  />
+            <SplitContainer leftView = { <JobForm /> } rightView = { <Milestones openMilestoneModal = { this.openMilestoneModal } closeMilestoneModal = { this.closeMilestoneModal } /> } actions = { this.ButtonRow }  />
         );
     }
 }
@@ -28,7 +48,7 @@ const JobForm = () => {
                 </div>
                 <div className = "flex items-center">
                     <TextInput className="mr-2 w-24" placeholder = "Duration" /> 
-                    <Dropdown list = {["Some", "Random", "List"]} label="Weeks" />
+                    <Dropdown list = {["Weeks", "Days", "Months"]} />
                 </div>
             </div>
             <div className = "flex mt-10">
@@ -36,7 +56,7 @@ const JobForm = () => {
                     <h2 className = "text-xl font-semibold">Difficulty</h2>
                     <p>How difficult is the job?</p>
                 </div>
-                <Dropdown list = {["Some", "Random", "List"]} label="Intermediate" />
+                <Dropdown list = {["Intermediate", "Easy", "Hard"]} />
             </div>
             <h2 className = "text-xl font-semibold mt-10">Skills required</h2>
             {/* <TextInput className="mt-2 w-full mb-4" placeholder = "Type and press enter to add skills" /> 
@@ -49,7 +69,7 @@ const JobForm = () => {
 
 }
 
-const Milestones = () => {
+const Milestones = (props) => {
     return(
         <div className = "flex-col p-2 pt-0">
             <div className = "text-2xl">
@@ -60,7 +80,7 @@ const Milestones = () => {
                 They can also choose to work on individual milestones they find interesting.
             </div>
             <div className = "mt-6">
-                <Button type = "primary" label = "Add a new Milestone" />
+                <Button type = "primary" label = "Add a new Milestone" onClick = { props.openMilestoneModal } />
             </div>
         </div>
     );
