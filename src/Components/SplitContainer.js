@@ -36,7 +36,7 @@ const SplitContainer = (props) => {
                 props.actions ?
                   props.actions.map((button, index) => {
                     return (
-                      <div className={"flex-1 ml-2"}>
+                      <div className={"flex-1 ml-2 w-full"}>
                         {button}
                       </div>
                     );

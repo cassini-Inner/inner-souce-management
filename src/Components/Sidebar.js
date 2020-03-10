@@ -66,9 +66,9 @@ class Sidebar extends Component {
                         {
                             this.state.mobileExpanded
                                 ?
-                                <Icons.MenuIcon className="h-8 w-8 text-nebula-blue stroke-current p-1" />
-                                :
                                 <Icons.CloseIcon className="h-8 w-8 text-nebula-blue stroke-current p-1" />
+                                :
+                                <Icons.MenuIcon className="h-8 w-8 text-nebula-blue stroke-current p-1" />
                         }
                     </button>
                 </div>
