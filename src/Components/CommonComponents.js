@@ -4,9 +4,10 @@ import { ChevronDownIcon, SearchIcon, CloseIcon } from './Icons';
 
 export const Button = (props) => {
     switch (props.type) {
-        case "primary": return (<button className="rounded w-full font-semibold px-4 py-2 text-center bg-nebula-blue text-white transition duration-150 shadow-none hover:shadow-lg text-sm h-12" onClick={props.onClick} >{props.label}</button>);
-        case "secondary": return (<button className="rounded w-full font-semibold px-4 py-2 text-center bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue text-sm h-12" onClick={props.onClick} >{props.label}</button>);
-        default: <button className="rounded w-full font-semibold px-4 py-2 text-center bg-nebula-blue text-white text-sm">{props.label}</button>;
+        case "primary": return (<button className={"rounded w-full font-semibold px-4 py-2 text-center bg-nebula-blue text-white transition duration-150 shadow-none hover:shadow-lg text-sm h-12 " + props.className} onClick={props.onClick} >{props.label}</button>);
+        case "secondary": return (<button className={"rounded w-full font-semibold px-4 py-2 text-center bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue text-sm h-12 " + props.className} onClick={props.onClick} >{props.label}</button>);
+        case "error": return (<button className={"rounded w-full font-semibold px-4 py-2 text-center bg-nebula-red-light transition duration-150 shadow-none hover:shadow-lg text-nebula-red border-2 border-nebula-red text-sm h-12 " + props.className} onClick={props.onClick} >{props.label}</button>);
+        default: <button className={"rounded w-full font-semibold px-4 py-2 text-center bg-nebula-blue text-white text-sm " + props.className} >{props.label}</button>;
     }
 };
 
@@ -157,9 +158,16 @@ export const SearchBar = (props) => {
 
 export const TextInput = (props) => {
     return (
-        <input type="text" className={"pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className} placeholder={props.placeholder} onKeyDown={props.onKeyDown} />
+        <input type="text" className={"pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className} placeholder={props.placeholder} onKeyDown={props.onKeyDown ? props.onKeyDown : null} />
     );
 };
+
+export const TextAreaInput = (props) => {
+    return (
+        <textarea type="text" rows={props.rows ? props.rows : "5"} cols={props.cols ? props.cols : "50"} className={"pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 " + props.className} placeholder={props.placeholder} onKeyDown={props.onKeyDown ? props.onKeyDown : null} />
+    );
+};
+
 
 export const Tag = (props) => {
     return (

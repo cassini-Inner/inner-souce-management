@@ -12,13 +12,20 @@ const ModalContainer = (props) => {
 					<hr />
 					<div id="content" className="mt-4 mb-4 bg-white w-auto">{props.state.content}</div>
 					<hr />
-					<div id="footer" className="mt-2 flex">
-						<div id="information" className="flex-1 p-2">
-							{props.state.information}
-						</div>
-						<div id="buttons" className="p-2">
-							{props.state.buttons}
-						</div>
+					<div id="footer" className="mt-2 flex-col">
+						{ 
+							props.state.information ?
+							<div id="information" className="flex-1 p-2">
+								{props.state.information}
+							</div> :""
+						}
+						{ 
+							props.state.buttons ? 
+							<div id="buttons" className="p-2">
+								{props.state.buttons}
+							</div>
+							: ""
+						}
 					</div>
 
 				</div>

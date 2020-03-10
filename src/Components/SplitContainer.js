@@ -10,11 +10,11 @@ const SplitContainer = (props) => {
 
   return (
     <div className="bg-white lg:flex-row lg:max-w-screen-xl mx-auto ">
-      <div className="lg:flex">
+      <div className="md:flex">
         <div
-          className="bg-white flex-col flex lg:sticky lg:top-0 lg:overflow-y-auto lg:h-screen lg:h-screen lg:w-1/2 ">
+          className="bg-white flex-col flex md:sticky md:top-0 md:overflow-y-auto  md:w-1/2 md:h-screen lg:h-screen lg:w-1/2 ">
           <div className="px-5 py-5 flex-1 lg:px-10 lg:py-12 lg:pt-5">
-            <div className="cursor-pointer select-none hover:text-nebula-blue" onClickc={goBack}>
+            <div className="cursor-pointer select-none hover:text-nebula-blue" onClick={goBack} >
               <div className="flex">
                 <BackIcon />
                 <p className="text-base pl-2 leading-snug">Back</p>
@@ -54,4 +54,5 @@ const SplitContainer = (props) => {
     </div>
   );
 };
+
 export default withRouter(SplitContainer);
