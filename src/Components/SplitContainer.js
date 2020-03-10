@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { BackIcon } from "../Icons";
+import { BackIcon } from "./Icons";
 import { withRouter } from "react-router";
 
 const SplitContainer = (props) => {
@@ -14,7 +14,7 @@ const SplitContainer = (props) => {
                 <div
                     className="bg-white flex-col flex md:sticky md:top-0 md:overflow-y-auto  md:w-1/2 md:h-screen lg:h-screen lg:w-1/2 ">
                     <div className="px-5 py-5 flex-1 lg:px-10 lg:py-12 lg:pt-5">
-                        <div className="cursor-pointer select-none hover:text-nebula-blue" onClick={goBack} >
+                        <div className="cursor-pointer select-none hover:text-nebula-blue" onClickc = { goBack } >
                             <div className="flex">
                                 <BackIcon />
                                 <p className="text-base pl-2 leading-snug">Back</p>

@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 
 import { StatusTag, InfoTag } from '../CommonComponents';
 import { EditIcon, ChevronDownIcon, DeleteIcon, ChevronUpIcon } from '../Icons';

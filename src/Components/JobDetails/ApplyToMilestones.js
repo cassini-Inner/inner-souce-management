@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { milestones } from '../../../assets/placeholder';
-import MilestoneCard from './MilestoneCard';
+import MilestoneCard from '../Milestones/MilestoneCard';
 
 class ApplyToMilestones extends Component {
 

@@ -1,8 +1,8 @@
 import React, { Fragment, Component } from 'react';
-import SplitContainer from './SplitContainer';
+import SplitContainer from '../SplitContainer';
 import JobInformation from './JobInformation';
 import { Button } from '../CommonComponents';
-import MilestonesList from './MilestonesList';
+import MilestonesList from '../Milestones/MilestonesList';
 
 class JobDetailsPage extends Component {
     constructor(props) {

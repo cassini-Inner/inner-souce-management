@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from "react";
-import { TextInput, Dropdown, Button, Tag, SearchTags } from "../CommonComponents";
-import SplitContainer from '../JobDetails/SplitContainer';
+import React, { Component } from "react";
+import { TextInput, Dropdown, Button, SearchTags } from "../CommonComponents";
+import SplitContainer from '../SplitContainer';
 
 class CreateJob extends Component {
     ButtonRow = [
