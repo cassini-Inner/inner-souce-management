@@ -72,6 +72,7 @@ class Sidebar extends Component {
                         }
                     </button>
                 </div>
+                {/* TODO: Add icons for desktop sidebar collapsed state */}
                 <div className={this.state.mobileExpanded ? "block " : "hidden lg:block "}>
                     <ul>
                         <li>
@@ -90,7 +91,7 @@ class Sidebar extends Component {
                         <li>
 
                             <div id="yourJobsList" className={(this.state.yourJobsToggle ? "block" : "hidden")}>
-                                <ul>
+                                {desktopExpanded && <ul>
                                     <li>
                                         <Link to={{ pathname: "/yourJobs", hash: ("#" + config.ongoing) }} data-id="ongoingJobs" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "ongoingJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                                             <div className="w-6 h-6 ml-6"></div>
@@ -118,6 +119,7 @@ class Sidebar extends Component {
                                         </Link>
                                     </li>
                                 </ul>
+                                }
                             </div>
                         </li>
                         <li>

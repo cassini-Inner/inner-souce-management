@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Button, InfoTag, AuthorInfo, StatusTag, Dropdown, SearchTags } from './CommonComponents';
 import { exploreJobs, explore } from "../../assets/placeholder";
 import { FilterIcon } from "./Icons";
+import { Link } from 'react-router-dom';
 
 class JobList extends Component {
 
@@ -37,7 +38,7 @@ class JobList extends Component {
                 <div className="flex-1">
                     <div className="flex">
                         <Button type="secondary" label="Cancel" onClick={this.closeFilterModal} />
-                        <div className="m-1"/>
+                        <div className="m-1" />
                         <Button type="primary" label="Apply Filter" />
                     </div>
                 </div>
@@ -49,14 +50,14 @@ class JobList extends Component {
         return (
             <div className="flex-col w-full my-2">
                 <div className="flex mr-64">
-                    <Dropdown title="Sort By" label="Oldest" list = {["Some", "Sample", "Data"]} />
-                    <div className="m-4"/>
-                    <Dropdown title="Job status" label="Open" list = {["Some", "Sample", "Data"]} />
+                    <Dropdown title="Sort By" label="Oldest" list={["Some", "Sample", "Data"]} />
+                    <div className="m-4" />
+                    <Dropdown title="Job status" label="Open" list={["Some", "Sample", "Data"]} />
                 </div>
                 <h2 className="text-base mt-6">Job Tags</h2>
                 {/* <p className="text-nebula-grey-500 mt-1 mb-2 text-sm">No tags added</p>
                 <SearchBar className="mt-2 mb-40 bg-nebula-grey-200 " inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" /> */}
-                <SearchTags placeholder = "Search for tags to add" className = "mb-16" />
+                <SearchTags placeholder="Search for tags to add" className="mb-16" />
             </div>
         );
     };
@@ -73,8 +74,8 @@ class JobList extends Component {
                     exploreJobs.map(data => {
                         return (
                             <div className="w-full p-6 bg-white mt-5 transition duration-300 shadow-none hover:shadow-lg cursor-pointer" key={data.title}>
-                                <h1 className="text-lg font-semibold">{data.title}</h1>
-                                <div className="mt-2 text-base leading-normal text-nebula-grey-600 mb-8">
+                                <h1 className="text-base font-semibold">{data.title}</h1>
+                                <div className="mt-2 text-sm leading-relaxed text-nebula-grey-700 mb-8">
                                     {data.description}
                                 </div>
                                 <div className="flex mb-4 flex-wrap">
@@ -129,7 +130,7 @@ const Options = (props) => {
                 <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
             </div>
             <div className="flex-1" />
-            <a href="/createJob"><Button label="Create a new Job" type="primary" /></a>
+            <Link to="/createJob"><Button label="Create a new Job" type="primary" /></Link>
         </div>
     );
 };

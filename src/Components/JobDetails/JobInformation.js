@@ -9,12 +9,12 @@ const JobInformation = (props) => {
                 <StatusTag statusTag={exploreJobs[0].status} />
             </div>
             <div className="mt-8">
-                <h1 className="text-2xl leading-snug">
+                <h1 className="text-xl leading-snug">
                     {exploreJobs[0].title}
                 </h1>
             </div>
             <div className="mt-6 mb-8">
-                <p className="text-normal text-nebula-grey-700 leading-snug">
+                <p className="text-sm text-nebula-grey-700 leading-relaxed">
                     {exploreJobs[0].description}
                 </p>
             </div>
@@ -26,7 +26,7 @@ const JobInformation = (props) => {
                     </p>
                     </div>
                     <div>
-                        <p className="leading-tight font-semibold text-s mt-1">
+                        <p className="leading-tight font-semibold text-sm mt-1">
                             {exploreJobs[0].noMilestones + " Milestones"}
                         </p>
                     </div>
@@ -36,7 +36,7 @@ const JobInformation = (props) => {
                         <p className="leading-tight tracking-widest text-xs text-nebula-grey-600 font-semibold">DIFFICULTY</p>
                     </div>
                     <div>
-                        <p className="leading-tight font-semibold text-s mt-1">
+                        <p className="leading-tight font-semibold text-sm mt-1">
                             {exploreJobs[0].difficulty}
                         </p>
                     </div>
@@ -48,7 +48,7 @@ const JobInformation = (props) => {
                     </p>
                     </div>
                     <div>
-                        <p className="leading-tight font-semibold text-s mt-1">
+                        <p className="leading-tight font-semibold text-sm mt-1">
                             {exploreJobs[0].duration}
                         </p>
                     </div>
@@ -60,13 +60,13 @@ const JobInformation = (props) => {
                     </p>
                     </div>
                     <div>
-                        <p className="leading-tight font-semibold text-s mt-1">
+                        <p className="leading-tight font-semibold text-sm mt-1">
                             {exploreJobs[0].skills}
                         </p>
                     </div>
                 </div>
+                <AuthorInfo className="mt-8" iconClass="w-12 h-12" date={exploreJobs[0].date} />
             </div>
-            <AuthorInfo className="mt-8 mb-6" iconClass="w-12 h-12" date={exploreJobs[0].date} />
         </React.Fragment>
     );
 }

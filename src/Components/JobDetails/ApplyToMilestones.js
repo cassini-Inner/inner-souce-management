@@ -27,13 +27,14 @@ class ApplyToMilestones extends Component {
 
     render() {
         return (
-            <div className="">
+            <div className="max-w-lg max-h-screen overflow-y-auto">
                 <ul>
                     {milestones.map(
                         (milestone, index) => {
                             return (
-                                <div className="w-full">
-                                    <MilestoneCard index={index} milestone={milestone} />
+                                <div className="w-full flex">
+                                    <MilestoneCard expanded={false} index={index} milestone={milestone} lastIndex={milestones.length} className="flex-1" />
+                                    <input type="checkbox" id={milestone.id}></input>
                                 </div>
                             );
                         }

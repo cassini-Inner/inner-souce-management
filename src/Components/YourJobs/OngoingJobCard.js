@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 const OngoingJobCard = (props) => {
 
     return (
-        <div className={"bg-white p-6 flex border border-transparent hover:border-nebula-grey-400 select-text cursor-pointer transition duration-300 shadow-none hover:shadow-lg  " + props.className} key={props.job.title}>
+        <div className={"bg-white p-6 border border-transparent hover:border-nebula-grey-400 select-text cursor-pointer transition duration-300 shadow-none hover:shadow-lg  " + props.className} key={props.job.title}>
             <Link to="/jobDetails" >
-                <div className="flex flex-col flex-1">
-                    <div className="flex-1">
-                        <h2 className="text-lg font-semibold mb-4">{props.job.title}</h2>
+                <div className="flex flex-col h-full  flex-1 justify-between">
+                    <div className="">
+                        <h2 className="text-base font-semibold mb-4">{props.job.title}</h2>
                         <StatusTag statusTag={["ongoing"]} />
                     </div>
                     <div className="flex">
