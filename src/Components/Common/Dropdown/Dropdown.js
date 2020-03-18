@@ -1,0 +1,30 @@
+import React from "react";
+
+const Dropdown = (props) => {
+
+    let dropdownList = props.list.map((label) => {
+        return (
+            <option value={label}>{label}</option>
+        );
+    });
+
+    return (
+        <div className="flex flex-wrap w-auto">
+            <div className="p-2">
+                {
+                    props.title ?
+                        <div className="flex text-base">
+                            {props.title}
+                        </div>
+                        : ""
+                }
+                <select id={props.title}
+                    className="transition duration-150 rounded border border-2 border-nebula-grey-400 outline-none p-2 leading-tight hover:shadow-inner">
+                    {dropdownList}
+                </select>
+            </div>
+        </div>
+    );
+};
+
+export default Dropdown;

@@ -1,8 +1,8 @@
-import React, { useState, Fragment } from 'react';
-import Routes from "./Routes";
-import Sidebar from './Sidebar';
-import Modal from "./Modal";
-import { BrowserRouter } from 'react-router-dom';
+import React, { useState, Fragment } from "react";
+import Routes from "./routes/Routes";
+import Sidebar from "./Navigation/Sidebar";
+import Modal from "./Containers/Modal";
+import { BrowserRouter } from "react-router-dom";
 
 
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
             ...newState
         }
         );
-    }
+    };
 
     return (
         <Fragment>
@@ -42,7 +42,6 @@ const App = () => {
                         </div>
                     </div>
                 </div>
-
             </BrowserRouter>
         </Fragment>
     );
