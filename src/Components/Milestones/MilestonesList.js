@@ -1,6 +1,6 @@
-import React from 'react';
-import MilestoneCard from './MilestoneCard';
-import { milestones } from '../../../assets/placeholder';
+import React from "react";
+import MilestoneCard from "./MilestoneCard";
+import { milestones } from "../../../assets/placeholder";
 
 const MilestonesList = (props) => {
     return (
@@ -20,6 +20,6 @@ const MilestonesList = (props) => {
             </ul>
         </div>
     );
-}
+};
 
 export default MilestonesList;
