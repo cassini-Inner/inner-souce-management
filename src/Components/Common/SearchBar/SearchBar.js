@@ -1,11 +1,11 @@
-import { SearchIcon } from "../Icons";
+import * as Icons from "react-feather";
 import React from "react";
 
 const SearchBar = (props) => {
     let inputClasses = "h-12 focus:outline-none rounded py-2 block w-full appearance-none leading-normal ";
     return (
         <div className={"flex-1 flex items-center rounded " + props.className}>
-            <SearchIcon className="h-4 w-4 stroke-current text-nebula-grey-500 mx-5"/>
+            <Icons.Search className="h-4 w-4 stroke-current text-nebula-grey-500 mx-5"/>
             {/* Input for Search */}
 
             <input

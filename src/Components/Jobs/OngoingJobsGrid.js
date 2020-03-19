@@ -31,7 +31,7 @@ const OngoingJobsGrid = (props) => {
             <div id={props.title} className="">
                 <div className="flex w-full">
                     <h1 className="text-2xl flex-1">Ongoing Jobs</h1>
-                    {props.location === "home" ? <a href="/yourJobs" className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL JOBS</a> : ""}
+                    {props.location === "home" ? <a href="/yourJobs" className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL ONGOING JOBS</a> : ""}
                 </div>
                 <div className="flex flex-wrap mt-4">
                     {jobsRow}
