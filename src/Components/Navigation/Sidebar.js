@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "../../../assets/style/tailwind.css";
-import * as Icons from "./Common/Icons";
-import * as config from "../../assets/placeholder";
+import * as Icons from "../Common/Icons";
+import * as config from "../../../assets/placeholder";
 import { NavLink, Link } from 'react-router-dom';
 
 class Sidebar extends Component {
