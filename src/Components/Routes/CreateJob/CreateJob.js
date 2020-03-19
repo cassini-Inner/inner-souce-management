@@ -62,10 +62,6 @@ const JobForm = () => {
                 <Dropdown list={["Intermediate", "Easy", "Hard"]} />
             </div>
             <h2 className="text-base font-semibold mt-10">Skills required</h2>
-            {/* <InputFields className="mt-2 w-full mb-4" placeholder = "Type and press enter to add skills" />
-            <div className="flex flex-row flex-wrap">
-            <Tag label = "Nodejs" /> 
-            </div>*/}
             <SearchTagsInput className="w-full" placeholder="Type and press enter to add skills" />
         </div>
     );

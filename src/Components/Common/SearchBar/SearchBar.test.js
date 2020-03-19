@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import SearchBar from "./SearchBar";
-import * as Icons from "react-feather"
+import * as Icons from "react-feather";
 
 
 describe("<SearchBar />", () => { 

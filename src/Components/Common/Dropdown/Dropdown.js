@@ -1,8 +1,7 @@
 import React from "react";
 
 const Dropdown = (props) => {
-
-    let dropdownList = props.list.map((label) => {
+    const dropdownList = props.list.map((label) => {
         return (
             <option value={label}>{label}</option>
         );

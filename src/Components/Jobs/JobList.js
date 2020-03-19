@@ -5,9 +5,6 @@ import { Link } from 'react-router-dom';
 import Dropdown from '../Common/Dropdown/Dropdown'
 import SearchTagsInput from '../Common/InputFields/SearchTagsInput'
 import Button from '../Common/Button/Button'
-import { InfoTag } from '../Common/InfoTag/InfoTag'
-import AuthorInfo from '../Common/AuthorInfo/AuthorInfo'
-import StatusTags from '../Common/StatusTags/StatusTags'
 import JobCard from './JobCard'
 
 class JobList extends Component {
@@ -40,7 +37,6 @@ class JobList extends Component {
     getModalButtons = () => {
         return (
             <div className="flex">
-                {/* <div className="flex-1"></div> */}
                 <div className="flex-1">
                     <div className="flex">
                         <Button type="secondary" label="Cancel" onClick={this.closeFilterModal} />
@@ -61,7 +57,6 @@ class JobList extends Component {
                     <Dropdown title="Job status" label="Open" list={["Some", "Sample", "Data"]} />
                 </div>
                 <h2 className="text-base mt-6">Job Tags</h2>
-                {/* <p className="text-nebula-grey-500 mt-1 mb-2 text-sm">No tags added</p>
                 <SearchBar className="mt-2 mb-40 bg-nebula-grey-200 " inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" /> */}
                 <SearchTagsInput placeholder="Search for tags to add" className="mb-16" />
             </div>
