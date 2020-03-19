@@ -1,38 +1,23 @@
-import React, { Component } from "react";
-import SplitContainer from "../../Containers/SplitContainer";
-import CreateMilestoneForm from "./CreateMilestoneForm";
+import React, { Component } from 'react';
+import SplitContainer from '../../Containers/SplitContainer';
+import * as actionType from '../../../Store/actions';
 import SearchTagsInput from '../../Common/InputFields/SearchTagsInput'
 import TextInput from '../../Common/InputFields/TextInput'
 import Dropdown from '../../Common/Dropdown/Dropdown'
 import Button from '../../Common/Button/Button'
+import { connect } from 'react-redux';
 
 class CreateJob extends Component {
-
-    closeMilestoneModal = () => {
-        this.props.setModalState({
-            display: false,
-        });
-    }
-
-    milestoneModal = CreateMilestoneForm(1, this.closeMilestoneModal);
-
-    openMilestoneModal = () => {
-        this.props.setModalState({
-            display: true,
-            header: this.milestoneModal.title,
-            content: this.milestoneModal.content,
-            buttons: this.milestoneModal.actions,
-        });
-    }
-
     ButtonRow = [
         <Button type="secondary" label="Cancel Job Creation" className=" w-full " />,
         <Button type="primary" label="Submit Job" className=" w-full " />
     ]
+    
 
     render() {
+        console.log(this.props)
         return (
-            <SplitContainer leftView={<JobForm />} rightView={<Milestones openMilestoneModal={this.openMilestoneModal} closeMilestoneModal={this.closeMilestoneModal} />} actions={this.ButtonRow} />
+            <SplitContainer leftView={<JobForm />} rightView={<Milestones openMilestoneModal={this.props.openModal} />} actions={this.ButtonRow} />
         );
     }
 }
@@ -62,10 +47,6 @@ const JobForm = () => {
                 <Dropdown list={["Intermediate", "Easy", "Hard"]} />
             </div>
             <h2 className="text-base font-semibold mt-10">Skills required</h2>
-            {/* <InputFields className="mt-2 w-full mb-4" placeholder = "Type and press enter to add skills" />
-            <div className="flex flex-row flex-wrap">
-            <Tag label = "Nodejs" /> 
-            </div>*/}
             <SearchTagsInput className="w-full" placeholder="Type and press enter to add skills" />
         </div>
     );
@@ -89,4 +70,16 @@ const Milestones = (props) => {
     );
 }
 
-export default CreateJob;
+const mapStateToProps = state => {
+    return {
+        modalState: state.modal.display
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        openModal: () => dispatch({ type: actionType.OPEN_MODAL, modalType: "milestone", payload: {milestoneNo: 4}})
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateJob);

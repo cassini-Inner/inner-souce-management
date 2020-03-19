@@ -13,9 +13,7 @@ class Sidebar extends Component {
         mobileExpanded: false,
         desktopExpanded: true,
     }
-
-
-
+    
     iconClasses = "w-1/6 pl-3 h-10 pt-3 pb-1 stroke-current text-black";
     selectedClasses = " font-semibold transition duration-300  text-nebula-blue  bg-nebula-blue-light border-l-4 border-nebula-blue  hover:border-nebula-blue cursor-pointer ";
     unselectedClasses = " font-semibold transition duration-300  text-nebula-grey-700  hover:bg-nebula-grey-400 hover:border-nebula-grey-400 border-l-4 border-nebula-grey-200 cursor-pointer ";
