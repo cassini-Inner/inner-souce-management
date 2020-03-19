@@ -1,4 +1,4 @@
-import { CloseIcon } from "../Icons";
+import * as Icons from "react-feather";
 import React from "react";
 
 export const LabelChip = (props) => {
@@ -11,7 +11,7 @@ export const LabelChip = (props) => {
                 id={props.label}
                 className="hover:text-nebula-grey-800"
                 onClick={props.onClick}>
-                <CloseIcon className="px-1 py-1"/>
+                <Icons.X className="px-1 py-1"/>
             </div>
         </div>
     );
