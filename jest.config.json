@@ -1,0 +1,19 @@
+{
+    "roots": [
+        "<rootDir>/src"
+        ],
+        "transform": {
+        "^.+\\.tsx?$": "ts-jest",
+        ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$":
+        "jest-transform-stub",
+        "^.+\\.(js|jsx)?$": "babel-jest"
+        },
+        "setupFilesAfterEnv": ["<rootDir>/setupTests.js"],
+        "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+        "moduleNameMapper": {
+            "^@/(.*)$": "<rootDir>/src/$1",
+            "^.+\\.(css|less|scss)$": "babel-jest",
+            "^.+\\.(jpg|png|gif|svg)$": "identity-obj-proxy"
+        },
+        "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"]
+}
