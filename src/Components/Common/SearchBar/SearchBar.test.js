@@ -5,8 +5,8 @@ import * as Icons from "react-feather"
 
 
 describe("<SearchBar />", () => { 
-    it("should render SearchIcon", () => {
-        const wrapper = shallow(<SearchBar />);
-        // expect(wrapper.find(Icons.search)).toHaveLength(1);
+    it("should display passed placeholder", () => {
+        const wrapper = shallow(<SearchBar placeholder="some test value"/>);
+        expect(wrapper.find("some test value"));
     });
 });
