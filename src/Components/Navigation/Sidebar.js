@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "../../../assets/style/tailwind.css";
-import * as Icons from "./Common/Icons";
-import * as config from "../../assets/placeholder";
+import * as Icons from "react-feather"
+import * as config from "../../../assets/placeholder";
 import { NavLink, Link } from 'react-router-dom';
 
 class Sidebar extends Component {
@@ -66,9 +66,9 @@ class Sidebar extends Component {
                         {
                             this.state.mobileExpanded
                                 ?
-                                <Icons.CloseIcon className="h-8 w-8 text-nebula-blue stroke-current p-1" />
+                                <Icons.X className="h-8 w-8 text-nebula-blue stroke-current p-1" />
                                 :
-                                <Icons.MenuIcon className="h-8 w-8 text-nebula-blue stroke-current p-1" />
+                                <Icons.Menu className="h-8 w-8 text-nebula-blue stroke-current p-1" />
                         }
                     </button>
                 </div>
@@ -77,15 +77,15 @@ class Sidebar extends Component {
                     <ul>
                         <li>
                             <NavLink exact to="/" data-id="home" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "home" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
-                                <Icons.HomeIcon currentPage={this.state.currentPage} className="ml-6" />
+                                <Icons.Home currentPage={this.state.currentPage} className="ml-6" />
                                 {desktopExpanded && <div className="ml-10 ">{config.home}</div>}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink exact to="/yourJobs" data-id="yourJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "yourJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
-                                <Icons.YourJobsIcon currentPage={this.state.currentPage} className="ml-6" />
+                                <Icons.GitBranch currentPage={this.state.currentPage} className="ml-6" />
                                 {desktopExpanded && <div className="ml-10 flex-1" >{config.yourJobs}</div>}
-                                {desktopExpanded && <Icons.ChevronDownIcon currentPage={this.state.currentPage} className={this.state.yourJobsToggle ? "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-0" : "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-180"} />}
+                                {desktopExpanded && <Icons.ChevronDown currentPage={this.state.currentPage} className={this.state.yourJobsToggle ? "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-0" : "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-180"} />}
                             </NavLink>
                         </li>
                         <li>
@@ -125,7 +125,7 @@ class Sidebar extends Component {
                         <li>
 
                             <div data-id="manageJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "manageJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
-                                <Icons.ManageJobsIcon currentPage={this.state.currentPage} className="ml-6" />
+                                <Icons.Edit3 currentPage={this.state.currentPage} className="ml-6" />
                                 {desktopExpanded && <div className="ml-10  block ">{config.manageJobs}</div>}
                             </div>
                         </li>

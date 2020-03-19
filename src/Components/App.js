@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from "react";
-import Routes from "./routes/Routes";
+import Routes from "./Routes/Routes";
 import Sidebar from "./Navigation/Sidebar";
 import Modal from "./Containers/Modal";
 import { BrowserRouter } from "react-router-dom";

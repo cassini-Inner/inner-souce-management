@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import { EditIcon, ChevronDownIcon, DeleteIcon, ChevronUpIcon } from '../Common/Icons';
+import * as Icons from "react-feather";
 import { InfoTag } from '../Common/InfoTag/InfoTag'
 import StatusTags from '../Common/StatusTags/StatusTags'
 
@@ -44,8 +43,8 @@ class MilestoneCard extends Component {
                         </div>
                         {isEditMode &&
                             <div className="flex">
-                                <EditIcon className="text-nebula-blue mx-4" />
-                                <DeleteIcon className="text-nebula-red mx-4" />
+                                <Icons.Edit className="text-nebula-blue mx-4" />
+                                <Icons.Delete className="text-nebula-red mx-4" />
                             </div>
                         }
                     </div>
@@ -54,11 +53,11 @@ class MilestoneCard extends Component {
                             <p className="text-base leading-tight flex-1 font-semibold mb-2 pr-4 ">{this.props.milestone.title}</p>
                             {isExpanded ?
                                 <button>
-                                    <ChevronUpIcon ></ChevronUpIcon>
+                                    <Icons.ChevronUp />
                                 </button>
                                 :
                                 <button>
-                                    <ChevronDownIcon ></ChevronDownIcon>
+                                    <Icons.ChevronDown/>
                                 </button>
                             }
                         </div>

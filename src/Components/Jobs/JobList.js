@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { exploreJobs, explore } from "../../../assets/placeholder";
-import { FilterIcon } from "../Common/Icons";
+import * as Icons from "react-feather";
 import { Link } from 'react-router-dom';
 import Dropdown from '../Common/Dropdown/Dropdown'
 import SearchTagsInput from '../Common/InputFields/SearchTagsInput'
@@ -93,7 +93,7 @@ const Options = (props) => {
         <div className="flex mt-4 h-12 w-full cursor-default">
             <div className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue" onClick={props.setModalState}>
                 <h4 className="text-lg font-semi-bold pr-1">Filter Jobs</h4>
-                <FilterIcon class="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
+                <Icons.Filter className="ml-4 h-5 w-5 stroke-current text-bg-nebula-blue" />
             </div>
             <div className="flex-1" />
             <Link to="/createJob"><Button label="Create a new Job" type="primary" /></Link>
