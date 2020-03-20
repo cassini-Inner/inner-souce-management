@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { exploreJobs, explore } from "../../../assets/placeholder";
 import * as Icons from "react-feather";
 import { Link } from 'react-router-dom';
-import Dropdown from '../Common/Dropdown/Dropdown'
-import SearchTagsInput from '../Common/InputFields/SearchTagsInput'
 import Button from '../Common/Button/Button'
+import * as actionType from '../../Store/actions';
 import JobCard from './JobCard'
+import { connect } from 'react-redux';
 
 class JobList extends Component {
 
@@ -69,7 +69,7 @@ class JobList extends Component {
             <div className="cursor-default ">
                 <div className=" w-full mt-6 ">
                     <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
-                    {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                    {this.props.title == explore ? <Options setModalState={this.props.openFilterModal} /> : ""}
                 </div>
                 {
                     exploreJobs.map(data => {
@@ -97,4 +97,16 @@ const Options = (props) => {
 };
 
 
-export default JobList;
+const mapStateToProps = state => {
+    return {
+        filterModal: state.modal.display
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        openFilterModal: () => dispatch({ type: actionType.OPEN_MODAL, modalType: "filter"})
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(JobList);
