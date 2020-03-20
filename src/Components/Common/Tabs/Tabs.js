@@ -1,34 +1,43 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router';
-const Tabs = (props) => {
+import { NavLink } from 'react-router-dom';
 
-    const [ state, setState ] = useState({
-        currentTab: Object.keys(props.tabList)[0]
-    })
+const Tabs = (props) => {
+    const [ currentTab, setState ] = useState("");
 
     const notSelectedClasses = " hover:text-nebula-blue";
     const selectedClasses = " border-nebula-blue text-nebula-blue";  
 
     const selectTabHandler = (event) => {
-        let currentTab = event.currentTarget.id;
-        setState({
-            currentTab: currentTab
-        })
-        props.history.push(props.match.url + "/" + currentTab)
+        let tab = event.currentTarget.id;
+        setState(tab);
+    }
+
+    //To set the initial selected tab
+    if(currentTab === "") {
+        let sublink = props.currentLink ? props.currentLink : Object.keys(props.tabList)[0];
+        setState(sublink)
+    }
+
+    //If the initial selected tab and route not in sync
+    if((props.location.pathname).indexOf(currentTab) === -1) {
+        // console.log("hii ",props.location.pathname, state.currentTab)
     }
 
     const content = Object.entries(props.tabList).map(([tab , number]) => {
         return(
+                <NavLink to = {props.match.url + "/" + tab}>
                 <div key = { tab }
                     id = { tab }
                     onClick={ selectTabHandler } 
-                    className = { "flex border-b-2 border-transparent py-2 px-8 text-lg font-semibold" + (state.currentTab == tab ? selectedClasses : notSelectedClasses) }
+                    className = { "flex border-b-2 border-transparent py-2 px-8 text-lg font-semibold" + (currentTab == tab ? selectedClasses : notSelectedClasses) }
                 >
                     { tab }
                     <div className="text-nebula-grey-500 pl-3">
                         { number }
                     </div>
                 </div>
+                </NavLink>
             )
         }
     );

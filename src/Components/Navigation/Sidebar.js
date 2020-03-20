@@ -81,40 +81,6 @@ class Sidebar extends Component {
                                 
                             </NavLink>
                         </li>
-                        {/* <li>
-                            <div id="yourJobsList" className={(this.state.? "block" : "hidden")}>
-                                {desktopExpanded &&
-                                <ul>
-                                    <li>
-                                        <Link to={{ pathname: "/yourJobs", hash: ("#" + config.ongoing) }} data-id="ongoingJobs" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "ongoingJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
-                                            <div className="w-6 h-6 ml-6"></div>
-                                            <p className="ml-10">
-                                                {config.ongoing}
-                                            </p>
-                                        </Link>
-                                    </li>
-
-                                    <li>
-                                        <Link to={{ pathname: "/yourJobs", hash: ("#" + config.applications) }} data-id="applications" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "applications" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
-                                            <div className="w-6 h-6 ml-6"></div>
-                                            <p className="ml-10">
-                                                {config.applications}
-                                            </p>
-                                        </Link>
-                                    </li>
-
-                                    <li>
-                                        <Link to={{ pathname: "/yourJobs", hash: ("#" + config.completed) }} data-id="completed" className={"w-full h-12 flex items-center mb-2" + (this.state.currentPage == "completed" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
-                                            <div className="w-6 h-6 ml-6"></div>
-                                            <p className="ml-10">
-                                                {config.completed}
-                                            </p>
-                                        </Link>
-                                    </li>
-                                </ul>
-                                }
-                            </div>
-                        </li> */}
                         <li>
 
                             <div data-id="manageJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "manageJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>

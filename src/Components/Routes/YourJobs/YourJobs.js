@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import Navbar from "../../Navigation/Navbar";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import JobList from "../../Jobs/JobList";
-import { withRouter, Route } from "react-router";
+import { withRouter, Route, Redirect } from "react-router";
 import * as config from "../../../../assets/placeholder";
 import Tabs from "../../Common/Tabs/Tabs";
 
@@ -49,6 +49,9 @@ class YourJobs extends Component {
 
         return (
             <Fragment>
+                {
+                    location.pathname === "/yourJobs"?<Redirect to={this.props.match.url + "/Ongoing"} />: "" 
+                }
                 <div className="px-4 lg:px-10">
                     <Navbar />
                     <div className="h-auto mt-4">

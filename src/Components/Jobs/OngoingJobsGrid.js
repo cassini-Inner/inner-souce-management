@@ -1,6 +1,7 @@
-import React from "react";
-import { ongoingJobs } from "../../../assets/placeholder";
-import OngoingJobCard from "./OngoingJobCard";
+import React from 'react';
+import { ongoingJobs } from '../../../assets/placeholder';
+import OngoingJobCard from './OngoingJobCard';
+import { NavLink } from 'react-router-dom';
 
 
 const OngoingJobsGrid = (props) => {
@@ -31,7 +32,15 @@ const OngoingJobsGrid = (props) => {
             <div id={props.id} className="">
                 <div className="flex w-full">
                     <h1 className="text-2xl flex-1">{props.title}</h1>
-                    {props.location === "home" ? <a href="/yourJobs" className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">SEE ALL ONGOING JOBS</a> : ""}
+                    {
+                        props.location === "home" ? 
+                            <NavLink exact to="/yourJobs/Ongoing">
+                                <div className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">
+                                    SEE ALL ONGOING JOBS
+                                </div>
+                            </NavLink> 
+                            : ""
+                    }
                 </div>
                 <div className="flex flex-wrap mt-4">
                     {jobsRow}
