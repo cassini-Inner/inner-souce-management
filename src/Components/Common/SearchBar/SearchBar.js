@@ -6,8 +6,6 @@ const SearchBar = (props) => {
     return (
         <div className={"flex-1 flex items-center rounded " + props.className}>
             <Icons.Search className="h-4 w-4 stroke-current text-nebula-grey-500 mx-5"/>
-            {/* Input for Search */}
-
             <input
                 type="text"
                 className={props.inputClass
