@@ -12,12 +12,10 @@ const Routes = (props) => {
         <Switch>
             <Route exact path="/jobDetails" component={(props) => { return <JobDetailsPage />; }} />
             <Route path="/yourJobs" component={(props) => { return <YourJobs />; }} />
+            <Route exact path="/manageJobs" component={(props) => { return <YourJobs />; }} />
             <Route exact path="/applyToMilestones" component={(props) => { return <ApplyToMilestones />; }} />
             <Route exact path="/createJob" component={(props) => { return <CreateJob />; }} />
             <Route exact path="/" component={(props) => { return <Home />; }} />
-            <Route>
-                <Redirect to="/login" />
-            </Route>
         </Switch>
     );
 };
