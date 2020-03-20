@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import Navbar from "../../Navigation/Navbar";
-import Sidebar from "../../Navigation/Sidebar";
 import Content from "./Content";
 
 class Home extends Component {

@@ -8,7 +8,6 @@ class Sidebar extends Component {
 
     state = {
         currentPage: this.props.page ? this.props.page : "home",
-        yourJobsExpanded: false,
         hover: false,
         mobileExpanded: false,
         desktopExpanded: true,
@@ -20,15 +19,12 @@ class Sidebar extends Component {
 
     selectRouteHandler = (e) => {
         const currentPage = e.currentTarget.dataset.id;
-        const yourJobsToggleState = this.state.yourJobsExpanded;
         if (currentPage === "home" || currentPage === "manageJobs") {
             this.setState({
-                yourJobsExpanded: false,
                 currentPage: currentPage,
             });
         } else if (currentPage === "yourJobs") {
             this.setState({
-                yourJobsExpanded: !yourJobsToggleState,
                 currentPage: currentPage,
             });
         } else {
@@ -82,15 +78,11 @@ class Sidebar extends Component {
                             <NavLink exact to="/yourJobs" data-id="yourJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "yourJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
                                 <Icons.GitBranch currentPage={this.state.currentPage} className="ml-6" />
                                 {desktopExpanded && <div className="ml-10 flex-1" >{config.yourJobs}</div>}
-                                {desktopExpanded && !this.state.yourJobsExpanded &&
-                                <Icons.ChevronDown currentPage={this.state.currentPage} className={this.state.yourJobsExpanded ? "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-0" : "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-180"} />}
-                            {desktopExpanded && this.state.yourJobsExpanded &&
-                                <Icons.ChevronUp currentPage={this.state.currentPage} className={this.state.yourJobsExpanded ? "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-0" : "ml-6 h-8 w-8 p-1 transition duration-150 ease-in-out rotate-180"} />}
+                                
                             </NavLink>
                         </li>
-                        <li>
-
-                            <div id="yourJobsList" className={(this.state.yourJobsExpanded ? "block" : "hidden")}>
+                        {/* <li>
+                            <div id="yourJobsList" className={(this.state.? "block" : "hidden")}>
                                 {desktopExpanded &&
                                 <ul>
                                     <li>
@@ -122,7 +114,7 @@ class Sidebar extends Component {
                                 </ul>
                                 }
                             </div>
-                        </li>
+                        </li> */}
                         <li>
 
                             <div data-id="manageJobs" className={"cursor-default flex rounded mb-2 items-center h-12" + (this.state.currentPage == "manageJobs" ? this.selectedClasses : this.unselectedClasses)} onClick={this.selectRouteHandler.bind(this)}>
