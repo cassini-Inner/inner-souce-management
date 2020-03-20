@@ -5,6 +5,7 @@ import YourJobs from "./YourJobs/YourJobs";
 import CreateJob from "./CreateJob/CreateJob";
 import JobDetailsPage from "./JobDetails/JobDetailsPage";
 import ApplyToMilestones from "./JobDetails/ApplyToMilestones";
+import LoginPage from "./Login/Login";
 
 const Routes = (props) => {
     const parentProps = props;

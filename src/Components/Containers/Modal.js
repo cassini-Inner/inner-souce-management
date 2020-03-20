@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import FilterModal from '../Modals/FilterModal';
-import MilestoneModal from '../Modals/MilestoneModal';
-import * as actionType from '../../Store/actions';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import FilterModal from "../Modals/FilterModal";
+import MilestoneModal from "../Modals/MilestoneModal";
+import * as actionType from "../../Store/actions";
 
 const ModalContainer = (props) => {
 
     const [state, setState] = useState(props.modalState.modal);
     let modal = "";
     if(props.modalState.modal.type === "filter")
-        modal =  <FilterModal {...props} />
+        modal =  <FilterModal {...props} />;
     if(props.modalState.modal.type === "milestone")
-        modal =  <MilestoneModal {...props} />
+        modal =  <MilestoneModal {...props} />;
 
     if (props.modalState.modal.display) {
         disableScroll();
         return (
             <div className="fixed w-screen h-screen flex justify-center items-center z-50">
                 <div className="w-full h-full fixed bg-black opacity-25"></div>
-                    { modal }
+                { modal }
             </div>
         );
     }
@@ -44,13 +44,13 @@ const enableScroll = () => {
 const mapStateToProps = state => {
     return {
         modalState: state,
-    }
-}
+    };
+};
 
 const mapDispatchToProps = dispatch => {
     return {
         closeModal: () => dispatch({ type: actionType.CLOSE_MODAL })
     };
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);
