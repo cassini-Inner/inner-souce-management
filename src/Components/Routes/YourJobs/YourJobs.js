@@ -2,9 +2,9 @@ import React, { Component, Fragment } from "react";
 import Navbar from "../../Navigation/Navbar";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import JobList from "../../Jobs/JobList";
-import { ongoing, completed, applications } from "../../../../assets/placeholder";
-import { withRouter } from "react-router";
+import { withRouter, Route } from "react-router";
 import * as config from "../../../../assets/placeholder";
+import Tabs from "../../Common/Tabs/Tabs";
 
 class YourJobs extends Component {
 
@@ -40,6 +40,11 @@ class YourJobs extends Component {
         }
     }
 
+    tabList = {
+        Ongoing: 2,
+        Applications: 14,
+        Completed: 8,
+    }
     render() {
 
         return (
@@ -47,9 +52,11 @@ class YourJobs extends Component {
                 <div className="px-4 lg:px-10">
                     <Navbar />
                     <div className="h-auto mt-4">
-                        <OngoingJobsGrid id={config.ongoing} title={ongoing} />
-                        <JobList id={config.applications} title={applications} setModalState={this.props.setModalState} />
-                        <JobList id={config.completed} title={completed} setModalState={this.props.setModalState} />
+                        <Tabs tabList = {this.tabList} />
+                        <div className="my-2" />
+                        <Route path = {this.props.match.url + "/Ongoing"} component = {(props) => <OngoingJobsGrid id={config.ongoing} />} />
+                        <Route path = {this.props.match.url + "/Applications"} component = {(props) => <JobList id={config.applications} />} />
+                        <Route path = {this.props.match.url + "/Completed"} component = {(props) => <JobList id={config.completed} />} />
                     </div>
                 </div>
             </Fragment>
