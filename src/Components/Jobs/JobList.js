@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { exploreJobs, explore } from '../../../assets/placeholder';
-import * as Icons from 'react-feather';
+import { exploreJobs, explore } from "../../../assets/placeholder";
+import * as Icons from "react-feather";
 import { Link } from 'react-router-dom';
 import Button from '../Common/Button/Button'
 import * as actionType from '../../Store/actions';
@@ -8,6 +8,61 @@ import JobCard from './JobCard'
 import { connect } from 'react-redux';
 
 class JobList extends Component {
+
+    state = {
+        filterModal: false,
+    };
+
+    closeFilterModal = () => {
+        this.props.setModalState({
+            display: false,
+        });
+    };
+
+    openFilterModal = () => {
+        this.props.setModalState({
+            display: true,
+            header: this.getModalHeader(),
+            content: this.getModalContent(),
+            buttons: this.getModalButtons(),
+        });
+    };
+
+    getModalHeader = () => {
+        return (
+            <h1 className="text-2xl">Filter Jobs</h1>
+        );
+    };
+
+    getModalButtons = () => {
+        return (
+            <div className="flex">
+                <div className="flex-1">
+                    <div className="flex">
+                        <Button type="secondary" label="Cancel" onClick={this.closeFilterModal} />
+                        <div className="m-1" />
+                        <Button type="primary" label="Apply Filter" />
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
+    getModalContent = () => {
+        return (
+            <div className="flex-col w-full my-2">
+                <div className="flex mr-64">
+                    <Dropdown title="Sort By" label="Oldest" list={["Some", "Sample", "Data"]} />
+                    <div className="m-4" />
+                    <Dropdown title="Job status" label="Open" list={["Some", "Sample", "Data"]} />
+                </div>
+                <h2 className="text-base mt-6">Job Tags</h2>
+                <SearchBar className="mt-2 mb-40 bg-nebula-grey-200 " inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" /> */}
+                <SearchTagsInput placeholder="Search for tags to add" className="mb-16" />
+            </div>
+        );
+    };
+
 
     render() {
         return (
