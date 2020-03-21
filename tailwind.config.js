@@ -25,6 +25,15 @@ module.exports = {
                 "96": "24rem",
             },
             colors: {
+                "nebula-grey-100": "#FCFCFC",
+                "nebula-grey-200": "#F6F6F6",
+                "nebula-grey-300": "#F1F1F1",
+                "nebula-grey-400": "#E2E2E2",
+                "nebula-grey-500": "#B3B3B3",
+                "nebula-grey-600": "#7E7E7E",
+                "nebula-grey-700": "#464646",
+                "nebula-grey-800": "#191919",
+                "nebula-grey-900": "#111111",
                 "nebula-blue": "#0066FF",
                 "nebula-blue-light": "#DCEAFF",
                 "nebula-red": "#FF6363",
@@ -35,18 +44,12 @@ module.exports = {
                 "nebula-green-light": "#E3F5F1",
                 "nebula-yellow": "#A38418",
                 "nebula-yellow-light": "#FFF7D9",
-                "nebula-grey-100": "#FCFCFC",
-                "nebula-grey-200": "#F6F6F6",
-                "nebula-grey-300": "#F1F1F1",
-                "nebula-grey-400": "#E2E2E2",
-                "nebula-grey-500": "#B3B3B3",
-                "nebula-grey-600": "#7E7E7E",
-                "nebula-grey-700": "#464646",
-                "nebula-grey-800": "#191919",
-                "nebula-grey-900": "#111111",
             }
         },
     },
-    variants: {},
+    variants: {
+        borderColor: ["responsive", "hover", "focus", "active"],
+        textColor: ["hover", "active"]
+    },
     plugins: [],
 };

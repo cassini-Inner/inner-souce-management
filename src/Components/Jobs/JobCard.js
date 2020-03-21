@@ -5,7 +5,7 @@ import React from "react";
 
 const JobCard = (props) => {
     return (
-        <div className="w-full p-6 bg-white mt-5 transition border border-nebula-grey-400 duration-300 shadow-none hover:shadow-lg cursor-pointer" key={props.data.title}>
+        <div className="w-full p-6 bg-white mt-5 rounded-lg transition border border-nebula-grey-400 duration-300 shadow-none cursor-pointer  hover:shadow-lg " key={props.data.title}>
             <h1 className="text-base font-semibold">{props.data.title}</h1>
             <div className="mt-2 text-sm leading-relaxed text-nebula-grey-700 mb-8">
                 {props.data.description}

@@ -6,7 +6,7 @@ import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 const OngoingJobCard = (props) => {
 
     return (
-        <div className={"bg-white p-6 border border-nebula-grey-400 select-text cursor-pointer transition duration-300 shadow-none hover:shadow-lg  " + props.className} key={props.job.title}>
+        <div className={"bg-white rounded-lg p-6 border border-nebula-grey-400 select-text cursor-pointer transition duration-300 shadow-none hover:shadow-lg  " + props.className} key={props.job.title}>
             <Link to="/jobDetails" >
                 <div className="flex flex-col h-full  flex-1 justify-between">
                     <div className="">

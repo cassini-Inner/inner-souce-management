@@ -15,7 +15,6 @@ class CreateJob extends Component {
     
 
     render() {
-        console.log(this.props)
         return (
             <SplitContainer leftView={<JobForm />} rightView={<Milestones openMilestoneModal={this.props.openModal} />} actions={this.ButtonRow} />
         );

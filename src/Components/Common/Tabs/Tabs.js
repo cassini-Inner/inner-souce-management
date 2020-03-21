@@ -1,45 +1,26 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { withRouter } from "react-router";
+import { NavLink } from "react-router-dom";
 
-const Tabs = (props) => {
-    const [ currentTab, setState ] = useState("");
+const TabStrip = (props) => {
 
-    const notSelectedClasses = " hover:text-nebula-blue";
-    const selectedClasses = " border-nebula-blue text-nebula-blue";  
-
-    const selectTabHandler = (event) => {
-        let tab = event.currentTarget.id;
-        setState(tab);
-    }
-
-    //To set the initial selected tab
-    if(currentTab === "") {
-        let sublink = props.currentLink ? props.currentLink : Object.keys(props.tabList)[0];
-        setState(sublink)
-    }
-
-    //If the initial selected tab and route not in sync
-    if((props.location.pathname).indexOf(currentTab) === -1) {
-        // console.log("hii ",props.location.pathname, state.currentTab)
-    }
-
-    const content = Object.entries(props.tabList).map(([tab , number]) => {
-        return(
-                <NavLink to = {props.match.url + "/" + tab}>
-                <div key = { tab }
-                    id = { tab }
-                    onClick={ selectTabHandler } 
-                    className = { "flex border-b-2 border-transparent py-2 px-8 text-lg font-semibold" + (currentTab == tab ? selectedClasses : notSelectedClasses) }
+    const content =props.tabs.map(({ title, location, count, notify }) => {
+        return (
+            <NavLink to={props.match.url + "/" + location} activeClassName="border-nebula-blue" key={count} className={"flex border-b-2 border-transparent pb-4 pt-3 px-8 font-semibold hover:bg-nebula-blue-light transition duration-300 "}>
+                <div key={location}
+                    className="flex flex-row items-center"
                 >
-                    { tab }
+                    {notify &&
+                        <div className="bg-nebula-blue w-2 h-2 mr-2 rounded-full"/>
+                    }
+                    {title}
                     <div className="text-nebula-grey-500 pl-3">
-                        { number }
+                        {count}
                     </div>
                 </div>
-                </NavLink>
-            )
-        }
+            </NavLink>
+        );
+    }
     );
 
     return(
@@ -47,6 +28,6 @@ const Tabs = (props) => {
             { content }
         </div>
     );
-}
+};
 
-export default withRouter(Tabs);
+export default withRouter(TabStrip);
