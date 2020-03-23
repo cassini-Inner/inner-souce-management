@@ -1,6 +1,6 @@
 import React from "react";
 
-export const InfoTag = (props) => {
+const InfoTag = (props) => {
     let content = "";
     if (Array.isArray(props.data)) {
         const length = props.data.length - 1;
@@ -13,17 +13,19 @@ export const InfoTag = (props) => {
     return (
         <div className={props.className}>
             <div>
-                <p className="font-semibold leading-tight tracking-widest text-xs text-nebula-grey-600 mb-2">
-                    {props.title}
+                <p className="font-semibold leading-tight tracking-widest text-xs text-nebula-grey-600 mb-1">
+                    {props.title.toUpperCase()}
                 </p>
             </div>
             <div>
-                <p className="leading-tight font-semibold text-sm">
+                <p className="leading-tight font-semibold text-normal">
                     {content}
                 </p>
             </div>
         </div>
     );
 };
+
+export default InfoTag;
 
 

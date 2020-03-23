@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextInput from "./TextInput";
-import LabelChip from "../Chips/LabelChip";
+import ActionChip from "../Chips/ActionChip";
 
 const SearchTagsInput = (props) => {
     const [state, setState] = useState({
@@ -37,7 +37,7 @@ const SearchTagsInput = (props) => {
                 {
                     state.tagList.map((tag, index) => {
                         return (
-                            <LabelChip
+                            <ActionChip
                                 key={tag}
                                 id={index}
                                 label={tag}

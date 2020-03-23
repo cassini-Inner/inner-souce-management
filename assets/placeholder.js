@@ -123,6 +123,18 @@ export const milestones = [
     },
 ];
 
+export const profileData = {
+    name: "Tushar Paliwal",
+    position: "Intern International",
+    githubUrl: "github.paypal.com/tpaliwal",
+    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec tellus porta sed ac pretium erat sed in. Morbi fermentum ut velit facilisi. Egestas non maecenas duis commodo suspendisse tellus congue leo. Feugiat libero volutpat sed odio fringilla facilisis vivamus lacus.",
+    skills: ["NODEJS", "REACT", "SPRING", "RAPTOR"],
+    jobStats: {
+        completed: 5,
+        ongoing: 2,
+    }
+};
+
 export const appName = "Nebula";
 export const home = "Home";
 export const yourJobs = "Your Jobs";

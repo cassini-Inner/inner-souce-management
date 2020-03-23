@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as Icons from "react-feather";
 import SearchBar from "../Common/SearchBar/SearchBar";
-
+import { Link } from "react-router-dom";
 class Navbar extends Component {
 
     render() {
@@ -13,7 +13,9 @@ class Navbar extends Component {
                     <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-12 w-12 flex items-center">
                         <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
                     </div>
-                    <img src="../assets/icons/Ellipse 1.png" className="flex-0 h-12 w-12 rounded-full" />
+                    <Link exact to="/profile">
+                        <img src="../assets/icons/Ellipse 1.png" className="flex-0 h-12 w-12 rounded-full" />
+                    </Link>
                 </div >
             </div>
         );

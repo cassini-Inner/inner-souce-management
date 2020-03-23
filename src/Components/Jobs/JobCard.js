@@ -1,4 +1,4 @@
-import { InfoTag } from "../Common/InfoTag/InfoTag";
+import InfoTag from "../Common/InfoTag/InfoTag";
 import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 import StatusTags from "../Common/StatusTags/StatusTags";
 import React from "react";
