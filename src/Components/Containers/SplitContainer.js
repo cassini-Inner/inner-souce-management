@@ -11,7 +11,7 @@ const SplitContainer = (props) => {
     return (
         <div className="bg-white flex flex-col lg:flex-row mx-auto xl:shadow-lg ">
             <div
-                className="bg-white flex-col flex lg:sticky fixed lg:h-screen lg:top-0 lg:overflow-y-auto lg:w-1/2 lg:w-1/2 ">
+                className="bg-white w-screen flex-col flex lg:sticky fixed lg:h-screen lg:top-0 lg:overflow-y-auto lg:w-1/2 lg:w-1/2 ">
                 <div className="px-5 py-5 lg:px-10 lg:pb-4 lg:pt-8">
                     <div className="cursor-pointer select-none hover:text-nebula-blue" onClick={goBack}>
                         <div className="flex items-center">
@@ -36,7 +36,7 @@ const SplitContainer = (props) => {
                             props.actions ?
                                 props.actions.map((button, index) => {
                                     return (
-                                        <div className={" ml-1 mr-1 my-1 w-full"}>
+                                        <div className={" ml-1 mr-1 my-1 w-full"} key={index}>
                                             {button}
                                         </div>
                                     );
@@ -47,7 +47,7 @@ const SplitContainer = (props) => {
                 </div>
             </div>
             <div
-                className="w-full px-4  lg:overflow-y-auto bg-white lg:w-2/3 lg:px-10 py-16  lg:h-screen">
+                className="w-screen px-4  lg:overflow-y-auto bg-white lg:w-2/3 lg:px-10 py-16  lg:h-screen">
                 {props.rightView}
             </div>
         </div>

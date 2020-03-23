@@ -3,7 +3,7 @@ import Navbar from "../../Navigation/Navbar";
 import Button from "../../Common/Button/Button";
 import Card from "../../Common/Card/Card";
 import { profileData } from "../../../../assets/placeholder";
-import {GitHub } from "react-feather";
+import {GitHub} from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
 import InfoTag from "../../Common/InfoTag/InfoTag"; 
 import { Link } from "react-router-dom";
@@ -14,11 +14,11 @@ const Profile = (props) => {
             <Navbar />
             <div className="flex flex-row mt-8 mb-4 justify-between">
                 <h1 className="text-2xl">Profile</h1>
-                <Link>
+                <Link to="/profile/edit" exact>
                     <Button type="primary" label="Edit Profile"/>
                 </Link>
             </div>
-            <Card isInteractive={false}>
+            <Card>
                 <div className="flex p-4">
                     <img src="../assets/images/profile.png" className="flex-0 h-24 w-24 rounded-full" />
                     <div className="flex flex-col mx-8 my-6  max-w-screen-md">

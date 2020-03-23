@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import TextInput from "./TextInput";
 import ActionChip from "../Chips/ActionChip";
+import TextInputLabel from "./TextInputLabel";
+import PropTypes from "prop-types";
 
 const SearchTagsInput = (props) => {
     const [state, setState] = useState({
-        tagList: [],
+        tagList: props.initialList || [],
         input: "",
     });
 
@@ -30,9 +32,13 @@ const SearchTagsInput = (props) => {
 
     return (
         <div className={props.className}>
+            <TextInputLabel label={props.label}/>
             {/* eslint-disable-next-line react/jsx-no-undef */}
-            <TextInput className="w-full" placeholder={props.placeholder}
-                onKeyDown={addTag}/>
+            <TextInput
+                className="w-full mb-2 "
+                placeholder={props.placeholder}
+                onKeyDown={addTag}
+            />
             <div className="flex flex-row flex-wrap">
                 {
                     state.tagList.map((tag, index) => {
@@ -50,6 +56,13 @@ const SearchTagsInput = (props) => {
             </div>
         </div>
     );
+};
+
+SearchTagsInput.propTypes = {
+    className: PropTypes.string,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    initialList: PropTypes.array,
 };
 
 export default SearchTagsInput;

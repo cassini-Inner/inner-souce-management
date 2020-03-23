@@ -4,8 +4,6 @@ import { milestones } from "../../../assets/placeholder";
 
 const MilestonesList = (props) => {
     return (
-        <div>
-            <h2 className="text-2xl">Milestones</h2>
             <ul className="">
                 {
                     milestones.map(
@@ -18,7 +16,6 @@ const MilestonesList = (props) => {
                         })
                 }
             </ul>
-        </div>
     );
 };
 

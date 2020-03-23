@@ -9,11 +9,11 @@ const UserList = () => {
         jobApplication.map(({name, designation, type, milestones}) =>{
             return(
                 <div className = "my-4 flex border-b-2 border-nebula-grey-400">
-                     <img src="../assets/icons/Ellipse 3.png" className="flex-0 h-12 w-12 rounded-full" />
-                     <div className = "flex-col ml-2 mb-2 flex-1">
-                            <div className = "text-lg font-semibold">{name}</div>
-                            <div className = "text-nebula-grey-600">{designation}</div>
-                            <div className = "text-nebula-blue font-semibold">{ milestones ? ("Milestones "+milestones) : "" }</div>
+                    <img src="../assets/icons/Ellipse 3.png" className="flex-0 h-12 w-12 rounded-full" />
+                    <div className = "flex-col ml-2 mb-2 flex-1">
+                        <div className = "text-lg font-semibold">{name}</div>
+                        <div className = "text-nebula-grey-600">{designation}</div>
+                        <div className = "text-nebula-blue font-semibold">{ milestones ? ("Milestones "+milestones) : "" }</div>
                     </div>
                     <div className = "flex self-center">
                         <StatusTag statusTag = { [type] } />
@@ -30,6 +30,6 @@ const UserList = () => {
             );
         })
     );
-}
+};
 
 export default UserList;
