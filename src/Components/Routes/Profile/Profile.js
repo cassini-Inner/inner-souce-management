@@ -6,6 +6,7 @@ import { profileData } from "../../../../assets/placeholder";
 import {GitHub } from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
 import InfoTag from "../../Common/InfoTag/InfoTag"; 
+import { Link } from "react-router-dom";
 
 const Profile = (props) => {
     return (
@@ -13,9 +14,11 @@ const Profile = (props) => {
             <Navbar />
             <div className="flex flex-row mt-8 mb-4 justify-between">
                 <h1 className="text-2xl">Profile</h1>
-                <Button type="primary" label="Edit Profile"/>
+                <Link>
+                    <Button type="primary" label="Edit Profile"/>
+                </Link>
             </div>
-            <Card>
+            <Card isInteractive={false}>
                 <div className="flex p-4">
                     <img src="../assets/images/profile.png" className="flex-0 h-24 w-24 rounded-full" />
                     <div className="flex flex-col mx-8 my-6  max-w-screen-md">
@@ -50,7 +53,6 @@ const Profile = (props) => {
                         </div>
                     </div>
                 </div>
-                
             </Card>
         </div>
     );
