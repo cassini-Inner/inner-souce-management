@@ -4,7 +4,7 @@ import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import JobList from "../../Jobs/JobList";
 import { withRouter, Route, Redirect } from "react-router";
 import * as config from "../../../../assets/placeholder";
-import TabStrip from "../../Common/Tabs/Tabs";
+import TabStrip from "../../Common/Tabs/TabStrip";
 
 class YourJobs extends Component {
 
@@ -53,6 +53,7 @@ class YourJobs extends Component {
                 title: "Applications",
                 location: "applications",
                 count: 3,
+                notify: true
             },
             {
                 title: "Completed",
@@ -71,9 +72,9 @@ class YourJobs extends Component {
                     <div className="h-auto mt-4">
                         <TabStrip tabs = {tabList} />
                         <div className="my-2" />
-                        <Route path = {this.props.match.url + "/ongoing"} component = {(props) => <OngoingJobsGrid id={config.ongoing} />} />
-                        <Route path = {this.props.match.url + "/applications"} component = {(props) => <JobList id={config.applications} />} />
-                        <Route path = {this.props.match.url + "/Completed"} component = {(props) => <JobList id={config.completed} />} />
+                        <Route exact path = {this.props.match.url + "/ongoing"} component = {(props) => <OngoingJobsGrid id={config.ongoing} />} />
+                        <Route exact path = {this.props.match.url + "/applications"} component = {(props) => <JobList id={config.applications} />} />
+                        <Route exact path = {this.props.match.url + "/completed"} component = {(props) => <JobList id={config.completed} />} />
                     </div>
                 </div>
             </Fragment>

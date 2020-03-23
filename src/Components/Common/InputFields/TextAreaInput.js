@@ -1,6 +1,7 @@
 import React from "react";
+import TextInput from "./TextInput";
 
-export const TextAreaInput = (props) => {
+const TextAreaInput = (props) => {
     return (
         <textarea type="text" rows={props.rows ? props.rows : "5"}
             cols={props.cols ? props.cols : "50"}
@@ -10,3 +11,5 @@ export const TextAreaInput = (props) => {
             onKeyDown={props.onKeyDown ? props.onKeyDown : null}/>
     );
 };
+
+export default TextInput;
