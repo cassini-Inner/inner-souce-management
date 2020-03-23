@@ -123,6 +123,33 @@ export const milestones = [
     },
 ];
 
+export const Comments = [{
+    "name": "Arjun",
+    "dateTime": "15th March 9:30 pm",
+    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam mattis neque penatibus augue scelerisque quis. Scelerisque orci vitae facilisis ac fringilla. Sit sed tellus dictum sit dui libero, dolor molestie. Diam sit odio maecenas nunc proin amet ut. Fringilla vitae elementum quam consequat leo adipiscing. Morbi donec feugiat purus eu. Tincidunt nibh diam velit magna nullam amet diam mauris quis. Sit metus sit adipiscing et." 
+    },
+    {
+        "name": "Tushar",
+        "dateTime": "14th March 9:30 pm",
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam mattis neque penatibus augue scelerisque quis. Scelerisque orci vitae facilisis ac fringilla. Sit sed tellus dictum sit dui libero, dolor molestie. Diam sit odio maecenas nunc proin amet ut. Fringilla vitae elementum quam consequat leo adipiscing. Morbi donec feugiat purus eu. Tincidunt nibh diam velit magna nullam amet diam mauris quis. Sit metus sit adipiscing et." 
+    }
+];
+
+export const jobApplication = [
+    {
+        "name": "Tushar",
+        "designation": "Intern International",
+        "type": "job",
+        "milestones": null
+    },
+    {
+        "name": "Arjun",
+        "designation": "Intern International",
+        "type": "milestones",
+        "milestones": "4, 5 ,6"
+    }
+];
+
 export const appName = "Nebula";
 export const home = "Home";
 export const yourJobs = "Your Jobs";

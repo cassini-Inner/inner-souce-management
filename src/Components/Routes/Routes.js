@@ -10,7 +10,7 @@ const Routes = (props) => {
     const parentProps = props;
     return (
         <Switch>
-            <Route exact path="/jobDetails" component={(props) => { return <JobDetailsPage />; }} />
+            <Route path="/jobDetails" component={(props) => { return <JobDetailsPage />; }} />
             <Route path="/yourJobs" component={(props) => { return <YourJobs />; }} />
             <Route exact path="/manageJobs" component={(props) => { return <YourJobs />; }} />
             <Route exact path="/applyToMilestones" component={(props) => { return <ApplyToMilestones />; }} />
