@@ -3,9 +3,10 @@ import Navbar from "../../Navigation/Navbar";
 import Button from "../../Common/Button/Button";
 import Card from "../../Common/Card/Card";
 import { profileData } from "../../../../assets/placeholder";
-import {GitHub } from "react-feather";
+import {GitHub} from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
 import InfoTag from "../../Common/InfoTag/InfoTag"; 
+import { Link } from "react-router-dom";
 
 const Profile = (props) => {
     return (
@@ -13,7 +14,9 @@ const Profile = (props) => {
             <Navbar />
             <div className="flex flex-row mt-8 mb-4 justify-between">
                 <h1 className="text-2xl">Profile</h1>
-                <Button type="primary" label="Edit Profile"/>
+                <Link to="/profile/edit" exact>
+                    <Button type="primary" label="Edit Profile"/>
+                </Link>
             </div>
             <Card>
                 <div className="flex p-4">
@@ -50,7 +53,6 @@ const Profile = (props) => {
                         </div>
                     </div>
                 </div>
-                
             </Card>
         </div>
     );

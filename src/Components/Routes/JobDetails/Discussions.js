@@ -10,8 +10,8 @@ const Discussions = () => {
             <AddComment />
             <Comment />
         </Fragment>
-    )
-}
+    );
+};
 
 const AddComment = () => {
     return(
@@ -23,26 +23,26 @@ const AddComment = () => {
             </div>
         </div>
     );
-}
+};
 
 export const Comment = () => {
     
     return( Comments.map(({name, dateTime, comment}) => {
-            return(
-                <div className = "my-6 flex-col">
-                    <div className = "flex">
-                        <img src="../assets/icons/Ellipse 3.png" className="flex-0 h-12 w-12 rounded-full" />
-                        <div className = "flex-col ml-2 mb-2">
-                            <div className = "text-lg font-semibold">{name}</div>
-                            <div className = "text-nebula-grey-500">{dateTime}</div>
-                        </div>
+        return(
+            <div className = "my-6 flex-col">
+                <div className = "flex">
+                    <img src="../assets/icons/Ellipse 3.png" className="flex-0 h-12 w-12 rounded-full" />
+                    <div className = "flex-col ml-2 mb-2">
+                        <div className = "text-lg font-semibold">{name}</div>
+                        <div className = "text-nebula-grey-500">{dateTime}</div>
                     </div>
-                    <div>{ comment }</div>
                 </div>
-                )
-            }
-        )
+                <div>{ comment }</div>
+            </div>
+        );
+    }
+    )
     );
-}
+};
 
 export default Discussions;
