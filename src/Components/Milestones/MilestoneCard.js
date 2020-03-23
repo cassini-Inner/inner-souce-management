@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Icons from "react-feather";
-import { InfoTag } from '../Common/InfoTag/InfoTag'
+import InfoTag from '../Common/InfoTag/InfoTag'
 import StatusTags from '../Common/StatusTags/StatusTags'
 
 class MilestoneCard extends Component {

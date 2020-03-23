@@ -1,11 +1,13 @@
 import React from "react";
 
 const Button = (props) => {
+    const commonStyle = " text-sm h-12 rounded w-auto select-none font-semibold px-8 py-2 text-center transition duration-150 shadow-none hover:shadow-lg  ";
+
     switch (props.type) {
     case "primary":
         return (
             <button
-                className={"rounded w-auto select-none font-semibold px-4 py-2 text-center bg-nebula-blue text-white transition duration-150 shadow-none hover:shadow-lg text-sm h-12 " +
+                className={commonStyle + "bg-nebula-blue text-white " +
                 props.className}
                 onClick={props.onClick}>
                 {props.label}
@@ -14,7 +16,7 @@ const Button = (props) => {
     case "secondary":
         return (
             <button
-                className={"rounded w-auto select-none font-semibold px-4 py-2 text-center bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue text-sm h-12 " +
+                className={commonStyle + "bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue " +
               props.className}
                 onClick={props.onClick}>
                 {props.label}
@@ -23,7 +25,7 @@ const Button = (props) => {
     case "error":
         return (
             <button
-                className={"rounded w-auto select-none font-semibold px-4 py-2 text-center bg-nebula-red-light transition duration-150 shadow-none hover:shadow-lg text-nebula-red border-2 border-nebula-red text-sm h-12 " +
+                className={commonStyle + "bg-nebula-red-light transition duration-150 shadow-none hover:shadow-lg text-nebula-red border-2 border-nebula-red " +
               props.className}
                 onClick={props.onClick}>
                 {props.label}
@@ -32,7 +34,7 @@ const Button = (props) => {
     default:
         return (
             <button
-                className={"rounded w-auto select-none font-semibold px-4 py-2 text-center bg-nebula-blue text-white text-sm " +
+                className={commonStyle + "bg-nebula-blue text-white text-sm " +
               props.className}>
                 {props.label}
             </button>

@@ -123,10 +123,23 @@ export const milestones = [
     },
 ];
 
-export const Comments = [{
-    "name": "Arjun",
-    "dateTime": "15th March 9:30 pm",
-    "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam mattis neque penatibus augue scelerisque quis. Scelerisque orci vitae facilisis ac fringilla. Sit sed tellus dictum sit dui libero, dolor molestie. Diam sit odio maecenas nunc proin amet ut. Fringilla vitae elementum quam consequat leo adipiscing. Morbi donec feugiat purus eu. Tincidunt nibh diam velit magna nullam amet diam mauris quis. Sit metus sit adipiscing et." 
+export const profileData = {
+    name: "Tushar Paliwal",
+    position: "Intern International",
+    githubUrl: "github.paypal.com/tpaliwal",
+    bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec tellus porta sed ac pretium erat sed in. Morbi fermentum ut velit facilisi. Egestas non maecenas duis commodo suspendisse tellus congue leo. Feugiat libero volutpat sed odio fringilla facilisis vivamus lacus.",
+    skills: ["NODEJS", "REACT", "SPRING", "RAPTOR"],
+    jobStats: {
+        completed: 5,
+        ongoing: 2,
+    }
+};
+
+export const Comments = [
+    {
+        "name": "Arjun",
+        "dateTime": "15th March 9:30 pm",
+        "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quam mattis neque penatibus augue scelerisque quis. Scelerisque orci vitae facilisis ac fringilla. Sit sed tellus dictum sit dui libero, dolor molestie. Diam sit odio maecenas nunc proin amet ut. Fringilla vitae elementum quam consequat leo adipiscing. Morbi donec feugiat purus eu. Tincidunt nibh diam velit magna nullam amet diam mauris quis. Sit metus sit adipiscing et." 
     },
     {
         "name": "Tushar",
