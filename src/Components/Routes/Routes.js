@@ -6,6 +6,7 @@ import CreateJob from "./CreateJob/CreateJob";
 import JobDetailsPage from "./JobDetails/JobDetailsPage";
 import ApplyToMilestones from "./JobDetails/ApplyToMilestones";
 import Profile from "./Profile/Profile";
+import ManageJobs from "./ManageJobs/ManageJobs";
 
 const Routes = (props) => {
     const parentProps = props;
@@ -14,7 +15,7 @@ const Routes = (props) => {
             <Route path="/jobDetails" component={(props) => { return <JobDetailsPage />; }} />
             <Route path="/yourJobs" component={(props) => { return <YourJobs />; }} />
             <Route path="/profile" component={(props) => { return <Profile />; }} />
-            <Route exact path="/manageJobs" component={(props) => { return <YourJobs />; }} />
+            <Route path="/manageJobs" component={(props) => { return <ManageJobs />; }} />
             <Route exact path="/applyToMilestones" component={(props) => { return <ApplyToMilestones />; }} />
             <Route exact path="/createJob" component={(props) => { return <CreateJob />; }} />
             <Route exact path="/" component={(props) => { return <Home />; }} />

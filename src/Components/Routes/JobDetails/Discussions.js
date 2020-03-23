@@ -19,7 +19,7 @@ const AddComment = () => {
             <div className = "mb-6 font-semibold text-nebula-grey-600 text-lg">Add a new Comment</div>
             <TextInput placeholder = "Add comment" className = "mb-6 w-full" />
             <div className = "flex justify-end">
-                <Button label = "Post Comment" />
+                <Button type = "primary" label = "Post Comment" />
             </div>
         </div>
     );

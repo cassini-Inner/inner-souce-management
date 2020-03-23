@@ -83,7 +83,6 @@ class Sidebar extends Component {
                         </li>
                         <li>
                              <NavLink
-                                exact
                                 to="/manageJobs"
                                 activeClassName={this.selectedClasses}
                                 className={this.unselectedClasses}
