@@ -17,7 +17,7 @@ const Button = (props) => {
         return (
             <button
                 className={commonStyle + "bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue " +
-              props.className}
+                props.className}
                 onClick={props.onClick}>
                 {props.label}
             </button>
@@ -26,7 +26,7 @@ const Button = (props) => {
         return (
             <button
                 className={commonStyle + "bg-nebula-red-light transition duration-150 shadow-none hover:shadow-lg text-nebula-red border-2 border-nebula-red " +
-              props.className}
+                props.className}
                 onClick={props.onClick}>
                 {props.label}
             </button>
@@ -35,7 +35,8 @@ const Button = (props) => {
         return (
             <button
                 className={commonStyle + "bg-nebula-blue text-white text-sm " +
-              props.className}>
+                props.className}
+                onClick={props.onClick}>
                 {props.label}
             </button>
         );

@@ -7,7 +7,7 @@ class Home extends Component {
         return (
             <div className=" px-4 lg:px-10">
                 <Navbar />
-                <Content setModalState={this.props.setModalState} />
+                <Content />
             </div>
         );
     }
