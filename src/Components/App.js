@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react";
 import Routes from "./Routes/Routes";
 import Sidebar from "./Navigation/Sidebar";
-import Modal from "./Containers/Modal";
 import { BrowserRouter, Route } from "react-router-dom";
 import LoginPage from "./Routes/Login/Login";
 import { Switch } from "react-router";
@@ -11,7 +10,6 @@ const App = () => {
 
     return (
         <Fragment>
-            <Modal/>
             <BrowserRouter>
                 <Switch>
                     <Route path="/login" exact={true} component={(props) => {return (<LoginPage/>);}}/>

@@ -12,7 +12,7 @@ const TextInput = (props) => {
             props.className}
                 placeholder={props.placeholder}
                 onChange={props.onChange ? props.onChange : null}
-                value={props.value ? props.value : null}
+                value={props.value ? props.value : undefined}
                 onKeyDown={props.onKeyDown ? props.onKeyDown : null}
             />
         </Fragment>

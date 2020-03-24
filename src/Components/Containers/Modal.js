@@ -1,36 +1,36 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
+import React from "react";
+import ReactDOM from "react-dom";
 import FilterModal from "../Modals/FilterModal";
 import MilestoneModal from "../Modals/MilestoneModal";
-import * as actionType from "../../Store/actions";
+
+const modalRoot = document.getElementById("modal-root");
 
 const ModalContainer = (props) => {
 
-    const [state, setState] = useState(props.modalState.modal);
     let modal = "";
-    if(props.modalState.modal.type === "filter")
+    if(props.modalType === "filter")
         modal =  <FilterModal {...props} />;
-    if(props.modalState.modal.type === "milestone")
+    if(props.modalType === "milestone")
         modal =  <MilestoneModal {...props} />;
 
-    if (props.modalState.modal.display) {
+    if (props.modalDisplay) {
         disableScroll();
-        return (
-            <div className="fixed w-screen h-screen flex justify-center items-center z-50">
-                <div className="w-full h-full fixed bg-black opacity-25"></div>
+        return ReactDOM.createPortal(
+            <div className="w-screen h-screen fixed top-0 left-0 flex justify-center z-40">
+                <div className = "fixed bg-black opacity-25 z-40 w-full h-full top-0 right-0" />
                 { modal }
-            </div>
+            </div>,
+            modalRoot
         );
     }
     else {
         enableScroll();
-        return ("");
+        return ReactDOM.createPortal("", modalRoot);
     }
 };
 
 const disableScroll = () => {
     let name = "overflow-y-hidden";
-    let arr = document.body.className.split(" ");
     document.body.className += " " + name;
 };
 
@@ -41,16 +41,5 @@ const enableScroll = () => {
     document.body.className = arr.join("");
 };
 
-const mapStateToProps = state => {
-    return {
-        modalState: state,
-    };
-};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        closeModal: () => dispatch({ type: actionType.CLOSE_MODAL })
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModalContainer);
+export default ModalContainer;

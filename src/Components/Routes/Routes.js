@@ -6,7 +6,6 @@ import CreateJob from "./CreateJob/CreateJob";
 import JobDetailsPage from "./JobDetails/JobDetailsPage";
 import ApplyToMilestones from "./JobDetails/ApplyToMilestones";
 import Profile from "./Profile/Profile";
-
 import ManageJobs from "./ManageJobs/ManageJobs";
 import EditProfile from "./Profile/EditProfile";
 
