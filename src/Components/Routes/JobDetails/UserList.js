@@ -13,9 +13,9 @@ const UserList = () => {
                     <div className = "mt-4 mb-2 flex">
                         <Avatar imagePath="../assets/icons/Ellipse 3.png"/>
                         <div className = "flex-col ml-4 mb-2 flex-1">
-                            <div className = "text-lg font-semibold">{name}</div>
-                            <div className = "text-nebula-grey-600">{designation}</div>
-                            <div className = "text-nebula-blue font-semibold">{ milestones ? ("Milestones "+milestones) : "" }</div>
+                            <div className = "text font-semibold">{name}</div>
+                            <div className = "text-nebula-grey-600 text-sm">{designation}</div>
+                            <div className = "text-nebula-blue font-semibold text-sm">{ milestones ? ("Milestones "+milestones) : "" }</div>
                         </div>
                         <div className = "flex self-center">
                             <StatusTag statusTag = { [type] } />

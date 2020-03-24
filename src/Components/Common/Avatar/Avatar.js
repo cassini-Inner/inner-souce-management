@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 const Avatar = (props) => {
     return (
-        <img src={props.imagePath} className="flex-0 h-10 w-10 shadown-inner border-4 border-nebula-blue-light rounded-full" />
+        <img src={props.imagePath} className="h-10 w-10 shadown-inner border-4 border-nebula-blue-light rounded-full" />
     );
 };
 
