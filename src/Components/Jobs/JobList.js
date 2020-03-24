@@ -3,9 +3,8 @@ import { exploreJobs, explore } from "../../../assets/placeholder";
 import * as Icons from "react-feather";
 import { Link } from 'react-router-dom';
 import Button from '../Common/Button/Button'
-import * as actionType from '../../Store/actions';
 import JobCard from './JobCard'
-import { connect } from 'react-redux';
+import Modal from "../Containers/Modal"; 
 
 class JobList extends Component {
 
@@ -14,71 +13,35 @@ class JobList extends Component {
     };
 
     closeFilterModal = () => {
-        this.props.setModalState({
-            display: false,
+        this.setState({
+            filterModal: false,
         });
     };
 
     openFilterModal = () => {
-        this.props.setModalState({
-            display: true,
-            header: this.getModalHeader(),
-            content: this.getModalContent(),
-            buttons: this.getModalButtons(),
+        this.setState({
+            filterModal: true,
         });
     };
 
-    getModalHeader = () => {
-        return (
-            <h1 className="text-2xl">Filter Jobs</h1>
-        );
-    };
-
-    getModalButtons = () => {
-        return (
-            <div className="flex">
-                <div className="flex-1">
-                    <div className="flex">
-                        <Button type="secondary" label="Cancel" onClick={this.closeFilterModal} />
-                        <div className="m-1" />
-                        <Button type="primary" label="Apply Filter" />
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    getModalContent = () => {
-        return (
-            <div className="flex-col w-full my-2">
-                <div className="flex mr-64">
-                    <Dropdown title="Sort By" label="Oldest" list={["Some", "Sample", "Data"]} />
-                    <div className="m-4" />
-                    <Dropdown title="Job status" label="Open" list={["Some", "Sample", "Data"]} />
-                </div>
-                <h2 className="text-base mt-6">Job Tags</h2>
-                <SearchBar className="mt-2 mb-40 bg-nebula-grey-200 " inputClass="placeholder-nebula-grey-600 bg-nebula-grey-200" placeholder="Search for tags to add" /> */}
-                <SearchTagsInput placeholder="Search for tags to add" className="mb-16" />
-            </div>
-        );
-    };
-
-
     render() {
         return (
-            <div className="cursor-default ">
-                <div className=" w-full mt-6 ">
-                    <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
-                    {this.props.title == explore ? <Options setModalState={this.props.openFilterModal} /> : ""}
+            <Fragment>
+                <Modal modalType = "filter" modalDisplay = {this.state.filterModal} closeModal = {this.closeFilterModal} />
+                <div className="cursor-default ">
+                    <div className=" w-full mt-6 ">
+                        <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
+                        {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                    </div>
+                    {
+                        exploreJobs.map(data => {
+                            return (
+                            <JobCard data={data}/>
+                            );
+                        })
+                    }
                 </div>
-                {
-                    exploreJobs.map(data => {
-                        return (
-                          <JobCard data={data}/>
-                        );
-                    })
-                }
-            </div>
+            </Fragment>
         );
     }
 }
@@ -96,17 +59,4 @@ const Options = (props) => {
     );
 };
 
-
-const mapStateToProps = state => {
-    return {
-        filterModal: state.modal.display
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        openFilterModal: () => dispatch({ type: actionType.OPEN_MODAL, modalType: "filter"})
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(JobList);
+export default JobList;

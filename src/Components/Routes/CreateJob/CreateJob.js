@@ -1,13 +1,29 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import SplitContainer from '../../Containers/SplitContainer';
-import * as actionType from '../../../Store/actions';
 import SearchTagsInput from '../../Common/InputFields/SearchTagsInput'
 import TextInput from '../../Common/InputFields/TextInput'
 import Dropdown from '../../Common/Dropdown/Dropdown'
 import Button from '../../Common/Button/Button'
-import { connect } from 'react-redux';
+import Modal from "../../Containers/Modal";
 
 class CreateJob extends Component {
+
+    state = {
+        milestoneModal: false,
+    }
+
+    openMilestoneModal = () => {
+        this.setState({
+            milestoneModal: true,
+        })
+    };
+
+    closeMilestoneModal = () => {
+        this.setState({
+            milestoneModal: false,
+        })
+    };
+    
     ButtonRow = [
         <Button type="secondary" label="Cancel Job Creation" className=" w-full " />,
         <Button type="primary" label="Submit Job" className=" w-full " />
@@ -16,7 +32,20 @@ class CreateJob extends Component {
 
     render() {
         return (
-            <SplitContainer leftView={<JobForm />} rightView={<Milestones openMilestoneModal={this.props.openModal} />} actions={this.ButtonRow} />
+            <Fragment>
+
+                <Modal 
+                    modalType = "milestone" 
+                    modalDisplay = {this.state.milestoneModal} 
+                    closeMilestoneModal = {this.closeMilestoneModal} 
+                    milestoneNo = "4"
+                />
+                <SplitContainer 
+                    leftView={<JobForm />} 
+                    rightView={<Milestones openMilestoneModal = {this.openMilestoneModal} />} 
+                    actions={this.ButtonRow} 
+                />
+            </Fragment>
         );
     }
 }
@@ -69,16 +98,4 @@ const Milestones = (props) => {
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        modalState: state.modal.display
-    };
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        openModal: () => dispatch({ type: actionType.OPEN_MODAL, modalType: "milestone", payload: {milestoneNo: 4}})
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateJob);
+export default CreateJob;
