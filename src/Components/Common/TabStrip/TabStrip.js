@@ -11,10 +11,10 @@ const TabStrip = (props) => {
                     className="flex flex-row items-center"
                 >
                     {notify &&
-                        <div className="bg-nebula-blue w-2 h-2 mr-2 rounded-full"/>
+                        <div className="bg-nebula-blue text-sm w-2 h-2 mr-2 rounded-full"/>
                     }
-                    {title}
-                    <div className="text-nebula-grey-500 pl-3">
+                    <p className="text-sm font-semibold whitespace-no-wrap">{title}</p>
+                    <div className="text-nebula-grey-500 text-sm pl-2">
                         {count}
                     </div>
                 </div>
@@ -24,7 +24,7 @@ const TabStrip = (props) => {
     );
 
     return(
-        <div className = "flex border-b border-nebula-grey-400 w-full cursor-default">
+        <div className = "flex border-b border-nebula-grey-400 w-full cursor-default overflow-x-auto">
             { content }
         </div>
     );

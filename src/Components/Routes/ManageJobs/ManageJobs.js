@@ -1,7 +1,7 @@
 import React from "react";
-import TabStrip from "../../Common/Tabs/TabStrip";
+import TabStrip from "../../Common/TabStrip/TabStrip";
 import { withRouter, Route, Redirect } from "react-router";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { exploreJobs } from "../../../../assets/placeholder";
 import Navbar from "../../Navigation/Navbar";
 import JobCard from "../../Jobs/JobCard";
@@ -43,7 +43,7 @@ const ManageJobs = (props) => {
             </div>
         </div>
     );
-}
+};
 
 const JobList = (props) => {
     return(
@@ -51,7 +51,7 @@ const JobList = (props) => {
             return(
                 <div className = "my-8 border border-nebula-grey-400 rounded-lg transition duration-300 shadow-none cursor-pointer hover:shadow-lg">
                     <div className ="flex my-2">
-                        <div className = "self-center font-semibold text-nebula-blue text-lg ml-6">
+                        <div className = "self-center font-semibold text-nebula-blue text-sm ml-6 ">
                             View 6 Applications
                         </div>
                         <div className = "flex py-8 px-8">
@@ -73,6 +73,6 @@ const JobList = (props) => {
             );
         })
     );
-}
+};
 
 export default withRouter(ManageJobs);

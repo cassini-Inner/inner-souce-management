@@ -4,34 +4,35 @@ import Dropdown from "../../Common/Dropdown/Dropdown";
 
 const Applications = () => {
 
-    return(
+    return (
         <Fragment>
-            <div className = "my-6 flex-col px-2 mb-16">
-                <div className = "flex mb-2">
-                    <div className = "self-center flex-1 text-lg font-semibold">
-                        Filter applications by type
+            <div className="mt-6 mb-8 flex-col px-2">
+                <div className="flex mb-2">
+                    <div className="self-center flex-1 ">
+                        <p className="text-base font-semibold">Filter applications by type</p>
+                        <p className="text-sm text-gray-700">
+                            Since applicants can apply to specific milestones or complete job, you can filter applicants by application type.
+                        </p>
                     </div>
-                    <div className = "flex">
-                        <Dropdown list = { ["Job & Milestones", "Job", "Milestones"] }/>
+                    <div className="flex">
+                        <Dropdown list={["Job & Milestones", "Job", "Milestones"]} />
                     </div>
                 </div>
-                <div>
-                    Since applicants can apply to specific milestones or complete job, you can filter applicants by application type.
-                </div>
+
             </div>
-            <div className = "flex-col my-6 px-2">
-                <div className = "flex">
-                    <div className = "flex-1 font-semibold">
+            <div className="flex-col my-6 px-2">
+                <div className="flex text-sm ">
+                    <div className="flex-1 font-semibold text-nebula-gray-600">
                         Applicant
                     </div>
-                    <div className = "flex font-semibold mr-40">
+                    <div className="flex font-semibold mr-40 text-nebula-gray-600">
                         Application Type
                     </div>
                 </div>
                 <UserList />
             </div>
         </Fragment>
-        
+
     );
 };
 
