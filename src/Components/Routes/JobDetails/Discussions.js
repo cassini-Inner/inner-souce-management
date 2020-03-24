@@ -29,15 +29,15 @@ export const Comment = () => {
     
     return( Comments.map(({name, dateTime, comment}) => {
         return(
-            <div className = "my-6 flex-col">
+            <div className = "my-6 flex flex-row" key={name}>
+                <img src="../assets/icons/Ellipse 3.png" className="flex-0 h-10 w-10 rounded-full" />
                 <div className = "flex">
-                    <img src="../assets/icons/Ellipse 3.png" className="flex-0 h-12 w-12 rounded-full" />
-                    <div className = "flex-col ml-2 mb-2">
+                    <div className = "flex flex-col ml-4 mb-4">
                         <div className = "text-lg font-semibold">{name}</div>
-                        <div className = "text-nebula-grey-500">{dateTime}</div>
+                        <div className = "text-sm text-nebula-grey-600">{dateTime}</div>
+                        <p className="text-nebula-grey-700 text-sm">{ comment }</p>
                     </div>
                 </div>
-                <div>{ comment }</div>
             </div>
         );
     }

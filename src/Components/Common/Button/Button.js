@@ -1,7 +1,7 @@
 import React from "react";
 
 const Button = (props) => {
-    const commonStyle = " text-sm h-12 rounded w-auto select-none font-semibold px-8 py-2 text-center transition duration-150 shadow-none hover:shadow-lg  ";
+    const commonStyle = " text-sm whitespace-no-wrap h-12 rounded w-auto select-none font-semibold px-8 py-2 text-center transition duration-150 shadow-none hover:shadow-lg  ";
 
     switch (props.type) {
     case "primary":

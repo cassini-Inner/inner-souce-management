@@ -27,8 +27,8 @@ class MilestoneCard extends Component {
         return (
             <div className={"flex " + this.props.className}>
                 <div>
-                    <svg className="w-3 relative mt-6" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="6" cy="6" r="6" fill="#B3B3B3" />
+                    <svg className="w-3 relative mt-6 fill-current text-nebula-grey-400" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="6" cy="6" r="6" fill="" />
                     </svg>
                     <div className={(this.props.index === this.props.lastIndex - 1 ? '' : 'h-full ') + ' w-px mx-auto bg-nebula-grey-400'}/>
                 </div>
@@ -48,7 +48,7 @@ class MilestoneCard extends Component {
                             </div>
                         }
                     </div>
-                    <div className="bg-nebula-grey-100 shadow-xs p-6 cursor-pointer transition duration-100 hover:shadow-lg" onClick={this.toggleExpandedState}>
+                    <div className="bg-white rounded-md shadow-none border-nebula-grey-400 border p-6 cursor-pointer transition duration-100 hover:shadow-md" onClick={this.toggleExpandedState}>
                         <div className="flex flex-row justify-start items-start">
                             <p className="text-base leading-tight flex-1 font-semibold mb-2 pr-4 ">{this.props.milestone.title}</p>
                             {isExpanded ?

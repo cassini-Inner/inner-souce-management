@@ -4,7 +4,7 @@ import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import JobList from "../../Jobs/JobList";
 import { withRouter, Route, Redirect } from "react-router";
 import * as config from "../../../../assets/placeholder";
-import TabStrip from "../../Common/Tabs/TabStrip";
+import TabStrip from "../../Common/TabStrip/TabStrip";
 
 class YourJobs extends Component {
 
