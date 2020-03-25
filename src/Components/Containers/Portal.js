@@ -11,7 +11,9 @@ const Portal = (props) => {
     if (props.isOpen) {
         disableScroll();
         return ReactDOM.createPortal(
-            props.children,
+            <div className="fixed z-50 mx-auto inset-0">
+                {props.children}
+            </div>,
             modalRoot
         );
     }
