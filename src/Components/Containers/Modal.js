@@ -4,6 +4,7 @@ import FilterModal from "../Modals/FilterModal";
 import MilestoneModal from "../Modals/MilestoneModal";
 
 const modalRoot = document.getElementById("modal-root");
+const appRoot = document.getElementById("App");
 
 const ModalContainer = (props) => {
 
@@ -16,9 +17,11 @@ const ModalContainer = (props) => {
     if (props.modalDisplay) {
         disableScroll();
         return ReactDOM.createPortal(
-            <div className="w-screen h-screen fixed top-0 left-0 flex justify-center z-40">
-                <div className = "fixed bg-black opacity-25 z-40 w-full h-full top-0 right-0" />
-                { modal }
+            <div className="fixed inset-0 flex justify-center z-40">
+                <div className = "fixed inset-0 bg-black opacity-25 z-40" />
+                <div className=" overflow-y-auto mt-8 max-w-3xl mx-auto z-50">
+                    { modal }
+                </div>
             </div>,
             modalRoot
         );
@@ -30,15 +33,11 @@ const ModalContainer = (props) => {
 };
 
 const disableScroll = () => {
-    let name = "overflow-y-hidden";
-    document.body.className += " " + name;
+    document.body.style.overflow = "hidden";
 };
 
 const enableScroll = () => {
-    let name = "overflow-y-hidden";
-    let arr = document.body.className.split(" ");
-    arr[arr.indexOf(name)] = "overflow-y-scroll";
-    document.body.className = arr.join("");
+    document.body.style.overflow = "unset";
 };
 
 
