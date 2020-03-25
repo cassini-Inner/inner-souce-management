@@ -25,7 +25,6 @@ const Portal = (props) => {
 
 const disableScroll = () => {
     const scrollBarWidth = window.innerWidth - document.body.clientWidth ;
-    console.log(scrollBarWidth);
     document.body.style.overflow = "hidden";
     document.body.style.marginRight = scrollBarWidth + "px";
 };
