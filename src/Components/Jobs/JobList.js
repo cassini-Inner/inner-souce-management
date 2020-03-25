@@ -4,7 +4,9 @@ import * as Icons from "react-feather";
 import { Link } from 'react-router-dom';
 import Button from '../Common/Button/Button'
 import JobCard from './JobCard'
-import Modal from "../Containers/Modal"; 
+import Portal from "../Containers/Portal";
+import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
+import FilterModal from '../Modals/FilterModal'
 
 class JobList extends Component {
 
@@ -27,7 +29,11 @@ class JobList extends Component {
     render() {
         return (
             <Fragment>
-                <Modal modalType = "filter" modalDisplay = {this.state.filterModal} closeModal = {this.closeFilterModal} />
+                <Portal isOpen={this.state.filterModal}  >
+                    <ModalViewWithScrim>
+                        <FilterModal closeModal = {this.closeFilterModal}/>
+                    </ModalViewWithScrim>
+                </Portal>
                 <div className="cursor-default ">
                     <div className=" w-full mt-6 ">
                         <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>

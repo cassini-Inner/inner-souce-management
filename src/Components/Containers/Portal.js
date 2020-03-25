@@ -2,28 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import FilterModal from "../Modals/FilterModal";
 import MilestoneModal from "../Modals/MilestoneModal";
+import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("modal-root");
 
-const Modal = (props) => {
+const Portal = (props) => {
 
-    let modal = "";
-    if(props.modalType === "filter")
-        modal =  <FilterModal {...props} />;
-    if(props.modalType === "milestone")
-        modal =  <MilestoneModal {...props} />;
-
-    if (props.modalDisplay) {
+    if (props.isOpen) {
         disableScroll();
         return ReactDOM.createPortal(
-            <div className="fixed inset-0 flex justify-center z-40">
-                <div className = "fixed inset-0 bg-black opacity-25 z-40" />
-                <div className=" overflow-y-auto h-full w-full z-50">
-                    <div className=" mx-auto max-w-3xl py-12 px-4">
-                        { modal }
-                    </div>
-                </div>
-            </div>,
+            props.children,
             modalRoot
         );
     }
@@ -45,5 +33,9 @@ const enableScroll = () => {
     document.body.style.marginRight = 0;
 };
 
+Portal.propTypes = {
+    isOpen: PropTypes.bool,
+    children: PropTypes.any,
+};
 
-export default Modal;
+export default Portal;

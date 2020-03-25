@@ -4,7 +4,7 @@ import TextAreaInput from "../Common/InputFields/TextAreaInput";
 import Dropdown from "../Common/Dropdown/Dropdown";
 import Button from "../Common/Button/Button";
 import ModalContainer from "./ModalContainer";
-
+import PropTypes from "prop-types";
 const MilestoneModal = (props) => {
     return (
         <ModalContainer>
@@ -40,7 +40,7 @@ const MilestoneModal = (props) => {
                         <Button type = "error" label = "Delete Milestone" />
                     </div>
                     <div className = "flex">
-                        <Button type = "secondary" label = "Discard" className = "mr-4" onClick = { props.closeMilestoneModal } />
+                        <Button type = "secondary" label = "Discard" className = "mr-4" onClick = { props.closeModal } />
                         <Button type = "primary" label = "Save Milestone" />
                     </div>
                 </div>
@@ -51,5 +51,10 @@ const MilestoneModal = (props) => {
     );
 };
 
+MilestoneModal.propTypes = {
+    closeModal: PropTypes.func,
+    milestoneNo: PropTypes.number,
+    information: PropTypes.string,
+};
 
 export default MilestoneModal;

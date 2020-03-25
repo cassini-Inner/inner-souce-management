@@ -4,8 +4,10 @@ import SearchTagsInput from '../../Common/InputFields/SearchTagsInput'
 import TextInput from '../../Common/InputFields/TextInput'
 import Dropdown from '../../Common/Dropdown/Dropdown'
 import Button from '../../Common/Button/Button'
-import Modal from "../../Containers/Modal";
-
+import Modal from "../../Containers/Portal";
+import ModalViewWithScrim from '../../Modals/ModalViewWithScrim'
+import MilestoneModal from '../../Modals/MilestoneModal'
+import Portal from '../../Containers/Portal'
 class CreateJob extends Component {
 
     state = {
@@ -45,6 +47,11 @@ class CreateJob extends Component {
                     rightView={<Milestones openMilestoneModal = {this.openMilestoneModal} />} 
                     actions={this.ButtonRow} 
                 />
+                <Portal isOpen={this.state.milestoneModal} >
+                    <ModalViewWithScrim>
+                        <MilestoneModal closeModal={this.closeMilestoneModal}/>
+                    </ModalViewWithScrim>A
+                </Portal>
             </Fragment>
         );
     }
