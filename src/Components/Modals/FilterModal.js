@@ -2,10 +2,11 @@ import React from "react";
 import Dropdown from "../Common/Dropdown/Dropdown";
 import Button from "../Common/Button/Button";
 import SearchTagsInput from "../Common/InputFields/SearchTagsInput";
+import ModalContainer from "./ModalContainer";
 
 const FilterModal = (props) => {
     return (
-        <div id="modal" className = "flex flex-col bg-white p-6 z-50">
+        <ModalContainer>
             <div id="header" className="text-lg mb-2">
                 <h1 className="text-2xl">Filter Jobs</h1>
             </div>
@@ -23,19 +24,15 @@ const FilterModal = (props) => {
             </div>
             <hr />
             <div id="footer" className="mt-2 flex-col">
-                <div id="buttons" className="p-2">
-                    <div className="flex">
-                        <div className="flex-1">
-                            <div className="flex">
-                                <Button type="secondary" label = "Cancel" onClick = { props.closeModal } />
-                                <div className="m-1" />
-                                <Button type="primary" label = "Apply Filter" />
-                            </div>
-                        </div>
+                <div id="buttons" className="">
+                    <div className="flex flex-wrap-reverse lg:flex-row-reverse">
+                        <Button className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="secondary" label = "Cancel" onClick = { props.closeModal } />
+                        <div className="m-1" />
+                        <Button  className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="primary" label = "Apply Filter" />
                     </div>
                 </div>
             </div>
-        </div>
+        </ModalContainer>
     );
 };
 

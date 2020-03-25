@@ -4,9 +4,8 @@ import FilterModal from "../Modals/FilterModal";
 import MilestoneModal from "../Modals/MilestoneModal";
 
 const modalRoot = document.getElementById("modal-root");
-const appRoot = document.getElementById("App");
 
-const ModalContainer = (props) => {
+const Modal = (props) => {
 
     let modal = "";
     if(props.modalType === "filter")
@@ -19,8 +18,10 @@ const ModalContainer = (props) => {
         return ReactDOM.createPortal(
             <div className="fixed inset-0 flex justify-center z-40">
                 <div className = "fixed inset-0 bg-black opacity-25 z-40" />
-                <div className=" overflow-y-auto mt-8 max-w-3xl mx-auto z-50">
-                    { modal }
+                <div className=" overflow-y-auto h-full w-full z-50">
+                    <div className=" mx-auto max-w-3xl py-12 px-4">
+                        { modal }
+                    </div>
                 </div>
             </div>,
             modalRoot
@@ -33,12 +34,16 @@ const ModalContainer = (props) => {
 };
 
 const disableScroll = () => {
+    const scrollBarWidth = window.innerWidth - document.body.clientWidth ;
+    console.log(scrollBarWidth);
     document.body.style.overflow = "hidden";
+    document.body.style.marginRight = scrollBarWidth + "px";
 };
 
 const enableScroll = () => {
     document.body.style.overflow = "unset";
+    document.body.style.marginRight = 0;
 };
 
 
-export default ModalContainer;
+export default Modal;
