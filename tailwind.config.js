@@ -44,7 +44,7 @@ module.exports = {
                 "nebula-green-light": "#E3F5F1",
                 "nebula-yellow": "#A38418",
                 "nebula-yellow-light": "#FFF7D9",
-            }
+            },
         },
     },
     variants: {
