@@ -25,9 +25,13 @@ const Applications = () => {
                     <div className="flex-1 font-semibold text-nebula-gray-600">
                         Applicant
                     </div>
-                    <div className="flex font-semibold mr-40 text-nebula-gray-600">
+
+{/* ################################ Functionality to be added in version 2 #######################################
+                     <div className="flex font-semibold mr-40 text-nebula-gray-600">
                         Application Type
-                    </div>
+                    </div> 
+####################################################################################################################*/}
+                
                 </div>
                 <UserList />
             </div>

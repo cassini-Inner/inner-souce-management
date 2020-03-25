@@ -28,10 +28,12 @@ class JobDetailsPage extends Component {
                 key="applyjob"
                 className=" w-auto mr-4 "
             />),
+/* ################################ Functionality to be added in version 2 #######################################
             (<Button type="secondary" label="Apply to Milestones"
                 className=" w-auto mr-4 "
                 key="applyMilestone"
             />),
+###################################################################################################################*/
         ];
 
         const tabList = [

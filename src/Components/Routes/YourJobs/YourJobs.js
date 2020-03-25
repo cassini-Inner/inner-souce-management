@@ -45,12 +45,12 @@ class YourJobs extends Component {
     render() {
         const tabList = [
             {
-                title: "Ongoing",
+                title: "Working On",
                 location: "ongoing",
                 count: 2,
             },
             {
-                title: "Applications",
+                title: "Awaiting Approval",
                 location: "applications",
                 count: 3,
                 notify: true

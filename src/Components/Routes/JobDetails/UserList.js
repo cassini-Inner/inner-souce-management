@@ -15,11 +15,17 @@ const UserList = () => {
                         <div className = "flex-col ml-4 mb-2 flex-1">
                             <div className = "text-lg font-semibold">{name}</div>
                             <div className = "text-nebula-grey-600">{designation}</div>
+{/*################################# Functionality to be added in version 2 #######################################
                             <div className = "text-nebula-blue font-semibold">{ milestones ? ("Milestones "+milestones) : "" }</div>
-                        </div>
+####################################################################################################################*/}
+                    </div>
+
+{/*################################# Functionality to be added in version 2 #######################################
                         <div className = "flex self-center">
                             <StatusTag statusTag = { [type] } />
-                        </div>
+                        </div> 
+####################################################################################################################*/}
+                       
                         <div className = "flex">
                             <div className ="cursor-pointer self-center p-3 mx-2 rounded-full bg-nebula-red-light">
                                 <Icons.X className=" h-4 w-4 stroke-current text-nebula-red hover:text-black" />
