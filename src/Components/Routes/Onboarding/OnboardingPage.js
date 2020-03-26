@@ -15,9 +15,11 @@ const OnboardingPage = (props) => {
               started, we’d like get to know you a little better.</p>
 
             <label className="mt-10">Your position in company</label>
-            <TextInput placeholder={"Position"}/>
+            <TextInput placeholder="Position"/>
             <label className="mt-10">Your department</label>
-            <TextInput placeholder={"Department"}/>
+            <TextInput placeholder="Department"/>
+            <label className="mt-10">Contact</label>
+            <TextInput placeholder="Email, Slack ID..."/>
             <label className="mt-10">Skills & areas of interest</label>
             <SearchTagsInput placeholder="Type and press enter to add skills"/>
             {/*TODO: Remove this link when implementing onboarding logic*/}

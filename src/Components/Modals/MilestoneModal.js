@@ -1,6 +1,7 @@
 import React from "react";
 import TextInput from "../Common/InputFields/TextInput";
 import TextAreaInput from "../Common/InputFields/TextAreaInput";
+import SearchTagsInput from '../Common/InputFields/SearchTagsInput'
 import Dropdown from "../Common/Dropdown/Dropdown";
 import Button from "../Common/Button/Button";
 import ModalContainer from "./ModalContainer";
@@ -24,6 +25,8 @@ const MilestoneModal = (props) => {
                             <Dropdown className = "self-center" list = {["Weeks", "Days", "Months"]} />
                         </div>
                     </div>
+                    <h2 className = "text-base font-semibold mt-4">Skills Required</h2>
+                    <SearchTagsInput />
                     <h2 className = "text-base font-semibold my-4">Milestone Resolution Method</h2>
                     <TextInput placeholder = "eg. Accepted Github pull request" />
                 </div>
