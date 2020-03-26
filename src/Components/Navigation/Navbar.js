@@ -9,8 +9,7 @@ class Navbar extends Component {
         super(props);
         this.state = {
             profileModalOpen: false,
-            rect: null,
-            mouseInside: false,
+            mouseInside: null,
         };
         this.openProfilePopup = this.openProfilePopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
@@ -19,12 +18,8 @@ class Navbar extends Component {
     }
 
     openProfilePopup(event) {
-        const element = event.currentTarget;
-        const rect = element.getBoundingClientRect();
         this.setState({
             profileModalOpen: true,
-            rect: rect,
-            
         });
     }
 
@@ -50,7 +45,7 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div className="h-24 items-center flex z-10" ref={this.profileIcon} >
+            <div className="h-24 items-center flex z-10 relative" ref={this.profileIcon} >
                 <div className="flex-1 flex items-center h-12">
                     <SearchBar className="h-12 mr-4 bg-nebula-grey-300" inputClass="bg-nebula-grey-300 placeholder-nebula-grey-600" />
                     {/* Svg for notifications */}
@@ -60,28 +55,18 @@ class Navbar extends Component {
                     <button onClick={this.openProfilePopup} >
                         <img src="../assets/icons/Ellipse 1.png" className="flex-0 h-12 w-12 rounded-full" />
                     </button>
+                    {this.state.profileModalOpen &&
+                        <ProfileModal handleMouseOver={this.handleMouseOver} closePopup={this.closePopup} />
+                    }
                 </div >
-                {
-                    this.state.profileModalOpen &&
-                    <ProfileModal handleMouseOver={this.handleMouseOver} closePopup={this.closePopup} rect={this.state.rect}/>
-                }
-                {/* <Portal isOpen={this.state.profileModalOpen}>
-                    <ProfileModal rect={this.state.rect} close={this.closePopup}></ProfileModal>
-                </Portal> */}
             </div>
         );
     }
 }
 
 const ProfileModal = (props) => {
-    const popupStyle= {
-        left: ((props.rect.x) + "px"),
-        top: ((props.rect.y) + "px"),
-        position: "absolute",
-        transform: "translateX(-75%)"
-    };
     return (
-        <div className="w-96 " style={popupStyle} onMouseOver={() => props.handleMouseOver(true)} onMouseLeave={props.closePopup}>
+        <div className="w-96 mt-2 absolute top-0 right-0" onMouseOver={() => props.handleMouseOver(true)} onMouseLeave={props.closePopup}>
             <div className="overflow-hidden w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 z-50 bg-white" >
                 <div className="flex p-4" >
                     <img src="../assets/icons/Ellipse 1.png" className="h-12 w-12 rounded-full" />
