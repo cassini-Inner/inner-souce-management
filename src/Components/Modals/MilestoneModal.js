@@ -1,6 +1,7 @@
 import React from "react";
 import TextInput from "../Common/InputFields/TextInput";
 import TextAreaInput from "../Common/InputFields/TextAreaInput";
+import SearchTagsInput from '../Common/InputFields/SearchTagsInput'
 import Dropdown from "../Common/Dropdown/Dropdown";
 import Button from "../Common/Button/Button";
 
@@ -15,6 +16,8 @@ const MilestoneModal = (props) => {
                         <TextInput placeholder = "Title of the Milestone" className = "my-4 w-full" />
                         <h2 className = "text-xl font-semibold my-4" >Description</h2>
                         <TextAreaInput className = "my-4" rows = "3" placeholder = "Add a clear description of the Milestone"/>
+                        <h2 className="text-xl font-semibold my-4">Skills required</h2>
+                        <SearchTagsInput className="w-full" placeholder="Type and press enter to add skills" />
                         <div className = "flex my-4 py-4">
                             <div className = "flex-col flex-1">
                                 <h2 className = "text-xl font-semibold mb-4">Duration</h2>

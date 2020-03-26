@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import SplitContainer from '../../Containers/SplitContainer';
-import SearchTagsInput from '../../Common/InputFields/SearchTagsInput'
 import TextInput from '../../Common/InputFields/TextInput'
 import Dropdown from '../../Common/Dropdown/Dropdown'
 import Button from '../../Common/Button/Button'
@@ -74,8 +73,6 @@ const JobForm = () => {
                 </div>
                 <Dropdown list={["Intermediate", "Easy", "Hard"]} />
             </div>
-            <h2 className="text-base font-semibold mt-10">Skills required</h2>
-            <SearchTagsInput className="w-full" placeholder="Type and press enter to add skills" />
         </div>
     );
 
