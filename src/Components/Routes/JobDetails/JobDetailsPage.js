@@ -63,8 +63,7 @@ class JobDetailsPage extends Component {
 
         return (
             <Fragment>
-
-                <div className="px-4 max-w-screen-lg mx-auto lg:px-10">
+                <div className="px-4 pb-24 max-w-screen-lg mx-auto lg:px-10">
                     <button onClick={() => {this.props.history.goBack();}} className="flex  py-4">
                         <ArrowLeft /> 
                         <p className="px-4">Back</p>
@@ -88,7 +87,7 @@ class JobDetailsPage extends Component {
                         <div>
                             <p className="text-sm font-semibold text-nebula-blue">This is title</p>
                             <p className="text-sm font-semibold text-nebula-grey-600">This is subtitle</p>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </Fragment>

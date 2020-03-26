@@ -47,22 +47,22 @@ const ManageJobs = (props) => {
 
 const JobList = (props) => {
     return(
-        exploreJobs.map(data => {
+        exploreJobs.map((data, index) => {
             return(
-                <div className = "my-8 border border-nebula-grey-400 rounded-lg transition duration-300 shadow-none cursor-pointer hover:shadow-lg">
-                    <div className ="flex my-2">
+                <div className = "my-8 border border-nebula-grey-400 rounded-lg transition duration-300 shadow-none cursor-pointer hover:shadow-lg" key={index}>
+                    <div className ="flex mt-1">
                         <div className = "self-center font-semibold text-nebula-blue text-sm ml-6 ">
                             View 6 Applications
                         </div>
                         <div className = "flex py-8 px-8">
                             <div className = "self-center rounded-full bg-nebula-blue-light p-1 z-10 absolute">
-                                <img src="../../assets/icons/Ellipse 1.png" className="flex-0 h-10 w-10 rounded-full" />
+                                <img src="../../assets/icons/Ellipse 1.png" className="flex-0 h-8 w-8 rounded-full" />
                             </div>
                             <div className = "self-center rounded-full bg-nebula-blue-light p-1 z-20 absolute ml-8">
-                                <img src="../../assets/icons/Ellipse 2.png" className="flex-0 h-10 w-10 rounded-full" />
+                                <img src="../../assets/icons/Ellipse 2.png" className="flex-0 h-8 w-8 rounded-full" />
                             </div>
                             <div className = "self-center rounded-full bg-nebula-blue-light p-1 z-30 absolute ml-16">
-                                <img src="../../assets/icons/Ellipse 3.png" className="flex-0 h-10 w-10 rounded-full" />
+                                <img src="../../assets/icons/Ellipse 3.png" className="flex-0 h-8 w-8 rounded-full" />
                             </div>
                         </div>
                         <div className = "self-center text-lg font-semibold text-nebula-grey-500 ml-24">+3</div>

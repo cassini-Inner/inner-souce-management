@@ -70,6 +70,12 @@ class EditProfile extends Component {
                                 value={this.state.position}
                                 onChange={this.handlePositionChange}
                             />
+                            <TextInput
+                                label="Contact"
+                                placeholder="Email, Slack ID..."
+                                value=""
+                                onChange={this.handleNameChange}
+                            />
                             <TextAreaInput
                                 cols="10"
                                 label="Bio"

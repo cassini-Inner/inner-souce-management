@@ -3,8 +3,10 @@ import SplitContainer from '../../Containers/SplitContainer';
 import TextInput from '../../Common/InputFields/TextInput'
 import Dropdown from '../../Common/Dropdown/Dropdown'
 import Button from '../../Common/Button/Button'
-import Modal from "../../Containers/Modal";
-
+import Modal from "../../Containers/Portal";
+import ModalViewWithScrim from '../../Modals/ModalViewWithScrim'
+import MilestoneModal from '../../Modals/MilestoneModal'
+import Portal from '../../Containers/Portal'
 class CreateJob extends Component {
 
     state = {
@@ -44,6 +46,11 @@ class CreateJob extends Component {
                     rightView={<Milestones openMilestoneModal = {this.openMilestoneModal} />} 
                     actions={this.ButtonRow} 
                 />
+                <Portal isOpen={this.state.milestoneModal} >
+                    <ModalViewWithScrim>
+                        <MilestoneModal closeModal={this.closeMilestoneModal}/>
+                    </ModalViewWithScrim>
+                </Portal>
             </Fragment>
         );
     }
@@ -56,16 +63,6 @@ const JobForm = () => {
             <TextInput className="mt-2 w-full" placeholder="Give your Job a small title" />
             <h2 className="text-base font-semibold mt-10">Job Description</h2>
             <TextInput className="mt-2 w-full" placeholder="Enter a brief overview of the job" />
-            <div className="flex mt-10">
-                <div className="flex-col flex items-start flex-1 pr-1">
-                    <h2 className="text-base font-semibold ">Duration</h2>
-                    <p className=" text-nebula-grey-700 leading-tight text-sm">How soon do you expect the job to be finished?</p>
-                </div>
-                <div className="flex items-center">
-                    <TextInput className="mr-2 w-24" placeholder="Duration" />
-                    <Dropdown list={["Weeks", "Days", "Months"]} />
-                </div>
-            </div>
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-base font-semibold">Difficulty</h2>
