@@ -51,20 +51,15 @@ class MilestoneCard extends Component {
                     <div className="bg-white rounded-md shadow-none border-nebula-grey-400 border p-6 cursor-pointer transition duration-100 hover:shadow-md" onClick={this.toggleExpandedState}>
                         <div className="flex flex-row justify-start items-start">
                             <p className="text-base leading-tight flex-1 font-semibold mb-2 pr-4 ">{this.props.milestone.title}</p>
-                            {isExpanded ?
-                                <button>
+
+                            <button className={" transition duration-150 ease-in-out transform " + (isExpanded ? "rotate-0" : "rotate-180")}>
                                     <Icons.ChevronUp />
-                                </button>
-                                :
-                                <button>
-                                    <Icons.ChevronDown/>
-                                </button>
-                            }
+                            </button>
                         </div>
                         <StatusTags statusTag={this.props.milestone.status}/>
                         {
                             isExpanded &&
-                            <div className="" >
+                            <div >
                                 <p className="pt-4 text-sm text-nebula-grey-700 leading-relaxed" >{this.props.milestone.description}</p>
                                 <div className="flex flex-row flex-wrap">
                                     <InfoTag className="mr-6 mt-4" title="DURATION" data={this.props.milestone.durationCount + " " + this.props.milestone.durationUnit} />
