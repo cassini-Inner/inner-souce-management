@@ -3,6 +3,7 @@ import * as Icons from "react-feather";
 import SearchBar from "../Common/SearchBar/SearchBar";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { CSSTransition } from "react-transition-group";
 
 class Navbar extends Component {
     constructor(props) {
@@ -10,7 +11,6 @@ class Navbar extends Component {
         this.state = {
             profileModalOpen: false,
             mouseInside: null,
-            profileModalClasses: "hidden",
         };
         this.openProfilePopup = this.openProfilePopup.bind(this);
         this.closePopup = this.closePopup.bind(this);
@@ -21,11 +21,7 @@ class Navbar extends Component {
     openProfilePopup(event) {
         this.setState({
             profileModalOpen: true,
-            profileModalClasses: "block opacity-0 -translate-y-2 translate-x-2"
         });
-        setTimeout(() => {
-            this.setState({ profileModalClasses: "block opacity-100 translate-y-0 translate-x-0" });
-        }, 1);
     }
 
     closePopup() {
@@ -35,11 +31,7 @@ class Navbar extends Component {
                 if (!this.state.mouseInside) {
                     this.setState({
                         profileModalOpen: false,
-                        profileModalClasses: "block opacity-0 -translate-y-2 translate-x-2"
                     });
-                    setTimeout(() => {
-                        this.setState({ profileModalClasses: "hidden" });
-                    }, 200);
                 }
             },
             200
@@ -64,39 +56,60 @@ class Navbar extends Component {
                     <button onClick={this.openProfilePopup} >
                         <img src="../assets/icons/Ellipse 1.png" className="flex-0 h-12 w-12 rounded-full" />
                     </button>
-                    <ProfileModal className={this.state.profileModalClasses} onMouseOver={this.handleMouseOver} onMouseLeave={this.closePopup} />
+                    <ProfileModal
+                        onMouseOver={this.handleMouseOver}
+                        onMouseLeave={this.closePopup}
+                        profileModalOpen={this.state.profileModalOpen}
+                    />
                 </div >
             </div>
         );
     }
 }
 
-const ProfileModal = (props) => {
-    return (
-        <div className={"w-96 mt-2 absolute top-0 right-0 transition duration-200 ease-outn transform " + props.className || ""} onMouseOver={() => props.onMouseOver(true)} onMouseLeave={props.onMouseLeave}>
-            <div className="overflow-hidden w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 z-50 bg-white" >
-                <div className="flex p-4" >
-                    <img src="../assets/icons/Ellipse 1.png" className="h-12 w-12 rounded-full" />
-                    <div className="font-semibold leading-tight ml-8">
-                        <p className="text-nebula-grey-600 text-xs">Signed in as</p>
-                        <p className="text-lg mb-2">TusharTusharTusharTusharTusharTusharTusharTusharTusharTushar </p>
-                        <Link to="/profile" className="text-xs text-nebula-blue tracking-widest">VIEW PROFILE</Link>
+class ProfileModal extends Component {
+    render() {
+        return (
+            <CSSTransition
+                in={this.props.profileModalOpen}
+                timeout={300}
+                appear
+                unmountOnExit
+                classNames={{
+                    enter: "opacity-0",
+                    enterActive: "transition duration-300 opacity-100 transform transform-x-0 transform-y-0",
+                    exit: "",
+                    exitActive: "transition duration-300 opacity-0 transform -translate-y-4 translate-x-4",
+                }}
+            >
+                <div className={"w-96 mt-2 absolute top-0 right-0 inline-block" + this.props.className || ""} onMouseOver={() => this.props.onMouseOver(true)} onMouseLeave={this.props.onMouseLeave}>
+                    <div className="overflow-hidden w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 z-50 bg-white" >
+                        <div className="flex p-4" >
+                            <img src="../assets/icons/Ellipse 1.png" className="h-12 w-12 rounded-full" />
+                            <div className="font-semibold leading-tight ml-8">
+                                <p className="text-nebula-grey-600 text-xs">Signed in as</p>
+                                <p className="text-lg mb-2">Tushar Paliwal </p>
+                                <Link to="/profile" className="text-xs text-nebula-blue tracking-widest">VIEW PROFILE</Link>
+                            </div>
+                        </div>
+                        <hr />
+                        <Link to="/login" className="flex mt-4 text-nebula-blue font-semibold" >
+                            <Icons.LogOut className="stroke-current ml-4 mr-8" />
+                            <p>Logout</p>
+                        </Link>
                     </div>
                 </div>
-                <hr />
-                <Link to="/login" className="flex mt-4 text-nebula-blue font-semibold" >
-                    <Icons.LogOut className="stroke-current ml-4 mr-8" />
-                    <p>Logout</p>
-                </Link>
-            </div>
-        </div>
-    );
-};
+            </CSSTransition>
+
+        );
+    }
+}
 
 ProfileModal.propTypes = {
     className: PropTypes.string,
     onMouseOver: PropTypes.func,
     onMouseLeave: PropTypes.func,
+    profileModalOpen: PropTypes.bool,
 };
 
 export default Navbar;
