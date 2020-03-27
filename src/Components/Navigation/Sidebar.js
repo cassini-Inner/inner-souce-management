@@ -13,16 +13,15 @@ class Sidebar extends Component {
         mobileExpanded: false,
         desktopExpanded: true,
     }
-    
+
     iconClasses = "w-1/6 pl-3 h-10 pt-3 pb-1 stroke-current text-black ";
     selectedClasses = " text-nebula-blue bg-nebula-blue-light border-nebula-blue ";
     unselectedClasses = "flex flex-row items-center text-nebula-grey-600 h-12 my-4 font-semibold border-l-4 border-transparent ";
-   
+
     mobileExpandCollapseSidebar = (value) => {
         const currentState = this.state.mobileExpanded;
-        const newState = value ? value : !currentState;
         this.setState({
-            mobileExpanded: newState,
+            mobileExpanded: !currentState,
         });
     }
 
@@ -39,9 +38,9 @@ class Sidebar extends Component {
             <div className={"w-auto border-l-0 z-40 sticky top-0 text-black bg-nebula-grey-200 border-nebula-grey-400 border border-r-0 px-0 lg:z-10 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-l-0 lg:w-72 xl:w-84"}>
                 <div className="w-full h-16 lg:h-24 flex items-center ">
                     <NavLink
-                        className="flex-1 text-2xl pl-3 font-bold hover:text-nebula-blue outline-none cursor-pointer" 
+                        className="flex-1 text-2xl pl-3 font-bold hover:text-nebula-blue outline-none cursor-pointer"
                         to={'/'}>
-                        { appName }
+                        {appName}
                     </NavLink>
                     <button className="lg:hidden focus:outline-none" onClick={this.mobileExpandCollapseSidebar}>
                         {
@@ -61,8 +60,8 @@ class Sidebar extends Component {
                                 to="/"
                                 activeClassName={this.selectedClasses}
                                 className={this.unselectedClasses}
-                                onClick={()=>{this.mobileExpandCollapseSidebar(false)}}
-                                >
+                                onClick={() => { this.mobileExpandCollapseSidebar(false) }}
+                            >
                                 <Icons.Home className="ml-6" />
                                 {desktopExpanded &&
                                     <div className="ml-10 whitespace-no-wrap ">{config.home}</div>
@@ -74,7 +73,7 @@ class Sidebar extends Component {
                                 to="/yourJobs"
                                 activeClassName={this.selectedClasses}
                                 className={this.unselectedClasses}
-                                onClick={()=>{this.mobileExpandCollapseSidebar(false)}}
+                                onClick={() => { this.mobileExpandCollapseSidebar(false) }}
                             >
                                 <Icons.GitBranch className="ml-6" />
                                 {desktopExpanded &&
@@ -83,11 +82,11 @@ class Sidebar extends Component {
                             </NavLink>
                         </li>
                         <li>
-                             <NavLink
+                            <NavLink
                                 to="/manageJobs"
                                 activeClassName={this.selectedClasses}
                                 className={this.unselectedClasses}
-                                onClick={()=>{this.mobileExpandCollapseSidebar(false)}}
+                                onClick={() => { this.mobileExpandCollapseSidebar(false) }}
                             >
                                 <Icons.Edit3 className="ml-6" />
                                 {desktopExpanded &&
