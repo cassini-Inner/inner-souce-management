@@ -4,7 +4,6 @@ import Button from "../Common/Button/Button";
 import SearchTagsInput from "../Common/InputFields/SearchTagsInput";
 import ModalContainer from "./ModalContainer";
 import PropTypes from "prop-types";
-import { Filter } from "react-feather";
 
 const FilterModal = (props) => {
     return (

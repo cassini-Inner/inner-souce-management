@@ -128,6 +128,7 @@ export const profileData = {
     position: "Intern International",
     githubUrl: "github.paypal.com/tpaliwal",
     bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec tellus porta sed ac pretium erat sed in. Morbi fermentum ut velit facilisi. Egestas non maecenas duis commodo suspendisse tellus congue leo. Feugiat libero volutpat sed odio fringilla facilisis vivamus lacus.",
+    contact: "tpaliwal@gmail.com",
     skills: ["NODEJS", "REACT", "SPRING", "RAPTOR"],
     jobStats: {
         completed: 5,

@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import FilterModal from "../Modals/FilterModal";
-import MilestoneModal from "../Modals/MilestoneModal";
 import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("modal-root");

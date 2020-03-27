@@ -15,10 +15,9 @@ const Routes = (props) => {
         <Switch>
             <Route path="/jobDetails" component={(props) => { return <JobDetailsPage />; }} />
             <Route path="/yourJobs" component={(props) => { return <YourJobs />; }} />
+            <Route path="/profile/edit" component={(props) => { return <EditProfile />; }} />
             <Route path="/profile" component={(props) => { return <Profile />; }} />
-            <Route path="/manageJobs" component={(props) => { return <ManageJobs />; }} />
-            <Route exact path="/profile/edit" component={(props) => { return <EditProfile />; }} />
-            <Route exact path="/profile" component={(props) => { return <Profile />; }} />
+            <Route exact path="/manageJobs" component={(props) => { return <ManageJobs />; }} />
             <Route exact path="/manageJobs" component={(props) => { return <YourJobs />; }} />
             <Route exact path="/applyToMilestones" component={(props) => { return <ApplyToMilestones />; }} />
             <Route exact path="/createJob" component={(props) => { return <CreateJob />; }} />

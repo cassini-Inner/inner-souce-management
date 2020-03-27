@@ -38,7 +38,12 @@ const Profile = (props) => {
                                 {profileData.bio}
                             </p>
                         </div>
-                        
+                        <div className="mt-2">
+                            <p className="font-semibold ">Contact</p>
+                            <p className="text-sm text-nebula-grey-700"> 
+                                {profileData.contact}
+                            </p>
+                        </div>
                         <div className="mt-4">
                             <p className="font-semibold mb-4 ">Skills</p>
                             <LabelChipBuilder labels={profileData.skills}/>
