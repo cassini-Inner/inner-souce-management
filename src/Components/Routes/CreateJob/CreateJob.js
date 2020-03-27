@@ -24,31 +24,31 @@ class CreateJob extends Component {
             milestoneModal: false,
         })
     };
-    
+
     ButtonRow = [
-        <Button type="secondary" label="Cancel Job Creation" className=" w-full " />,
-        <Button type="primary" label="Submit Job" className=" w-full " />
+        <Button type="secondary" label="Cancel Job Creation" />,
+        <Button type="primary" label="Submit Job" />
     ]
-    
+
 
     render() {
         return (
             <Fragment>
 
-                <Modal 
-                    modalType = "milestone" 
-                    modalDisplay = {this.state.milestoneModal} 
-                    closeMilestoneModal = {this.closeMilestoneModal} 
-                    milestoneNo = "4"
+                <Modal
+                    modalType="milestone"
+                    modalDisplay={this.state.milestoneModal}
+                    closeMilestoneModal={this.closeMilestoneModal}
+                    milestoneNo="4"
                 />
-                <SplitContainer 
-                    leftView={<JobForm />} 
-                    rightView={<Milestones openMilestoneModal = {this.openMilestoneModal} />} 
-                    actions={this.ButtonRow} 
+                <SplitContainer
+                    leftView={<JobForm />}
+                    rightView={<Milestones openMilestoneModal={this.openMilestoneModal} />}
+                    actions={this.ButtonRow}
                 />
                 <Portal isOpen={this.state.milestoneModal} >
                     <ModalViewWithScrim>
-                        <MilestoneModal closeModal={this.closeMilestoneModal}/>
+                        <MilestoneModal closeModal={this.closeMilestoneModal} />
                     </ModalViewWithScrim>
                 </Portal>
             </Fragment>
