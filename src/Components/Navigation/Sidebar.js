@@ -14,7 +14,6 @@ class Sidebar extends Component {
         desktopExpanded: true,
     }
 
-    iconClasses = "w-1/6 pl-3 h-10 pt-3 pb-1 stroke-current text-black ";
     selectedClasses = " text-nebula-blue bg-nebula-blue-light border-nebula-blue ";
     unselectedClasses = "flex flex-row items-center text-nebula-grey-600 h-12 my-4 font-semibold border-l-4 border-transparent ";
 
@@ -35,10 +34,10 @@ class Sidebar extends Component {
         const desktopExpanded = this.state.desktopExpanded;
 
         return (
-            <div className={"w-auto border-l-0 z-40 sticky top-0 text-black bg-nebula-grey-200 border-nebula-grey-400 border border-r-0 px-0 lg:z-10 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-l-0 lg:w-72 xl:w-84"}>
-                <div className="w-full h-16 lg:h-24 flex items-center ">
+            <div className={"w-auto border-l-0 z-40 sticky top-0 text-black bg-nebula-grey-100 border-nebula-grey-400 border border-r-0 px-0 lg:z-10 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-t-0 lg:border-l-0 lg:w-72 xl:w-84"}>
+                <div className="w-full h-12 lg:h-24 flex items-center ">
                     <NavLink
-                        className="flex-1 text-2xl pl-3 font-bold hover:text-nebula-blue outline-none cursor-pointer"
+                        className="flex-1 text-xl pl-3 font-semibold hover:text-nebula-blue outline-none cursor-pointer"
                         to={'/'}>
                         {appName}
                     </NavLink>
@@ -46,9 +45,9 @@ class Sidebar extends Component {
                         {
                             this.state.mobileExpanded
                                 ?
-                                <Icons.X className="h-8 w-8 text-nebula-blue stroke-current p-1" />
+                                <Icons.X className="h-5 w-5 text-nebula-blue stroke-current mr-4 " />
                                 :
-                                <Icons.Menu className="h-8 w-8 text-nebula-blue stroke-current p-1" />
+                                <Icons.Menu className="h-5 w-5 text-nebula-blue stroke-current mr-4 " />
                         }
                     </button>
                 </div>
