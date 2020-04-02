@@ -8,7 +8,7 @@ const TextInput = (props) => {
             <TextInputLabel label={props.label}/>
             <input
                 type="text"
-                className={"pl-1 h-12 outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 placeholder-nebula-grey-500 " +
+                className={"pl-1 h-8 text-sm  outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 placeholder-nebula-grey-500 " +
             props.className}
                 placeholder={props.placeholder}
                 onChange={props.onChange ? props.onChange : null}

@@ -36,8 +36,9 @@ class JobList extends Component {
                 </Portal>
                 <div className="cursor-default ">
                     <div className=" w-full mt-6 ">
-                        <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
+                        <h1 className="text-xl flex-1 " id={this.props.title}>{this.props.title}</h1>
                         {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                    <hr/>
                     </div>
                     {
                         exploreJobs.map(data => {

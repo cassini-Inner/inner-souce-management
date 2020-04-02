@@ -5,7 +5,7 @@ const TextInputLabel = (props) => {
     let label = null;
     if (props.label) {
         label = (
-            <label className="font-semibold mt-6 ml-1">
+            <label className="font-semibold text-sm mt-6 ml-1">
                 {props.label}
             </label>
         );

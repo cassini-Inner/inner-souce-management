@@ -1,7 +1,7 @@
 import React from "react";
 import TextInput from "../Common/InputFields/TextInput";
 import TextAreaInput from "../Common/InputFields/TextAreaInput";
-import SearchTagsInput from '../Common/InputFields/SearchTagsInput'
+import SearchTagsInput from "../Common/InputFields/SearchTagsInput";
 import Dropdown from "../Common/Dropdown/Dropdown";
 import Button from "../Common/Button/Button";
 import ModalContainer from "./ModalContainer";
@@ -17,7 +17,7 @@ const MilestoneModal = (props) => {
                     <TextAreaInput className="my-4" rows="3" label="Description" placeholder="Add a clear description of the Milestone" />
                     <div className="flex py-4 flex-col md:flex-row">
                         <div className="flex-col flex-1">
-                            <h2 className="text-base font-semibold">Duration</h2>
+                            <h2 className="text-sm font-semibold">Duration</h2>
                             <p className="text-sm text-nebula-grey-600">How long do you think completing this milestone will take?</p>
                         </div>
                         <div className="flex flex-1 ml-4">
@@ -25,9 +25,9 @@ const MilestoneModal = (props) => {
                             <Dropdown className="self-center" list={["Weeks", "Days", "Months"]} />
                         </div>
                     </div>
-                    <h2 className="text-base font-semibold mt-4">Skills Required</h2>
+                    <h2 className="text-sm font-semibold mt-4">Skills Required</h2>
                     <SearchTagsInput />
-                    <h2 className="text-base font-semibold my-4">Milestone Resolution Method</h2>
+                    <h2 className="text-sm font-semibold my-4">Milestone Resolution Method</h2>
                     <TextInput placeholder="eg. Accepted Github pull request" />
                 </div>
             </div>
