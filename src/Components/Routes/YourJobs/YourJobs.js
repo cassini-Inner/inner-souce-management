@@ -1,18 +1,17 @@
-import React, { Component, Fragment } from "react";
-import Navbar from "../../Navigation/Navbar";
-import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
-import JobList from "../../Jobs/JobList";
-import { withRouter, Route, Redirect } from "react-router";
-import * as config from "../../../../assets/placeholder";
-import TabStrip from "../../Common/TabStrip/TabStrip";
+import React, { Component, Fragment } from 'react'
+import Navbar from '../../Navigation/Navbar'
+import OngoingJobsGrid from '../../Jobs/OngoingJobsGrid'
+import JobList from '../../Jobs/JobList'
+import { Redirect, Route, withRouter } from 'react-router'
+import * as config from '../../../../assets/placeholder'
+import TabStrip from '../../Common/TabStrip/TabStrip'
+import StickyHeader from '../../Common/StickyHeader/StickyHeader'
 
 class YourJobs extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
+    constructor (props) {
+        super(props)
+        this.state = {}
     }
 
     componentDidMount() {
@@ -68,13 +67,25 @@ class YourJobs extends Component {
                     location.pathname === "/yourJobs"?<Redirect to={this.props.match.url + "/ongoing"} />: "" 
                 }
                 <div className="px-4 lg:px-10">
-                    <Navbar />
-                    <div className="h-auto mt-4">
-                        <TabStrip tabs = {tabList} />
-                        <div className="my-2" />
-                        <Route exact path = {this.props.match.url + "/ongoing"} component = {(props) => <OngoingJobsGrid id={config.ongoing} />} />
-                        <Route exact path = {this.props.match.url + "/applications"} component = {(props) => <JobList id={config.applications} />} />
-                        <Route exact path = {this.props.match.url + "/completed"} component = {(props) => <JobList id={config.completed} />} />
+                    <Navbar/>
+                    <div className="h-auto">
+                        <StickyHeader>
+                            <div className="text-xl font-semibold flex-1 py-4">
+                                Your Jobs
+                            </div>
+                            <TabStrip tabs={tabList}/>
+                        </StickyHeader>
+                        <div className="my-2"/>
+                        <Route exact path={this.props.match.url + '/ongoing'}
+                               component={(props) => <OngoingJobsGrid
+                                 id={config.ongoing}/>}/>
+                        <Route exact
+                               path={this.props.match.url + '/applications'}
+                               component={(props) => <JobList
+                                 id={config.applications}/>}/>
+                        <Route exact path={this.props.match.url + '/completed'}
+                               component={(props) => <JobList
+                                 id={config.completed}/>}/>
                     </div>
                 </div>
             </Fragment>
