@@ -1,53 +1,53 @@
-import React from 'react'
-import TabStrip from '../../Common/TabStrip/TabStrip'
-import { Redirect, Route, withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
-import { exploreJobs } from '../../../../assets/placeholder'
-import Navbar from '../../Navigation/Navbar'
-import JobCard from '../../Jobs/JobCard'
-import Button from '../../Common/Button/Button'
-import StickyHeader from '../../Common/StickyHeader/StickyHeader'
+import React from "react";
+import TabStrip from "../../Common/TabStrip/TabStrip";
+import { Redirect, Route, withRouter } from "react-router";
+import { Link } from "react-router-dom";
+import { exploreJobs } from "../../../../assets/placeholder";
+import Navbar from "../../Navigation/Navbar";
+import JobCard from "../../Jobs/JobCard";
+import Button from "../../Common/Button/Button";
+import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 
 const ManageJobs = (props) => {
     {
-        location.pathname === '/manageJobs' ? <Redirect
-          to={props.match.url + '/ongoing'}/> : ''
+        location.pathname === "/manageJobs" ? <Redirect
+            to={props.match.url + "/ongoing"}/> : "";
     }
     const tabList = [
         {
-            title: 'Ongoing',
-            location: 'ongoing',
+            title: "Ongoing",
+            location: "ongoing",
             count: 2,
         },
         {
-            title: 'Completed',
-            location: 'completed',
+            title: "Completed",
+            location: "completed",
             count: 3,
         },
     ];
     return(
-      <div className="px-8">
-          <Navbar/>
-          <StickyHeader>
-              <div className="flex py-4 mx-1">
-                  <div className="text-xl font-semibold flex-1">
+        <div className="px-8">
+            <Navbar/>
+            <StickyHeader>
+                <div className="flex py-4 mx-1">
+                    <div className="text-xl font-semibold flex-1">
                       Created Jobs
-                  </div>
-                  <div className="flex">
-                      <Link to="/createJob">
-                          <Button type="primary" label="Create new job"/>
-                      </Link>
-                  </div>
-              </div>
-              <TabStrip tabs={tabList}/>
-          </StickyHeader>
-          <div className="my-2">
-              <Route exact path={props.match.url + '/ongoing'}
-                     component={(props) => <JobList/>}/>
-              <Route exact path={props.match.url + '/completed'}
-                     component={(props) => <JobList/>}/>
-          </div>
-      </div>
+                    </div>
+                    <div className="flex">
+                        <Link to="/createJob">
+                            <Button type="primary" label="Create new job"/>
+                        </Link>
+                    </div>
+                </div>
+                <TabStrip tabs={tabList}/>
+            </StickyHeader>
+            <div className="my-2">
+                <Route exact path={props.match.url + "/ongoing"}
+                    component={(props) => <JobList/>}/>
+                <Route exact path={props.match.url + "/completed"}
+                    component={(props) => <JobList/>}/>
+            </div>
+        </div>
     );
 };
 
