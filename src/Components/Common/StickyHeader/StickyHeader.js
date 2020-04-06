@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const StickyHeader = (props) => {
     return (
-        <div className="sticky top-0 bg-white">
+        <div className="sticky top-0 bg-white z-50">
             {props.children}
         </div>
     );
