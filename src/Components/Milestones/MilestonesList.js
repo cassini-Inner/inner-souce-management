@@ -36,7 +36,7 @@ const MilestonesList = (props) => {
                     (milestone, index) => {
                         return (
                             <li key={milestone.id}>
-                                <MilestoneCard milestone={data["Job"]} isEditMode={props.isEditMode} index={index} lastIndex={milestones.length} />
+                                <MilestoneCard milestone={milestone} isEditMode={props.isEditMode} index={index} lastIndex={milestones.length} />
                             </li>
                         );
                     })
