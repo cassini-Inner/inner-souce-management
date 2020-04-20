@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { exploreJobs, explore } from "../../../assets/placeholder";
-import * as Icons from "react-feather";
-import { Link } from 'react-router-dom';
+import React, { Component, Fragment } from 'react'
+import { explore, exploreJobs } from '../../../assets/placeholder'
+import * as Icons from 'react-feather'
+import { Link } from 'react-router-dom'
 import Button from '../Common/Button/Button'
 import JobCard from './JobCard'
-import Portal from "../Containers/Portal";
+import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
 
@@ -36,8 +36,10 @@ class JobList extends Component {
                 </Portal>
                 <div className="cursor-default ">
                     <div className=" w-full mt-6 ">
-                        <h1 className="text-2xl flex-1 " id={this.props.title}>{this.props.title}</h1>
+                        <h1 className="text-xl font-semibold flex-1 "
+                            id={this.props.title}>{this.props.title}</h1>
                         {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                    <hr/>
                     </div>
                     {
                         exploreJobs.map(data => {

@@ -18,7 +18,7 @@ const UserList = () => {
                             {/*Functionality to be added in version 2
                             <div className = "text-nebula-blue font-semibold">{ milestones ? ("Milestones "+milestones) : "" }</div>
                             */}
-                    </div>
+                        </div>
 
                         {/* Functionality to be added in version 2 
                         <div className = "flex self-center">

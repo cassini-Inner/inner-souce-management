@@ -59,13 +59,13 @@ class CreateJob extends Component {
 const JobForm = () => {
     return (
         <div className="bg-white flex flex-col w-full h-full mt-10">
-            <h2 className="text-base font-semibold ">Job Title</h2>
+            <h2 className="text-sm font-semibold ">Job Title</h2>
             <TextInput className="mt-2 w-full" placeholder="Give your Job a small title" />
-            <h2 className="text-base font-semibold mt-10">Job Description</h2>
+            <h2 className="text-sm font-semibold mt-10">Job Description</h2>
             <TextInput className="mt-2 w-full" placeholder="Enter a brief overview of the job" />
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
-                    <h2 className="text-base font-semibold">Difficulty</h2>
+                    <h2 className="text-sm font-semibold">Difficulty</h2>
                     <p className="text-nebula-grey-700 leading-tight text-sm">How difficult is the job?</p>
                 </div>
                 <Dropdown list={["Intermediate", "Easy", "Hard"]} />
