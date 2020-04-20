@@ -2,21 +2,48 @@ import React from "react";
 import { exploreJobs } from "../../../../assets/placeholder";
 import StatusTags from "../../Common/StatusTags/StatusTags";
 import AuthorInfo from "../../Common/AuthorInfo/AuthorInfo";
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+
+const GET_JOBDETAILS = gql`
+  {
+    Job(id:"3"){
+        id
+        title
+        createdBy {
+            name
+            department
+        }
+        description: desc 
+        duration 
+        difficulty
+        status 
+        timeCreated  
+        milestones {
+            totalCount
+        }
+    }
+  }
+`;
 
 const JobInformation = (props) => {
+    const { loading, error, data } = useQuery(GET_JOBDETAILS);
+    if (loading) return 'Loading...';
+    else if (error) alert(`Error! ${error.message}`);
+    console.log(data)
     return (
         <React.Fragment>
             <div className="mt-8">
-                <StatusTags statusTag={exploreJobs[0].status} />
+                <StatusTags statusTag={[data["Job"].status.toLowerCase()]} />
             </div>
             <div className="mt-8">
                 <h1 className="text-xl leading-snug">
-                    {exploreJobs[0].title}
+                    {data["Job"].title}
                 </h1>
             </div>
             <div className="mt-6 mb-8">
                 <p className="text-sm text-nebula-grey-700 leading-relaxed">
-                    {exploreJobs[0].description}
+                    {data["Job"].description}
                 </p>
             </div>
             <div className="flex flex-wrap mb-8">
@@ -38,7 +65,7 @@ const JobInformation = (props) => {
                     </div>
                     <div>
                         <p className="leading-tight font-semibold text-sm mt-1">
-                            {exploreJobs[0].difficulty}
+                            {data["Job"].difficulty}
                         </p>
                     </div>
                 </div>
@@ -66,7 +93,13 @@ const JobInformation = (props) => {
                         </p>
                     </div>
                 </div>
-                <AuthorInfo className="mt-8" iconClass="w-12 h-12" date={exploreJobs[0].date} />
+                <AuthorInfo 
+                    className="mt-8" 
+                    iconClass="w-12 h-12" 
+                    date={data["Job"].timeCreated} 
+                    department = {data["Job"].createdBy.department} 
+                    name = {data["Job"].createdBy.name} 
+                />
             </div>
         </React.Fragment>
     );
