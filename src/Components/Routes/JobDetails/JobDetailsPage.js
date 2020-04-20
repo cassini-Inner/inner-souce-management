@@ -40,12 +40,12 @@ class JobDetailsPage extends Component {
             {
                 title: "Milestones",
                 location: "milestones",
-                count: 3
+                count: 4
             },
             {
                 title: "Discussions",
                 location: "discussions",
-                count: 6
+                count: 2
             },
             {
                 title: "Applications",

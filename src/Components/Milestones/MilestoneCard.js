@@ -62,8 +62,8 @@ class MilestoneCard extends Component {
                             <div >
                                 <p className="pt-4 text-sm text-nebula-grey-700 leading-relaxed" >{this.props.milestone.description}</p>
                                 <div className="flex flex-row flex-wrap">
-                                    <InfoTag className="mr-6 mt-4" title="DURATION" data={this.props.milestone.durationCount + " " + this.props.milestone.durationUnit} />
-                                    <InfoTag className="mr-6 mt-4" title="RESOLUTION METHODS" data={this.props.milestone.resolutionMethods} />
+                                    <InfoTag className="mr-6 mt-4" title="DURATION" data={this.props.milestone.duration } /> 
+                                    <InfoTag className="mr-6 mt-4" title="RESOLUTION METHODS" data={this.props.milestone.resolution} />
                                 </div>
                             </div>
                         }
