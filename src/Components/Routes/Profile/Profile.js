@@ -9,10 +9,10 @@ import InfoTag from "../../Common/InfoTag/InfoTag";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_USER_PROFILE } from "../../../queries";
+import { connect } from "react-redux";
 
 const Profile = (props) => {
-    
-    const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: "2" } });
+    const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: props.user.id } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 
@@ -70,4 +70,10 @@ const Profile = (props) => {
     );
 };
 
-export default Profile;
+const mapStateToProps = state => {
+    return {
+        user: state
+    }
+}
+
+export default connect(mapStateToProps)(Profile);
