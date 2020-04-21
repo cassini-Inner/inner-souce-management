@@ -1,3 +1,12 @@
+// To get the duration in days and call duration parser
+export const getDuration = (data) => {
+    let days = 0;
+    for (let [key, value] of Object.entries(data)) {
+        days += parseInt(value.duration);
+    }
+    return DurationParser(days);
+}
+
 // Takes number of days as input and returns a duration string 
 const DurationParser = (days) => {
     let duration = ""
@@ -17,5 +26,3 @@ const DurationParser = (days) => {
     }
     return duration
 } 
-
-export default DurationParser;

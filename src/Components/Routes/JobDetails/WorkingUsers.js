@@ -4,7 +4,7 @@ import UserList from "./UserList";
 const WorkingUsers = (props) => {
     return (
         <div className="px-4">
-            <UserList />
+            <UserList type = "WORKING"/>
         </div>
     );
 };

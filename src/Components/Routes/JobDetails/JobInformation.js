@@ -4,7 +4,7 @@ import StatusTags from "../../Common/StatusTags/StatusTags";
 import AuthorInfo from "../../Common/AuthorInfo/AuthorInfo";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_JOB_DETAILS } from "../../../queries";
-import DurationParser from "../../Common/DurationParser/DurationParser";
+import  { getDuration } from "../../Common/DurationParser/DurationParser";
 
 const JobInformation = (props) => {
 
@@ -13,13 +13,7 @@ const JobInformation = (props) => {
     else if (error) alert(`Error! ${error.message}`);
 
     //To get the duration of the job by summing the duration of milestones
-    const getDuration = () => {
-        let days = 0;
-        for (let [key, value] of Object.entries(data["Job"]["milestones"]["milestones"])) {
-            days += parseInt(value.duration);
-        }
-        return DurationParser(days);
-    }
+    
 
     return (
         <React.Fragment>
@@ -67,7 +61,7 @@ const JobInformation = (props) => {
                     </div>
                     <div>
                         <p className="leading-tight font-semibold text-sm mt-1">
-                            { getDuration() }
+                            { getDuration(data["Job"]["milestones"]["milestones"]) }
                         </p>
                     </div>
                 </div>
@@ -89,6 +83,7 @@ const JobInformation = (props) => {
                     date={data["Job"].timeCreated} 
                     department = {data["Job"].createdBy.department} 
                     name = {data["Job"].createdBy.name} 
+                    img = {data["Job"].createdBy.photoUrl}
                 />
             </div>
         </React.Fragment>

@@ -14,6 +14,7 @@ const Profile = (props) => {
     const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: "2" } });
     if (loading) return 'Loading...';
     else if (error) alert(`Error! ${error.message}`);
+    console.log(data["User"])
     return (
         <div className="px-4 lg:px-10 container mx-auto">
             <Navbar />
@@ -25,7 +26,7 @@ const Profile = (props) => {
             </div>
             <Card key={data["User"].id}>
                 <div className="flex p-4">
-                    <img src="../assets/images/profile.png" className="flex-0 h-24 w-24 rounded-full" />
+                    <img src = {data["User"].photoUrl} className="flex-0 h-24 w-24 rounded-full" />
                     <div className="flex flex-col mx-8 my-6  max-w-screen-md">
                         <h2 className="text-2xl font-semibold leading-tight">{data["User"].name}</h2>
                         <h2 className="text-lg text-nebula-grey-700 font-semibold leading-tight">{data["User"].role}</h2>
@@ -51,7 +52,7 @@ const Profile = (props) => {
                         </div>
                         <div className="mt-4">
                             <p className="font-semibold mb-4 ">Skills</p>
-                            <LabelChipBuilder labels={profileData.skills}/>
+                            <LabelChipBuilder labels={data["User"].skills.map((skill, index) => skill.value)}/>
                         </div>
                         
                         <div className="mt-4">

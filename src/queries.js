@@ -29,6 +29,7 @@ export const GET_JOB_DETAILS = gql`
             createdBy {
                 name
                 department
+                photoUrl
             }
             description: desc 
             duration 
@@ -47,19 +48,17 @@ export const GET_JOB_DETAILS = gql`
 
 // To get the discussions based on job id
 export const GET_JOB_DISCUSSIONS = gql`
-    query($jobId: ID!){
-        Job{
-            Job(id:$jobId){
-                discussion{
-                    discussions{
-                        id
-                        content
-                        createdBy{
-                            name
-                            photoUrl
-                        }
-                        timeCreated
+query($jobId: ID!){
+        Job(id:$jobId){
+            discussion{
+                discussions{
+                    id
+                    content
+                    createdBy{
+                        name
+                        photoUrl
                     }
+                    timeCreated
                 }
             }
         }
@@ -79,6 +78,25 @@ export const GET_USER_PROFILE = gql`
             skills {
                 value
             }
+        }
+    }
+`;
+
+// To get the applicants for a job
+export const GET_JOB_APPLICANTS = gql`
+    query($jobId: ID!) {
+        Job(id: $jobId){
+            applications {
+                applications {
+                    applicant {
+                        name
+                        id
+                        role
+                        photoUrl
+                    }
+                    status
+                }      
+            }	
         }
     }
 `;
