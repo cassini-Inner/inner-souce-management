@@ -3,6 +3,7 @@ import { exploreJobs } from "../../../../assets/placeholder";
 import StatusTags from "../../Common/StatusTags/StatusTags";
 import AuthorInfo from "../../Common/AuthorInfo/AuthorInfo";
 import { useQuery } from "@apollo/react-hooks";
+import InfoTag from "../../Common/InfoTag/InfoTag";
 import { GET_JOB_DETAILS } from "../../../queries";
 import  { getDuration } from "../../Common/DurationParser/DurationParser";
 
@@ -32,55 +33,23 @@ const JobInformation = (props) => {
             </div>
             <div className="flex flex-wrap mb-8">
                 <div className="mr-8 mb-4 ">
-                    <div>
-                        <p className="leading-tight tracking-widest text-xs text-nebula-grey-600 font-semibold">
-                            MILESTONES
-                        </p>
-                    </div>
-                    <div>
-                        <p className="leading-tight font-semibold text-sm mt-1">
-                            {data["Job"]["milestones"].totalCount + " Milestones"}
-                        </p>
-                    </div>
+                    <InfoTag title="MILESTONES" data={data["Job"]["milestones"].totalCount + " Milestones"}/>
                 </div>
                 <div className="mr-4 mb-4 ">
-                    <div>
-                        <p className="leading-tight tracking-widest text-xs text-nebula-grey-600 font-semibold">DIFFICULTY</p>
-                    </div>
-                    <div>
-                        <p className="leading-tight font-semibold text-sm mt-1">
-                            {data["Job"].difficulty}
-                        </p>
-                    </div>
+                    <InfoTag title="DIFFICULTY" data={data["Job"].difficulty}/>
                 </div>
                 <div className="mr-4 mb-4 ">
-                    <div>
-                        <p className="leading-tight tracking-widest text-xs text-nebula-grey-600 font-semibold">
-                            DURATION
-                        </p>
-                    </div>
-                    <div>
-                        <p className="leading-tight font-semibold text-sm mt-1">
-                            { getDuration(data["Job"]["milestones"]["milestones"]) }
-                        </p>
-                    </div>
+                    <InfoTag title="DURATION" data={getDuration(data["Job"]["milestones"]["milestones"])} />  
                 </div>
                 <div className="mr-4 mb-4 ">
-                    <div>
-                        <p className="leading-tight tracking-widest text-xs text-nebula-grey-600 font-semibold">
-                            SKILLS NEEDED
-                        </p>
-                    </div>
-                    <div>
-                        <p className="leading-tight font-semibold text-sm mt-1">
-                            {exploreJobs[0].skills}
-                        </p>
-                    </div>
+                    <InfoTag title="SKILLS NEEDED" data={data["Job"]["skills"].map((skill, index) => skill.value + " ")} /> 
+                </div>
+                <div className="mr-4 mb-4 ">
+                    <InfoTag title="CREATED ON" data={data["Job"].timeCreated.split("T")[0]} /> 
                 </div>
                 <AuthorInfo 
                     className="mt-8" 
                     iconClass="w-12 h-12" 
-                    date={data["Job"].timeCreated} 
                     department = {data["Job"].createdBy.department} 
                     name = {data["Job"].createdBy.name} 
                     img = {data["Job"].createdBy.photoUrl}

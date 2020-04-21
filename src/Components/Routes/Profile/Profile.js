@@ -11,10 +11,11 @@ import { useQuery } from '@apollo/react-hooks';
 import { GET_USER_PROFILE } from '../../../queries';
 
 const Profile = (props) => {
+    
     const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: "2" } });
     if (loading) return 'Loading...';
     else if (error) alert(`Error! ${error.message}`);
-    console.log(data["User"])
+
     return (
         <div className="px-4 lg:px-10 container mx-auto">
             <Navbar />

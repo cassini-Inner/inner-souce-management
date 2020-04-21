@@ -7,6 +7,8 @@ import JobCard from './JobCard'
 import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
+import { Query } from 'react-apollo';
+import { GET_ALL_JOBS_FILTER, GET_JOB_APPLICANTS } from '../../queries';
 
 class JobList extends Component {
 
@@ -26,30 +28,62 @@ class JobList extends Component {
         });
     };
 
+    // getJobList = () => {
+    //     const { loading, error, data } = useQuery(GET_ALL_JOBS_FILTER, 
+    //         { 
+                // variables: {
+                    // "filter":{
+                    // "status": ["OPEN","ONGOING", "COMPLETED"],
+                    // "skills": ["nodejs", "spring", "react", "golang"],
+                    // "sortOrder": "NEWEST" 
+                // }
+    //         } 
+    //     });
+    //     if (loading) return 'Loading...';
+    //     else if (error) alert(`Error! ${error.message}`);
+    //     return data["allJobs"]
+    // }
+
+    jobvars = { 
+        "filter":{
+            "status": ["OPEN","ONGOING", "COMPLETED"],
+            "skills": ["nodejs", "spring", "react", "golang"],
+            "sortOrder": "NEWEST" 
+            }
+        }
+    
     render() {
         return (
-            <Fragment>
-                <Portal isOpen={this.state.filterModal}  >
-                    <ModalViewWithScrim>
-                        <FilterModal closeModal = {this.closeFilterModal}/>
-                    </ModalViewWithScrim>
-                </Portal>
-                <div className="cursor-default ">
-                    <div className=" w-full mt-6 ">
-                        <h1 className="text-xl font-semibold flex-1 "
-                            id={this.props.title}>{this.props.title}</h1>
-                        {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
-                    <hr/>
-                    </div>
-                    {
-                        exploreJobs.map(data => {
-                            return (
-                            <JobCard data={data}/>
-                            );
-                        })
-                    }
-                </div>
-            </Fragment>
+            <Query query={GET_ALL_JOBS_FILTER} variables={this.jobvars}>
+            {({ loading, error, data }) => {
+                if (loading) return null;
+                if (error) return `Error! ${error}`;
+                return (
+                    <Fragment>
+                        <Portal isOpen={this.state.filterModal}  >
+                            <ModalViewWithScrim>
+                                <FilterModal closeModal = {this.closeFilterModal}/>
+                            </ModalViewWithScrim>
+                        </Portal>
+                        <div className="cursor-default ">
+                            <div className=" w-full mt-6 ">
+                                <h1 className="text-xl font-semibold flex-1 "
+                                    id={this.props.title}>{this.props.title}</h1>
+                                {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                            <hr/>
+                            </div>
+                            {    
+                                data["allJobs"].map(data => {
+                                    return (
+                                    <JobCard data={data}/>
+                                    );
+                                })
+                            }
+                        </div>
+                    </Fragment>
+                );
+            }}
+            </Query>
         );
     }
 }

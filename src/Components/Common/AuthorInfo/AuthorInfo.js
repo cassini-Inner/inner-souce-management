@@ -7,7 +7,6 @@ const AuthorInfo = (props) => {
             <div className="pl-3">
                 <p className="text-sm font-semibold">{props.name}</p>
                 <p className="leading-tight text-xs text-nebula-grey-600">{props.department}</p>
-                { props.date ? <p className="leading-tight text-xs text-nebula-grey-600">{props.date}</p> : "" }
             </div>
         </div>
     );

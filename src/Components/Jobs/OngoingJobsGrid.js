@@ -3,7 +3,6 @@ import { ongoingJobs } from "../../../assets/placeholder";
 import OngoingJobCard from "./OngoingJobCard";
 import { NavLink } from "react-router-dom";
 
-
 const OngoingJobsGrid = (props) => {
     let maxCount = props.maxCount ? props.maxCount : ongoingJobs.length / 2 + 1; // +1 to ensure even odd number of cards are printed 
     let jobsRow = [];

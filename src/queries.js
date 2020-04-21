@@ -36,6 +36,9 @@ export const GET_JOB_DETAILS = gql`
             difficulty
             status 
             timeCreated  
+            skills {
+                value
+            }
             milestones {
                 totalCount
                 milestones{
@@ -100,3 +103,33 @@ export const GET_JOB_APPLICANTS = gql`
         }
     }
 `;
+
+// To get all the jobs based filter
+export const GET_ALL_JOBS_FILTER = gql`
+    query allJobs($filter: JobsFilterInput) {
+        allJobs(filter: $filter) {
+            id
+            title
+            createdBy {
+                name
+                department
+                photoUrl
+            }
+            description: desc
+            duration
+            difficulty
+            status
+            skills {
+                value
+            }
+            timeCreated
+            milestones {
+                totalCount
+                milestones{
+                    duration
+                }
+            }
+        }
+    }
+`;
+  

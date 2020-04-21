@@ -8,7 +8,7 @@ export const getDuration = (data) => {
 }
 
 // Takes number of days as input and returns a duration string 
-const DurationParser = (days) => {
+export const DurationParser = (days) => {
     let duration = ""
     days = parseInt(days)
     if ( days >= 30 ) {
