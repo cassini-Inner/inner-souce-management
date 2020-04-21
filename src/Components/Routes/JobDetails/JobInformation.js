@@ -2,21 +2,38 @@ import React from "react";
 import { exploreJobs } from "../../../../assets/placeholder";
 import StatusTags from "../../Common/StatusTags/StatusTags";
 import AuthorInfo from "../../Common/AuthorInfo/AuthorInfo";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_JOB_DETAILS } from "../../../queries";
+import DurationParser from "../../Common/DurationParser/DurationParser";
 
 const JobInformation = (props) => {
+
+    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: "2" } });
+    if (loading) return 'Loading...';
+    else if (error) alert(`Error! ${error.message}`);
+
+    //To get the duration of the job by summing the duration of milestones
+    const getDuration = () => {
+        let days = 0;
+        for (let [key, value] of Object.entries(data["Job"]["milestones"]["milestones"])) {
+            days += parseInt(value.duration);
+        }
+        return DurationParser(days);
+    }
+
     return (
         <React.Fragment>
             <div className="mt-8">
-                <StatusTags statusTag={exploreJobs[0].status} />
+                <StatusTags statusTag={[data["Job"].status.toLowerCase()]} />
             </div>
             <div className="mt-8">
                 <h1 className="text-xl leading-snug">
-                    {exploreJobs[0].title}
+                    {data["Job"].title}
                 </h1>
             </div>
             <div className="mt-6 mb-8">
                 <p className="text-sm text-nebula-grey-700 leading-relaxed">
-                    {exploreJobs[0].description}
+                    {data["Job"].description}
                 </p>
             </div>
             <div className="flex flex-wrap mb-8">
@@ -28,7 +45,7 @@ const JobInformation = (props) => {
                     </div>
                     <div>
                         <p className="leading-tight font-semibold text-sm mt-1">
-                            {exploreJobs[0].noMilestones + " Milestones"}
+                            {data["Job"]["milestones"].totalCount + " Milestones"}
                         </p>
                     </div>
                 </div>
@@ -38,7 +55,7 @@ const JobInformation = (props) => {
                     </div>
                     <div>
                         <p className="leading-tight font-semibold text-sm mt-1">
-                            {exploreJobs[0].difficulty}
+                            {data["Job"].difficulty}
                         </p>
                     </div>
                 </div>
@@ -50,7 +67,7 @@ const JobInformation = (props) => {
                     </div>
                     <div>
                         <p className="leading-tight font-semibold text-sm mt-1">
-                            {exploreJobs[0].duration}
+                            { getDuration() }
                         </p>
                     </div>
                 </div>
@@ -66,7 +83,13 @@ const JobInformation = (props) => {
                         </p>
                     </div>
                 </div>
-                <AuthorInfo className="mt-8" iconClass="w-12 h-12" date={exploreJobs[0].date} />
+                <AuthorInfo 
+                    className="mt-8" 
+                    iconClass="w-12 h-12" 
+                    date={data["Job"].timeCreated} 
+                    department = {data["Job"].createdBy.department} 
+                    name = {data["Job"].createdBy.name} 
+                />
             </div>
         </React.Fragment>
     );

@@ -56,7 +56,7 @@ class MilestoneCard extends Component {
                                     <Icons.ChevronUp />
                             </button>
                         </div>
-                        <StatusTags statusTag={this.props.milestone.status}/>
+                        <StatusTags statusTag={[this.props.milestone.status.toLowerCase()]}/>
                         {
                             isExpanded &&
                             <div >

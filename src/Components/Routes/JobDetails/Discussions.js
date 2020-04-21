@@ -3,6 +3,8 @@ import { Comments } from "../../../../assets/placeholder";
 import TextInput from "../../Common/InputFields/TextInput";
 import Button from "../../Common/Button/Button";
 import Avatar from "../../Common/Avatar/Avatar";
+import { useQuery } from '@apollo/react-hooks';
+import { GET_JOB_DISCUSSIONS } from "../../../queries";
 
 const Discussions = () => {
 
@@ -27,6 +29,11 @@ const AddComment = () => {
 };
 
 export const Comment = () => {
+
+    const { loading, error, data } = useQuery(GET_JOB_DISCUSSIONS, { variables: { jobId: "2" } });
+    if (loading) return 'Loading...';
+    else if (error) alert(`Error! ${error.message}`);
+    console.log(data);
     
     return( Comments.map(({name, dateTime, comment}) => {
         return(
