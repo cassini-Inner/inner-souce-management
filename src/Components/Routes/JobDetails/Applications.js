@@ -33,7 +33,7 @@ const Applications = () => {
                     */}
                 
                 </div>
-                <UserList />
+                <UserList type = "APPLICATIONS"/>
             </div>
         </Fragment>
 
