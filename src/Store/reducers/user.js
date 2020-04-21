@@ -1,7 +1,7 @@
 const initialState = {
-    id:"1",
-    name:"",
-    photoUrl:""
+    id:"2",
+    name:"Arjun Ramachandran",
+    photoUrl:"https://avatars3.githubusercontent.com/u/55799457?s=460&v=4"
 }
 
 const userReducer = (state = initialState, action) => {
