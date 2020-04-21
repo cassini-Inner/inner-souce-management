@@ -28,33 +28,17 @@ class JobList extends Component {
         });
     };
 
-    // getJobList = () => {
-    //     const { loading, error, data } = useQuery(GET_ALL_JOBS_FILTER, 
-    //         { 
-                // variables: {
-                    // "filter":{
-                    // "status": ["OPEN","ONGOING", "COMPLETED"],
-                    // "skills": ["nodejs", "spring", "react", "golang"],
-                    // "sortOrder": "NEWEST" 
-                // }
-    //         } 
-    //     });
-    //     if (loading) return 'Loading...';
-    //     else if (error) alert(`Error! ${error.message}`);
-    //     return data["allJobs"]
-    // }
-
-    jobvars = { 
+    jobsFilter = { 
         "filter":{
-            "status": ["OPEN","ONGOING", "COMPLETED"],
-            "skills": ["nodejs", "spring", "react", "golang"],
+            "status": ["OPEN","ONGOING"],
+            "skills": ["nodejs", "spring", "react", "golang"], 
             "sortOrder": "NEWEST" 
-            }
         }
+    }
     
     render() {
         return (
-            <Query query={GET_ALL_JOBS_FILTER} variables={this.jobvars}>
+            <Query query={GET_ALL_JOBS_FILTER} variables={this.jobsFilter}>
             {({ loading, error, data }) => {
                 if (loading) return null;
                 if (error) return `Error! ${error}`;
@@ -67,8 +51,7 @@ class JobList extends Component {
                         </Portal>
                         <div className="cursor-default ">
                             <div className=" w-full mt-6 ">
-                                <h1 className="text-xl font-semibold flex-1 "
-                                    id={this.props.title}>{this.props.title}</h1>
+                                <h1 className="text-2xl flex-1">{this.props.title}</h1>
                                 {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
                             <hr/>
                             </div>

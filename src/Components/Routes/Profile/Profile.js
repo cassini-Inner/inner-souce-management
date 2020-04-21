@@ -7,13 +7,13 @@ import {GitHub} from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
 import InfoTag from "../../Common/InfoTag/InfoTag"; 
 import { Link } from "react-router-dom";
-import { useQuery } from '@apollo/react-hooks';
-import { GET_USER_PROFILE } from '../../../queries';
+import { useQuery } from "@apollo/react-hooks";
+import { GET_USER_PROFILE } from "../../../queries";
 
 const Profile = (props) => {
     
     const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: "2" } });
-    if (loading) return 'Loading...';
+    if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 
     return (

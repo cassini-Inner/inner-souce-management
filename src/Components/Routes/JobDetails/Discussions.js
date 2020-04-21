@@ -3,15 +3,15 @@ import { Comments } from "../../../../assets/placeholder";
 import TextInput from "../../Common/InputFields/TextInput";
 import Button from "../../Common/Button/Button";
 import Avatar from "../../Common/Avatar/Avatar";
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery } from "@apollo/react-hooks";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
 
-const Discussions = () => {
+const Discussions = (props) => {
 
     return(
         <Fragment>
             <AddComment />
-            <Comment />
+            <Comment jobId = {props.jobId} />
         </Fragment>
     );
 };
@@ -28,10 +28,10 @@ const AddComment = () => {
     );
 };
 
-export const Comment = () => {
+export const Comment = (props) => {
 
     const { loading, error, data } = useQuery(GET_JOB_DISCUSSIONS, { variables: { jobId: "1" } });
-    if (loading) return 'Loading...';
+    if (loading) return "Loading...";
     else if (error) console.log(`Error! ${error.message}`);
 
     return (
@@ -47,9 +47,9 @@ export const Comment = () => {
                         </div>
                     </div>
                 </div>
-            )
+            );
         })     
-    )
-}
+    );
+};
 
 export default Discussions;

@@ -6,7 +6,7 @@ class Content extends Component {
     render() {
         return (
             <div className="h-auto mt-4">
-                <OngoingJobsGrid maxCount = {1} location = "home" />
+                <OngoingJobsGrid maxCount = {1} location = "home" title = "Ongoing Jobs" />
                 <JobList title = "Explore Jobs" />
             </div>
         );
