@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import UserList from "./UserList";
 import Dropdown from "../../Common/Dropdown/Dropdown";
 
-const Applications = () => {
+const Applications = (props) => {
 
     return (
         <Fragment>
@@ -33,7 +33,7 @@ const Applications = () => {
                     */}
                 
                 </div>
-                <UserList type = "APPLICATIONS"/>
+                <UserList type = "APPLICATIONS" jobId = {props.jobId}/>
             </div>
         </Fragment>
 

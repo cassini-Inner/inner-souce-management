@@ -1,4 +1,4 @@
-import { gql } from 'apollo-boost';
+import { gql } from "apollo-boost";
 
 // To get the milestones based on job id
 export const GET_MILESTONES = gql`
@@ -133,3 +133,30 @@ export const GET_ALL_JOBS_FILTER = gql`
     }
 `;
   
+// To get the ongoing jobs of a user based on user id
+export const GET_USER_ONGOING_JOBS = gql`
+    query($userId: ID!){
+        User(id: $userId){
+            appliedJobs{
+                applicationStatus
+                job{
+                    id
+                    title
+                    createdBy {
+                        name
+                        department
+                        photoUrl
+                    }
+                    status
+                    timeCreated
+                    milestones {
+                        totalCount
+                        milestones{
+                            status
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;

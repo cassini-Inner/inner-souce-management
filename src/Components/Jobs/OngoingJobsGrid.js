@@ -2,11 +2,18 @@ import React from "react";
 import { ongoingJobs } from "../../../assets/placeholder";
 import OngoingJobCard from "./OngoingJobCard";
 import { NavLink } from "react-router-dom";
+import { useQuery } from "@apollo/react-hooks";
+import { GET_USER_ONGOING_JOBS } from "../../queries";
 
 const OngoingJobsGrid = (props) => {
+
+    const { loading, error, data } = useQuery(GET_USER_ONGOING_JOBS, { variables: { userId: "3" } });
+    if (loading) return "Loading...";
+    else if (error) alert(`Error! ${error.message}`);
+
     let maxCount = props.maxCount ? props.maxCount : ongoingJobs.length / 2 + 1; // +1 to ensure even odd number of cards are printed 
     let jobsRow = [];
-    let jobs = [...ongoingJobs];
+    let jobs = data["User"]["appliedJobs"];
     if (ongoingJobs.length) {
         for (let i = 0; i < jobs.length && i < maxCount; i++) {
             let job1 = jobs[i];

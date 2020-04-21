@@ -10,7 +10,7 @@ import  { getDuration } from "../../Common/DurationParser/DurationParser";
 const JobInformation = (props) => {
 
     const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: "2" } });
-    if (loading) return 'Loading...';
+    if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 
     //To get the duration of the job by summing the duration of milestones

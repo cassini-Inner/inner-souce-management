@@ -22,7 +22,9 @@ class JobDetailsPage extends Component {
     }
 
     render() {
-
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get("id");
+        console.log("Id:"+jobId);
         const actions = [
             (<Button type="primary" label="Apply to Job"
                 key="applyjob"
@@ -73,10 +75,10 @@ class JobDetailsPage extends Component {
                     {
                         location.pathname === "/jobDetails"?<Redirect to={this.props.match.url + "/milestones"} />: "" 
                     }
-                    <Route exact path = {this.props.match.url + "/milestones"} component = {(props) => <MilestonesList />} />
-                    <Route exact path = {this.props.match.url + "/discussions"} component = {(props) => <Discussions />} />
-                    <Route exact path = {this.props.match.url + "/applications"} component = {(props) => <Applications />} />
-                    <Route exact path={this.props.match.url + "/working"} component={(props) => <WorkingUsers />} />
+                    <Route exact path = {this.props.match.url + "/milestones"} component = {(props) => <MilestonesList jobId = {jobId}/>} />
+                    <Route exact path = {this.props.match.url + "/discussions"} component = {(props) => <Discussions jobId = {jobId}/>} />
+                    <Route exact path = {this.props.match.url + "/applications"} component = {(props) => <Applications jobId = {jobId}/>} />
+                    <Route exact path={this.props.match.url + "/working"} component={(props) => <WorkingUsers jobId = {jobId}/>} />
                 </div>
                 <div className="sticky bottom-0 bg-white">
                     <hr/>
