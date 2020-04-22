@@ -181,6 +181,9 @@ export const GET_JOB_TABS = gql`
     query($jobId: ID!){
         Job(id: $jobId) {
             id 
+            createdBy {
+                id
+            }
             milestones{
                 totalCount
             }

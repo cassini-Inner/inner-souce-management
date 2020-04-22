@@ -11,6 +11,7 @@ import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_JOB_TABS } from "../../../queries";
+import { connect } from "react-redux";
 
 const JobDetailsPage = (props) => {
     
@@ -29,7 +30,7 @@ const JobDetailsPage = (props) => {
     else if (error) alert(`Error! ${error.message}`);
     console.log(data);
 
-    const actions = [
+    const userActions = [
         (<Button type="primary" label="Apply to Job"
             key="applyjob"
             className=" w-auto mr-4 "
@@ -40,6 +41,17 @@ const JobDetailsPage = (props) => {
             key="applyMilestone"
         />),
             */
+    ];
+
+    const authorActions = [
+        (<Button type="secondary" label="Edit Job"
+            key="editjob"
+            className=" w-auto mr-4 "
+        />),
+        (<Button type="error" label="Delete Job"
+            className=" w-auto mr-4 "
+            key="deletejob"
+        />),
     ];
 
     const tabList = [
@@ -88,11 +100,11 @@ const JobDetailsPage = (props) => {
                 <hr/>
                 <div className="px-4 flex flex-wrap-reverse items-center max-w-screen-lg mx-auto py-4 lg:px-10">
                     <div className="flex">
-                        {actions}
+                        { props.user.id == data.Job.createdBy.id ? authorActions : userActions}
                     </div>
                     <div>
-                        <p className="text-sm font-semibold text-nebula-blue">This title</p>
-                        <p className="text-sm font-semibold text-nebula-grey-600">This subtitle</p>
+                        {/* <p className="text-sm font-semibold text-nebula-blue">This title</p>
+                        <p className="text-sm font-semibold text-nebula-grey-600">This subtitle</p> */}
                     </div>  
                 </div>
             </div>
@@ -101,5 +113,10 @@ const JobDetailsPage = (props) => {
 }
 
 
+const mapStateToProps = state => {
+    return {
+        user: state
+    }
+}
 
-export default withRouter(JobDetailsPage);
+export default connect(mapStateToProps)(withRouter(JobDetailsPage));

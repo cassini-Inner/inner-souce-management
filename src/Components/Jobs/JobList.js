@@ -8,7 +8,7 @@ import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
 import { Query } from 'react-apollo';
-import { GET_ALL_JOBS_FILTER } from '../../queries';
+
 
 class JobList extends Component {
 
@@ -28,17 +28,9 @@ class JobList extends Component {
         });
     };
 
-    jobsFilter = { 
-        "filter":{
-            "status": ["OPEN","ONGOING"],
-            "skills": ["nodejs", "spring", "react", "golang"], 
-            "sortOrder": "NEWEST" 
-        }
-    }
-    
     render() {
         return (
-            <Query query={GET_ALL_JOBS_FILTER} variables={this.jobsFilter}>
+            <Query query={ this.props.query } variables={ this.props.queryVariables } >
             {({ loading, error, data }) => {
                 if (loading) return null;
                 if (error) return `Error! ${error}`;
