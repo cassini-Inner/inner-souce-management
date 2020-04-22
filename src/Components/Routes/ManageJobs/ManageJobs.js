@@ -15,6 +15,11 @@ const ManageJobs = (props) => {
     }
     const tabList = [
         {
+            title: "Open",
+            location: "open",
+            count: 1,
+        },
+        {
             title: "Ongoing",
             location: "ongoing",
             count: 2,

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { explore, exploreJobs } from '../../../assets/placeholder'
+import { explore } from '../../../assets/placeholder'
 import * as Icons from 'react-feather'
 import { Link } from 'react-router-dom'
 import Button from '../Common/Button/Button'
@@ -29,42 +29,45 @@ class JobList extends Component {
     };
 
     render() {
-        return (
-            <Query query={ this.props.query } variables={ this.props.queryVariables } >
-            {({ loading, error, data }) => {
-                if (loading) return null;
-                if (error) return `Error! ${error}`;
-                if(data["allJobs"]) {
-                    return (
-                        <Fragment>
-                            <Portal isOpen={this.state.filterModal}  >
-                                <ModalViewWithScrim>
-                                    <FilterModal closeModal = {this.closeFilterModal}/>
-                                </ModalViewWithScrim>
-                            </Portal>
-                            <div className="cursor-default ">
-                                <div className=" w-full mt-6 ">
-                                    <h1 className="text-2xl flex-1">{this.props.title}</h1>
-                                    {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
-                                <hr/>
+        if(this.props.query) {
+            return (
+                <Query query={ this.props.query } variables={ this.props.queryVariables } >
+                {({ loading, error, data }) => {
+                    if (loading) return null;
+                    if (error) return `Error! ${error}`;
+                    if(data["allJobs"]) {
+                        return (
+                            <Fragment>
+                                <Portal isOpen={this.state.filterModal}  >
+                                    <ModalViewWithScrim>
+                                        <FilterModal closeModal = {this.closeFilterModal}/>
+                                    </ModalViewWithScrim>
+                                </Portal>
+                                <div className="cursor-default ">
+                                    <div className=" w-full mt-6 ">
+                                        <h1 className="text-2xl flex-1">{this.props.title}</h1>
+                                        {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                                    <hr/>
+                                    </div>
+                                    {    
+                                        data["allJobs"].map(data => {
+                                            return (
+                                            <JobCard data={data}/>
+                                            );
+                                        })
+                                    }
                                 </div>
-                                {    
-                                    data["allJobs"].map(data => {
-                                        return (
-                                        <JobCard data={data}/>
-                                        );
-                                    })
-                                }
-                            </div>
-                        </Fragment>
-                    );
-                }
-                else {
-                    return(<div>No Jobs</div>)
-                }
-                }}
-            </Query>
-        );
+                            </Fragment>
+                        );
+                    }
+                    else {
+                        return(<div>No Jobs</div>)
+                    }
+                    }}
+                </Query>
+            );
+        }
+        return(<div className="ml-2 mt-2">No Jobs</div>)
     }
 }
 

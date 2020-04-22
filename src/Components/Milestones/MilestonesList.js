@@ -1,6 +1,5 @@
 import React from "react";
 import MilestoneCard from "./MilestoneCard";
-import { milestones } from "../../../assets/placeholder";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_MILESTONES } from "../../queries";
 
