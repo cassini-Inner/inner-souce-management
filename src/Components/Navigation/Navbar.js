@@ -91,7 +91,7 @@ class ProfileModal extends Component {
                             <div className="font-semibold leading-tight ml-8">
                                 <p className="text-nebula-grey-600 text-xs">Signed in as</p>
                                     <p className="text-lg mb-2">{this.props.user.name}</p>
-                                <Link to="/profile" className="text-xs text-nebula-blue tracking-widest">VIEW PROFILE</Link>
+                                <Link to = {"/profile/"+this.props.user.id} className="text-xs text-nebula-blue tracking-widest">VIEW PROFILE</Link>
                             </div>
                         </div>
                         <hr />

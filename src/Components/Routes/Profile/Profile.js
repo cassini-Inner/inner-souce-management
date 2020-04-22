@@ -6,12 +6,17 @@ import { profileData } from "../../../../assets/placeholder";
 import {GitHub} from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
 import InfoTag from "../../Common/InfoTag/InfoTag"; 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_USER_PROFILE } from "../../../queries";
 import { connect } from "react-redux";
 
 const Profile = (props) => {
+    
+    //To get the user id from url
+    const { id } = useParams();
+    const userId = id;
+
     const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: props.user.id } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
@@ -21,9 +26,15 @@ const Profile = (props) => {
             <Navbar />
             <div className="flex flex-row mt-8 mb-4 justify-between">
                 <h1 className="text-2xl">Profile</h1>
-                <Link to="/profile/edit">
-                    <Button type="primary" label="Edit Profile"/>
-                </Link>
+                {   
+                    userId == props.user.id 
+                        ?
+                        <Link to="/profile/edit">
+                            <Button type="primary" label="Edit Profile"/>
+                        </Link>
+                        :
+                        ""
+                }
             </div>
             <Card key={data["User"].id}>
                 <div className="flex p-4">

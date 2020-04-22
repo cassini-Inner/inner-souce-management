@@ -19,7 +19,7 @@ const Routes = (props) => {
                 component={(props) => { return <YourJobs/>; }}/>
             <Route path="/profile/edit"
                 component={(props) => { return <EditProfile/>; }}/>
-            <Route path="/profile" component={(props) => { return <Profile/>; }}/>
+            <Route path="/profile/:id" component={(props) => { return <Profile/>; }}/>
             <Route path="/manageJobs"
                 component={(props) => { return <ManageJobs/>; }}/>
             <Route exact path="/applyToMilestones"

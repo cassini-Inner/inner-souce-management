@@ -197,3 +197,17 @@ export const GET_JOB_TABS = gql`
         }
     }
 `;
+
+// To get the skills of the user for custon job feed
+export const GET_USER_SKILLS = gql`
+    query($userId: ID!){
+        User(id: $userId){
+            id
+            skills {
+                id
+                value
+            }
+        }
+    }
+`;
+  

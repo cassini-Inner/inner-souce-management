@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import SplitContainer from '../../Containers/SplitContainer';
-import TextInput from '../../Common/InputFields/TextInput'
-import Dropdown from '../../Common/Dropdown/Dropdown'
-import Button from '../../Common/Button/Button'
+import TextAreaInput from '../../Common/InputFields/TextAreaInput';
+import TextInput from '../../Common/InputFields/TextInput';
+import Dropdown from '../../Common/Dropdown/Dropdown';
+import Button from '../../Common/Button/Button';
 import Modal from "../../Containers/Portal";
-import ModalViewWithScrim from '../../Modals/ModalViewWithScrim'
-import MilestoneModal from '../../Modals/MilestoneModal'
-import Portal from '../../Containers/Portal'
+import ModalViewWithScrim from '../../Modals/ModalViewWithScrim';
+import MilestoneModal from '../../Modals/MilestoneModal';
+import Portal from '../../Containers/Portal';
+
 class CreateJob extends Component {
 
     state = {
@@ -62,7 +64,7 @@ const JobForm = () => {
             <h2 className="text-sm font-semibold ">Job Title</h2>
             <TextInput className="mt-2 w-full" placeholder="Give your Job a small title" />
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
-            <TextInput className="mt-2 w-full" placeholder="Enter a brief overview of the job" />
+            <TextAreaInput className="mt-2 w-full" placeholder="Enter a brief overview of the job" />
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
