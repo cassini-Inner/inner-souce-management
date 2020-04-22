@@ -51,7 +51,13 @@ const UserList = (props) => {
             return(userList)
         }
     }
-    return(<div>No users</div>)
+    if(props.type == "APPLICATIONS") {
+        props.setDisplayState(false);
+        return null;
+    }
+    else if(props.type == "WORKING") {
+        return(<div className="mt-2">No currently working users</div>)
+    }
 
 };
 

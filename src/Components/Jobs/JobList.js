@@ -8,7 +8,7 @@ import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
 import { Query } from 'react-apollo';
-import { GET_ALL_JOBS_FILTER, GET_JOB_APPLICANTS } from '../../queries';
+import { GET_ALL_JOBS_FILTER } from '../../queries';
 
 class JobList extends Component {
 
