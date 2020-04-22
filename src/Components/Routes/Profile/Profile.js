@@ -21,7 +21,7 @@ const Profile = (props) => {
             <Navbar />
             <div className="flex flex-row mt-8 mb-4 justify-between">
                 <h1 className="text-2xl">Profile</h1>
-                <Link to="/profile/edit" exact>
+                <Link to="/profile/edit">
                     <Button type="primary" label="Edit Profile"/>
                 </Link>
             </div>

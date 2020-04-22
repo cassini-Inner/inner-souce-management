@@ -5,6 +5,7 @@ import TextInput from "../../Common/InputFields/TextInput";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import SearchTagsInput from "../../Common/InputFields/SearchTagsInput";
 import { GET_USER_PROFILE } from "../../../queries";
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Query } from 'react-apollo';
 
@@ -16,7 +17,7 @@ const EditProfile = (props) => {
                 if (loading) return "Loading...";
                 else if (error) alert(`Error! ${error.message}`);
                 return (
-                <EditProfileBody data = {data} />
+                <EditProfileBody data = {data} {...props} />
                 )
             }}
         </Query>
@@ -62,6 +63,13 @@ const EditProfileBody = (props) => {
         });
     }
 
+    const handleContactChange = (event) => {
+        setState({
+            ...state,
+            contact: event.target.value,
+        });
+    }
+
 
     return (
             <div className="px-4 lg:px-10 container mx-auto">
@@ -92,7 +100,7 @@ const EditProfileBody = (props) => {
                                 label="Contact"
                                 placeholder="Email, Slack ID..."
                                 value={state.contact}
-                                onChange={handleNameChange}
+                                onChange={handleContactChange}
                             />
                             <TextAreaInput
                                 cols="10"
@@ -110,7 +118,7 @@ const EditProfileBody = (props) => {
                             <hr className="mt-12 mb-4" />
                             <div className="flex flex-row flex-wrap mb-20">
                                 <Button label="Save changes" type="primary" className="mx-2"/>
-                                <Button label="Discard changes" type="secondary" className="mx-2"/>
+                                <Button label="Discard changes" type="secondary" className="mx-2" onClick={() =>props.history.goBack()}/>
                             </div>
                         </div>
                     </div>
@@ -125,4 +133,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(EditProfile);
+export default connect(mapStateToProps)(withRouter(EditProfile));
