@@ -21,12 +21,12 @@ const MilestoneModal = (props) => {
                             <p className="text-sm text-nebula-grey-600">How long do you think completing this milestone will take?</p>
                         </div>
                         <div className="flex flex-1 ml-4">
-                            <TextInput className="mr-2 w-24 self-center" placeholder="Duration" />
-                            <Dropdown className="self-center" list={["Weeks", "Days", "Months"]} />
+                            <TextInput number min="1" className="mr-2 w-24 self-center" placeholder="Duration" />
+                            <Dropdown className="self-center" list={["Week(s)", "Day(s)", "Month(s)"]} />
                         </div>
                     </div>
                     <h2 className="text-sm font-semibold mt-4">Skills Required</h2>
-                    <SearchTagsInput />
+                    <SearchTagsInput placeholder="Skills required to complete the milestone"/>
                     <h2 className="text-sm font-semibold my-4">Milestone Resolution Method</h2>
                     <TextInput placeholder="eg. Accepted Github pull request" />
                 </div>

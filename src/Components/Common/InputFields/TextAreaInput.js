@@ -9,6 +9,7 @@ const TextAreaInput = (props) => {
             <TextInputLabel label={props.label}/>
             <textarea
                 type="text"
+                id={props.id ? props.id : ""}
                 rows={props.rows ? props.rows : "5"}
                 cols={props.cols ? props.cols : "50"}
                 className={"pl-1 mt-2 text-sm outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 placeholder-nebula-grey-500  " +

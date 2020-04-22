@@ -15,7 +15,9 @@ const AuthorInfo = (props) => {
     if(props.redirectUrl) {
         return (
             <Link to={"/profile/"+props.redirectUrl}>
-                {authorInfo}
+                <div className = "hover:text-nebula-blue">
+                    {authorInfo}
+                </div>
             </Link>
         );
     }

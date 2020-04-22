@@ -8,11 +8,26 @@ import Modal from "../../Containers/Portal";
 import ModalViewWithScrim from '../../Modals/ModalViewWithScrim';
 import MilestoneModal from '../../Modals/MilestoneModal';
 import Portal from '../../Containers/Portal';
+import { withRouter } from "react-router";
 
 class CreateJob extends Component {
 
     state = {
         milestoneModal: false,
+        msg: "",
+        msgType: "",
+        job: {
+            title:"",
+            description: "",
+            difficult: "",
+            milestones: {
+                title: "",
+                description: "",
+                duration: "",
+                skills: [],
+                resolutionMethod: ""
+            }
+        }
     }
 
     openMilestoneModal = () => {
@@ -27,8 +42,19 @@ class CreateJob extends Component {
         })
     };
 
+    onChangeHandler = (event) => {
+        console.log(event.currentTarget.id, event.currentTarget.value)
+    }
+
+    goBack = () => {
+        const cancel = window.confirm("Are you sure you want cancel this job creation?")
+        if(cancel) {
+            this.props.history.goBack();
+        }
+    }
+
     ButtonRow = [
-        <Button type="secondary" label="Cancel Job Creation" />,
+        <Button type="secondary" label="Cancel Job Creation" onClick={() => this.goBack()}/>,
         <Button type="primary" label="Submit Job" />
     ]
 
@@ -44,7 +70,7 @@ class CreateJob extends Component {
                     milestoneNo="4"
                 />
                 <SplitContainer
-                    leftView={<JobForm />}
+                    leftView={<JobForm msg={this.props.msg} msgType={this.props.msgType} onChangeHandler={this.onChangeHandler}/>}
                     rightView={<Milestones openMilestoneModal={this.openMilestoneModal} />}
                     actions={this.ButtonRow}
                 />
@@ -58,13 +84,13 @@ class CreateJob extends Component {
     }
 }
 
-const JobForm = () => {
+const JobForm = (props) => {
     return (
         <div className="bg-white flex flex-col w-full h-full mt-10">
             <h2 className="text-sm font-semibold ">Job Title</h2>
-            <TextInput className="mt-2 w-full" placeholder="Give your Job a small title" />
+            <TextInput id="jobTitle" className="mt-2 w-full" placeholder="Give your Job a small title" onChange={props.onChangeHandler}/>
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
-            <TextAreaInput className="mt-2 w-full" placeholder="Enter a brief overview of the job" />
+            <TextAreaInput id="jodDesc" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChangeHandler}/>
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
@@ -72,6 +98,14 @@ const JobForm = () => {
                 </div>
                 <Dropdown list={["Intermediate", "Easy", "Hard"]} />
             </div>
+            { //To display error and success messages
+                props.msg?
+                <div 
+                    className = {"mt-6 "+(props.msgType == "error" ? "text-nebula-red" : "text-nebula-blue") }>
+                        {props.msg}
+                    </div>
+                : ""
+            }
         </div>
     );
 
@@ -94,4 +128,4 @@ const Milestones = (props) => {
     );
 }
 
-export default CreateJob;
+export default withRouter(CreateJob);
