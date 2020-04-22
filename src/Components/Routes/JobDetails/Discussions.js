@@ -30,7 +30,7 @@ const AddComment = () => {
 
 export const Comment = (props) => {
 
-    const { loading, error, data } = useQuery(GET_JOB_DISCUSSIONS, { variables: { jobId: "1" } });
+    const { loading, error, data } = useQuery(GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
     else if (error) console.log(`Error! ${error.message}`);
 

@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/react-hooks";
 import { GET_MILESTONES } from "../../queries";
 
 const MilestonesList = (props) => {
-    const { loading, error, data } = useQuery(GET_MILESTONES, { variables: { jobId: "2" } });
+    const { loading, error, data } = useQuery(GET_MILESTONES, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 

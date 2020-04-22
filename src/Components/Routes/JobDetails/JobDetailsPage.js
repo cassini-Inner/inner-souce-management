@@ -5,15 +5,18 @@ import Button from "../../Common/Button/Button";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import Discussions from "./Discussions";
 import Applications from "./Applications";
-import { withRouter, Route, Redirect } from "react-router";
+import { withRouter, Redirect } from "react-router";
+import { Route, useParams } from "react-router-dom";
 import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
 
 class JobDetailsPage extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             isEditMode: true,
+            jobId:this.props.match.params.id,
         };
     }
 
@@ -22,9 +25,6 @@ class JobDetailsPage extends Component {
     }
 
     render() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const jobId = urlParams.get("id");
-        console.log("Id:"+jobId);
         const actions = [
             (<Button type="primary" label="Apply to Job"
                 key="applyjob"
@@ -73,12 +73,12 @@ class JobDetailsPage extends Component {
                     < JobInformation />
                     <TabStrip tabs = { tabList } />
                     {
-                        location.pathname === "/jobDetails"?<Redirect to={this.props.match.url + "/milestones"} />: "" 
+                        location.pathname === ("/jobDetails/"+this.state.jobId)?<Redirect to={this.props.match.url + "/milestones"} />: "" 
                     }
-                    <Route exact path = {this.props.match.url + "/milestones"} component = {(props) => <MilestonesList jobId = {jobId}/>} />
-                    <Route exact path = {this.props.match.url + "/discussions"} component = {(props) => <Discussions jobId = {jobId}/>} />
-                    <Route exact path = {this.props.match.url + "/applications"} component = {(props) => <Applications jobId = {jobId}/>} />
-                    <Route exact path={this.props.match.url + "/working"} component={(props) => <WorkingUsers jobId = {jobId}/>} />
+                    <Route exact path = {this.props.match.url + "/milestones"} component = {(props) => <MilestonesList jobId = {this.state.jobId}/>} />
+                    <Route exact path = {this.props.match.url + "/discussions"} component = {(props) => <Discussions jobId = {this.state.jobId}/>} />
+                    <Route exact path = {this.props.match.url + "/applications"} component = {(props) => <Applications jobId = {this.state.jobId}/>} />
+                    <Route exact path={this.props.match.url + "/working"} component={(props) => <WorkingUsers jobId = {this.state.jobId}/>} />
                 </div>
                 <div className="sticky bottom-0 bg-white">
                     <hr/>

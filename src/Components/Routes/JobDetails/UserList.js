@@ -8,7 +8,7 @@ import { GET_JOB_APPLICANTS } from "../../../queries";
 
 const UserList = (props) => {
 
-    const { loading, error, data } = useQuery(GET_JOB_APPLICANTS, { variables: { jobId: "3" } });
+    const { loading, error, data } = useQuery(GET_JOB_APPLICANTS, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
     else if (error) console.log(`Error! ${error.message}`);
     

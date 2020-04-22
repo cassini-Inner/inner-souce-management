@@ -7,7 +7,7 @@ import  { getDuration } from "../Common/DurationParser/DurationParser";
 
 const JobCard = (props) => {
     return (
-        <Link to = { "/jobDetails?id="+props.data.id} >
+        <Link to = { "/jobDetails/"+props.data.id} >
             <div className={"w-full p-6 bg-white mt-4 rounded-lg " + (props.manageJobs
                 ? ""
                 : "transition duration-300 shadow-none cursor-pointer hover:shadow-lg border border-nebula-grey-400")}

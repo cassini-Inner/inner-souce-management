@@ -13,7 +13,7 @@ const Routes = (props) => {
     const parentProps = props;
     return (
         <Switch>
-            <Route path="/jobDetails"
+            <Route path="/jobDetails/:id"
                 component={(props) => { return <JobDetailsPage/>; }}/>
             <Route path="/yourJobs"
                 component={(props) => { return <YourJobs/>; }}/>

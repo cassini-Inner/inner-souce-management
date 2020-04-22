@@ -27,6 +27,7 @@ export const GET_JOB_DETAILS = gql`
             id
             title
             createdBy {
+                id
                 name
                 department
                 photoUrl
@@ -37,11 +38,13 @@ export const GET_JOB_DETAILS = gql`
             status 
             timeCreated  
             skills {
+                id
                 value
             }
             milestones {
                 totalCount
                 milestones{
+                    id
                     duration
                 }
             }
@@ -53,11 +56,13 @@ export const GET_JOB_DETAILS = gql`
 export const GET_JOB_DISCUSSIONS = gql`
 query($jobId: ID!){
         Job(id:$jobId){
+            id
             discussion{
                 discussions{
                     id
                     content
                     createdBy{
+                        id
                         name
                         photoUrl
                     }
@@ -80,6 +85,7 @@ export const GET_USER_PROFILE = gql`
             email
             photoUrl
             skills {
+                id
                 value
             }
         }
@@ -90,11 +96,12 @@ export const GET_USER_PROFILE = gql`
 export const GET_JOB_APPLICANTS = gql`
     query($jobId: ID!) {
         Job(id: $jobId){
+            id
             applications {
                 applications {
                     applicant {
-                        name
                         id
+                        name
                         role
                         photoUrl
                     }
@@ -112,6 +119,7 @@ export const GET_ALL_JOBS_FILTER = gql`
             id
             title
             createdBy {
+                id
                 name
                 department
                 photoUrl
@@ -121,12 +129,14 @@ export const GET_ALL_JOBS_FILTER = gql`
             difficulty
             status
             skills {
+                id
                 value
             }
             timeCreated
             milestones {
                 totalCount
                 milestones{
+                    id
                     duration
                 }
             }
@@ -138,12 +148,14 @@ export const GET_ALL_JOBS_FILTER = gql`
 export const GET_USER_ONGOING_JOBS = gql`
     query($userId: ID!){
         User(id: $userId){
+            id
             appliedJobs{
                 applicationStatus
                 job{
                     id
                     title
                     createdBy {
+                        id
                         name
                         department
                         photoUrl
@@ -153,6 +165,7 @@ export const GET_USER_ONGOING_JOBS = gql`
                     milestones {
                         totalCount
                         milestones{
+                            id
                             status
                         }
                     }
