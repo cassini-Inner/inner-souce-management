@@ -25,7 +25,7 @@ const OngoingJobCard = (props) => {
                             <p className="text-nebula-grey-600 text-xs font-semibold pb-0 tracking-widest">POSTED BY</p>
                             <AuthorInfo 
                                 className="mt-8" 
-                                iconClass="w-12 h-12" 
+                                iconClass="w-12 h-12"
                                 department = { job.createdBy.department} 
                                 name = { job.createdBy.name} 
                                 img = { job.createdBy.photoUrl}

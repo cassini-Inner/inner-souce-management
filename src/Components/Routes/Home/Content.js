@@ -23,7 +23,7 @@ const Content = (props) => {
         "filter":{
             "status": ["OPEN","ONGOING"],
             // "skills": data.User.skills ? data.User.skills.map((skill, key) => skill.value) : [],
-            "skills": ["nodejs", "spring", "react", "golang"],  
+            "skills": ["nodejs", "spring", "react", "golang", "tableau"],  
             "sortOrder": "NEWEST" 
         }
     }

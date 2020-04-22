@@ -12,12 +12,12 @@ import { GET_USER_PROFILE } from "../../../queries";
 import { connect } from "react-redux";
 
 const Profile = (props) => {
-    
+
     //To get the user id from url
     const { id } = useParams();
     const userId = id;
 
-    const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: props.user.id } });
+    const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: userId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 

@@ -50,6 +50,7 @@ const JobInformation = (props) => {
                 <AuthorInfo 
                     className="mt-8" 
                     iconClass="w-12 h-12" 
+                    redirectUrl = {data["Job"].createdBy.id}
                     department = {data["Job"].createdBy.department} 
                     name = {data["Job"].createdBy.name} 
                     img = {data["Job"].createdBy.photoUrl}
