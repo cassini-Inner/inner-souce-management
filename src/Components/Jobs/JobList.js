@@ -42,30 +42,35 @@ class JobList extends Component {
             {({ loading, error, data }) => {
                 if (loading) return null;
                 if (error) return `Error! ${error}`;
-                return (
-                    <Fragment>
-                        <Portal isOpen={this.state.filterModal}  >
-                            <ModalViewWithScrim>
-                                <FilterModal closeModal = {this.closeFilterModal}/>
-                            </ModalViewWithScrim>
-                        </Portal>
-                        <div className="cursor-default ">
-                            <div className=" w-full mt-6 ">
-                                <h1 className="text-2xl flex-1">{this.props.title}</h1>
-                                {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
-                            <hr/>
+                if(data["allJobs"]) {
+                    return (
+                        <Fragment>
+                            <Portal isOpen={this.state.filterModal}  >
+                                <ModalViewWithScrim>
+                                    <FilterModal closeModal = {this.closeFilterModal}/>
+                                </ModalViewWithScrim>
+                            </Portal>
+                            <div className="cursor-default ">
+                                <div className=" w-full mt-6 ">
+                                    <h1 className="text-2xl flex-1">{this.props.title}</h1>
+                                    {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                                <hr/>
+                                </div>
+                                {    
+                                    data["allJobs"].map(data => {
+                                        return (
+                                        <JobCard data={data}/>
+                                        );
+                                    })
+                                }
                             </div>
-                            {    
-                                data["allJobs"].map(data => {
-                                    return (
-                                    <JobCard data={data}/>
-                                    );
-                                })
-                            }
-                        </div>
-                    </Fragment>
-                );
-            }}
+                        </Fragment>
+                    );
+                }
+                else {
+                    return(<div>No Jobs</div>)
+                }
+                }}
             </Query>
         );
     }

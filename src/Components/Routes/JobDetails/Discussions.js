@@ -33,23 +33,26 @@ export const Comment = (props) => {
     const { loading, error, data } = useQuery(GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
     else if (error) console.log(`Error! ${error.message}`);
-
-    return (
-        data["Job"]["discussion"]["discussions"].map((comment, key) =>{
-            return (
-                <div className="border-b border-nebula-gray-400" key={ comment.id }>
-                    <div className = "mt-4 mb-2 flex">
-                        <Avatar imagePath = { comment.createdBy.photoUrl }/>
-                        <div className = "flex-col ml-4 mb-2 flex-1">
-                            <div className = "text font-semibold">{ comment.createdBy.name }</div>
-                            <div className = "text-xs text-nebula-grey-600 ">{ comment.createdBy.timeCreated }</div>
-                            <div className = "text-sm text-nebula-grey-700 ">{ comment.content }</div>
+    if(data["Job"]["discussion"]["discussions"])
+        return (
+            data["Job"]["discussion"]["discussions"].map((comment, key) =>{
+                return (
+                    <div className="border-b border-nebula-gray-400" key={ comment.id }>
+                        <div className = "mt-4 mb-2 flex">
+                            <Avatar imagePath = { comment.createdBy.photoUrl }/>
+                            <div className = "flex-col ml-4 mb-2 flex-1">
+                                <div className = "text font-semibold">{ comment.createdBy.name }</div>
+                                <div className = "text-xs text-nebula-grey-600 ">{ comment.createdBy.timeCreated }</div>
+                                <div className = "text-sm text-nebula-grey-700 ">{ comment.content }</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            );
-        })     
-    );
+                );
+            })     
+        );
+    else {
+        return(<div>No comments</div>)
+    }
 };
 
 export default Discussions;
