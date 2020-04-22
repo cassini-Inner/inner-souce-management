@@ -9,7 +9,7 @@ import  { getDuration } from "../../Common/DurationParser/DurationParser";
 
 const JobInformation = (props) => {
 
-    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: "2" } });
+    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 

@@ -16,7 +16,7 @@ const MilestonesList = (props) => {
                     (milestone, index) => {
                         return (
                             <li key={data.id}>
-                                <MilestoneCard milestone={milestone} isEditMode={props.isEditMode} index={index} lastIndex={milestones.length} />
+                                <MilestoneCard milestone={milestone} isEditMode={props.isEditMode} index={index} lastIndex={data.Job.milestones.totalCount} />
                             </li>
                         );
                     })

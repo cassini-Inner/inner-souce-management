@@ -174,3 +174,23 @@ export const GET_USER_ONGOING_JOBS = gql`
         }
     }
 `;
+  
+
+// To get the number of milestones, applications, discussions and currently working for tabs
+export const GET_JOB_TABS = gql`
+    query($jobId: ID!){
+        Job(id: $jobId) {
+            id 
+            milestones{
+                totalCount
+            }
+            discussion{
+                totalCount
+            }
+            applications{
+                acceptedCount
+                pendingCount
+            }
+        }
+    }
+`;
