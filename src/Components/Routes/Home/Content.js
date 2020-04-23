@@ -9,12 +9,10 @@ import {connect} from "react-redux";
 
 const Content = (props) => {
 
-    //ToDo Get user id of the currently logged in user
     const ongoingJobsVariables = { 
         userId: props.user.id
     }
 
-    //ToDo Get userid of currenlty logged in user 
     const { loading, error, data } = useQuery(GET_USER_SKILLS, { variables: {userId: props.user.id} });
     if (loading) return "Loading...";
     else if (error) return (`Error! ${error.message}`);

@@ -14,6 +14,8 @@ class JobList extends Component {
 
     state = {
         filterModal: false,
+        sortDropdownValue:"",
+        filterDropdownValue:"",
     };
 
     closeFilterModal = () => {
@@ -27,6 +29,27 @@ class JobList extends Component {
             filterModal: true,
         });
     };
+    
+    sortDropdown = (event) =>{
+        this.setState({
+            sortDropdownValue :[event.currentTarget.value.toUpperCase()]
+        });
+        console.log(this.state)
+    }
+
+    jobStatusDropdown = (event) =>{
+        let value= [];
+        if(event.currentTarget.value === "Open & Ongoing"){
+            value = ["OPEN","ONGOING"]
+        }
+        else {
+            value = [event.currentTarget.value.toUpperCase()]
+        }
+        this.setState({
+            filterDropdownValue : value
+        });
+        console.log(this.state)
+    }
 
     render() {
         if(this.props.query) {
@@ -40,7 +63,11 @@ class JobList extends Component {
                             <Fragment>
                                 <Portal isOpen={this.state.filterModal}  >
                                     <ModalViewWithScrim>
-                                        <FilterModal closeModal = {this.closeFilterModal}/>
+                                        <FilterModal 
+                                            closeModal = {this.closeFilterModal} 
+                                            sortDropdown = {this.sortDropdown} 
+                                            jobStatusDropdown = {this.jobStatusDropdown}  
+                                        />
                                     </ModalViewWithScrim>
                                 </Portal>
                                 <div className="cursor-default ">
