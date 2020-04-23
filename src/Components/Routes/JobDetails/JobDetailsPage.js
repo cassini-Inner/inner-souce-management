@@ -115,7 +115,7 @@ const JobDetailsPage = (props) => {
 
 const mapStateToProps = state => {
     return {
-        user: state
+        user: state.user
     }
 }
 

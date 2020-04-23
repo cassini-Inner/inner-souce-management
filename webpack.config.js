@@ -2,7 +2,7 @@ var path = require("path");
 var HtmlWebpackPlugin =  require("html-webpack-plugin");
 
 module.exports = {
-    entry : "./src/index.js",
+    entry: "./src/index.js",
     output : {
         path : path.resolve(__dirname , "dist"),
         filename: "index_bundle.js",
@@ -25,6 +25,7 @@ module.exports = {
         })
     ],
     devServer: {
+        port: 3000,
         historyApiFallback: true,
     },
     devtool: "cheap-module-eval-source-map"

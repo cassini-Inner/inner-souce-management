@@ -129,7 +129,7 @@ const EditProfileBody = (props) => {
 
 const mapStateToProps = state => {
     return {
-        user: state
+        user: state.user
     }
 }
 

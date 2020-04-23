@@ -3,6 +3,7 @@ import Routes from "./Routes/Routes";
 import Sidebar from "./Navigation/Sidebar";
 import { BrowserRouter, Route } from "react-router-dom";
 import LoginPage from "./Routes/Login/Login";
+import Authenticate from "./Routes/Login/Auth";
 import { Switch } from "react-router";
 import OnboardingPage from "./Routes/Onboarding/OnboardingPage";
 
@@ -13,6 +14,8 @@ const App = () => {
                 <Switch>
                     <Route path="/login" exact={true}
                         component={(props) => { return (<LoginPage/>); }}/>
+                    <Route path="/auth/result" exact={true}
+                        component={(props) => { return (<Authenticate/>); }}/>
                     <Route path="/onboard" exact={true} component={(props) => {
                         return (<OnboardingPage/>);
                     }}/>

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
-
+import { CLIENT_ID, redirect_url } from '../../../config';
 
 const LoginPage = (props) => {
     const body = (
@@ -16,19 +16,25 @@ const LoginPage = (props) => {
               Innersource helps you find awesome projects and collaboration opportunities within your organisation.
             </p>
             <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
-            <Link to="/onboard">
-                <button className="w-full md:w-auto">
+            {/* <Link to="/onboard"> */}
+                <button className="w-full md:w-auto" onClick={()=>Authenticator()}>
                     <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-lg items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
                         <Icons.GitHub className="text-white "/>
                         <p className="px-6 text-white font-semibold whitespace-no-wrap">Continue with GitHub</p>
                     </div>
                 </button>
-            </Link>
+            {/* </Link> */}
         </div>
     );
     return (
         <SplitContainerWithImage body={body}/>
     );
 };
+
+const Authenticator = () => {
+    console.log("Initiating Authentication")
+    window.open(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirect_url}&scope=read:user user:email`, '_self');
+}
+
 
 export default LoginPage;

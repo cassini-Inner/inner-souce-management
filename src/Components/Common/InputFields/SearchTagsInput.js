@@ -5,6 +5,7 @@ import TextInputLabel from "./TextInputLabel";
 import PropTypes from "prop-types";
 
 const SearchTagsInput = (props) => {
+
     const [state, setState] = useState({
         tagList: props.initialList || [],
         input: "",
@@ -19,7 +20,12 @@ const SearchTagsInput = (props) => {
             });
             event.target.value = "";
         }
+        //For the parent component to get the tag list 
+        if(props.getTagList) {
+            props.getTagList( [...state.tagList, state.input]);
+        }
     };
+
 
     const removeTag = (event) => {
         let temp = [...state.tagList];
@@ -39,7 +45,7 @@ const SearchTagsInput = (props) => {
                 placeholder={props.placeholder}
                 onKeyDown={addTag}
             />
-            <div className="flex flex-row flex-wrap">
+            <div className="flex flex-row flex-wrap" >
                 {
                     state.tagList.map((tag, index) => {
                         return (

@@ -10,7 +10,6 @@ import ManageJobs from "./ManageJobs/ManageJobs";
 import EditProfile from "./Profile/EditProfile";
 
 const Routes = (props) => {
-    const parentProps = props;
     return (
         <Switch>
             <Route path="/jobDetails/:id"

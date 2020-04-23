@@ -9,27 +9,43 @@ import ModalViewWithScrim from '../../Modals/ModalViewWithScrim';
 import MilestoneModal from '../../Modals/MilestoneModal';
 import Portal from '../../Containers/Portal';
 import { withRouter } from "react-router";
+import * as actions from "../../../Store/actions";
+import { connect } from "react-redux";
+import { validateJob, validateMilestone } from "./ValidateForm";
 
 class CreateJob extends Component {
 
     state = {
         milestoneModal: false,
+        milestoneNo: 0,
         msg: "",
         msgType: "",
         job: {
             title:"",
             description: "",
-            difficult: "",
-            milestones: {
+            difficulty: "Intermediate", //Default value in the dropdown
+            milestones: [{
                 title: "",
                 description: "",
                 duration: "",
+                durationUnit: "Weeks", //Default value in the dropdown
                 skills: [],
                 resolutionMethod: ""
-            }
+            }]
         }
     }
 
+    getTagList = (skillList) => {
+        console.log(skillList);
+        this.setState({
+            job: {
+                milestones: {
+                    milestoneSkills: skillList,
+                }
+            }
+        })
+    }
+    
     openMilestoneModal = () => {
         this.setState({
             milestoneModal: true,
@@ -42,9 +58,27 @@ class CreateJob extends Component {
         })
     };
 
-    onChangeHandler = (event) => {
-        console.log(event.currentTarget.id, event.currentTarget.value)
+    saveMilestone = () => {
+        // let isMilestoneValid, milestone = validateMilestone(this.state.milestoneSkills);
+        this.setState({
+            milestoneModal: false,
+        })
+    };
+
+    validateForm = () => {
+        // const some = (job) =>{
+        //     console.log(job);
+        //     if(!isJobValid) {
+        //         alert("hii");
+        //     }
+        // }
+        // validateJob(some);
     }
+
+    onInputChangeHandler = (event) => {
+        console.log(event.currentTarget.id, event.currentTarget.value);
+    }
+
 
     goBack = () => {
         const cancel = window.confirm("Are you sure you want cancel this job creation?")
@@ -55,7 +89,7 @@ class CreateJob extends Component {
 
     ButtonRow = [
         <Button type="secondary" label="Cancel Job Creation" onClick={() => this.goBack()}/>,
-        <Button type="primary" label="Submit Job" />
+        <Button type="primary" label="Submit Job" onClick={() => this.validateForm() }/>
     ]
 
 
@@ -70,13 +104,18 @@ class CreateJob extends Component {
                     milestoneNo="4"
                 />
                 <SplitContainer
-                    leftView={<JobForm msg={this.props.msg} msgType={this.props.msgType} onChangeHandler={this.onChangeHandler}/>}
+                    leftView={<JobForm msg={this.state.msg} msgType={this.state.msgType} state={this.state} onChange={this.onInputChangeHandler} />}
                     rightView={<Milestones openMilestoneModal={this.openMilestoneModal} />}
                     actions={this.ButtonRow}
                 />
                 <Portal isOpen={this.state.milestoneModal} >
                     <ModalViewWithScrim>
-                        <MilestoneModal closeModal={this.closeMilestoneModal} />
+                        <MilestoneModal 
+                            saveMilestone={this.saveMilestone} 
+                            closeModal={this.closeMilestoneModal} 
+                            getTagList = {this.getTagList}
+                            onChange={this.onInputChangeHandler}
+                        />
                     </ModalViewWithScrim>
                 </Portal>
             </Fragment>
@@ -88,15 +127,15 @@ const JobForm = (props) => {
     return (
         <div className="bg-white flex flex-col w-full h-full mt-10">
             <h2 className="text-sm font-semibold ">Job Title</h2>
-            <TextInput id="jobTitle" className="mt-2 w-full" placeholder="Give your Job a small title" onChange={props.onChangeHandler}/>
+            <TextInput id="jobTitle" className="mt-2 w-full" placeholder="Give your Job a small title" onChange={props.onChange} />
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
-            <TextAreaInput id="jodDesc" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChangeHandler}/>
+            <TextAreaInput id="jobDescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
                     <p className="text-nebula-grey-700 leading-tight text-sm">How difficult is the job?</p>
                 </div>
-                <Dropdown list={["Intermediate", "Easy", "Hard"]} />
+                <Dropdown id="jobDifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
             </div>
             { //To display error and success messages
                 props.msg?
@@ -127,5 +166,19 @@ const Milestones = (props) => {
         </div>
     );
 }
+
+// const mapStateToProps = state => {
+//     return {
+//         jobStore: state.createJob
+//     }
+// }
+
+// const mapDispatchToProps = dispatch => {
+//     return {
+//       setJobFields: () => dispatch({ type: actions.SET_CREATEJOB_JOBFIELDS }),
+//       setMilestoneFields: () => dispatch({ type: actions.SET_CREATEJOB_MILESTONEFIELDS }),
+//       cancelJobCreation: () => dispatch({ type: actions.CANCEL_CREATEJOB })
+//     }
+// }
 
 export default withRouter(CreateJob);
