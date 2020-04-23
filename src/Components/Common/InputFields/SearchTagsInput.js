@@ -14,15 +14,17 @@ const SearchTagsInput = (props) => {
     const addTag = (event) => {
         state.input = event.target.value;
         if (event.key === "Enter" && state.input.trim() !== "") {
+            const tagList = [...state.tagList, state.input];
             setState({
-                tagList: [...state.tagList, state.input],
+                tagList: tagList,
                 input: "",
             });
             event.target.value = "";
-        }
-        //For the parent component to get the tag list 
-        if(props.getTagList) {
-            props.getTagList( [...state.tagList, state.input]);
+
+            //For the parent component to get the tag list 
+            if(props.getTagList) {
+                props.getTagList(tagList);
+            }
         }
     };
 

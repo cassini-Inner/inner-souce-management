@@ -9,74 +9,135 @@ import ModalViewWithScrim from '../../Modals/ModalViewWithScrim';
 import MilestoneModal from '../../Modals/MilestoneModal';
 import Portal from '../../Containers/Portal';
 import { withRouter } from "react-router";
-import * as actions from "../../../Store/actions";
-import { connect } from "react-redux";
 import { validateJob, validateMilestone } from "./ValidateForm";
 
 class CreateJob extends Component {
 
     state = {
         milestoneModal: false,
-        milestoneNo: 0,
-        msg: "",
-        msgType: "",
+        milestoneNo: -1, //No milestones in the job initially
+        milestoneErrMsg: "",
+        jobErrMsg: "",
         job: {
             title:"",
             description: "",
             difficulty: "Intermediate", //Default value in the dropdown
-            milestones: [{
-                title: "",
-                description: "",
-                duration: "",
-                durationUnit: "Weeks", //Default value in the dropdown
-                skills: [],
-                resolutionMethod: ""
-            }]
+            milestones: [],
+        },
+        milestone: {
+            title: "",
+            description: "",
+            duration: "",
+            durationUnit: "Weeks", //Default value in the dropdown
+            skills: [],
+            resolution: ""
         }
     }
 
-    getTagList = (skillList) => {
-        console.log(skillList);
+    //To set the skill tags of the milestone
+    getTagList = (skillList) => {   
         this.setState({
-            job: {
-                milestones: {
-                    milestoneSkills: skillList,
-                }
+            milestone: {
+                ...this.state.milestone,
+                skills: skillList,
             }
-        })
+        });
     }
     
     openMilestoneModal = () => {
         this.setState({
             milestoneModal: true,
+            milestoneNo: this.state.milestoneNo + 1,
         })
     };
 
     closeMilestoneModal = () => {
         this.setState({
             milestoneModal: false,
+            milestoneNo: this.state.milestoneNo - 1,
         })
     };
 
+    //To validate and save the milestone
     saveMilestone = () => {
-        // let isMilestoneValid, milestone = validateMilestone(this.state.milestoneSkills);
-        this.setState({
-            milestoneModal: false,
-        })
+        let isMilestoneValid = validateMilestone(this.state.milestone);
+        if(isMilestoneValid) {
+            const updatedMilestones = [...this.state.job.milestones, this.state.milestone]
+            //To save the newly created milestone into the existing list of milestones
+            this.setState({
+                milestoneModal: false,
+                job: {
+                    ...this.state.job,
+                    milestones: updatedMilestones,
+                },
+                //To empty the milestone after insertion
+                milestone: {
+                    title: "",
+                    description: "",
+                    duration: "",
+                    durationUnit: "Weeks", //Default value in the dropdown
+                    skills: [],
+                    resolution: ""
+                }
+            });
+        }
+        else {
+            this.setState({
+                ...this.state,
+                milestoneErrMsg: "Empty field(s)!!"
+            });
+        }
     };
 
+    
     validateForm = () => {
-        // const some = (job) =>{
-        //     console.log(job);
-        //     if(!isJobValid) {
-        //         alert("hii");
-        //     }
-        // }
-        // validateJob(some);
+
     }
 
+    //To get all the input values and store them in the state
     onInputChangeHandler = (event) => {
-        console.log(event.currentTarget.id, event.currentTarget.value);
+        const value = event.currentTarget.value;
+        switch(event.currentTarget.id) {
+            case "jobTitle": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                job: {...this.state.job, title: value}});break;
+
+            case "jobDescription": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                job:{...this.state.job, description: value}});break;
+
+            case "jobDifficulty": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                job:{...this.state.job, difficulty: value}});break;
+
+            case "milestoneTitle": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                milestone:{...this.state.milestone, title: value}});break;
+
+            case "milestoneDescription": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                milestone:{...this.state.milestone, description: value}});break;
+
+            case "milestoneDuration": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                milestone:{...this.state.milestone, duration: value}});break;
+
+            case "milestoneDurationUnit": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                milestone:{...this.state.milestone, durationUnit: value}});break;
+
+            case "milestoneResolution": this.setState({...this.state,
+                milestoneErrMsg:"",
+                jobErrMsg:"",
+                milestone:{...this.state.milestone, resolution: value}});break;
+        }
     }
 
 
@@ -115,6 +176,8 @@ class CreateJob extends Component {
                             closeModal={this.closeMilestoneModal} 
                             getTagList = {this.getTagList}
                             onChange={this.onInputChangeHandler}
+                            errMsg={this.state.milestoneErrMsg}
+                            milestoneNo={this.state.milestoneNo+1}//milestoneNo refers to array index hence +1
                         />
                     </ModalViewWithScrim>
                 </Portal>
@@ -137,10 +200,10 @@ const JobForm = (props) => {
                 </div>
                 <Dropdown id="jobDifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
             </div>
-            { //To display error and success messages
+            { //To display error messages
                 props.msg?
                 <div 
-                    className = {"mt-6 "+(props.msgType == "error" ? "text-nebula-red" : "text-nebula-blue") }>
+                    className = {"mt-6 text-nebula-red" }>
                         {props.msg}
                     </div>
                 : ""
@@ -166,19 +229,5 @@ const Milestones = (props) => {
         </div>
     );
 }
-
-// const mapStateToProps = state => {
-//     return {
-//         jobStore: state.createJob
-//     }
-// }
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//       setJobFields: () => dispatch({ type: actions.SET_CREATEJOB_JOBFIELDS }),
-//       setMilestoneFields: () => dispatch({ type: actions.SET_CREATEJOB_MILESTONEFIELDS }),
-//       cancelJobCreation: () => dispatch({ type: actions.CANCEL_CREATEJOB })
-//     }
-// }
 
 export default withRouter(CreateJob);

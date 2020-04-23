@@ -32,10 +32,10 @@ const MilestoneModal = (props) => {
                 </div>
             </div>
             <div id="footer" className="py-4 sticky bottom-0 bg-white">
-                {
-                    props.information ?
-                        <div id="information" className="flex-1 p-2">
-                            {props.information}
+                { //To display error messages
+                    props.errMsg ?
+                        <div id="information" className="flex-1 p-2 text-nebula-red">
+                            {props.errMsg}
                         </div> : ""
                 }
                 <div className="flex flex-col justify-between flex-wrap md:flex-row" >
@@ -48,7 +48,6 @@ const MilestoneModal = (props) => {
                     </div>
                 </div>
             </div>
-
         </ModalContainer>
 
     );
