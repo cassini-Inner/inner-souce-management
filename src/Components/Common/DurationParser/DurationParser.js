@@ -26,3 +26,15 @@ export const DurationParser = (days) => {
     }
     return duration;
 }; 
+
+// To get the duration as a string like 1 Weeks, 1 Months, 1 Days
+export const durationStringToDays = (duration) => {
+    duration = duration.toLowerCase();
+    let [ days, unit ] = duration.split(" ");
+    switch(unit) {
+        case "weeks": days *= 7;break;
+        case "days": days *= 1;break;
+        case "months": days *= 30;break;
+    }
+    return days;
+};

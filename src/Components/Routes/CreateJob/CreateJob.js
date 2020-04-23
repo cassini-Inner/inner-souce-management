@@ -10,12 +10,14 @@ import MilestoneModal from '../../Modals/MilestoneModal';
 import Portal from '../../Containers/Portal';
 import { withRouter } from "react-router";
 import { validateJob, validateMilestone } from "./ValidateForm";
+import MilestoneCard from "../../Milestones/MilestoneCard";
+import { durationStringToDays } from "../../Common/DurationParser/DurationParser";
 
 class CreateJob extends Component {
 
     state = {
         milestoneModal: false,
-        milestoneNo: -1, //No milestones in the job initially
+        milestoneCount: -1, //No milestones in the job initially
         milestoneErrMsg: "",
         jobErrMsg: "",
         job: {
@@ -47,14 +49,14 @@ class CreateJob extends Component {
     openMilestoneModal = () => {
         this.setState({
             milestoneModal: true,
-            milestoneNo: this.state.milestoneNo + 1,
+            milestoneCount: this.state.milestoneCount + 1,
         })
     };
 
     closeMilestoneModal = () => {
         this.setState({
             milestoneModal: false,
-            milestoneNo: this.state.milestoneNo - 1,
+            milestoneCount: this.state.milestoneCount - 1,
         })
     };
 
@@ -62,7 +64,17 @@ class CreateJob extends Component {
     saveMilestone = () => {
         const isMilestoneValid = validateMilestone(this.state.milestone);
         if(isMilestoneValid) {
-            const updatedMilestones = [...this.state.job.milestones, this.state.milestone]
+            //To change the duration into days before saving it
+            let newMilestone ={
+                id: this.state.milestoneCount+1,
+                title: this.state.milestone.title,
+                description: this.state.milestone.description,
+                duration: durationStringToDays(this.state.milestone.duration+" "+this.state.milestone.durationUnit),
+                skills: this.state.milestone.skills,
+                resolution: this.state.milestone.resolution,
+            }
+            
+            const updatedMilestones = [...this.state.job.milestones, newMilestone]
             //To save the newly created milestone into the existing list of milestones
             this.setState({
                 milestoneModal: false,
@@ -84,22 +96,23 @@ class CreateJob extends Component {
         else {
             this.setState({
                 ...this.state,
-                milestoneErrMsg: "Empty field(s)!!"
+                milestoneErrMsg: "Empty fields!"
             });
         }
     };
 
     //To validate the whole form 
     validateForm = () => {
-        const isFormValid = validateJob(this.milestoneNo, this.state.job);
+        const isFormValid = validateJob(this.state.milestoneCount + 1, this.state.job); //milestoneCount refers to array index hence +1
         if(isFormValid) {
             console.log("Hiii");
         }
+
         else {
             console.log("Not hii");
             this.setState({
                 ...this.state,
-                jobErrMsg: "Empty field(s)!!"
+                jobErrMsg: "Please fill all the fields and add at least one milestone!"
             });
         }
     }
@@ -176,7 +189,7 @@ class CreateJob extends Component {
                 />
                 <SplitContainer
                     leftView={<JobForm jobErrMsg={this.state.jobErrMsg} state={this.state} onChange={this.onInputChangeHandler} />}
-                    rightView={<Milestones openMilestoneModal={this.openMilestoneModal} />}
+                    rightView={<Milestones milestoneCount={this.state.milestoneCount} milestones={this.state.job.milestones} openMilestoneModal={this.openMilestoneModal} />}
                     actions={this.ButtonRow}
                 />
                 <Portal isOpen={this.state.milestoneModal} >
@@ -187,7 +200,7 @@ class CreateJob extends Component {
                             getTagList = {this.getTagList}
                             onChange={this.onInputChangeHandler}
                             errMsg={this.state.milestoneErrMsg}
-                            milestoneNo={this.state.milestoneNo+1}//milestoneNo refers to array index hence +1
+                            milestoneNo={this.state.milestoneCount+1}//milestoneCount refers to array index hence +1
                         />
                     </ModalViewWithScrim>
                 </Portal>
@@ -225,17 +238,34 @@ const JobForm = (props) => {
 
 const Milestones = (props) => {
     return (
-        <div className="flex-col p-2 pt-0">
-            <div className="text-2xl">
-                Milestones
+        <div>
+            <div className="flex-col p-2 pt-0">
+                <div className="text-2xl">
+                    Milestones
+                </div>
+                <div className="mt-6 flex-wrap">
+                    Break down your job into smaller actionable milestones to help people understand it better.
+                    They can also choose to work on individual milestones they find interesting.
+                </div>
+                <div className="mt-6">
+                    <Button type="primary" label="Add a new Milestone" onClick={props.openMilestoneModal} />
+                </div>
             </div>
-            <div className="mt-6 flex-wrap">
-                Break down your job into smaller actionable milestones to help people understand it better.
-                They can also choose to work on individual milestones they find interesting.
-            </div>
-            <div className="mt-6">
-                <Button type="primary" label="Add a new Milestone" onClick={props.openMilestoneModal} />
-            </div>
+            <ul className="py-8">
+                {
+                    props.milestoneCount > -1 ?
+                        props.milestones.map(
+                            (milestone, index) => {
+                                return (
+                                    <li key={index}>
+                                        <MilestoneCard milestone={milestone} isEditMode={true} index={index} lastIndex={props.milestoneCount+1} />
+                                    </li>
+                                );
+                            })
+                        :
+                        ""
+                }
+            </ul>
         </div>
     );
 }

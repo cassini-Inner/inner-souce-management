@@ -11,6 +11,11 @@ export const GET_MILESTONES = gql`
                     id
                     title
                     description: desc
+                    #ToDo add this
+                    # skills {
+                    #     id                             
+                    #     value
+                    # }
                     status
                     duration
                     resolution

@@ -57,7 +57,11 @@ class MilestoneCard extends Component {
                                     <Icons.ChevronUp />
                             </button>
                         </div>
-                        <StatusTags statusTag={[this.props.milestone.status.toLowerCase()]}/>
+                        {   
+                            this.props.milestone.status ? 
+                            <StatusTags statusTag={[this.props.milestone.status.toLowerCase()]}/>
+                            :""
+                        }
                         {
                             isExpanded &&
                             <div >
@@ -65,7 +69,16 @@ class MilestoneCard extends Component {
                                 <div className="flex flex-row flex-wrap">
                                     <InfoTag className="mr-6 mt-4" title="DURATION" data={ DurationParser(this.props.milestone.duration) } /> 
                                     <InfoTag className="mr-6 mt-4" title="RESOLUTION METHODS" data={this.props.milestone.resolution} />
-                                </div>
+                                    { 
+                                        this.props.milestone.skills?
+                                        <InfoTag 
+                                            className="mr-6 mt-4"
+                                            title="SKILLS NEEDED" 
+                                            data={this.props.milestone.skills} 
+                                        />
+                                        : []
+                                    }
+                                    </div>
                             </div>
                         }
                     </div>

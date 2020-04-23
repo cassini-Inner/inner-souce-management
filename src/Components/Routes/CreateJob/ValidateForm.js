@@ -1,11 +1,12 @@
 
 
-export const validateJob = (noOfMilestones, job) => {
+export const validateJob = (milestoneCount, job) => {
     console.log("Job Validation");
+    console.log(milestoneCount, job);
     if(!job.title.trim()) return false;
     if(!job.description.trim()) return false;
     if(!job.difficulty.trim()) return false;
-    if(!job.milestones.length || !(noOfMilestones == job.milestones.length)) return false;
+    if(!job.milestones.length || !(milestoneCount == job.milestones.length)) return false;
     return true;
 }
 

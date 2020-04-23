@@ -26,7 +26,7 @@ const MilestoneModal = (props) => {
                         </div>
                     </div>
                     <h2 className="text-sm font-semibold mt-4">Skills Required</h2>
-                    <SearchTagsInput getTagList={props.getTagList} placeholder="Skills required to complete the milestone" />
+                    <SearchTagsInput getTagList={props.getTagList} placeholder="Type the skills required and press Enter key" />
                     <h2 className="text-sm font-semibold my-4">Milestone Resolution Method</h2>
                     <TextInput id="milestoneResolution" placeholder="eg. Accepted Github pull request" onChange={props.onChange} />
                 </div>

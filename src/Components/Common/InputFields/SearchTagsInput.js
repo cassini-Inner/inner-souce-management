@@ -36,6 +36,9 @@ const SearchTagsInput = (props) => {
             tagList: temp,
             input: state.input,
         });
+        if(props.getTagList) {
+            props.getTagList(temp);
+        }
     };
 
     return (
