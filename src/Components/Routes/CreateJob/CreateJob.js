@@ -60,7 +60,7 @@ class CreateJob extends Component {
 
     //To validate and save the milestone
     saveMilestone = () => {
-        let isMilestoneValid = validateMilestone(this.state.milestone);
+        const isMilestoneValid = validateMilestone(this.state.milestone);
         if(isMilestoneValid) {
             const updatedMilestones = [...this.state.job.milestones, this.state.milestone]
             //To save the newly created milestone into the existing list of milestones
@@ -89,9 +89,19 @@ class CreateJob extends Component {
         }
     };
 
-    
+    //To validate the whole form 
     validateForm = () => {
-
+        const isFormValid = validateJob(this.milestoneNo, this.state.job);
+        if(isFormValid) {
+            console.log("Hiii");
+        }
+        else {
+            console.log("Not hii");
+            this.setState({
+                ...this.state,
+                jobErrMsg: "Empty field(s)!!"
+            });
+        }
     }
 
     //To get all the input values and store them in the state
@@ -165,7 +175,7 @@ class CreateJob extends Component {
                     milestoneNo="4"
                 />
                 <SplitContainer
-                    leftView={<JobForm msg={this.state.msg} msgType={this.state.msgType} state={this.state} onChange={this.onInputChangeHandler} />}
+                    leftView={<JobForm jobErrMsg={this.state.jobErrMsg} state={this.state} onChange={this.onInputChangeHandler} />}
                     rightView={<Milestones openMilestoneModal={this.openMilestoneModal} />}
                     actions={this.ButtonRow}
                 />
@@ -201,10 +211,10 @@ const JobForm = (props) => {
                 <Dropdown id="jobDifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
             </div>
             { //To display error messages
-                props.msg?
+                props.jobErrMsg?
                 <div 
                     className = {"mt-6 text-nebula-red" }>
-                        {props.msg}
+                        {props.jobErrMsg}
                     </div>
                 : ""
             }

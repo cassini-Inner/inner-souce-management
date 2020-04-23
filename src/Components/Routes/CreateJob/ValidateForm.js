@@ -1,8 +1,12 @@
 
 
-export const validateJob = (some) => {
+export const validateJob = (noOfMilestones, job) => {
     console.log("Job Validation");
-
+    if(!job.title.trim()) return false;
+    if(!job.description.trim()) return false;
+    if(!job.difficulty.trim()) return false;
+    if(!job.milestones.length || !(noOfMilestones == job.milestones.length)) return false;
+    return true;
 }
 
 
