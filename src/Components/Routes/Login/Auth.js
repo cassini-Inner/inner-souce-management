@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router";
 import { AUTHENTICATE } from "../../../mutations";
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation } from '@apollo/client';
 
 
 const Authenticate = (props) => {
