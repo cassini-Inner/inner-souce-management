@@ -4,17 +4,25 @@ import TextInput from "../../Common/InputFields/TextInput";
 import SearchTagsInput from "../../Common/InputFields/SearchTagsInput";
 import Button from "../../Common/Button/Button";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+import { connect } from "react-redux";
+import { USER_SIGN_IN } from "../../../Store/actions";
 
 const OnboardingPage = (props) => {
-    console.log(document.cookie);
+    const profile = props.location.state.profile;
+    if(profile.githubName && !props.user.loggedIn) {
+        props.setUserData(profile);
+    }
     const body = (
         <div className="flex flex-col w-full px-4 font-semibold ">
             <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
-            <p className="text-3xl">Tushar Paliwal</p>
+            <p className="text-3xl">{profile.githubName}</p>
 
             <p className="text-lg text-nebula-grey-600 mt-2">Before we get
               started, we’d like get to know you a little better.</p>
 
+            <label className="mt-10">Your Full Name</label>
+            <TextInput placeholder="Full Name"/>
             <label className="mt-10">Your position in company</label>
             <TextInput placeholder="Position"/>
             <label className="mt-10">Your department</label>
@@ -35,4 +43,17 @@ const OnboardingPage = (props) => {
     );
 };
 
-export default OnboardingPage;
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+      setUserData: (profile) => dispatch({ type: USER_SIGN_IN, payload: {profile: profile}})
+    }
+  }
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(OnboardingPage));
+

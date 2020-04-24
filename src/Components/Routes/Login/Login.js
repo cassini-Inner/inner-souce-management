@@ -32,7 +32,6 @@ const LoginPage = (props) => {
 };
 
 const Authenticator = () => {
-    console.log("Initiating Authentication")
     window.open(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirect_url}&scope=read:user user:email`, '_self');
 }
 
