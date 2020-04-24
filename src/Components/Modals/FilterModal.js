@@ -25,11 +25,13 @@ const FilterModal = (props) => {
             </div>
             <hr />
             <div id="footer" className="mt-2 flex-col">
-                <div id="buttons" className="">
+                <div id="buttons" className="flex-row">
                     <div className="flex flex-wrap-reverse lg:flex-row-reverse">
                         <Button className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="secondary" label = "Cancel" onClick = { props.closeModal } />
                         <div className="m-1" />
                         <Button  className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="primary" label = "Apply Filter" onClick = { props.applyFilter } />
+                        <div className="m-1" />
+                        <Button className="flex mb-4 mt-1 lg:flex-grow-0" type="error" label = "Reset" onClick = { props.resetFilter } />
                     </div>
                 </div>
             </div>

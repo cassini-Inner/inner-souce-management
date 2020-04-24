@@ -12,16 +12,13 @@ import jobFilterReducer from "./Store/reducers/jobFilterModal";
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: new HttpLink({
+    headers: { Authorization: "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODgzMzU1MjQsImp0aSI6IjQiLCJpYXQiOjE1ODc3MzA3MjQsImlzcyI6ImlubmVyc291cmNlIn0.FSaoi6Jnc4ZGr4UPZdP7seuXzJWnWv4cnxXfnPBvGBU" },
+    cache: new InMemoryCache(),
+    link: new HttpLink({
     uri: 'http://localhost:8080/query',
-  })
+    })
 });
 
-// const client = new ApolloClient({
-//     // headers: { Authorization: "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODgzMzU1MjQsImp0aSI6IjQiLCJpYXQiOjE1ODc3MzA3MjQsImlzcyI6ImlubmVyc291cmNlIn0.FSaoi6Jnc4ZGr4UPZdP7seuXzJWnWv4cnxXfnPBvGBU" },
-//     uri: "http://localhost:8080/query",
-// });
   
 const rootReducer = combineReducers({
     user: userReducer,

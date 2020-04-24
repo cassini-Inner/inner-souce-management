@@ -8,7 +8,6 @@ const OngoingJobsGrid = (props) => {
     let queryVariables = {}
     if(props.location == "home") {
         queryVariables = {userId: props.user.id};
-        console.log(props.user)
     }
     else if(props.queryVariables) {
         queryVariables = props.queryVariables;

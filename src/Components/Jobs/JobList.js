@@ -8,21 +8,24 @@ import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
 import { Query } from '@apollo/react-components';
+import { compose } from 'redux'
 
 
 class JobList extends Component {
 
     constructor(props) {
         super(props);
+        this.defaultSortOrder = "NEWEST";
+        this.defaultJobStatus = ["OPEN","ONGOING"];
         this.state = {
             filterModal: false,
             filterModalSortValue: "",
             filterModalJobStatusValue: [],
             skills: [],
             filter: {
-                status: ["OPEN","ONGOING"],
+                status: this.defaultJobStatus,
                 skills:  this.props.userSkills? this.props.userSkills : [],
-                sortOrder: "NEWEST",
+                sortOrder:  this.defaultSortOrder,
             }
         };
     }
@@ -37,19 +40,31 @@ class JobList extends Component {
     closeFilterModal = () => {
         this.setState({
             filterModal: false,
-            filterModalSortValue: "NEWEST",
-            filterModalJobStatusValue: ["OPEN","ONGOING"],
-            skills: this.props.userSkills,
         });
     };
+
+    resetFilter = () => {
+        //Reset to default filters on reseting the filter
+        this.setState({
+            filterModal: false,
+            filterModalSortValue:  this.defaultSortOrder,
+            filterModalJobStatusValue: this.defaultJobStatus,
+            skills: this.props.userSkills,
+            filter: {
+                sortOrder: this.defaultSortOrder,
+                status: this.defaultJobStatus,
+                skills: this.props.userSkills,
+            }
+        });
+    }
 
     applyFilter = () => {
          this.setState({
             filterModal: false,
             filter: {
-                status: this.state.filterModalJobStatusValue,
+                status: this.state.filterModalJobStatusValue ? this.state.filterModalJobStatusValue : this.defaultJobStatus,
                 skills: this.state.skills,
-                sortOrder: this.state.filterModalSortValue,
+                sortOrder: this.state.filterModalSortValue ? this.state.filterModalSortValue : this.defaultSortOrder,
             }
         });
     }
@@ -93,41 +108,40 @@ class JobList extends Component {
                 {({ loading, error, data }) => {
                     if (loading) return null;
                     if (error) return `Error! ${error}`;
-                    if(data["allJobs"]) {
-                        return (
-                            <Fragment>
-                                <Portal isOpen={this.state.filterModal}  >
-                                    <ModalViewWithScrim>
-                                        <FilterModal 
-                                            closeModal = {this.closeFilterModal} 
-                                            sortDropdown = {this.filterModalSortDropdown} 
-                                            jobStatusDropdown = {this.filterModalJobStatusDropdown}  
-                                            getTagList = {this.filterModalSkillTags}
-                                            applyFilter = {this.applyFilter}
-                                        />
-                                    </ModalViewWithScrim>
-                                </Portal>
-                                <div className="cursor-default ">
-                                    <div className=" w-full mt-6 ">
-                                        <h1 className="text-2xl flex-1">{this.props.title}</h1>
-                                        {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
-                                    <hr/>
-                                    </div>
-                                    {    
+                    return (
+                        <Fragment>
+                            <Portal isOpen={this.state.filterModal}  >
+                                <ModalViewWithScrim>
+                                    <FilterModal 
+                                        closeModal = {this.closeFilterModal} 
+                                        sortDropdown = {this.filterModalSortDropdown} 
+                                        jobStatusDropdown = {this.filterModalJobStatusDropdown}  
+                                        getTagList = {this.filterModalSkillTags}
+                                        applyFilter = {this.applyFilter}
+                                        resetFilter = {this.resetFilter}
+                                    />
+                                </ModalViewWithScrim>
+                            </Portal>
+                            <div className="cursor-default ">
+                                <div className=" w-full mt-6 ">
+                                    <h1 className="text-2xl flex-1">{this.props.title}</h1>
+                                    {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                                <hr/>
+                                </div>
+                                {   
+                                    data["allJobs"] ?
                                         data["allJobs"].map(data => {
                                             return (
                                             <JobCard data={data}/>
                                             );
-                                        })
-                                    }
-                                </div>
-                            </Fragment>
-                        );
-                    }
-                    else {
-                        return(<div>No Jobs</div>)
-                    }
-                    }}
+                                        }) 
+                                    : 
+                                        <div>No Jobs</div>
+                                }
+                            </div>
+                        </Fragment>
+                    );
+                }}
                 </Query>
             );
         }
