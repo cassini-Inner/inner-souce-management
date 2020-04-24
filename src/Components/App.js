@@ -6,8 +6,26 @@ import LoginPage from "./Routes/Login/Login";
 import Authenticate from "./Routes/Login/Auth";
 import { Switch } from "react-router";
 import OnboardingPage from "./Routes/Onboarding/OnboardingPage";
+import { connect } from "react-redux";
+import { INIT_USER_REDUX } from "../Store/actions";
+import { useCookies } from 'react-cookie';
 
-const App = () => {
+const App = (props) => {
+
+    //Check if the user store in redux is empty 
+    if(!(props.user && props.user.id && props.user.token)) {
+        
+        const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
+        //Check if cookies are set then set the user redux store with respective values
+        if(cookies.token&&cookies.id&&cookies.githubName) {
+            props.initUserRedux({
+                token: cookies.token,
+                id: cookies.id,
+                githubName: cookies.githubName,
+            });
+        }
+    }
+
     return (
         <React.StrictMode>
             <BrowserRouter>
@@ -37,4 +55,16 @@ const App = () => {
         </React.StrictMode>
     );
 };
-export default App;
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+      initUserRedux: (data) => dispatch({ type: INIT_USER_REDUX, payload: {user: data}})
+    }
+  }
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

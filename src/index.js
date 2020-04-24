@@ -4,7 +4,7 @@ import App from "./Components/App";
 import "../assets/style/index.css";
 import {  ApolloProvider } from "@apollo/react-components";
 import {  ApolloProvider as ApolloHooksProvider  } from "@apollo/client";
-// import ApolloClient from "apollo-boost";
+import { CookiesProvider } from 'react-cookie';
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import userReducer from "./Store/reducers/user";
@@ -28,12 +28,14 @@ const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && wi
 
 
 ReactDOM.render(
-    <ApolloHooksProvider client = {client}>
-    <ApolloProvider client={client}>
-        <Provider store = {store}>
-            <App />
-        </Provider>
-    </ApolloProvider>
-    </ApolloHooksProvider>,
+    <CookiesProvider>
+        <ApolloHooksProvider client = {client}>
+            <ApolloProvider client={client}>
+                <Provider store = {store}>
+                    <App />
+                </Provider>
+            </ApolloProvider>
+        </ApolloHooksProvider>
+    </CookiesProvider>,
     document.getElementById("App")
 );

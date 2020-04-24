@@ -7,16 +7,20 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { USER_SIGN_IN } from "../../../Store/actions";
+import { useCookies } from 'react-cookie';
 
 const OnboardingPage = (props) => {
-    const profile = props.location.state.profile;
-    if(profile.githubName && !props.user.loggedIn) {
-        props.setUserData(profile);
-    }
+    const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
+    // const profile = props.location.state.profile;
+    // if(props.user)
+    // if(cookies.githubName && !props.loggedIn) {
+        // props.setUserData(profile);
+
+    // }
     const body = (
         <div className="flex flex-col w-full px-4 font-semibold ">
             <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
-            <p className="text-3xl">{profile.githubName}</p>
+            <p className="text-3xl">{cookies.githubName}</p>
 
             <p className="text-lg text-nebula-grey-600 mt-2">Before we get
               started, we’d like get to know you a little better.</p>

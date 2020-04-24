@@ -3,42 +3,37 @@ import { Redirect } from "react-router";
 import { AUTHENTICATE } from "../../../mutations";
 import { useMutation } from '@apollo/client';
 import { withRouter } from "react-router";
-import { getCookie } from "../../../HelperFunctions/Cookies";
+import { useCookies } from 'react-cookie';
 
 const Authenticate = (props) => {
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const code = params.get('code');
+    const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
+    const [login, {loading, error}] = useMutation(AUTHENTICATE);
+    if(loading) return <p>Authenticating...</p>;
+    if(error) return <p>Authentication Error! {error}</p>;
 
     if(code) {
-        const [login, {loading, error}] = useMutation(AUTHENTICATE);
-        if(loading) return <p>Authenticating...</p>;
-        if(error) return <p>Authentication Error! {error}</p>;
         login({
             variables: {
                 githubCode: code
             }
         }).then(res => {
             // To set the cookie after authentication
-            console.log(res)
-            let cookieStr = "token=" + res.data.authenticate.token.toString(); //Token has to be the first key
-            cookieStr += "; id="+ res.data.authenticate.profile.id.toString();
-            cookieStr += "; name="+ res.data.authenticate.profile.githubName.toString();
-            //ToDo add expires=  expiry time
-            document.cookie = cookieStr;
+            console.log("Authres",res.data);
+            if(res.data.authenticate.profile.id)
+                setCookie('id', res.data.authenticate.profile.id);
+            if(res.data.authenticate.token)
+                setCookie('token', res.data.authenticate.token);
+            if(res.data.authenticate.profile.githubName)
+                setCookie('githubName',res.data.authenticate.profile.githubName);
+            console.log("cookies",cookies.id,cookies.token,cookies.githubName)
             if(res.data.authenticate.profile.onboarded) {
-                props.history.push({
-                    pathname: '/',
-                    search: '',
-                    state: res.data.authenticate,
-                });
+                props.history.push('/');
             }
             else {
-                props.history.push({
-                    pathname: '/onboard',
-                    search: '',
-                    state: res.data.authenticate,
-                });
+                props.history.push('/onboard');
             }
         },
         err => {
@@ -46,14 +41,10 @@ const Authenticate = (props) => {
         });
     }
 
-    if(getCookie('token')&&getCookie('id')&&getCookie('name')) {
-        console.log("hiii")
-        return <Redirect to={{
-            pathname: "/",
-            search: "",
-            state: { userId: getCookie('id')}
-          }} />
-    }
+    // if(cookies.token&&cookies.id&&cookies.githubName) {
+    //     console.log("hiii")
+    //     return <Redirect to="/" />
+    // }
 
     return <Redirect to={{
         pathname: "/login",

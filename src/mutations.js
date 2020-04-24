@@ -8,9 +8,7 @@ export const AUTHENTICATE = gql`
             onboarded
             id
             githubName
-            githubUrl
             photoUrl
-            bio
         }
         token
         }
