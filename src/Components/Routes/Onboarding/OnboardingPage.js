@@ -6,6 +6,7 @@ import Button from "../../Common/Button/Button";
 import { Link } from "react-router-dom";
 
 const OnboardingPage = (props) => {
+    console.log(document.cookie);
     const body = (
         <div className="flex flex-col w-full px-4 font-semibold ">
             <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>

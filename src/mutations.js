@@ -5,7 +5,8 @@ export const AUTHENTICATE = gql`
     mutation authenticate($githubCode: String!) {
         authenticate(githubCode: $githubCode){
         profile{
-            name
+            id
+            githubName
             githubUrl
             photoUrl
             bio
