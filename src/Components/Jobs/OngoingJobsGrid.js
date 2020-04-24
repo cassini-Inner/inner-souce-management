@@ -1,13 +1,14 @@
 import React from "react";
 import OngoingJobCard from "./OngoingJobCard";
 import { NavLink } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import {connect} from "react-redux";
 
 const OngoingJobsGrid = (props) => {
     let queryVariables = {}
     if(props.location == "home") {
         queryVariables = {userId: props.user.id};
+        console.log(props.user)
     }
     else if(props.queryVariables) {
         queryVariables = props.queryVariables;
@@ -21,7 +22,7 @@ const OngoingJobsGrid = (props) => {
 
         let maxCount = props.maxCount ? props.maxCount : jobs.length / 2 + 1; // +1 to ensure even odd number of cards are printed 
         let jobsRow = [];
-        if (jobs.length) {
+        if (jobs && jobs.length) {
             for (let i = 0; i < jobs.length && i < maxCount; i++) {
                 let job1 = jobs[i];
                 let job2 = jobs[i + 1];

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as Icons from "react-feather";
 import InfoTag from '../Common/InfoTag/InfoTag'
 import StatusTags from '../Common/StatusTags/StatusTags'
-import  { DurationParser } from "../Common/DurationParser/DurationParser"; 
+import  { DurationParser } from "../../HelperFunctions/DurationParser"; 
 
 class MilestoneCard extends Component {
 
@@ -73,8 +73,9 @@ class MilestoneCard extends Component {
                                         this.props.milestone.skills?
                                         <InfoTag 
                                             className="mr-6 mt-4"
-                                            title="SKILLS NEEDED" 
-                                            data={this.props.milestone.skills} 
+                                            title="SKILLS NEEDED"
+                                            // To convert the incoming type of (if object type) skills to array 
+                                            data={this.props.milestone.skills.map((skill, key) => typeof skill === "object" ? skill.value : skill)} 
                                         />
                                         : []
                                     }

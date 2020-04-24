@@ -3,7 +3,7 @@ import { Comments } from "../../../../assets/placeholder";
 import TextInput from "../../Common/InputFields/TextInput";
 import Button from "../../Common/Button/Button";
 import Avatar from "../../Common/Avatar/Avatar";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
 
 const Discussions = (props) => {

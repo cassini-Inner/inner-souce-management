@@ -1,6 +1,6 @@
 import React from "react";
 import MilestoneCard from "./MilestoneCard";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_MILESTONES } from "../../queries";
 
 const MilestonesList = (props) => {
@@ -12,8 +12,6 @@ const MilestonesList = (props) => {
             {
                 data["Job"]["milestones"]["milestones"].map(
                     (milestone, index) => {
-                        // To convert the incoming object type skills to array
-                        milestone.skills = milestone.skills.map((skill, key) => typeof skill === "object" ? skill.value : skill);
                         return (
                             <li key={data.id}>
                                 <MilestoneCard milestone={milestone} isEditMode={props.isEditMode} index={index} lastIndex={data.Job.milestones.totalCount} />

@@ -2,10 +2,10 @@ import React from "react";
 import { exploreJobs } from "../../../../assets/placeholder";
 import StatusTags from "../../Common/StatusTags/StatusTags";
 import AuthorInfo from "../../Common/AuthorInfo/AuthorInfo";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import InfoTag from "../../Common/InfoTag/InfoTag";
 import { GET_JOB_DETAILS } from "../../../queries";
-import  { getDuration } from "../../Common/DurationParser/DurationParser";
+import  { getDuration } from "../../../HelperFunctions/DurationParser";
 
 const JobInformation = (props) => {
 

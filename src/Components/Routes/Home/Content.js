@@ -4,7 +4,7 @@ import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import { GET_ALL_JOBS_FILTER } from '../../../queries';
 import { GET_USER_ONGOING_JOBS } from "../../../queries";
 import { GET_USER_SKILLS } from "../../../queries"; 
-import {useQuery} from "@apollo/react-hooks";
+import {useQuery} from "@apollo/client";
 import {connect} from "react-redux";
 
 const Content = (props) => {

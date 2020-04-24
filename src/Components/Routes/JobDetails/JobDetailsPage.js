@@ -9,7 +9,7 @@ import { withRouter, Redirect } from "react-router";
 import { Route } from "react-router-dom";
 import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_JOB_TABS } from "../../../queries";
 import { connect } from "react-redux";
 

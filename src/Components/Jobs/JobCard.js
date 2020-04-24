@@ -3,7 +3,7 @@ import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 import StatusTags from "../Common/StatusTags/StatusTags";
 import React from "react";
 import { Link } from "react-router-dom";
-import  { getDuration } from "../Common/DurationParser/DurationParser";
+import  { getDuration } from "../../HelperFunctions/DurationParser";
 
 const JobCard = (props) => {
     return (

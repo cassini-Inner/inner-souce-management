@@ -11,7 +11,7 @@ import Portal from '../../Containers/Portal';
 import { withRouter } from "react-router";
 import { validateJob, validateMilestone } from "./ValidateForm";
 import MilestoneCard from "../../Milestones/MilestoneCard";
-import { durationStringToDays } from "../../Common/DurationParser/DurationParser";
+import { durationStringToDays } from "../../../HelperFunctions/DurationParser";
 
 class CreateJob extends Component {
 

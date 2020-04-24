@@ -1,4 +1,4 @@
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 
 // To get the milestones based on job id
 export const GET_MILESTONES = gql`

@@ -7,7 +7,7 @@ import JobCard from './JobCard'
 import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
-import { Query } from 'react-apollo';
+import { Query } from '@apollo/react-components';
 
 
 class JobList extends Component {
@@ -70,12 +70,7 @@ class JobList extends Component {
 
     filterModalJobStatusDropdown = (event) =>{
         let value= [];
-        // if(event.currentTarget.value === "Open & Ongoing"){
-        //     value = ["OPEN","ONGOING"]
-        // }
-        // else {
-            value = [event.currentTarget.value.toUpperCase()]
-        // }
+        value = [event.currentTarget.value.toUpperCase()]
         this.setState({
             filterModalJobStatusValue : value
         });
@@ -83,7 +78,6 @@ class JobList extends Component {
 
     render() {
         let queryVariables = {};
-
         // If in Home page filter based on userskills or using the job filter modal
         if(this.props.location == "home") {
             queryVariables = { filter: this.state.filter };

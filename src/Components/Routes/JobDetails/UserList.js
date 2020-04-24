@@ -3,7 +3,7 @@ import * as Icons from "react-feather";
 import { jobApplication } from "../../../../assets/placeholder";
 import StatusTag from "../../Common/StatusTags/StatusTags";
 import Avatar from "../../Common/Avatar/Avatar";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_JOB_APPLICANTS } from "../../../queries";
 
 const UserList = (props) => {
