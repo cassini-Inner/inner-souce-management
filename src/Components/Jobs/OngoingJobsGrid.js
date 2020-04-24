@@ -2,13 +2,21 @@ import React from "react";
 import OngoingJobCard from "./OngoingJobCard";
 import { NavLink } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-
+import {connect} from "react-redux";
 
 const OngoingJobsGrid = (props) => {
+    let queryVariables = {}
+    if(props.location == "home") {
+        queryVariables = {userId: props.user.id};
+    }
+    else if(props.queryVariables) {
+        queryVariables = props.queryVariables;
+    }
+    
     if(props.query) {
-        const { loading, error, data } = useQuery(props.query, { variables: props.queryVariables });
+        const { loading, error, data } = useQuery(props.query, { variables: queryVariables });
         if (loading) return "Loading...";
-        else if (error) alert(`Error! ${error.message}`);
+        else if (error) return(`Error! ${error.message}`);
         let jobs = data["User"]["appliedJobs"];
 
         let maxCount = props.maxCount ? props.maxCount : jobs.length / 2 + 1; // +1 to ensure even odd number of cards are printed 
@@ -58,5 +66,11 @@ const OngoingJobsGrid = (props) => {
     
 };
 
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
 
-export default OngoingJobsGrid;
+export default connect(mapStateToProps)(OngoingJobsGrid);
+

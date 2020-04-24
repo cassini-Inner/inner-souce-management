@@ -12,49 +12,90 @@ import { Query } from 'react-apollo';
 
 class JobList extends Component {
 
-    state = {
-        filterModal: false,
-        sortDropdownValue:"",
-        filterDropdownValue:"",
-    };
-
-    closeFilterModal = () => {
-        this.setState({
+    constructor(props) {
+        super(props);
+        this.state = {
             filterModal: false,
-        });
-    };
+            filterModalSortValue: "",
+            filterModalJobStatusValue: [],
+            skills: [],
+            filter: {
+                status: ["OPEN","ONGOING"],
+                skills:  this.props.userSkills? this.props.userSkills : [],
+                sortOrder: "NEWEST",
+            }
+        };
+    }
+
 
     openFilterModal = () => {
         this.setState({
             filterModal: true,
         });
     };
-    
-    sortDropdown = (event) =>{
+
+    closeFilterModal = () => {
         this.setState({
-            sortDropdownValue :[event.currentTarget.value.toUpperCase()]
+            filterModal: false,
+            filterModalSortValue: "NEWEST",
+            filterModalJobStatusValue: ["OPEN","ONGOING"],
+            skills: this.props.userSkills,
         });
-        console.log(this.state)
+    };
+
+    applyFilter = () => {
+         this.setState({
+            filterModal: false,
+            filter: {
+                status: this.state.filterModalJobStatusValue,
+                skills: this.state.skills,
+                sortOrder: this.state.filterModalSortValue,
+            }
+        });
+    }
+    
+
+    filterModalSkillTags = (skillList) =>{
+        this.setState({
+            skills: skillList,
+        });
     }
 
-    jobStatusDropdown = (event) =>{
-        let value= [];
-        if(event.currentTarget.value === "Open & Ongoing"){
-            value = ["OPEN","ONGOING"]
-        }
-        else {
-            value = [event.currentTarget.value.toUpperCase()]
-        }
+    filterModalSortDropdown = (event) =>{
         this.setState({
-            filterDropdownValue : value
+            filterModalSortValue : event.currentTarget.value.toUpperCase()
         });
-        console.log(this.state)
+    }
+
+
+    filterModalJobStatusDropdown = (event) =>{
+        let value= [];
+        // if(event.currentTarget.value === "Open & Ongoing"){
+        //     value = ["OPEN","ONGOING"]
+        // }
+        // else {
+            value = [event.currentTarget.value.toUpperCase()]
+        // }
+        this.setState({
+            filterModalJobStatusValue : value
+        });
     }
 
     render() {
+        let queryVariables = {};
+
+        // If in Home page filter based on userskills or using the job filter modal
+        if(this.props.location == "home") {
+            queryVariables = { filter: this.state.filter };
+        }
+        // Else get the query variables from the parent component
+        else {
+            queryVariables = this.props.queryVariables;
+        }
+
         if(this.props.query) {
             return (
-                <Query query={ this.props.query } variables={ this.props.queryVariables } >
+                <Query query={ this.props.query } variables={ queryVariables } >
                 {({ loading, error, data }) => {
                     if (loading) return null;
                     if (error) return `Error! ${error}`;
@@ -65,8 +106,10 @@ class JobList extends Component {
                                     <ModalViewWithScrim>
                                         <FilterModal 
                                             closeModal = {this.closeFilterModal} 
-                                            sortDropdown = {this.sortDropdown} 
-                                            jobStatusDropdown = {this.jobStatusDropdown}  
+                                            sortDropdown = {this.filterModalSortDropdown} 
+                                            jobStatusDropdown = {this.filterModalJobStatusDropdown}  
+                                            getTagList = {this.filterModalSkillTags}
+                                            applyFilter = {this.applyFilter}
                                         />
                                     </ModalViewWithScrim>
                                 </Portal>

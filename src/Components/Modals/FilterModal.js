@@ -17,10 +17,10 @@ const FilterModal = (props) => {
                     <div className="flex mr-64">
                         <Dropdown title="Sort By" label="Newest" list={["Newest", "Oldest"]} onChange = {props.sortDropdown} />
                         <div className="m-4" />
-                        <Dropdown title="Job status" label={"Open & Ongoing"} list={["Open", "Ongoing", "Completed","Open & Ongoing"]} onChange = {props.jobStatusDropdown} />
+                        <Dropdown title="Job status" list={["Open & Ongoing", "Open", "Ongoing", "Completed"]} onChange = {props.jobStatusDropdown} />
                     </div>
                     <h2 className="text-base mt-6">Job Tags</h2>
-                    <SearchTagsInput placeholder="Search for tags to add" className="mb-16" />
+                    <SearchTagsInput getTagList={props.getTagList} placeholder="Search for tags to add" className="mb-16" />
                 </div>
             </div>
             <hr />
@@ -29,7 +29,7 @@ const FilterModal = (props) => {
                     <div className="flex flex-wrap-reverse lg:flex-row-reverse">
                         <Button className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="secondary" label = "Cancel" onClick = { props.closeModal } />
                         <div className="m-1" />
-                        <Button  className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="primary" label = "Apply Filter" />
+                        <Button  className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="primary" label = "Apply Filter" onClick = { props.applyFilter } />
                     </div>
                 </div>
             </div>
