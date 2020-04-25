@@ -11,11 +11,11 @@ import { INIT_USER_REDUX } from "../Store/actions";
 import { useCookies } from 'react-cookie';
 
 const App = (props) => {
-
     //Check if the user store in redux is empty 
     if(!(props.user && props.user.id && props.user.token)) {
-        
-        const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
+    console.log("<APP> if condition")
+    const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
+    console.log(cookies.token,cookies.githubName,cookies.id)
         //Check if cookies are set then set the user redux store with respective values
         if(cookies.token&&cookies.id&&cookies.githubName) {
             props.initUserRedux({

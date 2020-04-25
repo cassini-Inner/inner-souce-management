@@ -21,13 +21,13 @@ const Authenticate = (props) => {
             }
         }).then(res => {
             // To set the cookie after authentication
-            console.log("Authres",res.data);
+            console.log("   ",res.data);
             if(res.data.authenticate.profile.id)
-                setCookie('id', res.data.authenticate.profile.id);
+                setCookie('id', res.data.authenticate.profile.id, { path: '/', maxAge:36000 });
             if(res.data.authenticate.token)
-                setCookie('token', res.data.authenticate.token);
+                setCookie('token', res.data.authenticate.token, { path: '/', maxAge:36000 });
             if(res.data.authenticate.profile.githubName)
-                setCookie('githubName',res.data.authenticate.profile.githubName);
+                setCookie('githubName',res.data.authenticate.profile.githubName, { path: '/', maxAge:36000 });
             console.log("cookies",cookies.id,cookies.token,cookies.githubName)
             if(res.data.authenticate.profile.onboarded) {
                 props.history.push('/');
