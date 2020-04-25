@@ -11,12 +11,20 @@ import { useCookies } from 'react-cookie';
 
 const OnboardingPage = (props) => {
     const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
-    // const profile = props.location.state.profile;
-    // if(props.user)
-    // if(cookies.githubName && !props.loggedIn) {
-        // props.setUserData(profile);
-
-    // }
+    //To verify if the user has already onboarded 
+    //ToDo implement query to DB to find out 
+    if(props.location.state == undefined || props.location.state.onboarded == true) {
+        const body =
+            <div className="flex flex-col w-full px-4 font-semibold ">
+                <p className="text-3xl">Your onboarding is completed already,</p>
+                <Link>
+                    <p className="text-lg text-nebula-grey-600 mt-4 hover:text-nebula-blue">Go to home page</p>
+                </Link>
+            </div>
+        return (
+            <SplitContainerWithImage body={body}/>
+        );
+    }
     const body = (
         <div className="flex flex-col w-full px-4 font-semibold ">
             <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
