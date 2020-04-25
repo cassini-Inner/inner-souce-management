@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
 import { CLIENT_ID, redirect_url } from '../../../config';
@@ -15,15 +15,20 @@ const LoginPage = (props) => {
                 className="text-nebula-grey-600 mt-5 font-semibold text-lg">
               Innersource helps you find awesome projects and collaboration opportunities within your organisation.
             </p>
-            <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
-            {/* <Link to="/onboard"> */}
+            {/* {
+                (props.location.state && props.location.state.msg) 
+                ?
+                    <p className="mt-12 mb-6 text-nebula-red">{props.location.state.msg}</p>
+                : */}
+                    <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
+            {/* } */}
+            
                 <button className="w-full md:w-auto" onClick={()=>Authenticator()}>
                     <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-lg items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
                         <Icons.GitHub className="text-white "/>
                         <p className="px-6 text-white font-semibold whitespace-no-wrap">Continue with GitHub</p>
                     </div>
                 </button>
-            {/* </Link> */}
         </div>
     );
     return (
@@ -36,4 +41,4 @@ const Authenticator = () => {
 }
 
 
-export default LoginPage;
+export default withRouter(LoginPage);

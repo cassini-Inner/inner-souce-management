@@ -19,6 +19,7 @@ const App = (props) => {
                         component={(props) => { return (<LoginPage/>); }}/>
                     <Route path="/auth/result" exact={true}
                         component={(props) => { return (<Authenticate/>); }}/>
+                    
                     {/* User redux store is passed for checking if the user is logged in */}
                     <PrivateRoute userReduxStore={props.user} initUserRedux={props.initUserRedux}>
                         <Route path="/onboard" exact={true} component={(props) => {
@@ -38,6 +39,7 @@ const App = (props) => {
                             </div>);
                         }}/>
                     </PrivateRoute>
+                    
                 </Switch>
             </BrowserRouter>
         </React.StrictMode>
@@ -47,7 +49,6 @@ const App = (props) => {
 
 // To allow routes only after user has logged in
 function PrivateRoute({ children, ...rest }) {
-    console.log("<Private route>")
     const user = rest.userReduxStore;
     let isLoggedIn;
     const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
@@ -67,7 +68,6 @@ function PrivateRoute({ children, ...rest }) {
             isLoggedIn = false;
         }
     }
-    console.log(cookies.token,cookies.id,cookies.githubName)
     //If user  redux store has value and cookie doesn't exist means the cookie has expired
     //ToDo Implement refresh token 
     if(!(cookies.token&&cookies.id&&cookies.githubName)) {
