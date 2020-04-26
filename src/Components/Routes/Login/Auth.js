@@ -19,7 +19,7 @@ const Authenticate = (props) => {
             }
         }).then(res => {
             // To set the cookie after authentication
-            console.log("   ",res.data);
+            console.log("Auth:",res.data);
             var cookieExpiry = new Date(new Date().getTime() +  15* 60 * 1000); //15 minutes
             if(res.data.authenticate.profile.id) {
                 Cookies.set('id', res.data.authenticate.profile.id, { expires:cookieExpiry });
@@ -34,20 +34,17 @@ const Authenticate = (props) => {
                 props.history.push('/');
             }
             else {
-                props.history.push({
-                    pathname: "/onboard",
-                    search: "",
-                    state: { profile: res.data.authenticate.profile }
-                });
+                props.history.push("/onboard");
             }
         },
         err => {
             console.log(err);
-            props.history.push({
-                pathname: "/login",
-                search: "",
-                state: { msg: "Authentication error!" }
-            });
+            //ToDo use mutation not working properly
+            // props.history.push({
+            //     pathname: "/login",
+            //     search: "",
+            //     state: { msg: "Authentication error!" }
+            // });
         });
     }
 
@@ -57,6 +54,7 @@ const Authenticate = (props) => {
         state: { msg: "Please sign in with github to continue!" }
         }} />
 }
+
 
 
 export default withRouter(Authenticate);

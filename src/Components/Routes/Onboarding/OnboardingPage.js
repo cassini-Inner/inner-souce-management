@@ -5,29 +5,25 @@ import SearchTagsInput from "../../Common/InputFields/SearchTagsInput";
 import Button from "../../Common/Button/Button";
 import { withRouter, Redirect } from "react-router";
 import { connect } from "react-redux";
-import { USER_SIGN_IN } from "../../../Store/actions";
 import { validateOnboarding } from './ValidateForm';
 import { useMutation } from '@apollo/client';
 import { UPDATE_USER_PROFILE } from '../../../mutations';
 import Cookies from 'js-cookie';
 
-// import { useQuery } from '@apollo/client';
-// import { GET_USER_PROFILE } from "../../../queries";
 
 const OnboardingPage = (props) => {
-
-    //To verify if the user has already onboarded ToDo implement query to DB to find out 
-    const profile = props.location.state.profile ? props.location.state.profile : '';
-    if(profile == undefined || profile.onboarded == true) {
+    console.log(props.user)
+    //To verify if the user has already onboarded
+    if(props.user.onboarded) {
         return <Redirect to="/"/>
     }
 
     const form = {
-        name: profile.name ? profile.name : "",
+        name: props.user.name ? props.user.name : "",
         position: "",
         department: "",
         contact: "",
-        email: profile.email ? profile.email : "",
+        email: props.user.email ? props.user.email : "",
         skills: [],
         errMsg: "",
     }
@@ -104,7 +100,7 @@ const OnboardingPage = (props) => {
             <TextInput id="email" placeholder="Email" onChange={onInputChangeHandler} value={state.email}/>
             <label className="mt-10">Contact</label>
             <TextInput id="contact" placeholder="Slack ID, Microsoft Teams..." onChange={onInputChangeHandler} value={state.contact} />
-            <label className="mt-10">Skills & areas of interest (Optional)</label>
+            <label className="mt-10">Skills & areas of interest</label>
             <SearchTagsInput id="skills" getTagList = {getTagList} placeholder="Type and press enter to add skills"/>
             {
                 state.errMsg ? 
@@ -120,17 +116,10 @@ const OnboardingPage = (props) => {
     );
 };
 
-
 const mapStateToProps = state => {
     return {
         user: state.user,
     }
 }
-const mapDispatchToProps = dispatch => {
-    return {
-      setUserData: (profile) => dispatch({ type: USER_SIGN_IN, payload: {profile: profile}})
-    }
-  }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(OnboardingPage));
-
+export default connect(mapStateToProps)(withRouter(OnboardingPage));

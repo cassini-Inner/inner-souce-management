@@ -83,6 +83,8 @@ export const GET_USER_PROFILE = gql`
         User(id: $userId){
             id
             name
+            githubName
+            githubUrl
             role
             bio
             contact
