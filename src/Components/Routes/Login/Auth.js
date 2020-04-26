@@ -18,7 +18,6 @@ const Authenticate = (props) => {
                 githubCode: code
             }
         }).then(res => {
-            console.log("Hii")
             // To set the cookie after authentication
             console.log("   ",res.data);
             var cookieExpiry = new Date(new Date().getTime() +  15* 60 * 1000); //15 minutes
@@ -38,7 +37,7 @@ const Authenticate = (props) => {
                 props.history.push({
                     pathname: "/onboard",
                     search: "",
-                    state: { onboarded: res.data.authenticate.profile.onboarded }
+                    state: { profile: res.data.authenticate.profile }
                 });
             }
         },
