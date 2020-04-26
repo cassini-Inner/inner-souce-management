@@ -62,7 +62,12 @@ const OngoingJobsGrid = (props) => {
             );
         }
     }
-    return(<div className="ml-2 mt-2">No Jobs</div>)
+    if(props.location == "home") {
+        return '';
+    }
+    else {
+        return(<div className="ml-2 mt-2">No Jobs</div>)
+    }
     
 };
 

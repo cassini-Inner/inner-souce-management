@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import * as Icons from "react-feather";
 import SearchBar from "../Common/SearchBar/SearchBar";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
+import Cookies from 'js-cookie';
 
 class Navbar extends Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class Navbar extends Component {
                         <img src = {this.props.user.photoUrl} className="flex-0 h-8 w-8 rounded-full" />
                     </button>
                     <ProfileModal
+                        {...this.props}
                         user = {this.props.user}
                         onMouseOver={this.handleMouseOver}
                         onMouseLeave={this.closePopup}
@@ -70,6 +72,13 @@ class Navbar extends Component {
 }
 
 class ProfileModal extends Component {
+    logout = () => {
+        Cookies.remove('id');
+        Cookies.remove('token');
+        Cookies.remove('githubName');
+        this.props.history.push('/login');
+    }
+
     render() {
         return (
             <CSSTransition
@@ -95,10 +104,10 @@ class ProfileModal extends Component {
                             </div>
                         </div>
                         <hr />
-                        <Link to="/login" className="flex mt-4 text-nebula-blue font-semibold" >
+                        <div className="flex mt-4 text-nebula-blue font-semibold cursor-pointer" onClick={this.logout}>
                             <Icons.LogOut className="stroke-current ml-4 mr-8" />
                             <p>Logout</p>
-                        </Link>
+                        </div>
                     </div>
                 </div>
             </CSSTransition>
@@ -120,4 +129,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withRouter(Navbar));
