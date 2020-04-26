@@ -85,6 +85,7 @@ export const GET_USER_PROFILE = gql`
             name
             githubName
             githubUrl
+            department
             role
             bio
             contact

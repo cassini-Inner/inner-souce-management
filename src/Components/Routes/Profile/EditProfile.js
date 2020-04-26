@@ -30,6 +30,7 @@ const EditProfileBody = (props) => {
         name: props.data["User"].name,
         id: props.data["User"].id,
         position: props.data["User"].role,
+        department: props.data["User"].department,
         bio: props.data["User"].bio,
         contact: props.data["User"].contact,
         email: props.data["User"].email,
@@ -94,6 +95,18 @@ const EditProfileBody = (props) => {
                                 label="Position"
                                 placeholder="Position"
                                 value={state.position}
+                                onChange={handlePositionChange}
+                            />
+                            <TextInput
+                                label="Department"
+                                placeholder="Department"
+                                value={state.department}
+                                onChange={handlePositionChange}
+                            />
+                            <TextInput
+                                label="Email"
+                                placeholder="email"
+                                value={state.email}
                                 onChange={handlePositionChange}
                             />
                             <TextInput

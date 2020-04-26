@@ -57,6 +57,18 @@ const Profile = (props) => {
                             </p>
                         </div>
                         <div className="mt-2">
+                            <p className="font-semibold ">Department</p>
+                            <p className="text-sm text-nebula-grey-700"> 
+                                {data["User"].department}
+                            </p>
+                        </div>
+                        <div className="mt-2">
+                            <p className="font-semibold ">Email</p>
+                            <p className="text-sm text-nebula-grey-700"> 
+                                {data["User"].email}
+                            </p>
+                        </div>
+                        <div className="mt-2">
                             <p className="font-semibold ">Contact</p>
                             <p className="text-sm text-nebula-grey-700"> 
                                 {data["User"].contact}

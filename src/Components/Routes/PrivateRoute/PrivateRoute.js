@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import { SET_USER_DATA } from "../../../Store/actions";
 
 // To allow routes only after user has logged in
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoute = ({ children, ...props }) => {
     let isLoggedIn = false;
     //Checks if the user is logged in and sets the user redux store with cookies if it is empty
-    if(!(rest.user.id && rest.user.token)) {
+    if(!(props.user.id && props.user.token)) {
         //Check if cookies are set then set the user redux store with respective values
         if(Cookies.get('token') != undefined && Cookies.get('id') != undefined ) {
             const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: Cookies.get('id') } });
@@ -20,7 +20,7 @@ const PrivateRoute = ({ children, ...rest }) => {
                 return (`get user profile error! ${error.message}`);
 
             }
-            rest.setUserData({
+            props.setUserData({
                 token: Cookies.get('token'),
                 id: Cookies.get('id'),
                 onboarded: data.User.onboarded ? data.User.onboarded : false,
@@ -48,7 +48,7 @@ const PrivateRoute = ({ children, ...rest }) => {
 
     return (
       <Route
-        {...rest}
+        {...props}
         render={({ location }) =>
             isLoggedIn? (
             children
