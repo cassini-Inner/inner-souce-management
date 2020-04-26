@@ -36,26 +36,3 @@ export const CREATE_JOB = gql`
     }
 `;
 
-// {
-//     title:"Test mutation job",
-//     desc:"Test mutations job desc",
-//     difficulty:HARD,
-//     milestones:[
-//         {
-//         title:"test milestones 1",
-//         desc:"Test",
-//         resolution:"lmao",
-//         duration:"1",
-//         status:OPEN,
-//         skills:["lmao"]
-//         },
-//         {
-//         title:"test milestones 2",
-//         desc:"Test",
-//         resolution:"lmao"
-//         duration:"1",
-//         status:OPEN,
-//         skills:["nodejs", "react", "typescript", "newskill"]
-//         }
-//     ]
-//     })

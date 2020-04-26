@@ -13,9 +13,9 @@ import { validateJob, validateMilestone } from "./ValidateForm";
 import MilestoneCard from "../../Milestones/MilestoneCard";
 import { durationStringToDays } from "../../../HelperFunctions/DurationParser";
 import { CREATE_JOB } from "../../../mutations";
-import { Mutation } from '@apollo/react-components';
+import { useMutation } from '@apollo/client';
 
-const CreateJob = () =>  {
+const CreateJob = (props) =>  {
 
     const initialState = {
         milestoneModal: false,
@@ -38,6 +38,10 @@ const CreateJob = () =>  {
         }
     }
     const [ state, setState ] = useState(initialState);
+
+    const [createJob, {loading, error}] = useMutation(CREATE_JOB);
+    if(loading) return <p>Authenticating...</p>;
+    if(error) return <p>Authentication Error! {error}</p>;
 
     //To set the skill tags of the milestone
     const getTagList = (skillList) => {   
@@ -112,7 +116,32 @@ const CreateJob = () =>  {
     const validateForm = () => {
         const isFormValid = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
         if(isFormValid) {
-            console.log("Hiii");
+            const createJobInput = {
+                title: state.job.title,
+                desc: state.job.description,
+                difficulty: state.job.difficulty.toUpperCase(),
+                milestones: state.job.milestones.map((milestone, key) => {
+                    return {
+                        title: milestone.title,
+                        desc: milestone.description,
+                        resolution: milestone.resolution,
+                        status: "OPEN",
+                        duration: milestone.duration.toString(),
+                        skills: milestone.skills
+                    }
+                })
+            }
+            console.log(createJobInput);
+            createJob({
+                variables: {
+                    job: createJobInput,
+                }
+            })
+            .then(res => {
+                props.history.push('/jobDetails/'+res.data.createJob.id)
+                alert("Job has been created successfully!");
+            },
+                err => console.log(err));
         }
 
         else {
@@ -183,35 +212,31 @@ const CreateJob = () =>  {
         <Button type="primary" label="Submit Job" onClick={() => validateForm() }/>
     ]
     return (
-        <Mutation mutation={CREATE_JOB}>
-            {(createJob, { data }) => (
-                <Fragment>
-                    <Modal
-                        modalType="milestone"
-                        modalDisplay={state.milestoneModal}
-                        closeMilestoneModal={closeMilestoneModal}
-                        milestoneNo="4"
+        <Fragment>
+            <Modal
+                modalType="milestone"
+                modalDisplay={state.milestoneModal}
+                closeMilestoneModal={closeMilestoneModal}
+                milestoneNo="4"
+            />
+            <SplitContainer
+                leftView={<JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />}
+                rightView={<Milestones milestoneCount={state.milestoneCount} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />}
+                actions={ButtonRow}
+            />
+            <Portal isOpen={state.milestoneModal} >
+                <ModalViewWithScrim>
+                    <MilestoneModal 
+                        saveMilestone={saveMilestone} 
+                        closeModal={closeMilestoneModal} 
+                        getTagList = {getTagList}
+                        onChange={onInputChangeHandler}
+                        errMsg={state.milestoneErrMsg}
+                        milestoneNo={state.milestoneCount+1}//milestoneCount refers to array index hence +1
                     />
-                    <SplitContainer
-                        leftView={<JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />}
-                        rightView={<Milestones milestoneCount={state.milestoneCount} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />}
-                        actions={ButtonRow}
-                    />
-                    <Portal isOpen={state.milestoneModal} >
-                        <ModalViewWithScrim>
-                            <MilestoneModal 
-                                saveMilestone={saveMilestone} 
-                                closeModal={closeMilestoneModal} 
-                                getTagList = {getTagList}
-                                onChange={onInputChangeHandler}
-                                errMsg={state.milestoneErrMsg}
-                                milestoneNo={state.milestoneCount+1}//milestoneCount refers to array index hence +1
-                            />
-                        </ModalViewWithScrim>
-                    </Portal>
-                </Fragment>
-            )}
-        </Mutation>
+                </ModalViewWithScrim>
+            </Portal>
+        </Fragment>
     );
 }
 
