@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
-import { CLIENT_ID, redirect_url } from '../../../config';
+import { githubAuthUrl } from '../../../githubAuthConfig';
 
 const LoginPage = (props) => {
     const body = (
@@ -37,7 +37,7 @@ const LoginPage = (props) => {
 };
 
 const Authenticator = () => {
-    window.open(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${redirect_url}&scope=read:user user:email`, '_self');
+    window.open(githubAuthUrl, '_self');
 }
 
 

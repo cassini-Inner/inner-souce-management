@@ -17,6 +17,7 @@ export const AUTHENTICATE = gql`
     }
 `;
 
+// To update the user profile details
 export const UPDATE_USER_PROFILE = gql`
     mutation ($userInput: UpdateUserInput) {
         updateProfile(user: $userInput){
@@ -24,3 +25,37 @@ export const UPDATE_USER_PROFILE = gql`
         }
     }
 `;
+
+// To create job
+export const CREATE_JOB = gql`
+    mutation($job: CreateJobInput){
+        createJob(job: $job) {
+            id
+            title
+        }
+    }
+`;
+
+// {
+//     title:"Test mutation job",
+//     desc:"Test mutations job desc",
+//     difficulty:HARD,
+//     milestones:[
+//         {
+//         title:"test milestones 1",
+//         desc:"Test",
+//         resolution:"lmao",
+//         duration:"1",
+//         status:OPEN,
+//         skills:["lmao"]
+//         },
+//         {
+//         title:"test milestones 2",
+//         desc:"Test",
+//         resolution:"lmao"
+//         duration:"1",
+//         status:OPEN,
+//         skills:["nodejs", "react", "typescript", "newskill"]
+//         }
+//     ]
+//     })

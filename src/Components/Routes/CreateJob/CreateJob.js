@@ -12,6 +12,8 @@ import { withRouter } from "react-router";
 import { validateJob, validateMilestone } from "./ValidateForm";
 import MilestoneCard from "../../Milestones/MilestoneCard";
 import { durationStringToDays } from "../../../HelperFunctions/DurationParser";
+import { CREATE_JOB } from "../../../mutations";
+import { Mutation } from '@apollo/react-components';
 
 class CreateJob extends Component {
 
@@ -178,6 +180,7 @@ class CreateJob extends Component {
 
 
     render() {
+
         return (
             <Fragment>
 
