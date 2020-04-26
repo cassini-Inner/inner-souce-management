@@ -215,3 +215,12 @@ export const GET_USER_SKILLS = gql`
     }
 `;
   
+// To check if onboarding is done already
+export const GET_USER_ONBOARDED = gql`
+    query($userId: ID!){
+        User(id: $userId){
+            id
+            onboarded
+        }
+    }
+`;

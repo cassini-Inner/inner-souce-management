@@ -3,32 +3,34 @@ import { Redirect } from "react-router";
 import { AUTHENTICATE } from "../../../mutations";
 import { useMutation } from '@apollo/client';
 import { withRouter } from "react-router";
-import { useCookies } from 'react-cookie';
+import Cookies from 'js-cookie';
 
 const Authenticate = (props) => {
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const code = params.get('code');
-    const [cookies, setCookie, removeCookie] = useCookies(['token', 'githubName', 'id']);
-    const cookieExpiry = 2000;
     const [login, {loading, error}] = useMutation(AUTHENTICATE);
     if(loading) return <p>Authenticating...</p>;
     if(error) return <p>Authentication Error! {error}</p>;
-
     if(code) {
         login({
             variables: {
                 githubCode: code
             }
         }).then(res => {
+            console.log("Hii")
             // To set the cookie after authentication
             console.log("   ",res.data);
-            if(res.data.authenticate.profile.id)
-                setCookie('id', res.data.authenticate.profile.id, { path: '/', maxAge:cookieExpiry });
-            if(res.data.authenticate.token)
-                setCookie('token', res.data.authenticate.token, { path: '/', maxAge:cookieExpiry });
-            if(res.data.authenticate.profile.githubName)
-                setCookie('githubName',res.data.authenticate.profile.githubName, { path: '/', maxAge:cookieExpiry });
+            var cookieExpiry = new Date(new Date().getTime() +  15* 60 * 1000); //15 minutes
+            if(res.data.authenticate.profile.id) {
+                Cookies.set('id', res.data.authenticate.profile.id, { expires:cookieExpiry });
+            }
+            if(res.data.authenticate.token) {
+                Cookies.set('token', res.data.authenticate.token, { expires:cookieExpiry });
+            }
+            if(res.data.authenticate.profile.githubName) {
+                Cookies.set('githubName',res.data.authenticate.profile.githubName, { expires:cookieExpiry });
+            }
             if(res.data.authenticate.profile.onboarded) {
                 props.history.push('/');
             }

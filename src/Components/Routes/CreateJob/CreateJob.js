@@ -226,7 +226,7 @@ const JobForm = (props) => {
             { //To display error messages
                 props.jobErrMsg?
                 <div 
-                    className = {"mt-6 text-nebula-red" }>
+                    className = "mt-6 text-nebula-red" >
                         {props.jobErrMsg}
                     </div>
                 : ""
