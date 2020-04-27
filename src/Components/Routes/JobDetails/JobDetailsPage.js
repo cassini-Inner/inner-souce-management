@@ -12,6 +12,8 @@ import WorkingUsers from "./WorkingUsers";
 import { useQuery } from "@apollo/client";
 import { GET_JOB_TABS } from "../../../queries";
 import { connect } from "react-redux";
+import { DELETE_JOB } from "../../../mutations";
+import { useMutation } from '@apollo/client';
 
 const JobDetailsPage = (props) => {
     
@@ -24,11 +26,28 @@ const JobDetailsPage = (props) => {
 
     // ToDo implement this function 
     const applyToJobClickHandler = () => {    }
+    // ToDo implement Modal for getting password
+    const deleteJobHandler = () => {
+        let confirmed = window.confirm("Are you sure you want to delete this job? Note: all the associated milestones, discussions and applications will be lost.");
+        if(confirmed) {
+            deleteJob({
+                variables:{
+                    jobId: state.jobId
+                }
+            }).then(
+                res => console.log(res),
+                err => console.log(err)
+            );
+        }
+    }   
+
+    const [deleteJob, {mutationLoading, mutationError}] = useMutation(DELETE_JOB);
+    if(mutationLoading) return <p>Loading...</p>;
+    if(mutationError) return <p>Mutation Error! {mutationError}</p>;
 
     const { loading, error, data } = useQuery(GET_JOB_TABS, { variables: { jobId: state.jobId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
-    console.log(data);
 
     const userActions = [
         (<Button type="primary" label="Apply to Job"
@@ -51,6 +70,7 @@ const JobDetailsPage = (props) => {
         (<Button type="error" label="Delete Job"
             className=" w-auto mr-4 "
             key="deletejob"
+            onClick={deleteJobHandler}
         />),
     ];
 

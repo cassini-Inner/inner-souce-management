@@ -39,9 +39,6 @@ const EditProfileBody = (props) => {
     };
 
     const [ state, setState ] = useState(initialState);
-    // handleNameChange = handleNameChange.bind(;
-    // handlePositionChange = handlePositionChange.bind(;
-    // handleBioChange = handleBioChange.bind(;
 
     const handleNameChange = (event) => {
         setState({

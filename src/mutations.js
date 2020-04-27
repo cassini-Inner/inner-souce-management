@@ -26,7 +26,7 @@ export const UPDATE_USER_PROFILE = gql`
     }
 `;
 
-// To create job
+// To create a new job
 export const CREATE_JOB = gql`
     mutation($job: CreateJobInput){
         createJob(job: $job) {
@@ -35,4 +35,16 @@ export const CREATE_JOB = gql`
         }
     }
 `;
+
+// To delete an existing job
+export const DELETE_JOB = gql`
+    mutation($jobId: ID!){
+        deleteJob(jobID: $jobId) {
+            id
+            title
+        }
+    }
+`;
+
+
 

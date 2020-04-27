@@ -1,5 +1,5 @@
 import React from "react";
-import { exploreJobs } from "../../../../assets/placeholder";
+import { withRouter } from "react-router-dom";
 import StatusTags from "../../Common/StatusTags/StatusTags";
 import AuthorInfo from "../../Common/AuthorInfo/AuthorInfo";
 import { useQuery } from "@apollo/client";
@@ -11,7 +11,10 @@ const JobInformation = (props) => {
 
     const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
-    else if (error) alert(`Error! ${error.message}`);
+    else if (error) { 
+        console.log(`Error! ${error.message}`);
+        props.history.push("/");
+    }
 
     //To get the duration of the job by summing the duration of milestones
     
@@ -60,4 +63,4 @@ const JobInformation = (props) => {
     );
 };
 
-export default JobInformation;
+export default withRouter(JobInformation);
