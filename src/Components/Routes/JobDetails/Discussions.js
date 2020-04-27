@@ -11,6 +11,12 @@ import { useMutation } from '@apollo/client';
 
 const Discussions = (props) => {
 
+    //To refresh component on modificaitons
+    const initialState ={
+        reload: false,
+    }
+    const [ state, setState ] = useState(initialState); 
+
     return(
         <Fragment>
             <AddComment jobId = {props.jobId} />
@@ -74,15 +80,15 @@ export const Comment = (props) => {
     if (loading3) return "Loading...";
     else if (error3) console.log(`Error! ${error3}`);
 
-    const deleteComment = () => {
+    const deleteComment = (event) => {
         deleteCommentMutation({ 
             variables: { 
-                commentId: comment.id 
+                commentId: parseInt(event.currentTarget.id),
             } 
         }).then(res => 
                 console.log(res),
             err => 
-                console.log(err));
+                alert(err));
     }
 
     if(data["Job"]["discussion"]["discussions"])
@@ -110,7 +116,7 @@ export const Comment = (props) => {
                                         <div className="m-1 flex cursor-pointer hover:text-nebula-blue">
                                             <Icons.Edit className="text-nebula-blue mx-4" />Edit
                                         </div>
-                                        <div className="m-1 flex cursor-pointer hover:text-nebula-blue" onClick={() => deleteComment}>
+                                        <div id={comment.id} className="m-1 flex cursor-pointer hover:text-nebula-blue" onClick={deleteComment}>
                                             <Icons.Edit className="text-nebula-red mx-4" />Delete
                                         </div>
                                     </div>
