@@ -197,9 +197,14 @@ export const GET_JOB_TABS = gql`
             discussion{
                 totalCount
             }
-            applications{
+            applications {
                 acceptedCount
-                pendingCount
+                applications {
+                    status
+                    applicant{
+                        id
+                    }
+                }
             }
         }
     }

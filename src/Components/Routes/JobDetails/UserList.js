@@ -7,6 +7,10 @@ import { useQuery } from "@apollo/client";
 import { GET_JOB_APPLICANTS } from "../../../queries";
 
 const UserList = (props) => {
+    // To check if userlist is empty
+    var isEmptyList = true;
+    //Only for version 1  v1
+    var applicationIdList = [];
 
     const { loading, error, data } = useQuery(GET_JOB_APPLICANTS, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
@@ -14,7 +18,13 @@ const UserList = (props) => {
     if(data["Job"]["applications"]["applications"]) {
         const userList =
             data["Job"]["applications"]["applications"].map((application, key) =>{
-                if((props.type == "APPLICATIONS" && application.status == "PENDING") || (props.type == "WORKING" && application.status == "ACCEPTED")) {
+                if((props.type == "APPLICATIONS" && application.status.toUpperCase() == "PENDING") || (props.type == "WORKING" && application.status.toUpperCase() == "ACCEPTED")) {
+                    //Only for version 1  v1 
+                    if(applicationIdList.find((id) => application.applicant.id == id )) {
+                        return '';
+                    }
+                    applicationIdList.push(application.applicant.id);
+                    isEmptyList = false;
                     return (
                         <div className="border-b border-nebula-gray-400" key = { application.applicant.id }>
                             <div className = "mt-4 mb-2 flex">
@@ -47,16 +57,17 @@ const UserList = (props) => {
                 }
             }
         );
-        if(userList.indexOf(undefined)) {
+        //To ensure user list is not empty
+        if(!isEmptyList) {
             return(userList)
         }
     }
     if(props.type == "APPLICATIONS") {
-        props.setDisplayState(false);
-        return null;
+        props.setFilterDisplay(false);
+        return <div className="mt-2">No applicants so far!</div>;
     }
     else if(props.type == "WORKING") {
-        return(<div className="mt-2">No currently working users</div>)
+        return(<div className="mt-2">No currently working users!</div>)
     }
 
 };

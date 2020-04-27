@@ -5,10 +5,12 @@ import { useState } from "react";
  
 const Applications = (props) => {
     const initialDisplayHeaderState = true;
-    const [ displayHeaderState, setDisplayState] = useState(initialDisplayHeaderState);
-    if(displayHeaderState) {
-        return (
-            <Fragment>
+    const [ displayHeaderState, setFitlerDisplayState] = useState(initialDisplayHeaderState);
+    return (
+        <Fragment>
+            {
+                displayHeaderState
+                ?
                 <div className="mt-6 mb-8 flex-col px-2">
                     <div className="flex mb-2">
                         <div className="self-center flex-1 ">
@@ -21,30 +23,26 @@ const Applications = (props) => {
                             <Dropdown list={["Job & Milestones", "Job", "Milestones"]} />
                         </div>
                     </div>
-
                 </div>
-                <div className="flex-col my-6 px-2">
-                    <div className="flex text-sm ">
-                        <div className="flex-1 font-semibold text-nebula-gray-600">
-                            Applicant
-                        </div>
-
-                        {/*  Functionality to be added in version 2 
-                        <div className="flex font-semibold mr-40 text-nebula-gray-600">
-                            Application Type
-                        </div> 
-                        */}
-                    
+                :
+                    ""
+            }
+            <div className="flex-col my-6 px-2">
+                <div className="flex text-sm ">
+                    <div className="flex-1 font-semibold text-nebula-gray-600">
+                        Applicants
                     </div>
-                    <UserList type = "APPLICATIONS" jobId = {props.jobId} setDisplayState = {setDisplayState} />
+                    {/*  Functionality to be added in version 2 
+                    <div className="flex font-semibold mr-40 text-nebula-gray-600">
+                        Application Type
+                    </div> 
+                    */}
                 </div>
-            </Fragment>
+                <UserList type = "APPLICATIONS" jobId = {props.jobId} setFilterDisplay = {setFitlerDisplayState} />
+            </div>
+        </Fragment>
 
-        );
-    }
-    else{
-        return(<div className="ml-2 mt-2">No applicants</div>)
-    }
-};
+    );
+}
 
 export default Applications;

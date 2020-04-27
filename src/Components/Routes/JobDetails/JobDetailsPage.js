@@ -12,7 +12,7 @@ import WorkingUsers from "./WorkingUsers";
 import { useQuery } from "@apollo/client";
 import { GET_JOB_TABS } from "../../../queries";
 import { connect } from "react-redux";
-import { DELETE_JOB } from "../../../mutations";
+import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from '@apollo/client';
 
 const JobDetailsPage = (props) => {
@@ -24,8 +24,24 @@ const JobDetailsPage = (props) => {
 
     const [ state, setState ] = useState(initialState)
 
-    // ToDo implement this function 
-    const applyToJobClickHandler = () => {    }
+    
+    const applyToJobHandler = () => {  
+        let confirmed = window.confirm("Apply to this job?");
+        if(confirmed) { 
+            applyToJobMutation({
+                variables :{
+                    jobId: state.jobId
+                }
+            }).then(
+                res => {
+                    console.log(res);
+                    alert("Applied to the job successfully!")
+                    props.history.push('/');
+                },
+                err => console.log(err)
+            );
+        }
+    }
     // ToDo implement Modal for getting password
     const deleteJobHandler = () => {
         let confirmed = window.confirm("Are you sure you want to delete this job? Note: all the associated milestones, discussions and applications will be lost.");
@@ -35,32 +51,74 @@ const JobDetailsPage = (props) => {
                     jobId: state.jobId
                 }
             }).then(
-                res => console.log(res),
+                res => {
+                    console.log(res);
+                    props.history.push('/');
+                },
                 err => console.log(err)
             );
         }
     }   
 
-    const [deleteJobMutation, {mutationLoading, mutationError}] = useMutation(DELETE_JOB);
-    if(mutationLoading) return <p>Loading...</p>;
-    if(mutationError) return <p>Mutation Error! {mutationError}</p>;
+    const withdrawApplicationHandler = () => {
+        let confirmed = window.confirm("Are you sure you want to withdraw your application for this job?")
+        if(confirmed) {
+            withdrawApplicationMutation({
+                variables: {
+                    jobId: state.jobId,
+                }
+            }).then(res => props.history.push('/jobDetails/'+state.jobId),
+                err => console.log(err));
+        }
+    }
 
+    //Mutation for applying to a job
+    const [applyToJobMutation, {applyToJobLoading, applyToJobError}] = useMutation(APPLY_TO_JOB);
+    if(applyToJobLoading) return <p>Loading...</p>;
+    if(applyToJobError) return <p>Apply to job mutation Error! {applyToJobError}</p>;
+
+     //Mutation for withdrawing a job application
+     const [withdrawApplicationMutation, {withdrawApplicationLoading, withdrawApplicationError}] = useMutation(WITHDRAW_JOB_APPLICATION);
+     if(withdrawApplicationLoading) return <p>Loading...</p>;
+     if(withdrawApplicationError) return <p>Apply to job mutation Error! {withdrawApplicationError}</p>;
+    
+
+    //Mutation for deleting a job
+    const [deleteJobMutation, {deleteJobLoading, deleteJobError}] = useMutation(DELETE_JOB);
+    if(deleteJobLoading) return <p>Loading...</p>;
+    if(deleteJobError) return <p>Delete job mutation Error! {deleteJobError}</p>;
+
+    //Query to get the job tabs
     const { loading, error, data } = useQuery(GET_JOB_TABS, { variables: { jobId: state.jobId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 
-    const userActions = [
-        (<Button type="primary" label="Apply to Job"
-            key="applyjob"
-            className=" w-auto mr-4 "
-        />),
-        /* Functionality to be added in version 2
-        (<Button type="secondary" label="Apply to Milestones"
-            className=" w-auto mr-4 "
-            key="applyMilestone"
-        />),
-            */
-    ];
+    //To check if the user has already applied to this job for buttons
+    var userActions = [];
+    if(data.Job.applications.applications.find((application) => application.applicant.id == props.user.id)) {
+        userActions = [
+            (<Button type="error" label="Withdraw application"
+                key="withdrawJobApplication"
+                className=" w-auto mr-4 "
+                onClick={withdrawApplicationHandler}
+            />),
+        ];
+    }
+    else {
+        userActions = [
+            (<Button type="primary" label="Apply to Job"
+                key="applyjob"
+                className=" w-auto mr-4 "
+                onClick={applyToJobHandler}
+            />),
+            /* Functionality to be added in version 2
+            (<Button type="secondary" label="Apply to Milestones"
+                className=" w-auto mr-4 "
+                key="applyMilestone"
+            />),
+                */
+        ];
+    }
 
     const authorActions = [
         (<Button type="secondary" label="Edit Job"

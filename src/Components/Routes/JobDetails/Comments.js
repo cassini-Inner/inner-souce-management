@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import Avatar from "../../Common/Avatar/Avatar";
+import { GET_JOB_DISCUSSIONS } from "../../../queries";
 import * as Icons from "react-feather";
 import { DELETE_COMMENT, UPDATE_COMMENT } from "../../../mutations";
 import { useMutation } from '@apollo/client';
@@ -13,9 +14,10 @@ const Comments = (props) => {
         comments: props.comments ? props.comments : [],
     }
     const [state, setState] = useState(initialState);
-
     //Delete Comment Mutation
-    const [deleteCommentMutation, {loading:loading2, error:error2}] = useMutation(DELETE_COMMENT);
+    const [deleteCommentMutation, {loading:loading2, error:error2}] = useMutation(DELETE_COMMENT, {
+        refetchQueries: [ { query: GET_JOB_DISCUSSIONS, variables: { jobId : props.jobId } } ],
+    });
     if(loading2) return <p>Loading...</p>;
     if(error2) return <p>Delete comment mutation Error! {error2}</p>;
 
@@ -41,16 +43,16 @@ const Comments = (props) => {
     }
 
     const deleteComment = (event) => {
-        console.log(event.currentTarget.parentNode.id)
         deleteCommentMutation({ 
             variables: { 
                 commentId: parseInt(event.currentTarget.parentNode.id),
-            } 
-        }).then(res => 
-                console.log(res),
-            err => 
+            },
+        },  
+        ).then(res => 
+            console.log(res),
+        err => 
             console.log(err)
-        );
+    );
     }
 
     const cancelEdit = () => {

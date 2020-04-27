@@ -72,3 +72,21 @@ export const UPDATE_COMMENT = gql`
         }
     }
 `;
+
+// To create a job application
+export const APPLY_TO_JOB = gql`
+    mutation($jobId: ID!){
+        createJobApplication(jobID: $jobId) {
+            id
+        }
+    }
+`;
+
+// To withdraw a job application
+export const WITHDRAW_JOB_APPLICATION = gql`
+    mutation($jobId: ID!){
+        deleteJobApplication(jobID: $jobId) {
+            id
+        }
+    }
+`;
