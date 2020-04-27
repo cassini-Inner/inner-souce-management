@@ -48,3 +48,21 @@ export const DELETE_JOB = gql`
 
 
 
+// To delete a comment 
+export const DELETE_COMMENT = gql`
+    mutation($commentId: ID!){
+        deleteCommment(id: $commentId) {
+            id
+        }
+    }
+`;
+
+// To post a new 
+export const POST_COMMENT = gql`
+    mutation($comment: String!, $jobId: ID!){
+        addCommentToJob(jobID: $jobId, comment: $comment) {
+            id
+        }
+    }
+`;
+

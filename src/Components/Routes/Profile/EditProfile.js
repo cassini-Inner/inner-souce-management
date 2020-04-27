@@ -194,4 +194,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(withRouter(EditProfile));
+export default withRouter(connect(mapStateToProps)(EditProfile));
