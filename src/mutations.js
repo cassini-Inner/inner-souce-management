@@ -46,17 +46,6 @@ export const DELETE_JOB = gql`
     }
 `;
 
-
-
-// To delete a comment 
-export const DELETE_COMMENT = gql`
-    mutation($commentId: ID!){
-        deleteCommment(id: $commentId) {
-            id
-        }
-    }
-`;
-
 // To post a new 
 export const POST_COMMENT = gql`
     mutation($comment: String!, $jobId: ID!){
@@ -66,3 +55,20 @@ export const POST_COMMENT = gql`
     }
 `;
 
+// To delete a comment 
+export const DELETE_COMMENT = gql`
+    mutation($commentId: ID!){
+        deleteComment(id: $commentId) {
+            id
+        }
+    }
+`;
+
+// To update a comment
+export const UPDATE_COMMENT = gql`
+    mutation($comment: String!, $commentId: ID!){
+        updateComment(id: $commentId, comment: $comment) {
+            id
+        }
+    }
+`;
