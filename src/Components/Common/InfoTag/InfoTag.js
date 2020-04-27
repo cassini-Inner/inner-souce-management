@@ -18,7 +18,7 @@ const InfoTag = (props) => {
                 </p>
             </div>
             <div>
-                <p className="font-semibold leading-tight text-xs">
+                <p className="font-semibold leading-tight text-sm">
                     {content}
                 </p>
             </div>

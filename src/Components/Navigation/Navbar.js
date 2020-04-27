@@ -96,7 +96,7 @@ class ProfileModal extends Component {
                 <div className={"w-96 mt-2 absolute top-0 right-0 inline-block" + this.props.className || ""} onMouseOver={() => this.props.onMouseOver(true)} onMouseLeave={this.props.onMouseLeave}>
                     <div className="overflow-hidden w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 z-50 bg-white" >
                         <div className="flex p-4" >
-                            <img src={this.props.user.photoUrl} className="h-8 w-8 rounded-full" />
+                            <img src={this.props.user.photoUrl} className="h-10 w-10 rounded-full" />
                             <div className="font-semibold leading-tight ml-8">
                                 <p className="text-nebula-grey-600 text-xs">Signed in as</p>
                                     <p className="text-lg mb-2">{this.props.user.name}</p>

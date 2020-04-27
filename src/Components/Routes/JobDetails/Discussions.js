@@ -12,15 +12,13 @@ import { useMutation } from '@apollo/client';
 const Discussions = (props) => {
 
     //To refresh component on modificaitons
-    const initialState ={
-        reload: false,
-    }
+    const initialState = "reload";
     const [ state, setState ] = useState(initialState); 
 
     return(
         <Fragment>
-            <AddComment jobId = {props.jobId} />
-            <Comment jobId = {props.jobId} { ...props } />
+            <AddComment jobId = {props.jobId} refresh={setState} />
+            <Comment jobId = {props.jobId} refresh={setState} { ...props } />
         </Fragment>
     );
 };
@@ -49,12 +47,17 @@ const AddComment = (props) => {
                 variables: { 
                     comment: state.comment,
                     jobId: props.jobId, 
-                } 
+                },
+                options: {refetchQueries: [{ query: GET_JOB_DISCUSSIONS }]}
             }).then(res => 
                     console.log(res),
                 err => 
                     console.log(err));
         }
+        setState({
+            comment:  "",
+        });
+        props.refresh("");
     }
 
     return(
@@ -70,6 +73,11 @@ const AddComment = (props) => {
 
 export const Comment = (props) => {
 
+    const initialState = {
+        editCommentId: "",
+    }
+    const [state, setState] = useState(initialState);
+
     //Delete Comment Mutation
     const [deleteCommentMutation, {loading:loading2, error:error2}] = useMutation(DELETE_COMMENT);
     if(loading2) return <p>Loading...</p>;
@@ -80,16 +88,44 @@ export const Comment = (props) => {
     if (loading3) return "Loading...";
     else if (error3) console.log(`Error! ${error3}`);
 
+    const editComment = (event) => {
+        setState({
+            editCommentId: parseInt(event.currentTarget.parentNode.id),
+        });
+    }
+
     const deleteComment = (event) => {
         deleteCommentMutation({ 
             variables: { 
-                commentId: parseInt(event.currentTarget.id),
+                commentId: parseInt(event.currentTarget.parentNode.id),
             } 
         }).then(res => 
                 console.log(res),
             err => 
-                alert(err));
+                alert(err)
+        );
+        props.refresh("");
     }
+
+    const editCommentButtonRow = 
+        <Fragment>
+            <div className="m-1 flex cursor-pointer hover:text-nebula-blue" onClick={editComment}>
+                <Icons.Edit className="text-nebula-blue mx-4" />Save 
+            </div>
+            <div className="m-1 flex cursor-pointer hover:text-nebula-blue" onClick={deleteComment}>
+                <Icons.Edit className="text-nebula-red mx-4" />Cancel
+            </div>
+        </Fragment>;
+
+    const buttonRow = 
+        <Fragment>
+            <div className="m-1 flex cursor-pointer hover:text-nebula-blue" onClick={editComment}>
+                <Icons.Edit className="text-nebula-blue mx-4" />Edit
+            </div>
+            <div className="m-1 flex cursor-pointer hover:text-nebula-blue" onClick={deleteComment}>
+                <Icons.Edit className="text-nebula-red mx-4" />Delete
+            </div>
+        </Fragment>;
 
     if(data["Job"]["discussion"]["discussions"])
         return (
@@ -111,14 +147,14 @@ export const Comment = (props) => {
                             comment.createdBy.id == props.user.id
                             ?
                                 <div id="buttons" className="flex-row">
-                                    <div className="flex flex-wrap-reverse lg:flex-row-reverse">
-                                        {/* <Button  className="flex-1 mb-4 mt-1 lg:flex-grow-0" type="primary" label = "Post"  /> */}
-                                        <div className="m-1 flex cursor-pointer hover:text-nebula-blue">
-                                            <Icons.Edit className="text-nebula-blue mx-4" />Edit
-                                        </div>
-                                        <div id={comment.id} className="m-1 flex cursor-pointer hover:text-nebula-blue" onClick={deleteComment}>
-                                            <Icons.Edit className="text-nebula-red mx-4" />Delete
-                                        </div>
+                                    <div id={comment.id} className="flex flex-wrap-reverse lg:flex-row-reverse">
+                                        {  
+                                            state.editCommentId == comment.id
+                                            ?
+                                                editCommentButtonRow
+                                            :
+                                                buttonRow
+                                        }
                                     </div>
                                 </div>
                             : ""
