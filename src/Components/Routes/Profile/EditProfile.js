@@ -4,10 +4,14 @@ import Button from "../../Common/Button/Button";
 import TextInput from "../../Common/InputFields/TextInput";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import SearchTagsInput from "../../Common/InputFields/SearchTagsInput";
+import { UPDATE_USER_PROFILE } from '../../../mutations';
 import { GET_USER_PROFILE } from "../../../queries";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { Query } from 'react-apollo';
+import { useMutation } from '@apollo/client';
+import { validateProfileUpdate } from './ValidateForm';
+
 
 
 const EditProfile = (props) => {
@@ -27,8 +31,8 @@ const EditProfile = (props) => {
 const EditProfileBody = (props) => {
 
     const initialState = {
-        name: props.data["User"].name,
         id: props.data["User"].id,
+        name: props.data["User"].name,
         position: props.data["User"].role,
         department: props.data["User"].department,
         bio: props.data["User"].bio,
@@ -36,38 +40,72 @@ const EditProfileBody = (props) => {
         email: props.data["User"].email,
         photoUrl: props.data["User"].photoUrl,
         skills: props.data["User"].skills.map((skill, key) => skill.value),
+        errMsg: "",
     };
+
+    const [updateUserMutation, {loading, error}] = useMutation(UPDATE_USER_PROFILE);
+    if(loading) return <p>Loading...</p>;
+    if(error) return <p>Error! {error}</p>;
 
     const [ state, setState ] = useState(initialState);
 
-    const handleNameChange = (event) => {
-        setState({
-            ...state,
-            name: event.target.value,
-        });
+    const onInputChangeHandler = (event) => {
+        const value = event.currentTarget.value;
+        switch(event.currentTarget.id) {
+            case "name": setState({...state, name:value});break;
+            case "email": setState({...state, email:value});break;
+            case "bio": setState({...state, bio:value});break;
+            case "position":  setState({...state, position:value});break;
+            case "department":  setState({...state, department:value});break;
+            case "contact":  setState({...state, contact:value});break;
+        }
     }
 
-    const handlePositionChange = (event) => {
+    const getTagList = (skillList) => {   
         setState({
-            ...state,
-            position: event.target.value,
-        });
+                ...state,
+                skills: skillList
+            }
+        );
     }
 
-    const handleBioChange = (event) => {
-        setState({
-            ...state,
-            bio: event.target.value,
-        });
+    const updateProfile = () => {
+        let isValid = validateProfileUpdate(state);
+        if(isValid) {
+            updateUserMutation({ 
+                variables: { 
+                    userInput: {
+                        name: state.name,
+                        email: state.email,
+                        bio: state.bio,
+                        role: state.position,
+                        department: state.department,
+                        contact: state.contact,
+                        skills: state.skills,
+                    }
+                }
+            }
+            ).then(res => {
+                    props.history.push('/profile/'+parseInt(state.id))
+                }, //Navigate to profile page on success
+                err => { 
+                    console.log(err)
+                }
+            );
+            
+            setState({
+                ...state,
+                errMsg: ""
+            });
+            
+        }
+        else {
+            setState({
+                ...state,
+                errMsg: "Please fill all the fields!"
+            });
+        }
     }
-
-    const handleContactChange = (event) => {
-        setState({
-            ...state,
-            contact: event.target.value,
-        });
-    }
-
 
     return (
             <div className="px-4 lg:px-10 container mx-auto">
@@ -83,51 +121,64 @@ const EditProfileBody = (props) => {
                         </div>
                         <div className="flex flex-col mt-8">
                             <TextInput
+                                id = "name"
                                 label="Full Name"
                                 placeholder="Full Name"
                                 value={state.name}
-                                onChange={handleNameChange}
+                                onChange={onInputChangeHandler}
                             />
                             <TextInput
+                                id = "position"
                                 label="Position"
                                 placeholder="Position"
                                 value={state.position}
-                                onChange={handlePositionChange}
+                                onChange={onInputChangeHandler}
                             />
                             <TextInput
+                                id = "department"
                                 label="Department"
                                 placeholder="Department"
                                 value={state.department}
-                                onChange={handlePositionChange}
+                                onChange={onInputChangeHandler}
                             />
                             <TextInput
+                                id = "email"
                                 label="Email"
                                 placeholder="email"
                                 value={state.email}
-                                onChange={handlePositionChange}
+                                onChange={onInputChangeHandler}
                             />
                             <TextInput
+                                id = "contact"
                                 label="Contact"
                                 placeholder="Email, Slack ID..."
                                 value={state.contact}
-                                onChange={handleContactChange}
+                                onChange={onInputChangeHandler}
                             />
                             <TextAreaInput
+                                id = "bio"
                                 cols="10"
                                 label="Bio"
                                 placeholder="Bio"
                                 value={state.bio}
-                                onChange = {handleBioChange}
+                                onChange = {onInputChangeHandler}
                             />
                             <SearchTagsInput
+                                id = "skills"
                                 label="Skills"
                                 className="mt-8"
                                 placeholder="Type and press Enter to add skills"
-                                initialList={ state.skills }
+                                initialList= { state.skills }
+                                getTagList = {getTagList}
                             />
                             <hr className="mt-12 mb-4" />
+                            {
+                                state.errMsg ? 
+                                    <div className = "m-2 text-nebula-red" >{state.errMsg}</div>
+                                : ""
+                            }
                             <div className="flex flex-row flex-wrap mb-20">
-                                <Button label="Save changes" type="primary" className="mx-2"/>
+                                <Button label="Save changes" type="primary" className="mx-2" onClick = {updateProfile}/>
                                 <Button label="Discard changes" type="secondary" className="mx-2" onClick={() =>props.history.goBack()}/>
                             </div>
                         </div>

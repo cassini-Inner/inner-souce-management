@@ -30,9 +30,9 @@ const OnboardingPage = (props) => {
     const [ state, setState ] = useState(form);
 
     // For update user mutation 
-    const [updateUser, {loading, error}] = useMutation(UPDATE_USER_PROFILE);
-    if(loading) return <p>Authenticating...</p>;
-    if(error) return <p>Authentication Error! {error}</p>;
+    const [updateUserMutation, {loading, error}] = useMutation(UPDATE_USER_PROFILE);
+    if(loading) return <p>Loading...</p>;
+    if(error) return <p>Error! {error}</p>;
 
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
@@ -56,7 +56,7 @@ const OnboardingPage = (props) => {
     const validateAndSubmitForm = () => {
         let isValid = validateOnboarding(state);
         if(isValid) {
-            updateUser({ 
+            updateUserMutation({ 
                 variables: { 
                     userInput: {
                         name: state.name,

@@ -30,7 +30,7 @@ const JobDetailsPage = (props) => {
     const deleteJobHandler = () => {
         let confirmed = window.confirm("Are you sure you want to delete this job? Note: all the associated milestones, discussions and applications will be lost.");
         if(confirmed) {
-            deleteJob({
+            deleteJobMutation({
                 variables:{
                     jobId: state.jobId
                 }
@@ -41,7 +41,7 @@ const JobDetailsPage = (props) => {
         }
     }   
 
-    const [deleteJob, {mutationLoading, mutationError}] = useMutation(DELETE_JOB);
+    const [deleteJobMutation, {mutationLoading, mutationError}] = useMutation(DELETE_JOB);
     if(mutationLoading) return <p>Loading...</p>;
     if(mutationError) return <p>Mutation Error! {mutationError}</p>;
 

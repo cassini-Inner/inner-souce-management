@@ -6,16 +6,20 @@ import { profileData } from "../../../../assets/placeholder";
 import {GitHub} from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
 import InfoTag from "../../Common/InfoTag/InfoTag"; 
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../../queries";
 import { connect } from "react-redux";
 
 const Profile = (props) => {
-
     //To get the user id from url
     const { id } = useParams();
     const userId = id;
+
+    //For invalid routes
+    if(!parseInt(userId)) {
+        return <Redirect to='/' />
+    }
 
     const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: userId } });
     if (loading) return "Loading...";
