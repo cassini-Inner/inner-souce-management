@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as Icons from "react-feather";
 import InfoTag from '../Common/InfoTag/InfoTag'
 import StatusTags from '../Common/StatusTags/StatusTags'
-import  { DurationParser } from "../Common/DurationParser/DurationParser"; 
+import  { DurationParser } from "../../HelperFunctions/DurationParser"; 
 
 class MilestoneCard extends Component {
 
@@ -57,7 +57,11 @@ class MilestoneCard extends Component {
                                     <Icons.ChevronUp />
                             </button>
                         </div>
-                        <StatusTags statusTag={[this.props.milestone.status.toLowerCase()]}/>
+                        {   
+                            this.props.milestone.status ? 
+                            <StatusTags statusTag={[this.props.milestone.status.toLowerCase()]}/>
+                            :""
+                        }
                         {
                             isExpanded &&
                             <div >
@@ -65,7 +69,17 @@ class MilestoneCard extends Component {
                                 <div className="flex flex-row flex-wrap">
                                     <InfoTag className="mr-6 mt-4" title="DURATION" data={ DurationParser(this.props.milestone.duration) } /> 
                                     <InfoTag className="mr-6 mt-4" title="RESOLUTION METHODS" data={this.props.milestone.resolution} />
-                                </div>
+                                    { 
+                                        this.props.milestone.skills?
+                                        <InfoTag 
+                                            className="mr-6 mt-4"
+                                            title="SKILLS NEEDED"
+                                            // To convert the incoming type of (if object type) skills to array 
+                                            data={this.props.milestone.skills.map((skill, key) => typeof skill === "object" ? skill.value : skill)} 
+                                        />
+                                        : []
+                                    }
+                                    </div>
                             </div>
                         }
                     </div>

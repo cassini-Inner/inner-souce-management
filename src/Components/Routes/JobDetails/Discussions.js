@@ -1,55 +1,83 @@
-import React, { Fragment } from "react";
-import { Comments } from "../../../../assets/placeholder";
+import React, { Fragment, useState } from "react";
 import TextInput from "../../Common/InputFields/TextInput";
 import Button from "../../Common/Button/Button";
-import Avatar from "../../Common/Avatar/Avatar";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
+import { connect } from "react-redux";
+import { POST_COMMENT } from "../../../mutations";
+import { useMutation } from '@apollo/client';
+import Comments from "./Comments";
 
 const Discussions = (props) => {
 
+    //Load all Comments
+    const { loading:loading3, error:error3, data } = useQuery(GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId } });
+    if (loading3) return "Loading...";
+    else if (error3) console.log(`Error! ${error3}`);
+
     return(
         <Fragment>
-            <AddComment />
-            <Comment jobId = {props.jobId} />
+            <AddComment jobId = {props.jobId}  />
+            <Comments 
+                jobId = {props.jobId} 
+                comments={ data["Job"]["discussion"]["discussions"] ? data["Job"]["discussion"]["discussions"] : [] } 
+                { ...props } 
+            />
         </Fragment>
     );
 };
 
-const AddComment = () => {
+const AddComment = (props) => {
+
+    const initialState = {
+        comment: "",
+    }
+    const [state, setState] = useState(initialState);
+
+    //Post Comment Mutation
+    const [postCommentMutation, {loading, error}] = useMutation(POST_COMMENT);
+    if(loading) return <p>Loading...</p>;
+    if(error) return <p>Post comment mutation Error! {error}</p>;
+
+    const onChangeHandler = (event) => {
+        setState({
+            comment:  event.currentTarget.value,
+        });
+    } 
+
+    const postComment = () => {
+        if(state.comment) {
+            postCommentMutation({ 
+                variables: { 
+                    comment: state.comment,
+                    jobId: props.jobId, 
+                },
+                options: {refetchQueries: [{ query: GET_JOB_DISCUSSIONS }]}
+            }).then(res => 
+                    console.log(res),
+                err => 
+                    console.log(err));
+        }
+        setState({
+            comment:  "",
+        });
+    }
+
     return(
         <div className = "my-6 flex-col w-full rounded py-5 px-4 border border-2 border-nebula-grey-400">
             <div className = "mb-6 font-semibold text-nebula-grey-600 text-lg">Add a new Comment</div>
-            <TextInput placeholder = "Add comment" className = "mb-6 w-full" />
+            <TextInput id="addComment" placeholder = "Add comment" className = "mb-6 w-full" value={state.comment} onChange={onChangeHandler} />
             <div className = "flex justify-end">
-                <Button type = "primary" label = "Post Comment" />
+                <Button type = "primary" label = "Post Comment" onClick={ postComment } />
             </div>
         </div>
     );
 };
 
-export const Comment = (props) => {
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
 
-    const { loading, error, data } = useQuery(GET_JOB_DISCUSSIONS, { variables: { jobId: "1" } });
-    if (loading) return "Loading...";
-    else if (error) console.log(`Error! ${error.message}`);
-
-    return (
-        data["Job"]["discussion"]["discussions"].map((comment, key) =>{
-            return (
-                <div className="border-b border-nebula-gray-400" key={ comment.id }>
-                    <div className = "mt-4 mb-2 flex">
-                        <Avatar imagePath = { comment.createdBy.photoUrl }/>
-                        <div className = "flex-col ml-4 mb-2 flex-1">
-                            <div className = "text font-semibold">{ comment.createdBy.name }</div>
-                            <div className = "text-xs text-nebula-grey-600 ">{ comment.createdBy.timeCreated }</div>
-                            <div className = "text-sm text-nebula-grey-700 ">{ comment.content }</div>
-                        </div>
-                    </div>
-                </div>
-            );
-        })     
-    );
-};
-
-export default Discussions;
+export default connect(mapStateToProps)(Discussions);

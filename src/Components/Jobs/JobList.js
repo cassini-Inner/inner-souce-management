@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { explore, exploreJobs } from '../../../assets/placeholder'
+import { explore } from '../../../assets/placeholder'
 import * as Icons from 'react-feather'
 import { Link } from 'react-router-dom'
 import Button from '../Common/Button/Button'
@@ -7,13 +7,34 @@ import JobCard from './JobCard'
 import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
-import { Query } from 'react-apollo';
-import { GET_ALL_JOBS_FILTER, GET_JOB_APPLICANTS } from '../../queries';
+import { Query } from '@apollo/react-components';
+import { compose } from 'redux'
+
 
 class JobList extends Component {
 
-    state = {
-        filterModal: false,
+    constructor(props) {
+        super(props);
+        this.defaultSortOrder = "NEWEST";
+        this.defaultJobStatus = ["OPEN","ONGOING"];
+        this.state = {
+            filterModal: false,
+            filterModalSortValue: "",
+            filterModalJobStatusValue: [],
+            skills: [],
+            filter: {
+                status: this.defaultJobStatus,
+                skills:  this.props.userSkills? this.props.userSkills : [],
+                sortOrder:  this.defaultSortOrder,
+            }
+        };
+    }
+
+
+    openFilterModal = () => {
+        this.setState({
+            filterModal: true,
+        });
     };
 
     closeFilterModal = () => {
@@ -22,52 +43,109 @@ class JobList extends Component {
         });
     };
 
-    openFilterModal = () => {
+    resetFilter = () => {
+        //Reset to default filters on reseting the filter
         this.setState({
-            filterModal: true,
+            filterModal: false,
+            filterModalSortValue:  this.defaultSortOrder,
+            filterModalJobStatusValue: this.defaultJobStatus,
+            skills: this.props.userSkills,
+            filter: {
+                sortOrder: this.defaultSortOrder,
+                status: this.defaultJobStatus,
+                skills: this.props.userSkills,
+            }
         });
-    };
+    }
 
-    jobsFilter = { 
-        "filter":{
-            "status": ["OPEN","ONGOING"],
-            "skills": ["nodejs", "spring", "react", "golang"], 
-            "sortOrder": "NEWEST" 
-        }
+    applyFilter = () => {
+         this.setState({
+            filterModal: false,
+            filter: {
+                status: this.state.filterModalJobStatusValue ? this.state.filterModalJobStatusValue : this.defaultJobStatus,
+                skills: this.state.skills,
+                sortOrder: this.state.filterModalSortValue ? this.state.filterModalSortValue : this.defaultSortOrder,
+            }
+        });
     }
     
+
+    filterModalSkillTags = (skillList) =>{
+        this.setState({
+            skills: skillList,
+        });
+    }
+
+    filterModalSortDropdown = (event) =>{
+        this.setState({
+            filterModalSortValue : event.currentTarget.value.toUpperCase()
+        });
+    }
+
+
+    filterModalJobStatusDropdown = (event) =>{
+        let value= [];
+        value = [event.currentTarget.value.toUpperCase()]
+        this.setState({
+            filterModalJobStatusValue : value
+        });
+    }
+
     render() {
-        return (
-            <Query query={GET_ALL_JOBS_FILTER} variables={this.jobsFilter}>
-            {({ loading, error, data }) => {
-                if (loading) return null;
-                if (error) return `Error! ${error}`;
-                return (
-                    <Fragment>
-                        <Portal isOpen={this.state.filterModal}  >
-                            <ModalViewWithScrim>
-                                <FilterModal closeModal = {this.closeFilterModal}/>
-                            </ModalViewWithScrim>
-                        </Portal>
-                        <div className="cursor-default ">
-                            <div className=" w-full mt-6 ">
-                                <h1 className="text-2xl flex-1">{this.props.title}</h1>
-                                {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
-                            <hr/>
+        let queryVariables = {};
+        // If in Home page filter based on userskills or using the job filter modal
+        if(this.props.location == "home") {
+            queryVariables = { filter: this.state.filter };
+        }
+        // Else get the query variables from the parent component
+        else {
+            queryVariables = this.props.queryVariables;
+        }
+
+        if(this.props.query) {
+            return (
+                <Query query={ this.props.query } variables={ queryVariables } >
+                {({ loading, error, data }) => {
+                    if (loading) return null;
+                    if (error) return `Error! ${error}`;
+                    return (
+                        <Fragment>
+                            <Portal isOpen={this.state.filterModal}  >
+                                <ModalViewWithScrim>
+                                    <FilterModal 
+                                        closeModal = {this.closeFilterModal} 
+                                        sortDropdown = {this.filterModalSortDropdown} 
+                                        jobStatusDropdown = {this.filterModalJobStatusDropdown}  
+                                        getTagList = {this.filterModalSkillTags}
+                                        applyFilter = {this.applyFilter}
+                                        resetFilter = {this.resetFilter}
+                                    />
+                                </ModalViewWithScrim>
+                            </Portal>
+                            <div className="cursor-default ">
+                                <div className=" w-full mt-6 ">
+                                    <h1 className="text-2xl flex-1">{this.props.title}</h1>
+                                    {this.props.title == explore ? <Options setModalState={this.openFilterModal} /> : ""}
+                                <hr/>
+                                </div>
+                                {   
+                                    data["allJobs"] ?
+                                        data["allJobs"].map(data => {
+                                            return (
+                                            <JobCard data={data}/>
+                                            );
+                                        }) 
+                                    : 
+                                        <div>No Jobs</div>
+                                }
                             </div>
-                            {    
-                                data["allJobs"].map(data => {
-                                    return (
-                                    <JobCard data={data}/>
-                                    );
-                                })
-                            }
-                        </div>
-                    </Fragment>
-                );
-            }}
-            </Query>
-        );
+                        </Fragment>
+                    );
+                }}
+                </Query>
+            );
+        }
+        return(<div className="ml-2 mt-2">No Jobs</div>)
     }
 }
 

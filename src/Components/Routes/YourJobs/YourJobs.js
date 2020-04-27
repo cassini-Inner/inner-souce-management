@@ -7,7 +7,15 @@ import * as config from "../../../../assets/placeholder";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 
-class YourJobs extends Component {
+
+// To get the tabs(Working on, awaiting approval..) values
+const YourJobs = (props) =>{ 
+    
+    return(<YourJobsBody {...props}/>);
+}
+
+
+class YourJobsBody extends Component {
 
     constructor (props) {
         super(props);

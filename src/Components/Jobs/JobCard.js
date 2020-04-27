@@ -3,11 +3,11 @@ import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 import StatusTags from "../Common/StatusTags/StatusTags";
 import React from "react";
 import { Link } from "react-router-dom";
-import  { getDuration } from "../Common/DurationParser/DurationParser";
+import  { getDuration } from "../../HelperFunctions/DurationParser";
 
 const JobCard = (props) => {
     return (
-        <Link to = { "/jobDetails?id="+props.data.id} >
+        <Link to = { "/jobDetails/"+props.data.id} >
             <div className={"w-full p-6 bg-white mt-4 rounded-lg " + (props.manageJobs
                 ? ""
                 : "transition duration-300 shadow-none cursor-pointer hover:shadow-lg border border-nebula-grey-400")}

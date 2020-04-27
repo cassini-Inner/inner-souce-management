@@ -6,13 +6,22 @@ import { profileData } from "../../../../assets/placeholder";
 import {GitHub} from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
 import InfoTag from "../../Common/InfoTag/InfoTag"; 
-import { Link } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
+import { Link, useParams, Redirect } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../../queries";
+import { connect } from "react-redux";
 
 const Profile = (props) => {
-    
-    const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: "2" } });
+    //To get the user id from url
+    const { id } = useParams();
+    const userId = id;
+
+    //For invalid routes
+    if(!parseInt(userId)) {
+        return <Redirect to='/' />
+    }
+
+    const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: userId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 
@@ -21,9 +30,15 @@ const Profile = (props) => {
             <Navbar />
             <div className="flex flex-row mt-8 mb-4 justify-between">
                 <h1 className="text-2xl">Profile</h1>
-                <Link to="/profile/edit" exact>
-                    <Button type="primary" label="Edit Profile"/>
-                </Link>
+                {   
+                    userId == props.user.id 
+                        ?
+                        <Link to="/profile/edit">
+                            <Button type="primary" label="Edit Profile"/>
+                        </Link>
+                        :
+                        ""
+                }
             </div>
             <Card key={data["User"].id}>
                 <div className="flex p-4">
@@ -43,6 +58,18 @@ const Profile = (props) => {
                             <p className="font-semibold ">Bio</p>
                             <p className="text-sm text-nebula-grey-700"> 
                                 {data["User"].bio}
+                            </p>
+                        </div>
+                        <div className="mt-2">
+                            <p className="font-semibold ">Department</p>
+                            <p className="text-sm text-nebula-grey-700"> 
+                                {data["User"].department}
+                            </p>
+                        </div>
+                        <div className="mt-2">
+                            <p className="font-semibold ">Email</p>
+                            <p className="text-sm text-nebula-grey-700"> 
+                                {data["User"].email}
                             </p>
                         </div>
                         <div className="mt-2">
@@ -70,4 +97,10 @@ const Profile = (props) => {
     );
 };
 
-export default Profile;
+const mapStateToProps = state => {
+    return {
+        user: state.user
+    }
+}
+
+export default connect(mapStateToProps)(Profile);

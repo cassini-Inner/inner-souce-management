@@ -1,17 +1,20 @@
 import React from "react";
-import { exploreJobs } from "../../../../assets/placeholder";
+import { withRouter } from "react-router-dom";
 import StatusTags from "../../Common/StatusTags/StatusTags";
 import AuthorInfo from "../../Common/AuthorInfo/AuthorInfo";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import InfoTag from "../../Common/InfoTag/InfoTag";
 import { GET_JOB_DETAILS } from "../../../queries";
-import  { getDuration } from "../../Common/DurationParser/DurationParser";
+import  { getDuration } from "../../../HelperFunctions/DurationParser";
 
 const JobInformation = (props) => {
 
-    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: "2" } });
+    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
-    else if (error) alert(`Error! ${error.message}`);
+    else if (error) { 
+        console.log(`Error! ${error.message}`);
+        props.history.push("/");
+    }
 
     //To get the duration of the job by summing the duration of milestones
     
@@ -50,6 +53,7 @@ const JobInformation = (props) => {
                 <AuthorInfo 
                     className="mt-8" 
                     iconClass="w-12 h-12" 
+                    redirectUrl = {data["Job"].createdBy.id}
                     department = {data["Job"].createdBy.department} 
                     name = {data["Job"].createdBy.name} 
                     img = {data["Job"].createdBy.photoUrl}
@@ -59,4 +63,4 @@ const JobInformation = (props) => {
     );
 };
 
-export default JobInformation;
+export default withRouter(JobInformation);
