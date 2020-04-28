@@ -6,11 +6,18 @@ import { Redirect, Route, withRouter } from "react-router";
 import * as config from "../../../../assets/placeholder";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";
-
+import { useQuery } from "@apollo/client";
+import { GET_JOB_INFO } from "../../../queries";
 
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) =>{ 
-    
+
+    //Query to get the job tabs and primary info(created by, applicant IDs)
+    // const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: {ate.jobId } });
+    // if (loading) return "Loading...";
+    // else if (error) alert(`Error! ${error.message}`);
+
+
     return(<YourJobsBody {...props}/>);
 }
 
@@ -50,24 +57,25 @@ class YourJobsBody extends Component {
    
 
     render() {
-        const tabList = [
-            {
-                title: "Working On",
-                location: "ongoing",
-                count: 2,
-            },
-            {
-                title: "Awaiting Approval",
-                location: "applications",
-                count: 3,
-                notify: true
-            },
-            {
-                title: "Completed",
-                location: "completed",
-                count: 8,
-            }
-        ];
+        
+    const tabList = [
+        {
+            title: "Working On",
+            location: "ongoing",
+            count: 2,
+        },
+        {
+            title: "Awaiting Approval",
+            location: "applications",
+            count: 3,
+            notify: true
+        },
+        {
+            title: "Completed",
+            location: "completed",
+            count: 8,
+        }
+    ];
 
         return (
             <Fragment>

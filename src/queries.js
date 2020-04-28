@@ -163,7 +163,7 @@ export const GET_USER_ONGOING_JOBS = gql`
         User(id: $userId){
             id
             appliedJobs{
-                applicationStatus
+                userJobStatus
                 job{
                     id
                     title
@@ -238,3 +238,16 @@ export const GET_USER_ONBOARDED = gql`
         }
     }
 `;
+
+// To get your jobs
+// export const GET_USER_SKILLS = gql`
+//     query($userId: ID!){
+//         User(id: $userId){
+//             id
+//             skills {
+//                 id
+//                 value
+//             }
+//         }
+//     }
+// `;
