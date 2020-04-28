@@ -281,3 +281,50 @@ export const GET_YOUR_JOBS = gql`
         }
     }
 `;
+
+
+// To get created jobs 
+export const GET_CREATED_JOBS = gql`
+    query($userId: ID!){
+        User(id: $userId){
+            id
+            createdJobs {    
+                id
+                title
+                createdBy {
+                    id
+                    name
+                    department
+                    photoUrl
+                }
+                description: desc
+                duration
+                difficulty
+                status
+                skills {
+                    id
+                    value
+                }
+                applications {
+                    acceptedCount
+                    pendingCount
+                    applications {
+                        id
+                        applicant {
+                            id
+                            photoUrl
+                        }
+                    }
+                }
+                timeCreated
+                milestones {
+                    totalCount
+                    milestones{
+                        id
+                        duration
+                    }
+                }
+            }
+        }
+    }
+`;

@@ -34,7 +34,6 @@ const OngoingJobsGrid = (props) => {
             for (let i = 0; i < jobs.length && i < maxCount; i++) {
                 let job1 = jobs[i];
                 let job2 = jobs[i + 1];
-                console.log("jobs:", jobs);
                 // Used only first time to check if atleast one ongoing job is there
                 // ToDo find better way to find out
                 (job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING" && job1.applicationStatus.toUpperCase() == "ACCEPTED") ? displayOngoingJobsHeader = true:'';
