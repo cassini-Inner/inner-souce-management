@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 import { withRouter, Redirect, Route } from "react-router";
-import { useQuery } from '@apollo/client';
+import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../../queries";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { connect } from "react-redux";
 import { SET_USER_DATA } from "../../../Store/actions";
 
@@ -12,8 +12,8 @@ const PrivateRoute = ({ children, ...props }) => {
     //Checks if the user is logged in and sets the user redux store with cookies if it is empty
     if(!(props.user.id && props.user.token)) {
         //Check if cookies are set then set the user redux store with respective values
-        if(Cookies.get('token') != undefined && Cookies.get('id') != undefined ) {
-            const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: Cookies.get('id') } });
+        if(Cookies.get("token") != undefined && Cookies.get("id") != undefined ) {
+            const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: Cookies.get("id") } });
             if (loading) return "Loading...";
             else if (error) {
                 isLoggedIn = false;
@@ -21,8 +21,8 @@ const PrivateRoute = ({ children, ...props }) => {
 
             }
             props.setUserData({
-                token: Cookies.get('token'),
-                id: Cookies.get('id'),
+                token: Cookies.get("token"),
+                id: Cookies.get("id"),
                 onboarded: data.User.onboarded ? data.User.onboarded : false,
                 githubName: data.User.githubName ? data.User.githubName : "",
                 name: data.User.name ? data.User.name : "",
@@ -39,7 +39,7 @@ const PrivateRoute = ({ children, ...props }) => {
     }
     //If user  redux store has value and cookie doesn't exist means the cookie has expired
     //ToDo Implement refresh token 
-    if(!(Cookies.get('token')&&Cookies.get('id')&&Cookies.get('githubName'))) {
+    if(!(Cookies.get("token")&&Cookies.get("id")&&Cookies.get("githubName"))) {
         isLoggedIn = false;
     }
     else {
@@ -47,33 +47,33 @@ const PrivateRoute = ({ children, ...props }) => {
     }
 
     return (
-      <Route
-        {...props}
-        render={({ location }) =>
-            isLoggedIn? (
-            children
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: location, msg:"Please log in to proceed!" }
-              }}
-            />
-          )
-        }
-      />
+        <Route
+            {...props}
+            render={({ location }) =>
+                isLoggedIn? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: location, msg:"Please log in to proceed!" }
+                        }}
+                    />
+                )
+            }
+        />
     );
-}
+};
 
 const mapStateToProps = state => {
     return {
         user: state.user,
-    }
-}
+    };
+};
 const mapDispatchToProps = dispatch => {
     return {
-      setUserData: (profile) => dispatch({ type: SET_USER_DATA, payload: {profile: profile}})
-    }
-  }
+        setUserData: (profile) => dispatch({ type: SET_USER_DATA, payload: {profile: profile}})
+    };
+};
 
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(PrivateRoute));

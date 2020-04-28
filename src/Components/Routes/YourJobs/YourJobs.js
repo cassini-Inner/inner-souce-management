@@ -24,11 +24,11 @@ const YourJobs = (props) =>{
             if(appliedJob.userJobStatus.toUpperCase() != "COMPLETED" && appliedJob.applicationStatus.toUpperCase() == "PENDING") {
                 appliedJobs.push({ ...appliedJob.job, userApplicationStatus: "APPLIED"});
             }
-        // If application status is accepted and job status is ongoing then the user is currently working on the job
+            // If application status is accepted and job status is ongoing then the user is currently working on the job
             if(appliedJob.userJobStatus.toUpperCase() == "ONGOING" && appliedJob.applicationStatus.toUpperCase() == "ACCEPTED") {
                 ongoingJobs.push({ ...appliedJob.job, userApplicationStatus: "WORKING"});
             }
-        // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
+            // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
             if(appliedJob.userJobStatus.toUpperCase() == "COMPLETED" && appliedJob.applicationStatus.toUpperCase() == "ACCEPTED") {
                 completedJobs.push({ ...appliedJob.job, userApplicationStatus: "COMPLETED"});
             }
@@ -64,7 +64,7 @@ const YourJobs = (props) =>{
             completedJobs={completedJobs}
         />
     );
-}
+};
 
 
 class YourJobsBody extends Component {
@@ -122,7 +122,7 @@ class YourJobsBody extends Component {
                             component={(props) => <OngoingJobsGrid
                                 id={config.ongoing}
                                 jobs={this.props.ongoingJobs}
-                                />}/>
+                            />}/>
                         <Route exact
                             path={this.props.match.url + "/applications"}
                             component={(props) => <JobList
@@ -142,7 +142,7 @@ class YourJobsBody extends Component {
 const mapStateToProps = state => {
     return {
         user: state.user,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(withRouter(YourJobs));

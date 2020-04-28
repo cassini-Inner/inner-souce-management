@@ -21,7 +21,7 @@ const ManageJobs = (props) => {
     else if (manageJobsError) return `error! ${manageJobsError}`;
 
     if(data.User.createdJobs) {
-        console.log("ji")
+        console.log("ji");
         data.User.createdJobs.forEach(createdJob => {
             // If the created job is in open status
             if(createdJob.status.toUpperCase() == "OPEN") {
@@ -31,7 +31,7 @@ const ManageJobs = (props) => {
             else if(createdJob.status.toUpperCase() == "ONGOING") {
                 ongoingJobsCreated.push(createdJob);
             }
-        // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
+            // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
             else if(createdJob.status.toUpperCase() == "COMPLETED") {
                 completedJobsCreated.push(createdJob);
             }
@@ -86,7 +86,7 @@ const ManageJobs = (props) => {
 };
 
 const CreatedJobList = (props) => {
-    console.log(props.jobs)
+    console.log(props.jobs);
     return (
         props.jobs.map((job, index) => {
             return (
@@ -119,7 +119,7 @@ const CreatedJobList = (props) => {
 const mapStateToProps = state => {
     return {
         user: state.user,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(withRouter(ManageJobs));

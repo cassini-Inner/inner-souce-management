@@ -8,7 +8,7 @@ const OngoingJobsGrid = (props) => {
     //The ongoing jobs header in the home page
     var displayOngoingJobsHeader = false;
 
-    let queryVariables = {}
+    let queryVariables = {};
     if(props.location == "home") {
         queryVariables = {userId: props.user.id};
     }
@@ -36,7 +36,7 @@ const OngoingJobsGrid = (props) => {
                 let job2 = jobs[i + 1];
                 // Used only first time to check if atleast one ongoing job is there
                 // ToDo find better way to find out
-                (job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING" && job1.applicationStatus.toUpperCase() == "ACCEPTED") ? displayOngoingJobsHeader = true:'';
+                (job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING" && job1.applicationStatus.toUpperCase() == "ACCEPTED") ? displayOngoingJobsHeader = true:"";
                 // If job status is ongoin and application status is accepted then its user's ongoing job
                 jobsRow.push(
                     <div className="flex w-full mb-4 flex-wrap lg:flex-no-wrap">
@@ -57,16 +57,16 @@ const OngoingJobsGrid = (props) => {
                 <div id={props.id} className="">
                     {
                         props.location === "home" && displayOngoingJobsHeader
-                        ? 
+                            ? 
                             <div className="flex w-full">
                                 <h1 className="text-2xl flex-1">{props.title}</h1>
-                                    <NavLink exact to="/yourJobs/ongoing">
-                                        <div className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">
+                                <NavLink exact to="/yourJobs/ongoing">
+                                    <div className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">
                                             SEE ALL ONGOING JOBS
-                                        </div>
-                                    </NavLink> 
+                                    </div>
+                                </NavLink> 
                             </div>
-                        : ""
+                            : ""
                     }
                     <div className="flex flex-wrap mt-4">
                         {jobsRow}
@@ -76,10 +76,10 @@ const OngoingJobsGrid = (props) => {
         }
     }
     if(props.location == "home") {
-        return '';
+        return "";
     }
     else {
-        return(<div className="ml-2 mt-2">No Jobs</div>)
+        return(<div className="ml-2 mt-2">No Jobs</div>);
     }
     
 };
@@ -87,8 +87,8 @@ const OngoingJobsGrid = (props) => {
 const mapStateToProps = state => {
     return {
         user: state.user,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(OngoingJobsGrid);
 

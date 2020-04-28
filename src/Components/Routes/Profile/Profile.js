@@ -18,7 +18,7 @@ const Profile = (props) => {
 
     //For invalid routes
     if(!parseInt(userId)) {
-        return <Redirect to='/' />
+        return <Redirect to='/' />;
     }
 
     const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: userId } });
@@ -100,7 +100,7 @@ const Profile = (props) => {
 const mapStateToProps = state => {
     return {
         user: state.user
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(Profile);
