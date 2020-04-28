@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 import {connect} from "react-redux";
 
 const OngoingJobsGrid = (props) => {
-    let queryVariables = {}
+    let queryVariables = {};
     if(props.location == "home") {
         queryVariables = {userId: props.user.id};
     }
@@ -14,7 +14,7 @@ const OngoingJobsGrid = (props) => {
     }
     
     if(props.query) {
-        const { loading, error, data } = useQuery(props.query, { variables: queryVariables });
+        const { loading, error, data } = useQuery(props.query, { variables: queryVariables , fetchPolicy: "cache-and-network"});
         if (loading) return "Loading...";
         else if (error) return(`Error! ${error.message}`);
         let jobs = data["User"]["appliedJobs"];
@@ -63,10 +63,10 @@ const OngoingJobsGrid = (props) => {
         }
     }
     if(props.location == "home") {
-        return '';
+        return "";
     }
     else {
-        return(<div className="ml-2 mt-2">No Jobs</div>)
+        return(<div className="ml-2 mt-2">No Jobs</div>);
     }
     
 };
@@ -74,8 +74,8 @@ const OngoingJobsGrid = (props) => {
 const mapStateToProps = state => {
     return {
         user: state.user,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(OngoingJobsGrid);
 

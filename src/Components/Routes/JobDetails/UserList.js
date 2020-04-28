@@ -12,7 +12,7 @@ const UserList = (props) => {
     //Only for version 1  v1
     var applicationIdList = [];
 
-    const { loading, error, data } = useQuery(GET_JOB_APPLICANTS, { variables: { jobId: props.jobId } });
+    const { loading, error, data } = useQuery(GET_JOB_APPLICANTS, { variables: { jobId: props.jobId }, fetchPolicy:"cache-and-network" });
     if (loading) return "Loading...";
     else if (error) console.log(`Error! ${error.message}`);
     if(data["Job"]["applications"]["applications"]) {
@@ -21,7 +21,7 @@ const UserList = (props) => {
                 if((props.type == "APPLICATIONS" && application.status.toUpperCase() == "PENDING") || (props.type == "WORKING" && application.status.toUpperCase() == "ACCEPTED")) {
                     //Only for version 1  v1 
                     if(applicationIdList.find((id) => application.applicant.id == id )) {
-                        return '';
+                        return "";
                     }
                     applicationIdList.push(application.applicant.id);
                     isEmptyList = false;
@@ -56,10 +56,10 @@ const UserList = (props) => {
                     );
                 }
             }
-        );
+            );
         //To ensure user list is not empty
         if(!isEmptyList) {
-            return(userList)
+            return(userList);
         }
     }
     if(props.type == "APPLICATIONS") {
@@ -67,7 +67,7 @@ const UserList = (props) => {
         return <div className="mt-2">No applicants so far!</div>;
     }
     else if(props.type == "WORKING") {
-        return(<div className="mt-2">No currently working users!</div>)
+        return(<div className="mt-2">No currently working users!</div>);
     }
 
 };

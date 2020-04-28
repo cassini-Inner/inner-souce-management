@@ -7,15 +7,11 @@ import { connect } from "react-redux";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import Button from "../../Common/Button/Button";
 import { useMutation } from "@apollo/react-hooks";
-import {
-    DELETE_COMMENT,
-    POST_COMMENT,
-    UPDATE_COMMENT,
-} from "../../../mutations";
+import { DELETE_COMMENT, UPDATE_COMMENT } from "../../../mutations";
 
 const CommentsList = (props) => {
     const { loading: discussionsLoading, error: discussionsError, data } = useQuery(
-        GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId } },
+        GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId }, fetchPolicy: "cache-and-network" },
     );
     if (discussionsLoading) {
         return "Loading...";
@@ -23,12 +19,15 @@ const CommentsList = (props) => {
     if (discussionsError) console.log(`Error! ${discussionsError}`);
     console.log(data.Job.discussion.discussions);
 
-    return (
-        data.Job.discussion.discussions.map((comment, key) => {
+    const commentsList = data.Job.discussion.discussions;
+    if (commentsList) {
+        return (commentsList.map((comment, key) => {
             return (<CommentItem key={key} comment={comment} user={props.user}
                 jobId={props.jobId}/>);
-        })
-    );
+        }));
+    } else {
+        return (<div>No Comments! </div>);
+    }
 };
 
 const CommentItem = (props) => {
@@ -37,19 +36,23 @@ const CommentItem = (props) => {
     };
     const [state, updateState] = useState(initialState);
 
-    const [updateComment, { loading:updateCommentLoading }] = useMutation(UPDATE_COMMENT,
+    const [updateComment, { loading: updateCommentLoading }] = useMutation(
+        UPDATE_COMMENT,
         {
             refetchQueries: [
-                { query: GET_JOB_DISCUSSIONS,
-                    variables: { jobId: props.jobId }
+                {
+                    query: GET_JOB_DISCUSSIONS,
+                    variables: { jobId: props.jobId },
                 },
             ],
         });
-    const [deleteComment, { loading:deleteCommentLoading }] = useMutation(DELETE_COMMENT,
+    const [deleteComment, { loading: deleteCommentLoading }] = useMutation(
+        DELETE_COMMENT,
         {
             refetchQueries: [
-                { query: GET_JOB_DISCUSSIONS,
-                    variables: { jobId: props.jobId }
+                {
+                    query: GET_JOB_DISCUSSIONS,
+                    variables: { jobId: props.jobId },
                 },
             ],
         });
@@ -69,9 +72,7 @@ const CommentItem = (props) => {
                 commentId: comment.id,
                 comment: textInputRef.current.value,
             },
-            optimisticResponse: {
-
-            }
+            optimisticResponse: {},
         }).then(() => {
             updateState({ editing: false });
         }).catch(() => {
@@ -81,19 +82,21 @@ const CommentItem = (props) => {
 
     const deleteOnClick = (e) => {
         e.preventDefault();
-        const confirmed = window.confirm("Are you sure you want to delete the comment?");
+        const confirmed = window.confirm(
+            "Are you sure you want to delete the comment?");
         if (confirmed) {
             deleteComment({ variables: { commentId: comment.id } }).then(
-              () => {
-                  updateState({ editing: false });
-              }
+                () => {
+                    updateState({ editing: false });
+                },
             ).catch(() => {alert("Error deleting comment");});
         }
     };
 
     const discardOnClick = (e) => {
         e.preventDefault();
-        const confirmed = window.confirm("Are you sure you want to discard changes?");
+        const confirmed = window.confirm(
+            "Are you sure you want to discard changes?");
         if (confirmed) {
             updateState({
                 editing: false,
@@ -102,7 +105,7 @@ const CommentItem = (props) => {
     };
 
     return <div
-        className={"mt-6 flex w-full  transition duration-150 rounded-md " +
+        className={"mt-2 flex w-full  transition duration-150 rounded-md " +
       (state.editing ? " shadow-md" : "   border-b border-nebula-grey-400 ")}>
         <div className="flex p-4 flex-row flex-auto items-start ">
             <Avatar imagePath={comment.createdBy.photoUrl}/>
@@ -131,10 +134,12 @@ const CommentItem = (props) => {
                                                 ? "Saving"
                                                 : "Save"} className="mr-2"/>
                                         <Button type="secondary" label="Discard"
-                                            onClick={(e)=> discardOnClick(e)}/>
+                                            onClick={(e) => discardOnClick(
+                                                e)}/>
 
                                     </div>
-                                    <Button type="error" label="Delete" onClick={(e)=> deleteOnClick(e)}/>
+                                    <Button type="error" label="Delete"
+                                        onClick={(e) => deleteOnClick(e)}/>
                                 </div>
                             </form>
                             :

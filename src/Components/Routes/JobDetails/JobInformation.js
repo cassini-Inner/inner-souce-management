@@ -9,7 +9,7 @@ import  { getDuration } from "../../../HelperFunctions/DurationParser";
 
 const JobInformation = (props) => {
 
-    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId } });
+    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId }, fetchPolicy:"cache-first" });
     if (loading) return "Loading...";
     else if (error) { 
         console.log(`Error! ${error.message}`);
@@ -62,7 +62,7 @@ const JobInformation = (props) => {
                     department = {data["Job"].createdBy.department} 
                     name = {data["Job"].createdBy.name} 
                     img = {data["Job"].createdBy.photoUrl}
-                    />
+                />
             </div>
         </React.Fragment>
     );

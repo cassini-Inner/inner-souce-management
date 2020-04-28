@@ -28,7 +28,7 @@ const EditProfile = (props) => {
 };
 
 const EditProfileBody = (props) => {
-    const userData = props.data["User"]
+    const userData = props.data["User"];
     const initialState = {
         id: userData.id,
         name: userData.name,

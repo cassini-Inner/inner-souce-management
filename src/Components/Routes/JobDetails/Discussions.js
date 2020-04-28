@@ -6,7 +6,7 @@ import { GET_JOB_DISCUSSIONS } from "../../../queries";
 import { connect } from "react-redux";
 import { POST_COMMENT } from "../../../mutations";
 import CommentsList from "./CommentsList";
-import TextAreaInput from '../../Common/InputFields/TextAreaInput'
+import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 
 const Discussions = (props) => {
     return (

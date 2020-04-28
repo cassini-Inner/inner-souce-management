@@ -1,19 +1,19 @@
-import React, { useState, Fragment } from 'react';
-import SplitContainer from '../../Containers/SplitContainer';
-import TextAreaInput from '../../Common/InputFields/TextAreaInput';
-import TextInput from '../../Common/InputFields/TextInput';
-import Dropdown from '../../Common/Dropdown/Dropdown';
-import Button from '../../Common/Button/Button';
+import React, { useState, Fragment } from "react";
+import SplitContainer from "../../Containers/SplitContainer";
+import TextAreaInput from "../../Common/InputFields/TextAreaInput";
+import TextInput from "../../Common/InputFields/TextInput";
+import Dropdown from "../../Common/Dropdown/Dropdown";
+import Button from "../../Common/Button/Button";
 import Modal from "../../Containers/Portal";
-import ModalViewWithScrim from '../../Modals/ModalViewWithScrim';
-import MilestoneModal from '../../Modals/MilestoneModal';
-import Portal from '../../Containers/Portal';
+import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
+import MilestoneModal from "../../Modals/MilestoneModal";
+import Portal from "../../Containers/Portal";
 import { withRouter } from "react-router";
 import { validateJob, validateMilestone } from "./ValidateForm";
 import MilestoneCard from "../../Milestones/MilestoneCard";
 import { durationStringToDays } from "../../../HelperFunctions/DurationParser";
 import { CREATE_JOB } from "../../../mutations";
-import { useMutation } from '@apollo/client';
+import { useMutation } from "@apollo/client";
 
 const CreateJob = (props) =>  {
 
@@ -36,10 +36,10 @@ const CreateJob = (props) =>  {
             skills: [],
             resolution: ""
         }
-    }
+    };
     const [ state, setState ] = useState(initialState);
 
-    const [createJob, {loading, error}] = useMutation(CREATE_JOB);
+    const [createJob, {loading, error}] = useMutation(CREATE_JOB,);
     if(loading) return <p>Authenticating...</p>;
     if(error) return <p>Authentication Error! {error}</p>;
 
@@ -52,14 +52,14 @@ const CreateJob = (props) =>  {
                 skills: skillList,
             }
         });
-    }
+    };
     
     const openMilestoneModal = () => {
         setState({
             ...state,
             milestoneModal: true,
             milestoneCount: state.milestoneCount + 1,
-        })
+        });
     };
 
     const closeMilestoneModal = () => {
@@ -67,7 +67,7 @@ const CreateJob = (props) =>  {
             ...state,
             milestoneModal: false,
             milestoneCount: state.milestoneCount - 1,
-        })
+        });
     };
 
     //To validate and save the milestone
@@ -82,9 +82,9 @@ const CreateJob = (props) =>  {
                 duration: durationStringToDays(state.milestone.duration+" "+state.milestone.durationUnit),
                 skills: state.milestone.skills,
                 resolution: state.milestone.resolution,
-            }
+            };
             
-            const updatedMilestones = [...state.job.milestones, newMilestone]
+            const updatedMilestones = [...state.job.milestones, newMilestone];
             //To save the newly created milestone into the existing list of milestones
             setState({
                 ...state,
@@ -128,19 +128,19 @@ const CreateJob = (props) =>  {
                         status: "OPEN",
                         duration: milestone.duration.toString(),
                         skills: milestone.skills
-                    }
+                    };
                 })
-            }
+            };
             console.log(createJobInput);
             createJob({
                 variables: {
                     job: createJobInput,
                 }
             })
-            .then(res => {
-                props.history.push('/jobDetails/'+res.data.createJob.id)
-                alert("Job has been created successfully!");
-            },
+                .then(res => {
+                    props.history.push("/jobDetails/"+res.data.createJob.id);
+                    alert("Job has been created successfully!");
+                },
                 err => console.log(err));
         }
 
@@ -151,53 +151,53 @@ const CreateJob = (props) =>  {
                 jobErrMsg: "Please fill all the fields and add at least one milestone!",
             });
         }
-    }
+    };
 
     //To get all the input values and store them in the state
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch(event.currentTarget.id) {
-            case "jobTitle": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                job: {...state.job, title: value}});break;
+        case "jobTitle": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            job: {...state.job, title: value}});break;
 
-            case "jobDescription": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                job:{...state.job, description: value}});break;
+        case "jobDescription": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            job:{...state.job, description: value}});break;
 
-            case "jobDifficulty": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                job:{...state.job, difficulty: value}});break;
+        case "jobDifficulty": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            job:{...state.job, difficulty: value}});break;
 
-            case "milestoneTitle": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                milestone:{...state.milestone, title: value}});break;
+        case "milestoneTitle": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            milestone:{...state.milestone, title: value}});break;
 
-            case "milestoneDescription": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                milestone:{...state.milestone, description: value}});break;
+        case "milestoneDescription": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            milestone:{...state.milestone, description: value}});break;
 
-            case "milestoneDuration": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                milestone:{...state.milestone, duration: value}});break;
+        case "milestoneDuration": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            milestone:{...state.milestone, duration: value}});break;
 
-            case "milestoneDurationUnit": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                milestone:{...state.milestone, durationUnit: value}});break;
+        case "milestoneDurationUnit": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            milestone:{...state.milestone, durationUnit: value}});break;
 
-            case "milestoneResolution": setState({...state,
-                milestoneErrMsg:"",
-                jobErrMsg:"",
-                milestone:{...state.milestone, resolution: value}});break;
+        case "milestoneResolution": setState({...state,
+            milestoneErrMsg:"",
+            jobErrMsg:"",
+            milestone:{...state.milestone, resolution: value}});break;
         }
-    }
+    };
 
 
     const goBack = () => {
@@ -205,12 +205,12 @@ const CreateJob = (props) =>  {
         if(cancel) {
             props.history.goBack();
         }
-    }
+    };
 
     const ButtonRow = [
         <Button type="secondary" label="Cancel Job Creation" onClick={() => goBack()}/>,
         <Button type="primary" label="Submit Job" onClick={() => validateForm() }/>
-    ]
+    ];
     return (
         <Fragment>
             <Modal
@@ -238,7 +238,7 @@ const CreateJob = (props) =>  {
             </Portal>
         </Fragment>
     );
-}
+};
 
 
 const JobForm = (props) => {
@@ -257,16 +257,16 @@ const JobForm = (props) => {
             </div>
             { //To display error messages
                 props.jobErrMsg?
-                <div 
-                    className = "mt-6 text-nebula-red" >
+                    <div 
+                        className = "mt-6 text-nebula-red" >
                         {props.jobErrMsg}
                     </div>
-                : ""
+                    : ""
             }
         </div>
     );
 
-}
+};
 
 const Milestones = (props) => {
     return (
@@ -300,6 +300,6 @@ const Milestones = (props) => {
             </ul>
         </div>
     );
-}
+};
 
 export default withRouter(CreateJob);
