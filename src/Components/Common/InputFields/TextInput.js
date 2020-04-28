@@ -7,6 +7,7 @@ const TextInput = (props) => {
         <Fragment>
             <TextInputLabel label={props.label}/>
             <input
+                ref={props.forwardedRef}
                 id={props.id?props.id:""}
                 type={props.number? "number" : "text"}
                 min={props.min?props.min:""}

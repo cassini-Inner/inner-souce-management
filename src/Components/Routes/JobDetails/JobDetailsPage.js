@@ -95,7 +95,6 @@ const JobDetailsPage = (props) => {
 
     //To check if the user has already applied to this job for buttons
     var userActions = [];
-    console.log("data:",data.Job)
     if(data.Job.applications.applications && data.Job.applications.applications.find((application) => application.applicant.id == props.user.id)) {
         userActions = [
             (<Button type="error" label="Withdraw application"

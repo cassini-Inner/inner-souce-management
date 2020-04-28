@@ -26,7 +26,7 @@ export const GET_MILESTONES = gql`
 
 // To get the job details based on job id
 export const GET_JOB_DETAILS = gql`
-    query($jobId:ID!){
+    query GET_JOB_DETAILS($jobId:ID!){
         Job(id:$jobId){
             id
             title
@@ -61,7 +61,7 @@ export const GET_JOB_DETAILS = gql`
 
 // To get the discussions based on job id
 export const GET_JOB_DISCUSSIONS = gql`
-query($jobId: ID!){
+query ($jobId: ID!){
         Job(id:$jobId){
             id
             discussion{
