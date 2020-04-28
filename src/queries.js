@@ -164,6 +164,7 @@ export const GET_USER_ONGOING_JOBS = gql`
             id
             appliedJobs{
                 userJobStatus
+                applicationStatus
                 job{
                     id
                     title
@@ -239,15 +240,44 @@ export const GET_USER_ONBOARDED = gql`
     }
 `;
 
-// To get your jobs
-// export const GET_USER_SKILLS = gql`
-//     query($userId: ID!){
-//         User(id: $userId){
-//             id
-//             skills {
-//                 id
-//                 value
-//             }
-//         }
-//     }
-// `;
+// To get your jobs 
+export const GET_YOUR_JOBS = gql`
+    query($userId: ID!){
+        User(id: $userId){
+            id
+            appliedJobs {
+                applicationStatus
+                userJobStatus
+                job {
+                    id
+                    title
+                    createdBy {
+                        id
+                        name
+                        department
+                        photoUrl
+                    }
+                    description: desc
+                    duration
+                    difficulty
+                    status
+                    skills {
+                        id
+                        value
+                    }
+                    applications {
+                        acceptedCount
+                    }
+                    timeCreated
+                    milestones {
+                        totalCount
+                        milestones{
+                            id
+                            duration
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;

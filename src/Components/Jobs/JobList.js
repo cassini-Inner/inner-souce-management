@@ -8,7 +8,6 @@ import Portal from '../Containers/Portal'
 import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
 import FilterModal from '../Modals/FilterModal'
 import { Query } from '@apollo/react-components';
-import { compose } from 'redux'
 
 
 class JobList extends Component {
@@ -143,6 +142,15 @@ class JobList extends Component {
                     );
                 }}
                 </Query>
+            );
+        }
+        if(this.props.jobs && this.props.jobs.length > 0) {
+            return(
+                this.props.jobs.map(data => {
+                    return (
+                        <JobCard data={data}/>
+                    );
+                }) 
             );
         }
         return(<div className="ml-2 mt-2">No Jobs</div>)

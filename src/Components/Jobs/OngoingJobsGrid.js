@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 
 const OngoingJobsGrid = (props) => {
     //The ongoing jobs header in the home page
-    const displayOngoingJobsHeader = false;
+    var displayOngoingJobsHeader = false;
 
     let queryVariables = {}
     if(props.location == "home") {
@@ -16,11 +16,17 @@ const OngoingJobsGrid = (props) => {
         queryVariables = props.queryVariables;
     }
     
-    if(props.query) {
-        const { loading, error, data } = useQuery(props.query, { variables: queryVariables });
-        if (loading) return "Loading...";
-        else if (error) return(`Error! ${error.message}`);
-        let jobs = data["User"]["appliedJobs"];
+    if(props.query || props.jobs) {
+        let jobs;
+        if(props.query) {
+            const { loading, error, data } = useQuery(props.query, { variables: queryVariables });
+            if (loading) return "Loading...";
+            else if (error) return(`Error! ${error.message}`);
+            jobs = data["User"]["appliedJobs"];
+        }
+        else if(props.jobs) {
+            jobs = props.jobs;
+        }
 
         let maxCount = props.maxCount ? props.maxCount : jobs.length / 2 + 1; // +1 to ensure even odd number of cards are printed 
         let jobsRow = [];
@@ -28,19 +34,20 @@ const OngoingJobsGrid = (props) => {
             for (let i = 0; i < jobs.length && i < maxCount; i++) {
                 let job1 = jobs[i];
                 let job2 = jobs[i + 1];
-
-                //Used only first time to check if atleast one row is there
-                (job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING") ? displayOngoingJobsHeader = true:'';
-
+                console.log("jobs:", jobs);
+                // Used only first time to check if atleast one ongoing job is there
+                // ToDo find better way to find out
+                (job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING" && job1.applicationStatus.toUpperCase() == "ACCEPTED") ? displayOngoingJobsHeader = true:'';
+                // If job status is ongoin and application status is accepted then its user's ongoing job
                 jobsRow.push(
                     <div className="flex w-full mb-4 flex-wrap lg:flex-no-wrap">
-                        {(job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING") ?
+                        {(job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING" && job1.applicationStatus.toUpperCase() == "ACCEPTED") ?
                             <OngoingJobCard job={job1} className="w-full mb-4 lg:mb-0 lg:w-1/2"/>
                             : null
                         }
                         <div className="w-4"></div>
                         {/* Blank div in case job count is even, otherwise the last card is out of place */}
-                        {(job2 != null && job1.userJobStatus.toUpperCase() == "ONGOING") ?
+                        {(job2 != null && job2.userJobStatus.toUpperCase() == "ONGOING" && job2.applicationStatus.toUpperCase() == "ACCEPTED") ?
                             <OngoingJobCard job={job2} className="w-full mb-4 lg:mb-0 lg:w-1/2"/>
                             :
                             <div className="w-1/2"/>}
