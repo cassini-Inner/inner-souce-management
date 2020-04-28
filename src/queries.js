@@ -53,7 +53,11 @@ export const GET_JOB_DETAILS = gql`
                 }
             }
             applications {
+                pendingCount
                 acceptedCount
+            }
+            discussion {
+                totalCount
             }
         }
     }
