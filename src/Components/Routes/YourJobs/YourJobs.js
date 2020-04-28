@@ -6,12 +6,64 @@ import { Redirect, Route, withRouter } from "react-router";
 import * as config from "../../../../assets/placeholder";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";
-
-
+import { useQuery } from "@apollo/client";
+import { GET_YOUR_JOBS } from "../../../queries";
+import { connect } from "react-redux";
+ 
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) =>{ 
+    var appliedJobs = [], ongoingJobs = [], completedJobs = [];
+    //Query to get your jobs 
+    const { loading:yourJobsInfoLoading, error:yourJobsInfoError, data } = useQuery(GET_YOUR_JOBS, { variables: { userId: props.user.id } });
+    if (yourJobsInfoLoading) return "Loading...";
+    else if (yourJobsInfoError) return `error! ${yourJobsInfoError.message}`;
     
-    return(<YourJobsBody {...props}/>);
+    if(data.User.appliedJobs) {
+        data.User.appliedJobs.forEach(appliedJob => {
+        // If application status is pending and job status is either open or ongoing then the user is awaiting approval
+            if(appliedJob.userJobStatus.toUpperCase() != "COMPLETED" && appliedJob.applicationStatus.toUpperCase() == "PENDING") {
+                appliedJobs.push({ ...appliedJob.job, userApplicationStatus: "APPLIED"});
+            }
+        // If application status is accepted and job status is ongoing then the user is currently working on the job
+            if(appliedJob.userJobStatus.toUpperCase() == "ONGOING" && appliedJob.applicationStatus.toUpperCase() == "ACCEPTED") {
+                ongoingJobs.push({ ...appliedJob.job, userApplicationStatus: "WORKING"});
+            }
+        // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
+            if(appliedJob.userJobStatus.toUpperCase() == "COMPLETED" && appliedJob.applicationStatus.toUpperCase() == "ACCEPTED") {
+                completedJobs.push({ ...appliedJob.job, userApplicationStatus: "COMPLETED"});
+            }
+        });
+    }
+
+    const tabList = [
+        {
+            title: "Working On",
+            location: "ongoing",
+            count: ongoingJobs.length,
+        },
+        {
+            title: "Awaiting Approval",
+            location: "applications",
+            count: appliedJobs.length,
+            notify: true
+        },
+        {
+            title: "Completed",
+            location: "completed",
+            count: completedJobs.length,
+        }
+    ];
+
+
+    return(
+        <YourJobsBody 
+            {...props}
+            tabList={tabList} 
+            appliedJobs={appliedJobs}
+            ongoingJobs={ongoingJobs}
+            completedJobs={completedJobs}
+        />
+    );
 }
 
 
@@ -50,24 +102,6 @@ class YourJobsBody extends Component {
    
 
     render() {
-        const tabList = [
-            {
-                title: "Working On",
-                location: "ongoing",
-                count: 2,
-            },
-            {
-                title: "Awaiting Approval",
-                location: "applications",
-                count: 3,
-                notify: true
-            },
-            {
-                title: "Completed",
-                location: "completed",
-                count: 8,
-            }
-        ];
 
         return (
             <Fragment>
@@ -81,19 +115,23 @@ class YourJobsBody extends Component {
                             <div className="text-xl font-semibold flex-1 py-4">
                                 Your Jobs
                             </div>
-                            <TabStrip tabs={tabList}/>
+                            <TabStrip tabs={this.props.tabList}/>
                         </StickyHeader>
                         <div className="my-2"/>
                         <Route exact path={this.props.match.url + "/ongoing"}
                             component={(props) => <OngoingJobsGrid
-                                id={config.ongoing}/>}/>
+                                id={config.ongoing}
+                                jobs={this.props.ongoingJobs}
+                                />}/>
                         <Route exact
                             path={this.props.match.url + "/applications"}
                             component={(props) => <JobList
-                                id={config.applications}/>}/>
+                                id={config.applications}
+                                jobs={this.props.appliedJobs}/>}/>
                         <Route exact path={this.props.match.url + "/completed"}
                             component={(props) => <JobList
-                                id={config.completed}/>}/>
+                                id={config.completed}
+                                jobs={this.props.completedJobs}/>}/>
                     </div>
                 </div>
             </Fragment>
@@ -101,4 +139,10 @@ class YourJobsBody extends Component {
     }
 }
 
-export default withRouter(YourJobs);
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(YourJobs));
