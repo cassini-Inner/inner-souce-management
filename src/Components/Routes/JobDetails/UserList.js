@@ -2,11 +2,11 @@ import React from "react";
 import * as Icons from "react-feather";
 import Avatar from "../../Common/Avatar/Avatar";
 import { useMutation, useQuery } from "@apollo/client";
-import { GET_JOB_APPLICANTS, GET_JOB_INFO } from '../../../queries'
+import { GET_JOB_APPLICANTS, GET_JOB_INFO } from "../../../queries";
 import {
     ACCEPT_JOB_APPLICATION,
     REJECT_JOB_APPLICATION,
-} from '../../../mutations'
+} from "../../../mutations";
 
 const UserList = (props) => {
     // To check if userlist is empty
@@ -40,7 +40,7 @@ const UserList = (props) => {
                     variables: { jobId: props.jobId }
                 },
             ],
-    });
+        });
 
     if (loading) {
         return "Loading...";
@@ -48,13 +48,13 @@ const UserList = (props) => {
 
     const acceptOnClick = (e, applicantId) => {
         if (window.confirm("Are you sure you want to accept this application?")) {
-        acceptApplication({
-            variables: {
-                applicantId: applicantId,
-                jobId: props.jobId,
-                note: "",
-            },
-        }).catch(() => {alert("Failed to accept application");});
+            acceptApplication({
+                variables: {
+                    applicantId: applicantId,
+                    jobId: props.jobId,
+                    note: "",
+                },
+            }).catch(() => {alert("Failed to accept application");});
 
         }
     };
@@ -62,15 +62,15 @@ const UserList = (props) => {
     const rejectOnClick = (e, applicantId) => {
         const confirm = window.confirm("Are you sure you want to reject this application?");
         if (confirm){
-        rejectApplication({
-            variables: {
-                applicantId: applicantId,
-                jobId: props.jobId,
-                note: "",
-            },
-        }).catch(() => alert("Failed to reject application"));
+            rejectApplication({
+                variables: {
+                    applicantId: applicantId,
+                    jobId: props.jobId,
+                    note: "",
+                },
+            }).catch(() => alert("Failed to reject application"));
         }
-    }
+    };
 
     const applications = data["Job"]["applications"]["applications"];
     if (applications) {
@@ -110,7 +110,7 @@ const UserList = (props) => {
 
                               <div className="flex">
                                   <button
-                                        onClick={(e) => rejectOnClick(e, application.applicant.id)}
+                                      onClick={(e) => rejectOnClick(e, application.applicant.id)}
                                       className="cursor-pointer self-center p-3 mx-2 rounded-full bg-nebula-red-light">
                                       <Icons.X
                                           className=" h-4 w-4 stroke-current text-nebula-red hover:text-black"/>
