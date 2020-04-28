@@ -12,7 +12,7 @@ const JobCard = (props) => {
                 ? ""
                 : "transition duration-300 shadow-none cursor-pointer hover:shadow-lg border border-nebula-grey-400")}
             key={props.data.id}>
-                <h1 className="text-sm font-semibold">{props.data.title}</h1>
+                <h1 className="text-md font-semibold">{props.data.title}</h1>
                 <div
                     className="mt-2 text-sm leading-relaxed text-nebula-grey-700 mb-8">
                     {props.data.description}
@@ -54,7 +54,7 @@ const JobCard = (props) => {
                 <div className="flex flex-col flex-wrap mt-4 justify-left md:flex-row">
                     <div className="flex-1">
                         <div className="flex items-center">
-                            <div><StatusTags statusTag={[props.data.status.toLowerCase()]} /></div>
+                            <div><StatusTags statusTag={[props.data.status.toLowerCase(), props.data.userApplicationStatus? props.data.userApplicationStatus.toLowerCase() : '']} /></div>
                             <div className="text-nebula-grey-600 ml-2 text-sm">{"created on " + props.data.timeCreated.split("T")[0]}</div>
                         </div>
                     </div>

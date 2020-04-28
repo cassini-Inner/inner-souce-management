@@ -6,6 +6,7 @@ const StatusTags = (props) => {
         open: "bg-nebula-blue-light text-nebula-blue",
         applied: "bg-nebula-yellow-light text-nebula-yellow",
         ongoing: "bg-nebula-green-light text-nebula-green",
+        working: "bg-nebula-green-light text-nebula-green",
         completed: "bg-nebula-purple-light text-nebula-purple",
         job: "bg-nebula-blue-light text-nebula-blue",
         milestones: "bg-nebula-yellow-light text-nebula-yellow",
