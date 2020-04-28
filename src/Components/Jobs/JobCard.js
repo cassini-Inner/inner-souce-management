@@ -33,6 +33,9 @@ const JobCard = (props) => {
                                 <InfoTag title="DURATION" data={getDuration(props.data["milestones"]["milestones"])} />
                             </div>
                             <div className="mr-6 mt-4 md:mt-0">
+                                <InfoTag title="WORKING" data={props.data.applications.acceptedCount + ( props.data.applications.acceptedCount > 1 ? " users":" user")} /> 
+                            </div>
+                            <div className="mr-6 mt-4 md:mt-0">
                                 <InfoTag title="SKILLS NEEDED" data={props.data.skills.map((skill, index) => skill.value + " ")} />
                             </div>
                         </div>

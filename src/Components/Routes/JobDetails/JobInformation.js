@@ -45,11 +45,16 @@ const JobInformation = (props) => {
                     <InfoTag title="DURATION" data={getDuration(data["Job"]["milestones"]["milestones"])} />  
                 </div>
                 <div className="mr-4 mb-4 ">
-                    <InfoTag title="SKILLS NEEDED" data={data["Job"]["skills"].map((skill, index) => skill.value + " ")} /> 
+                    <InfoTag title="CREATED ON" data={new Date(data["Job"].timeCreated).toDateString()} /> 
                 </div>
                 <div className="mr-4 mb-4 ">
-                    <InfoTag title="CREATED ON" data={data["Job"].timeCreated.split("T")[0]} /> 
+                    <InfoTag title="WORKING" data={data["Job"]["applications"]["acceptedCount"] + ( data["Job"]["applications"]["acceptedCount"] > 1 ? " users":" user")} /> 
                 </div>
+                <div className="mr-4 mb-4 ">
+                    <InfoTag title="SKILLS NEEDED" data={data["Job"]["skills"].map((skill, index) => skill.value + " ")} /> 
+                </div>
+            </div>
+            <div className="flex flex-wrap-reverse lg:flex-row-reverse">
                 <AuthorInfo 
                     className="mt-8" 
                     iconClass="w-12 h-12" 
@@ -57,7 +62,7 @@ const JobInformation = (props) => {
                     department = {data["Job"].createdBy.department} 
                     name = {data["Job"].createdBy.name} 
                     img = {data["Job"].createdBy.photoUrl}
-                />
+                    />
             </div>
         </React.Fragment>
     );
