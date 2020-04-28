@@ -10,7 +10,7 @@ import { Route } from "react-router-dom";
 import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
 import { useQuery } from "@apollo/client";
-import { GET_JOB_TABS } from "../../../queries";
+import { GET_JOB_INFO } from "../../../queries";
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from '@apollo/client';
@@ -88,14 +88,15 @@ const JobDetailsPage = (props) => {
     if(deleteJobLoading) return <p>Loading...</p>;
     if(deleteJobError) return <p>Delete job mutation Error! {deleteJobError}</p>;
 
-    //Query to get the job tabs
-    const { loading, error, data } = useQuery(GET_JOB_TABS, { variables: { jobId: state.jobId } });
+    //Query to get the job tabs and primary info(created by, applicant IDs)
+    const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
 
     //To check if the user has already applied to this job for buttons
     var userActions = [];
-    if(data.Job.applications.applications.find((application) => application.applicant.id == props.user.id)) {
+    console.log("data:",data.Job)
+    if(data.Job.applications.applications && data.Job.applications.applications.find((application) => application.applicant.id == props.user.id)) {
         userActions = [
             (<Button type="error" label="Withdraw application"
                 key="withdrawJobApplication"
@@ -143,18 +144,21 @@ const JobDetailsPage = (props) => {
             location: "discussions",
             count: data.Job.discussion.totalCount ? data.Job.discussion.totalCount : 0,
         },
-        {
+    ];
+    // Only the owner of the job can view applications and currently working tab
+    if( props.user.id==data.Job.createdBy.id ) {
+        tabList.push({
             title: "Applications",
             location: "applications",
             count: data.Job.applications.pendingCount ? data.Job.applications.pendingCount : 0,
             notify: true
-        },
-        {
+        });
+        tabList.push( {
             title: "Currently Working",
             location: "working",
             count: data.Job.applications.acceptedCount ? data.Job.applications.acceptedCount : 0,
-        }
-    ];
+        });
+    }
 
 
     return (
@@ -171,8 +175,16 @@ const JobDetailsPage = (props) => {
                 }
                 <Route exact path = {props.match.url + "/milestones"} component = {(props) => <MilestonesList jobId = {state.jobId}/>} />
                 <Route exact path = {props.match.url + "/discussions"} component = {(props) => <Discussions jobId = {state.jobId}/>} />
-                <Route exact path = {props.match.url + "/applications"} component = {(props) => <Applications jobId = {state.jobId}/>} />
-                <Route exact path={props.match.url + "/working"} component={(props) => <WorkingUsers jobId = {state.jobId}/>} />
+                {
+                    data.Job.createdBy.id == props.user.id
+                    ?
+                        <Fragment>
+                            <Route exact path = {props.match.url + "/applications"} component = {(props) => <Applications jobId = {state.jobId}/>} />
+                            <Route exact path={props.match.url + "/working"} component={(props) => <WorkingUsers jobId = {state.jobId}/>} />
+                        </Fragment>
+                    :
+                        ""
+                }
             </div>
             <div className="sticky bottom-0 bg-white">
                 <hr/>
