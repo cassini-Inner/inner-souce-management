@@ -7,7 +7,7 @@ export const validateJob = (milestoneCount, job) => {
     if(!job.difficulty.trim()) return false;
     if(!job.milestones.length || !(milestoneCount == job.milestones.length)) return false;
     return true;
-}
+};
 
 
 export const validateMilestone = (milestone) => {
@@ -18,4 +18,4 @@ export const validateMilestone = (milestone) => {
     if(!milestone.skills.length) return false;
     if(!milestone.resolution.trim()) return false;
     return true;
-}
+};

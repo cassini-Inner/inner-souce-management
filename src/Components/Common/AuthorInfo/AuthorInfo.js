@@ -10,7 +10,7 @@ const AuthorInfo = (props) => {
                 <p className="text-sm font-semibold">{props.name}</p>
                 <p className="leading-tight text-xs text-nebula-grey-600">{props.department}</p>
             </div>
-        </div>
+        </div>;
 
     if(props.redirectUrl) {
         return (
@@ -22,7 +22,7 @@ const AuthorInfo = (props) => {
         );
     }
     else {
-        return(authorInfo)
+        return(authorInfo);
     }
 };
 

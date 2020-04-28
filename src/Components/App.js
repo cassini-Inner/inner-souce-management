@@ -6,7 +6,7 @@ import LoginPage from "./Routes/Login/Login";
 import Authenticate from "./Routes/Login/Auth";
 import { Switch } from "react-router";
 import OnboardingPage from "./Routes/Onboarding/OnboardingPage";
-import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
+import PrivateRoute from "./Routes/PrivateRoute/PrivateRoute";
 
 const App = (props) => {
     return (

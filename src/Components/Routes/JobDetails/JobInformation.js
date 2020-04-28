@@ -9,16 +9,14 @@ import  { getDuration } from "../../../HelperFunctions/DurationParser";
 
 const JobInformation = (props) => {
 
-    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId } });
-    if (loading) return "Loading...";
+    const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId }, fetchPolicy:"cache-first" });
+    if (loading) return (<div>Loading...</div>);
     else if (error) { 
         console.log(`Error! ${error.message}`);
         props.history.push("/");
     }
 
     //To get the duration of the job by summing the duration of milestones
-    
-
     return (
         <React.Fragment>
             <div className="mt-8">
@@ -62,7 +60,7 @@ const JobInformation = (props) => {
                     department = {data["Job"].createdBy.department} 
                     name = {data["Job"].createdBy.name} 
                     img = {data["Job"].createdBy.photoUrl}
-                    />
+                />
             </div>
         </React.Fragment>
     );

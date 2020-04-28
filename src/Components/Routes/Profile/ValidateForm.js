@@ -8,4 +8,4 @@ export const validateProfileUpdate = (userDetails) => {
     if(!userDetails.contact.trim()) return false;
     if(!userDetails.skills.length) return false;
     return true;
-}
+};

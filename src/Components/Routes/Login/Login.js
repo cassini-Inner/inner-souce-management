@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
-import { githubAuthUrl } from '../../../githubAuthConfig';
+import { githubAuthUrl } from "../../../githubAuthConfig";
 
 const LoginPage = (props) => {
     const body = (
@@ -20,15 +20,15 @@ const LoginPage = (props) => {
                 // ?
                 //     <p className="mt-12 mb-6 text-nebula-red">{props.location.state.msg}</p>
                 // :
-                    <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
+                <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
             }
             
-                <button className="w-full md:w-auto" onClick={()=>Authenticator()}>
-                    <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-lg items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
-                        <Icons.GitHub className="text-white "/>
-                        <p className="px-6 text-white font-semibold whitespace-no-wrap">Continue with GitHub</p>
-                    </div>
-                </button>
+            <button className="w-full md:w-auto" onClick={()=>Authenticator()}>
+                <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-lg items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
+                    <Icons.GitHub className="text-white "/>
+                    <p className="px-6 text-white font-semibold whitespace-no-wrap">Continue with GitHub</p>
+                </div>
+            </button>
         </div>
     );
     return (
@@ -37,8 +37,8 @@ const LoginPage = (props) => {
 };
 
 const Authenticator = () => {
-    window.open(githubAuthUrl, '_self');
-}
+    window.open(githubAuthUrl, "_self");
+};
 
 
 export default withRouter(LoginPage);

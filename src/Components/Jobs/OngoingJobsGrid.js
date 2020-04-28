@@ -8,87 +8,36 @@ const OngoingJobsGrid = (props) => {
     //The ongoing jobs header in the home page
     var displayOngoingJobsHeader = false;
 
-    let queryVariables = {}
+    let queryVariables = {};
     if(props.location == "home") {
         queryVariables = {userId: props.user.id};
     }
     else if(props.queryVariables) {
         queryVariables = props.queryVariables;
     }
-    
-    if(props.query || props.jobs) {
-        let jobs;
-        if(props.query) {
-            const { loading, error, data } = useQuery(props.query, { variables: queryVariables });
-            if (loading) return "Loading...";
-            else if (error) return(`Error! ${error.message}`);
-            jobs = data["User"]["appliedJobs"];
-        }
-        else if(props.jobs) {
-            jobs = props.jobs;
-        }
 
-        let maxCount = props.maxCount ? props.maxCount : jobs.length / 2 + 1; // +1 to ensure even odd number of cards are printed 
-        let jobsRow = [];
-        if (jobs && jobs.length) {
-            for (let i = 0; i < jobs.length && i < maxCount; i++) {
-                let job1 = jobs[i];
-                let job2 = jobs[i + 1];
-                // Used only first time to check if atleast one ongoing job is there
-                // ToDo find better way to find out
-                (job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING" && job1.applicationStatus.toUpperCase() == "ACCEPTED") ? displayOngoingJobsHeader = true:'';
-                // If job status is ongoin and application status is accepted then its user's ongoing job
-                jobsRow.push(
-                    <div className="flex w-full mb-4 flex-wrap lg:flex-no-wrap">
-                        {(job1 != null && job1.userJobStatus.toUpperCase() == "ONGOING" && job1.applicationStatus.toUpperCase() == "ACCEPTED") ?
-                            <OngoingJobCard job={job1} className="w-full mb-4 lg:mb-0 lg:w-1/2"/>
-                            : null
-                        }
-                        <div className="w-4"></div>
-                        {/* Blank div in case job count is even, otherwise the last card is out of place */}
-                        {(job2 != null && job2.userJobStatus.toUpperCase() == "ONGOING" && job2.applicationStatus.toUpperCase() == "ACCEPTED") ?
-                            <OngoingJobCard job={job2} className="w-full mb-4 lg:mb-0 lg:w-1/2"/>
-                            :
-                            <div className="w-1/2"/>}
-                    </div>
-                );
-            }
-            return (
-                <div id={props.id} className="">
-                    {
-                        props.location === "home" && displayOngoingJobsHeader
-                        ? 
-                            <div className="flex w-full">
-                                <h1 className="text-2xl flex-1">{props.title}</h1>
-                                    <NavLink exact to="/yourJobs/ongoing">
-                                        <div className="cursor-pointer text-sm font-semibold text-nebula-blue mt-3 hover:text-blue-700 tracking-widest">
-                                            SEE ALL ONGOING JOBS
-                                        </div>
-                                    </NavLink> 
-                            </div>
-                        : ""
-                    }
-                    <div className="flex flex-wrap mt-4">
-                        {jobsRow}
-                    </div>
-                </div>
-            );
-        }
+    if (props.jobs != null) {
+        const maxCount = props.maxCount ? props.maxCount : props.jobs.length;
+        const jobs = props.jobs.slice(0, maxCount);
+        return <div className="grid grid-cols-1 md:grid-cols-2">
+            {jobs.map((job) => {
+                return <OngoingJobCard job={job} key = {job.id}/>;
+            })}
+        </div>;
     }
     if(props.location == "home") {
-        return '';
+        return "";
     }
     else {
-        return(<div className="ml-2 mt-2">No Jobs</div>)
+        return(<div className="ml-2 mt-2">No Jobs</div>);
     }
-    
 };
 
 const mapStateToProps = state => {
     return {
         user: state.user,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(OngoingJobsGrid);
 
