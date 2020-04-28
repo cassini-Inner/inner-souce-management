@@ -52,6 +52,9 @@ export const GET_JOB_DETAILS = gql`
                     duration
                 }
             }
+            applications {
+                acceptedCount
+            }
         }
     }
 `;
@@ -146,6 +149,9 @@ export const GET_ALL_JOBS_FILTER = gql`
                     id
                     duration
                 }
+            }
+            applications {
+                acceptedCount
             }
         }
     }

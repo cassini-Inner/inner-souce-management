@@ -13,7 +13,7 @@ const InfoTag = (props) => {
     return (
         <div className={props.className}>
             <div>
-                <p className=" leading-tight tracking-widest text-xs text-nebula-grey-600 mb-1">
+                <p className="leading-tight tracking-widest text-xs text-nebula-grey-600 mb-1">
                     {props.title.toUpperCase()}
                 </p>
             </div>
