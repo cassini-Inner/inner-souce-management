@@ -7,6 +7,8 @@ import Navbar from "../../Navigation/Navbar";
 import JobCard from "../../Jobs/JobCard";
 import Button from "../../Common/Button/Button";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";
+import { useQuery } from "@apollo/client";
+import { GET_YOUR_JOBS } from "../../../queries";
 
 const ManageJobs = (props) => {
     {

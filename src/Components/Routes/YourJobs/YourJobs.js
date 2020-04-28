@@ -9,7 +9,7 @@ import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery } from "@apollo/client";
 import { GET_YOUR_JOBS } from "../../../queries";
 import { connect } from "react-redux";
-
+ 
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) =>{ 
     var appliedJobs = [], ongoingJobs = [], completedJobs = [];
@@ -22,15 +22,15 @@ const YourJobs = (props) =>{
         data.User.appliedJobs.forEach(appliedJob => {
         // If application status is pending and job status is either open or ongoing then the user is awaiting approval
             if(appliedJob.userJobStatus.toUpperCase() != "COMPLETED" && appliedJob.applicationStatus.toUpperCase() == "PENDING") {
-                appliedJobs.push({ ...appliedJob.job, userJobStatus: "APPLIED"});
+                appliedJobs.push({ ...appliedJob.job, userApplicationStatus: "APPLIED"});
             }
         // If application status is accepted and job status is ongoing then the user is currently working on the job
             if(appliedJob.userJobStatus.toUpperCase() == "ONGOING" && appliedJob.applicationStatus.toUpperCase() == "ACCEPTED") {
-                ongoingJobs.push({ ...appliedJob.job, userJobStatus: "WORKING"});
+                ongoingJobs.push({ ...appliedJob.job, userApplicationStatus: "WORKING"});
             }
         // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
             if(appliedJob.userJobStatus.toUpperCase() == "COMPLETED" && appliedJob.applicationStatus.toUpperCase() == "ACCEPTED") {
-                completedJobs.push({ ...appliedJob.job, userJobStatus: "COMPLETED"});
+                completedJobs.push({ ...appliedJob.job, userApplicationStatus: "COMPLETED"});
             }
         });
     }

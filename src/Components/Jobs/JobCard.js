@@ -54,7 +54,7 @@ const JobCard = (props) => {
                 <div className="flex flex-col flex-wrap mt-4 justify-left md:flex-row">
                     <div className="flex-1">
                         <div className="flex items-center">
-                            <div><StatusTags statusTag={[props.data.status.toLowerCase(), props.data.userJobStatus? props.data.userJobStatus.toLowerCase() : '']} /></div>
+                            <div><StatusTags statusTag={[props.data.status.toLowerCase(), props.data.userApplicationStatus? props.data.userApplicationStatus.toLowerCase() : '']} /></div>
                             <div className="text-nebula-grey-600 ml-2 text-sm">{"created on " + props.data.timeCreated.split("T")[0]}</div>
                         </div>
                     </div>
