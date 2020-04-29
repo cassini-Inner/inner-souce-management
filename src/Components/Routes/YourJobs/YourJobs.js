@@ -9,6 +9,7 @@ import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery } from "@apollo/client";
 import { GET_YOUR_JOBS } from "../../../queries";
 import { connect } from "react-redux";
+import Placeholder from '../../Placeholders/placeholder'
  
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) =>{ 
@@ -102,6 +103,37 @@ class YourJobsBody extends Component {
    
 
     render() {
+        const OngoingJobsPlaceholder = (
+          <Placeholder
+            heading="You don’t have any ongoing jobs."
+            body="You can always head to explore new jobs or projects and apply to them!"
+            onClick={()=> <Redirect to="/"/>}
+            buttonLabel="Explore Jobs"
+            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            linkLocation="/"
+          />
+        );
+
+        const JobApplicationsPlaceholder = (
+          <Placeholder
+            heading="You’ll find your job applications here"
+            body="You haven’t applied to any jobs yet. Once you do, your applications will appear here."
+            onClick={()=> <Redirect to="/"/>}
+            buttonLabel="Explore Jobs"
+            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            linkLocation="/"
+          />
+        );
+        const CompletedJobsPlaceholder = (
+          <Placeholder
+            heading="Completed jobs will appear here"
+            body="You haven’t completed any jobs yet. Once you do, your completed jobs will appear here."
+            onClick={()=> <Redirect to="/"/>}
+            buttonLabel="Explore Jobs"
+            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            linkLocation="/"
+          />
+        );
 
         return (
             <Fragment>
@@ -122,16 +154,23 @@ class YourJobsBody extends Component {
                             component={(props) => <OngoingJobsGrid
                                 id={config.ongoing}
                                 jobs={this.props.ongoingJobs}
+                                placeholder={OngoingJobsPlaceholder}
                             />}/>
                         <Route exact
                             path={this.props.match.url + "/applications"}
                             component={(props) => <JobList
                                 id={config.applications}
-                                jobs={this.props.appliedJobs}/>}/>
+                                jobs={this.props.appliedJobs}
+                                placeholder={JobApplicationsPlaceholder}
+                            />}
+                        />
                         <Route exact path={this.props.match.url + "/completed"}
                             component={(props) => <JobList
                                 id={config.completed}
-                                jobs={this.props.completedJobs}/>}/>
+                                jobs={this.props.completedJobs}
+                                placeholder={CompletedJobsPlaceholder}
+                            />}
+                        />
                     </div>
                 </div>
             </Fragment>

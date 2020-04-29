@@ -11,10 +11,11 @@ import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
 import { useQuery } from "@apollo/client";
 import {
+    GET_ALL_JOBS_FILTER,
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
     GET_USER_PROFILE,
-} from "../../../queries";
+} from '../../../queries'
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from "@apollo/client";
@@ -87,8 +88,8 @@ const JobDetailsPage = (props) => {
     //Mutation for deleting a job
     const [deleteJobMutation, {deleteJobLoading, deleteJobError}] = useMutation(DELETE_JOB, {
         refetchQueries: [
-            { query: GET_JOB_INFO,
-                variables: { jobId: state.jobId }
+            { query: GET_ALL_JOBS_FILTER,
+                variables: { jobId: state.jobId },
             },
         ],
     });
