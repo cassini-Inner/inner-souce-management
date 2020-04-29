@@ -16,7 +16,7 @@ const App = (props) => {
                     <Route path="/login" exact={true}
                         component={(props) => { return (<LoginPage/>); }}/>
                     <Route path="/auth/result" exact={true}
-                        component={(props) => { return (<Authenticate/>); }}/>
+                        component={(props) =>(<Authenticate/>)}/>
                     
                     {/* User redux store is passed for checking if the user is logged in */}
                     <PrivateRoute>
