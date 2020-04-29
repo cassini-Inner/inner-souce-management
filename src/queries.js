@@ -5,10 +5,12 @@ export const GET_MILESTONES = gql`
     query($jobId: ID!){
         Job(id: $jobId){
             id
+            status
             milestones {
                 totalCount
                 milestones{
                     id
+                    timeCreated
                     title
                     description: desc
                     skills {
@@ -112,6 +114,8 @@ export const GET_JOB_APPLICANTS = gql`
         Job(id: $jobId){
             id
             applications {
+                pendingCount
+                acceptedCount
                 applications {
                     applicant {
                         id
@@ -210,6 +214,7 @@ export const GET_JOB_INFO = gql`
             }
             applications {
                 acceptedCount
+                pendingCount
                 applications {
                     status
                     applicant{
@@ -278,6 +283,7 @@ export const GET_YOUR_JOBS = gql`
                         milestones{
                             id
                             duration
+                            status
                         }
                     }
                 }
@@ -314,6 +320,7 @@ export const GET_CREATED_JOBS = gql`
                     pendingCount
                     applications {
                         id
+                        status
                         applicant {
                             id
                             photoUrl

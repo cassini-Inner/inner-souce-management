@@ -26,7 +26,7 @@ const Authenticate = (props) => {
             }
         }).then(res => {
             // To set the cookie after authentication
-            console.log("Auth:",res.data);
+            // console.log("Auth:",res.data);
             var cookieExpiry = new Date(new Date().getTime() +  600 * 60 * 1000); //15 minutes
             if(res.data.authenticate.profile.id) {
                 Cookies.set("id", res.data.authenticate.profile.id, { expires:cookieExpiry });

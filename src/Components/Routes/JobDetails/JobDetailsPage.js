@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useRef } from "react";
 import JobInformation from "./JobInformation";
 import MilestonesList from "../../Milestones/MilestonesList";
 import Button from "../../Common/Button/Button";
@@ -14,21 +14,64 @@ import {
     GET_ALL_JOBS_FILTER,
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
+<<<<<<< HEAD
+} from "../../../queries";
+=======
     GET_USER_PROFILE,
 } from '../../../queries'
+>>>>>>> ca62a23fef6f460b51c0f4031970e0c021c25acd
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from "@apollo/client";
 
 const JobDetailsPage = (props) => {
-
+    
     const initialState = {
         isEditMode: true,
         jobId: props.match.params.id,
+        footerMessage: "",
+        footerSubMessage: "",
     };
 
     const [ state, setState ] = useState(initialState);
 
+    //Mutation for applying to a job
+    const [applyToJobMutation, {applyToJobLoading, applyToJobError}] = useMutation(APPLY_TO_JOB,{
+        refetchQueries: [
+            { query: GET_JOB_APPLICANTS,
+                variables: { jobId: state.jobId }
+            },
+        ],
+    });
+    //Mutation for deleting a job
+    const [deleteJobMutation, {deleteJobLoading, deleteJobError}] = useMutation(DELETE_JOB, {
+        refetchQueries: [
+            { query: GET_JOB_INFO,
+                variables: { jobId: state.jobId }
+            },
+        ],
+    });
+    //Mutation for withdrawing a job application
+    const [withdrawApplicationMutation, {withdrawApplicationLoading, withdrawApplicationError}] = useMutation(WITHDRAW_JOB_APPLICATION,
+        {
+            refetchQueries: [
+                { query: GET_JOB_APPLICANTS,
+                    variables: { jobId: state.jobId }
+                },
+            ],
+        });
+    
+    const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId }, fetchPolicy:"cache-first" });
+    
+    if(applyToJobLoading) return <p>Loading...</p>;
+    if(applyToJobError) return <p>Apply to job mutation Error! {applyToJobError}</p>;
+    
+    if(withdrawApplicationLoading) return <p>Loading...</p>;
+    if(withdrawApplicationError) return <p>Apply to job mutation Error! {withdrawApplicationError}</p>;
+    
+    
+    if(deleteJobLoading) return <p>Loading...</p>;
+    if(deleteJobError) return <p>Delete job mutation Error! {deleteJobError}</p>;
 
     const applyToJobHandler = () => {
         let confirmed = window.confirm("Apply to this job?");
@@ -41,7 +84,7 @@ const JobDetailsPage = (props) => {
                 res => {
                     console.log(res);
                     alert("Applied to the job successfully!");
-                    props.history.push("/");
+                    props.history.push("/jobDetails/"+state.jobId);
                 },
                 err => console.log(err)
             );
@@ -66,8 +109,13 @@ const JobDetailsPage = (props) => {
     };
 
     const withdrawApplicationHandler = () => {
-        let confirmed = window.confirm("Are you sure you want to withdraw your application for this job?");
+        let confirmed = window.confirm("Are you sure you want to withdraw from this job?");
         if(confirmed) {
+            setState({
+                ...state,
+                footerMessage: "",
+                footerSubMessage: "",
+            })
             withdrawApplicationMutation({
                 variables: {
                     jobId: state.jobId,
@@ -77,43 +125,6 @@ const JobDetailsPage = (props) => {
         }
     };
 
-    //Mutation for applying to a job
-    const [applyToJobMutation, {applyToJobLoading, applyToJobError}] = useMutation(APPLY_TO_JOB,{
-        refetchQueries: [
-            { query: GET_JOB_APPLICANTS,
-                variables: { jobId: state.jobId }
-            },
-        ],
-    });
-    //Mutation for deleting a job
-    const [deleteJobMutation, {deleteJobLoading, deleteJobError}] = useMutation(DELETE_JOB, {
-        refetchQueries: [
-            { query: GET_ALL_JOBS_FILTER,
-                variables: { jobId: state.jobId },
-            },
-        ],
-    });
-    //Mutation for withdrawing a job application
-    const [withdrawApplicationMutation, {withdrawApplicationLoading, withdrawApplicationError}] = useMutation(WITHDRAW_JOB_APPLICATION,
-        {
-            refetchQueries: [
-                { query: GET_JOB_APPLICANTS,
-                    variables: { jobId: state.jobId }
-                },
-            ],
-        });
-
-    const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId }, fetchPolicy:"cache-first" });
-
-    if(applyToJobLoading) return <p>Loading...</p>;
-    if(applyToJobError) return <p>Apply to job mutation Error! {applyToJobError}</p>;
-
-    if(withdrawApplicationLoading) return <p>Loading...</p>;
-    if(withdrawApplicationError) return <p>Apply to job mutation Error! {withdrawApplicationError}</p>;
-
-
-    if(deleteJobLoading) return <p>Loading...</p>;
-    if(deleteJobError) return <p>Delete job mutation Error! {deleteJobError}</p>;
 
     //Query to get the job tabs and primary info(created by, applicant IDs)
     if (loading) return "Loading...";
@@ -121,7 +132,9 @@ const JobDetailsPage = (props) => {
 
     //To check if the user has already applied to this job for buttons
     var userActions = [];
-    if(data.Job.applications.applications && data.Job.applications.applications.find((application) => application.applicant.id == props.user.id)) {
+    var isJobAuthor = false;
+    // If the user has applied to this job and user's application has not been accepted
+    if(data.Job.applications.applications && data.Job.applications.applications.find((application) => ( application.applicant.id == props.user.id && application.status.toUpperCase() == "PENDING" ) ) ) {
         userActions = [
             (<Button type="error" label="Withdraw application"
                 key="withdrawJobApplication"
@@ -129,7 +142,34 @@ const JobDetailsPage = (props) => {
                 onClick={withdrawApplicationHandler}
             />),
         ];
+        //To set the message on the footer 
+        if(!state.footerMessage || !state.footerSubMessage) {
+            setState({
+                ...state,
+                footerMessage: "You've successfully applied to this job!",
+                footerSubMessage: "Please wait for intimation from the job author."
+            })
+        }
     }
+
+    // If the user has applied to this job and if the application has been accepted
+    else if(data.Job.applications.applications && data.Job.applications.applications.find((application) => ( application.applicant.id == props.user.id && application.status.toUpperCase() == "ACCEPTED" ) ) ) {
+        userActions = [
+            (<Button type="secondary" label="Leave Job"
+                key="leaveJob"
+                className=" w-auto mr-4 "
+                onClick={withdrawApplicationHandler}
+            />),
+        ];
+        if(!state.footerMessage || !state.footerSubMessage) {
+            setState({
+                ...state,
+                footerMessage: "Hurray! your application has been accpeted",
+                footerSubMessage: "Keep in touch with the job author."
+            })
+        }
+    }  
+
     else {
         userActions = [
             (<Button type="primary" label="Apply to Job"
@@ -158,7 +198,7 @@ const JobDetailsPage = (props) => {
         />),
     ];
 
-    const tabList = [
+    var tabList = [
         {
             title: "Milestones",
             location: "milestones",
@@ -170,7 +210,7 @@ const JobDetailsPage = (props) => {
             count: data.Job.discussion.totalCount ? data.Job.discussion.totalCount : 0,
         },
     ];
-    // Only the owner of the job can view applications and currently working tab
+    // Only the author of the job can view applications and currently working tab
     if( props.user.id==data.Job.createdBy.id ) {
         tabList.push({
             title: "Applications",
@@ -184,7 +224,10 @@ const JobDetailsPage = (props) => {
             count: data.Job.applications.acceptedCount ? data.Job.applications.acceptedCount : 0,
         });
     }
-
+    //To check if the user is the author of the job
+    if(props.user.id == data.Job.createdBy.id) {
+        isJobAuthor = true;
+    }
 
     return (
         <Fragment>
@@ -198,7 +241,7 @@ const JobDetailsPage = (props) => {
                 {
                     location.pathname === ("/jobDetails/"+state.jobId)?<Redirect to={props.match.url + "/milestones"} />: ""
                 }
-                <Route exact path = {props.match.url + "/milestones"} component = {(props) => <MilestonesList jobId = {state.jobId}/>} />
+                <Route exact path = {props.match.url + "/milestones"} component = {(props) => <MilestonesList jobId = {state.jobId} isJobAuthor = {isJobAuthor} />} />
                 <Route exact path = {props.match.url + "/discussions"} component = {(props) => <Discussions jobId = {state.jobId}/>} />
                 {
                     data.Job.createdBy.id == props.user.id
@@ -215,11 +258,11 @@ const JobDetailsPage = (props) => {
                 <hr/>
                 <div className="px-4 flex flex-wrap-reverse items-center max-w-screen-lg mx-auto py-4 lg:px-10">
                     <div className="flex">
-                        { props.user.id == data.Job.createdBy.id ? authorActions : userActions}
+                        { isJobAuthor ? authorActions : userActions}
                     </div>
                     <div>
-                        {/* <p className="text-sm font-semibold text-nebula-blue">This title</p>
-                        <p className="text-sm font-semibold text-nebula-grey-600">This subtitle</p> */}
+                        <p className="text-sm font-semibold text-nebula-blue">{state.footerMessage}</p>
+                        <p className="text-sm font-semibold text-nebula-grey-600">{state.footerSubMessage}</p>
                     </div>
                 </div>
             </div>
