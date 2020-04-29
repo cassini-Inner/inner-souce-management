@@ -9,7 +9,7 @@ import {
 import { useQuery } from "@apollo/client";
 import { connect } from "react-redux";
 import Placeholder from "../../Placeholders/placeholder";
-import { Link, Redirect } from 'react-router-dom'
+import { Link, Redirect } from "react-router-dom";
 
 const Content = (props) => {
     const { loading, error, data } = useQuery(GET_USER_SKILLS, {
