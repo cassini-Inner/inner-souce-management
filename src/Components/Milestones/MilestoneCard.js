@@ -49,7 +49,7 @@ const MilestoneCard = (props) => {
     const isExpanded = state.isExpanded;
     const isEditMode = props.isEditMode;
     const isJobAuthor = props.isJobAuthor;
-    const isMilestoneCompleted = props.milestone.status.toUpperCase() == "COMPLETED" ? true : false; 
+    const isMilestoneCompleted = props.milestone.status ? (props.milestone.status.toUpperCase() == "COMPLETED" ? true : false) : false; 
     return (
         <div className={"flex " + props.className}>
             <div>

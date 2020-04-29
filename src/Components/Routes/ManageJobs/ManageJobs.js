@@ -21,9 +21,9 @@ const ManageJobs = (props) => {
     else if (manageJobsError) return `error! ${manageJobsError}`;
 
     if(data.User.createdJobs) {
-        console.log("ji");
         data.User.createdJobs.forEach(createdJob => {
             // If the created job is in open status
+
             if(createdJob.status.toUpperCase() == "OPEN") {
                 openJobsCreated.push(createdJob);
             }
@@ -86,7 +86,6 @@ const ManageJobs = (props) => {
 };
 
 const CreatedJobList = (props) => {
-    console.log(props.jobs);
     return (
         props.jobs.map((job, index) => {
             return (
@@ -94,32 +93,32 @@ const CreatedJobList = (props) => {
                     {
                         job.applications.pendingCount 
                         ?
-                        <div className="flex mt-1">
-                            <div className="self-center font-semibold text-nebula-blue text-sm ml-6 ">
-                                View {job.applications.pendingCount} Applications
-                            </div>
-                            <div className="flex py-8 px-8">
-                                {
-                                    job.applications.applications.map((application, key) => {
-                                        if(application.applicationStatus.toUpperCase() == "PENDING") {
-                                            return(
-                                                <div key={application.applicant.id} className="self-center rounded-full bg-nebula-blue-light p-1 z-0 absolute">
-                                                    <img src={application.applicant.photoUrl} className="flex-0 h-8 w-8 rounded-full" />
-                                                </div>
-                                            )
-                                        }
-                                    })
-                                }
-                                
-                                {/* <div className="self-center rounded-full bg-nebula-blue-light p-1 z-10 absolute ml-8">
-                                    <img src="../../assets/icons/Ellipse 2.png" className="flex-0 h-8 w-8 rounded-full" />
+                        <Link to = { "/jobDetails/"+job.id} >
+                            <div className="flex mt-1">
+                                <div className="self-center font-semibold text-nebula-blue text-sm ml-6 ">
+                                    View {job.applications.pendingCount} Applications
                                 </div>
-                                <div className="self-center rounded-full bg-nebula-blue-light p-1 z-20 absolute ml-16">
-                                    <img src="../../assets/icons/Ellipse 3.png" className="flex-0 h-8 w-8 rounded-full" />
-                                </div> */}
+                                <div className="flex py-8 px-8">
+                                    {
+                                        job.applications.applications
+                                        ?
+                                            job.applications.applications.slice(0, 3).map((application, key) => {
+                                                if(application.status.toUpperCase() == "PENDING") {
+                                                    return(
+                                                        <div key={application.applicant.id} className="self-center rounded-full bg-nebula-blue-light p-1 z-0 absolute">
+                                                            <img src={application.applicant.photoUrl} className="flex-0 h-8 w-8 rounded-full" />
+                                                        </div>
+                                                    )
+                                                }
+                                            })
+                                        :
+                                        ""
+                                    }
+                                </div>    
+                                
+                                <div className="self-center text-lg font-semibold text-nebula-grey-500 ml-24">{job.applications.pendingCount > 3 ? ("+" + (job.applications.pendingCount-3)) : '' }</div>
                             </div>
-                            <div className="self-center text-lg font-semibold text-nebula-grey-500 ml-24">+3</div>
-                        </div>
+                        </Link>
                         :
                         ""
                     }  

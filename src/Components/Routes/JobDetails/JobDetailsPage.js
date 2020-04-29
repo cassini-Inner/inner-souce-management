@@ -78,7 +78,7 @@ const JobDetailsPage = (props) => {
                 res => {
                     console.log(res);
                     alert("Applied to the job successfully!");
-                    props.history.push("/");
+                    props.history.push("/jobDetails/"+state.jobId);
                 },
                 err => console.log(err)
             );
@@ -105,6 +105,11 @@ const JobDetailsPage = (props) => {
     const withdrawApplicationHandler = () => {
         let confirmed = window.confirm("Are you sure you want to withdraw your application for this job?");
         if(confirmed) {
+            setState({
+                ...state,
+                footerMessage: "",
+                footerSubMessage: "",
+            })
             withdrawApplicationMutation({
                 variables: {
                     jobId: state.jobId,
@@ -122,7 +127,8 @@ const JobDetailsPage = (props) => {
     //To check if the user has already applied to this job for buttons
     var userActions = [];
     var isJobAuthor = false;
-    if(data.Job.applications.applications && data.Job.applications.applications.find((application) => application.applicant.id == props.user.id)) {
+    // If the user has applied to this job and user's application has not been accepted
+    if(data.Job.applications.applications && data.Job.applications.applications.find((application) => ( application.applicant.id == props.user.id && application.status.toUpperCase() == "PENDING" ) ) ) {
         userActions = [
             (<Button type="error" label="Withdraw application"
                 key="withdrawJobApplication"
@@ -139,6 +145,25 @@ const JobDetailsPage = (props) => {
             })
         }
     }
+
+    // If the user has applied to this job and if the application has been accepted
+    else if(data.Job.applications.applications && data.Job.applications.applications.find((application) => ( application.applicant.id == props.user.id && application.status.toUpperCase() == "ACCEPTED" ) ) ) {
+        userActions = [
+            (<Button type="secondary" label="Leave Job"
+                key="leaveJob"
+                className=" w-auto mr-4 "
+                onClick={withdrawApplicationHandler}
+            />),
+        ];
+        if(!state.footerMessage || !state.footerSubMessage) {
+            setState({
+                ...state,
+                footerMessage: "Hurray! your application has been accpeted",
+                footerSubMessage: "Keep in touch with the job author."
+            })
+        }
+    }  
+
     else {
         userActions = [
             (<Button type="primary" label="Apply to Job"
@@ -167,7 +192,7 @@ const JobDetailsPage = (props) => {
         />),
     ];
 
-    const tabList = [
+    var tabList = [
         {
             title: "Milestones",
             location: "milestones",

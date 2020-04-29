@@ -26,10 +26,6 @@ const UserList = (props) => {
                 { query: GET_JOB_APPLICANTS,
                     variables: { jobId: props.jobId },
                 },
-                {
-                    query: GET_JOB_INFO,
-                    variables: {}
-                }
             ],
         });
     const [rejectApplication, { error: rejectApplicationError }] = useMutation(

@@ -2,12 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StatusTags from "../Common/StatusTags/StatusTags";
 import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
-import { milestones } from "../../../assets/placeholder";
 
 const OngoingJobCard = (props) => {
     console.log(props.job);
     const job = props.job;
-    const completedMilestones = job.milestones.milestones.filter((milestone) => milestone.status === "completed").length;
+    const completedMilestones = job.milestones.milestones.filter((milestone) => milestone.status.toUpperCase() === "COMPLETED").length;
     const totalMilestones = job.milestones.milestones.length;
     return (
         <div className={"bg-white rounded-lg p-6 border border-nebula-grey-400 select-text cursor-pointer transition duration-300 shadow-none hover:shadow-lg  " + props.className} key={job.id}>
@@ -21,7 +20,7 @@ const OngoingJobCard = (props) => {
                         <div className="w-1/2 mt-4">
 
                             <p className="text-nebula-grey-600 text-xs font-semibold pb-0 tracking-widest">JOB PROGRESS</p>
-                            <h1 className="text-lg font-semibold">{completedMilestones/totalMilestones * 100 + " %"}</h1>
+                            <h1 className="text-lg font-semibold">{+(completedMilestones/totalMilestones * 100).toFixed(2) + " %"}</h1>
                             <h1 className="text-sm font-semibold text-nebula-grey-700">{completedMilestones + " of " + totalMilestones + " milestones"}</h1>
                         </div>
                         <div className="w-1/2 mt-4">

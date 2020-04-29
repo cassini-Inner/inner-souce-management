@@ -7,10 +7,11 @@ const MilestonesList = (props) => {
     const { loading, error, data } = useQuery(GET_MILESTONES, { variables: { jobId: props.jobId } });
     if (loading) return "Loading...";
     else if (error) alert(`Error! ${error.message}`);
+    const sortedMilestones = data["Job"]["milestones"]["milestones"].sort(function(a, b) { return( a.id -b.id ) });
     return (
         <ul className="py-8">
             {
-                data["Job"]["milestones"]["milestones"].map(
+                sortedMilestones.map(
                     (milestone, index) => {
                         return (
                             <li key={milestone.id}>
