@@ -103,7 +103,7 @@ const JobDetailsPage = (props) => {
     };
 
     const withdrawApplicationHandler = () => {
-        let confirmed = window.confirm("Are you sure you want to withdraw your application for this job?");
+        let confirmed = window.confirm("Are you sure you want to withdraw from this job?");
         if(confirmed) {
             setState({
                 ...state,
