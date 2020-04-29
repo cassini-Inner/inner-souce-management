@@ -118,3 +118,13 @@ export const WITHDRAW_JOB_APPLICATION = gql`
         }
     }
 `;
+
+// To toggle milestone as completed
+export const TOGGLE_MILESTONE_COMPLETED = gql`
+    mutation($milestoneId: String!){
+        toggleMilestoneCompleted(milestoneID: $milestoneId) {
+            id
+        }
+    }
+`;
+

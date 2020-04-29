@@ -12,8 +12,8 @@ const PrivateRoute = ({ children, ...props }) => {
     //Checks if the user is logged in and sets the user redux store with cookies if it is empty
     if(!(props.user.id && props.user.token)) {
         //Check if cookies are set then set the user redux store with respective values
-        if(Cookies.get("token") != undefined && Cookies.get("id") != undefined ) {
-            const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: Cookies.get("id") } });
+        if(Cookies.get("token") != undefined && Cookies.get("id") != undefined && Cookies.get("token") && Cookies.get("id")) {
+            const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: Cookies.get("id").toString() } });
             if (loading) return "Loading...";
             else if (error) {
                 isLoggedIn = false;
@@ -22,7 +22,7 @@ const PrivateRoute = ({ children, ...props }) => {
             }
             props.setUserData({
                 token: Cookies.get("token"),
-                id: Cookies.get("id"),
+                id: parseInt(Cookies.get("id")),
                 onboarded: data.User.onboarded ? data.User.onboarded : false,
                 githubName: data.User.githubName ? data.User.githubName : "",
                 name: data.User.name ? data.User.name : "",

@@ -13,8 +13,15 @@ const MilestonesList = (props) => {
                 data["Job"]["milestones"]["milestones"].map(
                     (milestone, index) => {
                         return (
-                            <li key={data.id}>
-                                <MilestoneCard milestone={milestone} isEditMode={props.isEditMode} index={index} lastIndex={data.Job.milestones.totalCount} />
+                            <li key={milestone.id}>
+                                <MilestoneCard 
+                                    milestone = { milestone } 
+                                    isEditMode = { props.isEditMode } 
+                                    index = { index } 
+                                    lastIndex = { data.Job.milestones.totalCount } 
+                                    isJobAuthor = { props.isJobAuthor }
+                                    jobId = { data.Job.id }
+                                />
                             </li>
                         );
                     })
