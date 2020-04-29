@@ -9,6 +9,7 @@ import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery } from "@apollo/client";
 import { GET_CREATED_JOBS } from "../../../queries";
 import { connect } from "react-redux";
+import Placeholder from "../../Placeholders/placeholder";
 
 const ManageJobs = (props) => {
     if(location.pathname === "/manageJobs") {
@@ -37,6 +38,16 @@ const ManageJobs = (props) => {
             }
         });
     }
+
+    const createJobsPlaceholder = (
+        <Placeholder
+            heading="Create jobs for people to apply to!"
+            body="Once you create a job and publish it, people will be able to apply to it and work on the whole job or specific milestones."
+            buttonLabel="Create Job"
+            image="../../../../assets/images/create_jobs_placeholder.svg"
+            linkLocation="/createJob"
+        />
+    );
 
     const tabList = [
         {
@@ -75,17 +86,20 @@ const ManageJobs = (props) => {
             </StickyHeader>
             <div className="my-2">
                 <Route exact path={props.match.url + "/open"}
-                    component={(props) => <CreatedJobList jobs={openJobsCreated} />} />
+                    component={(props) => <CreatedJobList jobs={openJobsCreated}  placeholder={createJobsPlaceholder} />} />
                 <Route exact path={props.match.url + "/ongoing"}
-                    component={(props) => <CreatedJobList jobs={ongoingJobsCreated} />} />
+                    component={(props) => <CreatedJobList jobs={ongoingJobsCreated}  placeholder={createJobsPlaceholder} />}/>
                 <Route exact path={props.match.url + "/completed"}
-                    component={(props) => <CreatedJobList jobs={completedJobsCreated} />} />
+                    component={(props) => <CreatedJobList jobs={completedJobsCreated}  placeholder={createJobsPlaceholder} />}/>
             </div>
         </div>
     );
 };
 
 const CreatedJobList = (props) => {
+    if ((!props.jobs.length || props.jobs.length === 0 )) {
+        return props.placeholder;
+    }
     return (
         props.jobs.map((job, index) => {
             return (

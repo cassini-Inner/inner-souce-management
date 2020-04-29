@@ -75,6 +75,7 @@
     "js-cookie": "^2.2.1",
     "minimist": ">=1.2.5",
     "postcss-cli": "^7.1.0",
+    "prop-types": "^15.7.2",
     "react-feather": "^2.0.3",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",

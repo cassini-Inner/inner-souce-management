@@ -11,9 +11,15 @@ import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
 import { useQuery } from "@apollo/client";
 import {
+    GET_ALL_JOBS_FILTER,
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
+<<<<<<< HEAD
 } from "../../../queries";
+=======
+    GET_USER_PROFILE,
+} from '../../../queries'
+>>>>>>> ca62a23fef6f460b51c0f4031970e0c021c25acd
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from "@apollo/client";
