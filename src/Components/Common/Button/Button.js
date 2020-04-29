@@ -31,6 +31,16 @@ const Button = (props) => {
                 {props.label}
             </button>
         );
+    case "submit":
+        return (
+            <button
+                type="submit"
+                className={commonStyle + "bg-nebula-blue text-white " +
+                props.className}
+                onClick={props.onClick}>
+                {props.label}
+            </button>
+        );
     default:
         return (
             <button

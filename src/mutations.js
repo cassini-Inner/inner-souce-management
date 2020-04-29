@@ -64,6 +64,34 @@ export const DELETE_COMMENT = gql`
     }
 `;
 
+// to accept a job application
+export const ACCEPT_JOB_APPLICATION = gql`
+    mutation($applicantId: ID!, $jobId: ID!, $note: String!) {
+        updateJobApplication(
+            applicantID: $applicantId
+            jobID: $jobId
+            status: ACCEPTED
+            note: $note
+          ) {
+            id
+          }
+    }
+`;
+
+// to reject a job application
+export const REJECT_JOB_APPLICATION = gql`
+    mutation($applicantId: ID!, $jobId: ID!, $note: String!) {
+        updateJobApplication(
+            applicantID: $applicantId
+            jobID: $jobId
+            status: REJECTED
+            note: $note
+          ) {
+            id
+          }
+    }
+`;
+
 // To update a comment
 export const UPDATE_COMMENT = gql`
     mutation($comment: String!, $commentId: ID!){

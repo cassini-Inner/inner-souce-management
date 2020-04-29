@@ -10,21 +10,21 @@ const Applications = (props) => {
         <Fragment>
             {
                 displayHeaderState
-                ?
-                <div className="mt-6 mb-8 flex-col px-2">
-                    <div className="flex mb-2">
-                        <div className="self-center flex-1 ">
-                            <p className="text-base font-semibold">Filter applications by type</p>
-                            <p className="text-sm text-gray-700">
+                    ?
+                    <div className="mt-6 mb-8 flex-col px-2">
+                        <div className="flex mb-2">
+                            <div className="self-center flex-1 ">
+                                <p className="text-base font-semibold">Filter applications by type</p>
+                                <p className="text-sm text-gray-700">
                                 Since applicants can apply to specific milestones or complete job, you can filter applicants by application type.
-                            </p>
-                        </div>
-                        <div className="flex">
-                            <Dropdown list={["Job & Milestones", "Job", "Milestones"]} />
+                                </p>
+                            </div>
+                            <div className="flex">
+                                <Dropdown list={["Job & Milestones", "Job", "Milestones"]} />
+                            </div>
                         </div>
                     </div>
-                </div>
-                :
+                    :
                     ""
             }
             <div className="flex-col my-6 px-2">
@@ -43,6 +43,6 @@ const Applications = (props) => {
         </Fragment>
 
     );
-}
+};
 
 export default Applications;

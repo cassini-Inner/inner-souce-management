@@ -9,15 +9,15 @@ const TextAreaInput = (props) => {
             <TextInputLabel label={props.label}/>
             <textarea
                 type="text"
+                ref = {props.forwardedRef}
                 id={props.id ? props.id : ""}
-                rows={props.rows ? props.rows : "5"}
-                cols={props.cols ? props.cols : "50"}
-                className={"pl-1 mt-2 text-sm outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 placeholder-nebula-grey-500  " +
+                className={"pl-1 mt-2 text-sm outline-none  border-b-2 transition duration-300 focus:border-nebula-grey-600 placeholder-nebula-grey-500  " +
                 props.className}
                 placeholder={props.placeholder}
                 onChange={props.onChange ? props.onChange : null}
                 onKeyDown={props.onKeyDown ? props.onKeyDown : null}
                 value = {props.value ? props.value : null }
+                defaultValue={props.defaultValue}
             />
         </Fragment>
     );

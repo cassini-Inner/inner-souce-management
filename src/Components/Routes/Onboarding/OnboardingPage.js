@@ -5,17 +5,17 @@ import SearchTagsInput from "../../Common/InputFields/SearchTagsInput";
 import Button from "../../Common/Button/Button";
 import { withRouter, Redirect } from "react-router";
 import { connect } from "react-redux";
-import { validateOnboarding } from './ValidateForm';
-import { useMutation } from '@apollo/client';
-import { UPDATE_USER_PROFILE } from '../../../mutations';
-import Cookies from 'js-cookie';
+import { validateOnboarding } from "./ValidateForm";
+import { useMutation } from "@apollo/client";
+import { UPDATE_USER_PROFILE } from "../../../mutations";
+import Cookies from "js-cookie";
 
 
 const OnboardingPage = (props) => {
-    console.log(props.user)
+    console.log(props.user);
     //To verify if the user has already onboarded
     if(props.user.onboarded) {
-        return <Redirect to="/"/>
+        return <Redirect to="/"/>;
     }
 
     const form = {
@@ -26,7 +26,7 @@ const OnboardingPage = (props) => {
         email: props.user.email ? props.user.email : "",
         skills: [],
         errMsg: "",
-    }
+    };
     const [ state, setState ] = useState(form);
 
     // For update user mutation 
@@ -37,21 +37,21 @@ const OnboardingPage = (props) => {
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch(event.currentTarget.id) {
-            case "name": setState({...state, name:value});break;
-            case "email": setState({...state, email:value});break;
-            case "position":  setState({...state, position:value});break;
-            case "department":  setState({...state, department:value});break;
-            case "contact":  setState({...state, contact:value});break;
+        case "name": setState({...state, name:value});break;
+        case "email": setState({...state, email:value});break;
+        case "position":  setState({...state, position:value});break;
+        case "department":  setState({...state, department:value});break;
+        case "contact":  setState({...state, contact:value});break;
         }
-    }
+    };
 
     const getTagList = (skillList) => {   
         setState({
-                ...state,
-                skills: skillList
-            }
+            ...state,
+            skills: skillList
+        }
         );
-    }
+    };
 
     const validateAndSubmitForm = () => {
         let isValid = validateOnboarding(state);
@@ -69,7 +69,7 @@ const OnboardingPage = (props) => {
                 }
             }
             ).then(res => 
-                props.history.push('/'), //Navigate to home page on success
+                props.history.push("/"), //Navigate to home page on success
             err => console.log(err));
             setState({
                 ...state,
@@ -80,14 +80,14 @@ const OnboardingPage = (props) => {
             setState({
                 ...state,
                 errMsg: "Please fill in all fields!"
-            })
+            });
         }
-    }
+    };
     
     const body = (
         <div className="flex flex-col w-full px-4 font-semibold ">
             <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
-            <p className="text-3xl">{Cookies.get('githubName')}</p>
+            <p className="text-3xl">{Cookies.get("githubName")}</p>
             <p className="text-lg text-nebula-grey-600 mt-2">Before we get
               started, we’d like get to know you a little better.</p>
             <label className="mt-10">Your Full Name</label>
@@ -105,7 +105,7 @@ const OnboardingPage = (props) => {
             {
                 state.errMsg ? 
                     <div className = "mt-6 text-nebula-red" >{state.errMsg}</div>
-                : ""
+                    : ""
             }
             <Button label="Let's go!" type="primary" className="px-8 mt-24" onClick={validateAndSubmitForm}/>
         </div>
@@ -119,7 +119,7 @@ const OnboardingPage = (props) => {
 const mapStateToProps = state => {
     return {
         user: state.user,
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps)(withRouter(OnboardingPage));

@@ -32,9 +32,9 @@ export const durationStringToDays = (duration) => {
     duration = duration.toLowerCase();
     let [ days, unit ] = duration.split(" ");
     switch(unit) {
-        case "weeks": days *= 7;break;
-        case "days": days *= 1;break;
-        case "months": days *= 30;break;
+    case "weeks": days *= 7;break;
+    case "days": days *= 1;break;
+    case "months": days *= 30;break;
     }
     return days;
 };
