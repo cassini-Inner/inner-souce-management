@@ -1,8 +1,9 @@
 import React, { Fragment } from "react";
 import OngoingJobCard from "./OngoingJobCard";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import {connect} from "react-redux";
+import Placeholder from "../Placeholders/placeholder";
 
 const OngoingJobsGrid = (props) => {
     //The ongoing jobs header in the home page
@@ -16,6 +17,11 @@ const OngoingJobsGrid = (props) => {
         queryVariables = props.queryVariables;
     }
 
+    if (props.jobs != null && props.jobs.length ===0) {
+        const placeholder = props.placeholder;
+        return (placeholder);
+    }
+    
     if (props.jobs != null) {
         const maxCount = props.maxCount ? props.maxCount : props.jobs.length;
         const jobs = props.jobs.slice(0, maxCount);
@@ -25,7 +31,7 @@ const OngoingJobsGrid = (props) => {
             })}
         </div>;
     }
-    if(props.location == "home") {
+    if(props.location === "home") {
         return "";
     }
     else {

@@ -8,6 +8,8 @@ import {
 } from "../../../queries";
 import { useQuery } from "@apollo/client";
 import { connect } from "react-redux";
+import Placeholder from "../../Placeholders/placeholder";
+import { Link, Redirect } from 'react-router-dom'
 
 const Content = (props) => {
     const { loading, error, data } = useQuery(GET_USER_SKILLS, {
@@ -33,13 +35,23 @@ const Content = (props) => {
             job.applicationStatus === "accepted" && job.userJobStatus ===
           "ongoing" ? job.job : null)).map((application) => application.job);
     }
+    const placeholder = (<Placeholder
+        heading="This is your personalised job feed"
+        body="You can find projects and tasks based on your skills and interests.
+Have an interesting project? You can add that & invite people to collaborate with you."
+        buttonLabel="Create a new Job"
+        image="../../../../assets/images/explore_jobs_placeholder.svg"
+        onClick={() => {}}
+        linkLocation="/createJob"
+    />);
 
     return (
         <div className="h-auto mt-4">
             <OngoingJobsGrid maxCount={2} location="home" title="Ongoing Jobs"
-                jobs={ongoingJobs}/>
+                jobs={ongoingJobs} placeholder = {(<div></div>)}/>
             <JobList title="Explore Jobs" location="home"
-                query={GET_ALL_JOBS_FILTER} userSkills={userSkills}/>
+                query={GET_ALL_JOBS_FILTER} userSkills={userSkills}
+                placeholder={placeholder}/>
         </div>
     );
 };

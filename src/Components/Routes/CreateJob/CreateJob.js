@@ -39,9 +39,7 @@ const CreateJob = (props) =>  {
     };
     const [ state, setState ] = useState(initialState);
 
-    const [createJob, {loading, error}] = useMutation(CREATE_JOB,);
-    if(loading) return <p>Authenticating...</p>;
-    if(error) return <p>Authentication Error! {error}</p>;
+    const [createJob, {loading, error}] = useMutation(CREATE_JOB);
 
     //To set the skill tags of the milestone
     const getTagList = (skillList) => {   
@@ -136,7 +134,7 @@ const CreateJob = (props) =>  {
                 variables: {
                     job: createJobInput,
                 }
-            })
+            }).catch((error) => alert("Failed to create a new job: " + error))
                 .then(res => {
                     props.history.push("/jobDetails/"+res.data.createJob.id);
                     alert("Job has been created successfully!");
