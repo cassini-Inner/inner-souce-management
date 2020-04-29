@@ -310,6 +310,7 @@ export const GET_CREATED_JOBS = gql`
                     pendingCount
                     applications {
                         id
+                        status
                         applicant {
                             id
                             photoUrl
