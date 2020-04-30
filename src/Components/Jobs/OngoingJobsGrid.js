@@ -25,7 +25,7 @@ const OngoingJobsGrid = (props) => {
     if (props.jobs != null) {
         const maxCount = props.maxCount ? props.maxCount : props.jobs.length;
         const jobs = props.jobs.slice(0, maxCount);
-        return <div className="grid grid-cols-1 md:grid-cols-2">
+        return <div className="grid grid-cols-1 md:grid-cols-2 md:col-gap-4 md: row-gap-4">
             {jobs.map((job) => {
                 return <OngoingJobCard job={job} key = {job.id}/>;
             })}
