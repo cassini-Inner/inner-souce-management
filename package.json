@@ -34,6 +34,7 @@
     "@apollo/react-hooks": "^3.1.5",
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
+    "email-validator": "^2.0.4",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.19.0",
     "graphql": "^15.0.0",

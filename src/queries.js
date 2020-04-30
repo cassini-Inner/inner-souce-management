@@ -71,6 +71,7 @@ query ($jobId: ID!){
         Job(id:$jobId){
             id
             discussion{
+                totalCount
                 discussions{
                     id
                     content
