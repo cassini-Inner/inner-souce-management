@@ -1,13 +1,14 @@
-import React, { Component, Fragment } from 'react'
-import { explore } from '../../../assets/placeholder'
-import * as Icons from 'react-feather'
-import { Link } from 'react-router-dom'
-import Button from '../Common/Button/Button'
-import JobCard from './JobCard'
-import Portal from '../Containers/Portal'
-import ModalViewWithScrim from '../Modals/ModalViewWithScrim'
-import FilterModal from '../Modals/FilterModal'
-import { Query } from '@apollo/react-components'
+import React, { Component, Fragment } from 'react';
+import { explore } from '../../../assets/placeholder';
+import * as Icons from 'react-feather';
+import { Link } from 'react-router-dom';
+import Button from '../Common/Button/Button';
+import JobCard from './JobCard';
+import Portal from '../Containers/Portal';
+import ModalViewWithScrim from '../Modals/ModalViewWithScrim';
+import FilterModal from '../Modals/FilterModal';
+import { Query } from '@apollo/react-components';
+import LoadingIndicator from '../Common/LoadingIndicator/LoadingIndicator';
 
 class JobList extends Component {
 
@@ -106,7 +107,7 @@ class JobList extends Component {
             return (
               <Query query={this.props.query} variables={queryVariables}>
                   {({ loading, error, data }) => {
-                      if (loading) return null
+                      if (loading) return <LoadingIndicator/>;
                       if (error) return `Error! ${error}`
                       return (
                         <Fragment>

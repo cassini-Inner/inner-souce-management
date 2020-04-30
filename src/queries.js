@@ -117,6 +117,7 @@ export const GET_JOB_APPLICANTS = gql`
                 pendingCount
                 acceptedCount
                 applications {
+                    status
                     applicant {
                         id
                         name

@@ -11,13 +11,14 @@ import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import { useMutation } from "@apollo/client";
 import { validateProfileUpdate } from "./ValidateForm";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
 const EditProfile = (props) => {
     return (
         <Query query={GET_USER_PROFILE} variables={{ userId: props.user.id }}>
             {({ loading, error, data }) => {
                 if (loading) {
-                    return "Loading...";
+                    return <LoadingIndicator/>;
                 } else if (error) alert(`Error! ${error.message}`);
                 return (
                     <EditProfileBody data={data} {...props} />
@@ -139,7 +140,7 @@ const EditProfileBody = (props) => {
     };
 
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <LoadingIndicator/>;
     if (error) return <p>Error! {error}</p>;
 
     return (

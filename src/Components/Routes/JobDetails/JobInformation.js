@@ -6,11 +6,12 @@ import { useQuery } from "@apollo/client";
 import InfoTag from "../../Common/InfoTag/InfoTag";
 import { GET_JOB_DETAILS } from "../../../queries";
 import  { getDuration } from "../../../HelperFunctions/DurationParser";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
 const JobInformation = (props) => {
 
     const { loading, error, data } = useQuery(GET_JOB_DETAILS, { variables: { jobId: props.jobId }, fetchPolicy:"cache-first" });
-    if (loading) return (<div>Loading...</div>);
+    if (loading) return (<LoadingIndicator/>);
     else if (error) { 
         console.log(`Error! ${error.message}`);
         props.history.push("/");

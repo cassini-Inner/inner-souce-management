@@ -10,6 +10,7 @@ import { Link, useParams, Redirect } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../../queries";
 import { connect } from "react-redux";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
 const Profile = (props) => {
     //To get the user id from url
@@ -22,7 +23,7 @@ const Profile = (props) => {
     }
 
     const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: userId } });
-    if (loading) return "Loading...";
+    if (loading) return <LoadingIndicator/>;
     else if (error) alert(`Error! ${error.message}`);
 
     return (

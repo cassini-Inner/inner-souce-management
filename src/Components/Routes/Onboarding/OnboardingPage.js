@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { validateOnboarding } from "./ValidateForm";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_PROFILE } from "../../../mutations";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import Cookies from "js-cookie";
 
 
@@ -31,7 +32,7 @@ const OnboardingPage = (props) => {
 
     // For update user mutation 
     const [updateUserMutation, {loading, error}] = useMutation(UPDATE_USER_PROFILE);
-    if(loading) return <p>Loading...</p>;
+    if(loading) return<LoadingIndicator/>;
     if(error) return <p>Error! {error}</p>;
 
     const onInputChangeHandler = (event) => {

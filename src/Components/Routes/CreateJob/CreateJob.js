@@ -14,6 +14,7 @@ import MilestoneCard from "../../Milestones/MilestoneCard";
 import { durationStringToDays } from "../../../HelperFunctions/DurationParser";
 import { CREATE_JOB } from "../../../mutations";
 import { useMutation } from "@apollo/client";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
 const CreateJob = (props) =>  {
 
@@ -42,6 +43,9 @@ const CreateJob = (props) =>  {
     const [ state, setState ] = useState(initialState);
 
     const [createJob, {loading, error}] = useMutation(CREATE_JOB);
+    if(error) {
+        return 'Error!!'+error;
+    }
 
     //To set the skill tags of the milestone
     const getTagList = (skillList) => {   

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { Redirect } from "react-router";
 import { AUTHENTICATE } from "../../../mutations";
 import { useMutation } from "@apollo/client";
@@ -19,7 +19,7 @@ const Authenticate = (props) => {
     if(error) return <p>Authentication Error!</p>;
 
     if(code && !state.authenticationLoading) {
-    updateState({authenticationLoading: true});
+        updateState({authenticationLoading: true});
         login({
             variables: {
                 githubCode: code

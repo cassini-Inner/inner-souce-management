@@ -8,6 +8,7 @@ import {
     ACCEPT_JOB_APPLICATION,
     REJECT_JOB_APPLICATION,
 } from "../../../mutations";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
 const UserList = (props) => {
     // To check if userlist is empty
@@ -40,7 +41,7 @@ const UserList = (props) => {
         });
 
     if (loading) {
-        return "Loading...";
+        return <LoadingIndicator/>;
     } else if (error) console.log(`Error! ${error.message}`);
 
     const acceptOnClick = (e, applicantId) => {

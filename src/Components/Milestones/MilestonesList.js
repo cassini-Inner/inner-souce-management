@@ -2,12 +2,13 @@ import React from "react";
 import MilestoneCard from "./MilestoneCard";
 import { useQuery } from "@apollo/client";
 import { GET_MILESTONES } from "../../queries";
+import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 
 const MilestonesList = (props) => {
     const { loading, error, data } = useQuery(GET_MILESTONES, { variables: { jobId: props.jobId } });
-    if (loading) return "Loading...";
+    if (loading) return <LoadingIndicator/>;
     else if (error) alert(`Error! ${error.message}`);
-    const sortedMilestones = data["Job"]["milestones"]["milestones"].sort(function(a, b) { return( a.id -b.id ) });
+    const sortedMilestones = data["Job"]["milestones"]["milestones"].sort(function(a, b) { return( a.id -b.id ); });
     return (
         <ul className="py-8">
             {
