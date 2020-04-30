@@ -8,13 +8,14 @@ import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import Button from "../../Common/Button/Button";
 import { useMutation } from "@apollo/react-hooks";
 import { DELETE_COMMENT, UPDATE_COMMENT } from "../../../mutations";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
 const CommentsList = (props) => {
     const { loading: discussionsLoading, error: discussionsError, data } = useQuery(
         GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId }, fetchPolicy: "cache-and-network" },
     );
     if (discussionsLoading) {
-        return "Loading...";
+        return <LoadingIndicator/>;
     }
     if (discussionsError) console.log(`Error! ${discussionsError}`);
     console.log(data.Job.discussion.discussions);

@@ -6,6 +6,7 @@ import  { DurationParser } from "../../HelperFunctions/DurationParser";
 import { TOGGLE_MILESTONE_COMPLETED } from "../../mutations";
 import { useMutation } from "@apollo/client";
 import { GET_MILESTONES } from "../../queries";
+import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 
 const MilestoneCard = (props) => {
 
@@ -22,7 +23,7 @@ const MilestoneCard = (props) => {
             },
         ],
     });
-    if(toggleMilestoneLoading) return <p>Loading...</p>;
+    if(toggleMilestoneLoading) return <LoadingIndicator/>;
     if(toggleMilestoneError) return <p>Toggle milestone mutation Error! {toggleMilestoneError}</p>;
 
     const toggleExpandedState = () => {
@@ -68,9 +69,9 @@ const MilestoneCard = (props) => {
                         <div className="h-4"/>
                     </div>
                     {isEditMode &&
-                        <div className="flex">
-                            <Icons.Edit className="text-nebula-blue mx-4" />
-                            <Icons.Delete className="text-nebula-red mx-4" />
+                        <div className="flex text-nebula-grey-500 hover:text-nebula-blue" id={"#"+props.index} onClick={props.editMilestone}>
+                            <Icons.Edit className=" mx-4" />
+                            {/* <Icons.Delete className="text-nebula-red mx-4" /> */}
                         </div>
                     }
                     {

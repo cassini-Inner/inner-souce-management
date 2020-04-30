@@ -10,6 +10,7 @@ import { useQuery } from "@apollo/client";
 import { GET_CREATED_JOBS } from "../../../queries";
 import { connect } from "react-redux";
 import Placeholder from "../../Placeholders/placeholder";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
 const ManageJobs = (props) => {
     if(location.pathname === "/manageJobs") {
@@ -18,7 +19,7 @@ const ManageJobs = (props) => {
 
     var openJobsCreated = [], ongoingJobsCreated = [], completedJobsCreated = [];
     const { loading:manageJobsLoading, error:manageJobsError, data } = useQuery(GET_CREATED_JOBS, { variables: { userId: props.user.id } });
-    if (manageJobsLoading) return "Loading...";
+    if (manageJobsLoading) return <LoadingIndicator/>;
     else if (manageJobsError) return `error! ${manageJobsError}`;
 
     if(data.User.createdJobs) {

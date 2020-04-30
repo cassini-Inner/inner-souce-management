@@ -6,8 +6,9 @@ import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 const OngoingJobCard = (props) => {
     console.log(props.job);
     const job = props.job;
+    //ToDo change logic with allowing milestones to be applied 
     const completedMilestones = job.milestones.milestones.filter((milestone) => milestone.status.toUpperCase() === "COMPLETED").length;
-    const totalMilestones = job.milestones.milestones.length;
+    const totalMilestones = job.milestones.milestones.length; 
     return (
         <div className={"bg-white rounded-lg p-6 border border-nebula-grey-400 select-text cursor-pointer transition duration-300 shadow-none hover:shadow-lg  " + props.className} key={job.id}>
             <Link to={"/jobDetails/"+job.id} >

@@ -117,6 +117,7 @@ export const GET_JOB_APPLICANTS = gql`
                 pendingCount
                 acceptedCount
                 applications {
+                    status
                     applicant {
                         id
                         name
@@ -151,6 +152,7 @@ export const GET_ALL_JOBS_FILTER = gql`
                 value
             }
             timeCreated
+            viewerHasApplied
             milestones {
                 totalCount
                 milestones{
@@ -278,6 +280,7 @@ export const GET_YOUR_JOBS = gql`
                         acceptedCount
                     }
                     timeCreated
+                    viewerHasApplied
                     milestones {
                         totalCount
                         milestones{

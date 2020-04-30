@@ -10,10 +10,12 @@ import { Route } from "react-router-dom";
 import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
 import { useQuery } from "@apollo/client";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import {
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
-} from "../../../queries";
+    GET_USER_PROFILE,
+} from '../../../queries'
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from "@apollo/client";
@@ -56,14 +58,14 @@ const JobDetailsPage = (props) => {
     
     const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId }, fetchPolicy:"cache-first" });
     
-    if(applyToJobLoading) return <p>Loading...</p>;
+    if(applyToJobLoading) return <LoadingIndicator/>;
     if(applyToJobError) return <p>Apply to job mutation Error! {applyToJobError}</p>;
     
-    if(withdrawApplicationLoading) return <p>Loading...</p>;
+    if(withdrawApplicationLoading) return <LoadingIndicator/>;
     if(withdrawApplicationError) return <p>Apply to job mutation Error! {withdrawApplicationError}</p>;
     
     
-    if(deleteJobLoading) return <p>Loading...</p>;
+    if(deleteJobLoading) return <LoadingIndicator/>;
     if(deleteJobError) return <p>Delete job mutation Error! {deleteJobError}</p>;
 
     const applyToJobHandler = () => {
@@ -120,7 +122,7 @@ const JobDetailsPage = (props) => {
 
 
     //Query to get the job tabs and primary info(created by, applicant IDs)
-    if (loading) return "Loading...";
+    if (loading) return <LoadingIndicator/>;
     else if (error) alert(`Error! ${error.message}`);
 
     //To check if the user has already applied to this job for buttons
@@ -247,7 +249,7 @@ const JobDetailsPage = (props) => {
                         ""
                 }
             </div>
-            <div className="fixed bottom-0 bg-white">
+            <div className="bottom-0 sticky bg-white">
                 <hr/>
                 <div className="px-4 flex flex-wrap-reverse items-center max-w-screen-lg mx-auto py-4 lg:px-10">
                     <div className="flex">

@@ -40,7 +40,11 @@ const MilestoneModal = (props) => {
                 }
                 <div className="flex flex-col justify-between flex-wrap md:flex-row" >
                     <div className="flex-1 mt-2">
-                        <Button type="error" className="w-full md:w-auto" label="Delete Milestone" />
+                    {
+                        props.editMilestoneState ?
+                            <Button type="error" className="w-full md:w-auto" label="Delete Milestone" onClick={props.deleteMilestone} />
+                        : ""
+                    }
                     </div>
                     <div className="flex mt-2">
                         <Button type="secondary" label="Discard" className="w-full md:w-auto mx-1" onClick={props.closeModal} />

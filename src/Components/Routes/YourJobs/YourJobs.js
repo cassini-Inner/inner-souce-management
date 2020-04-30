@@ -45,17 +45,17 @@ const YourJobsBody = (props) => {
             {
                 title: "Working On",
                 location: "ongoing",
-                count: "0",
+                count: 0,
             },
             {
                 title: "Awaiting Approval",
                 location: "applications",
-                count: "0",
+                count: 0,
             },
             {
                 title: "Completed",
                 location: "completed",
-                count: "0",
+                count: 0,
             },
         ],
         appliedJobs: [],
@@ -85,30 +85,21 @@ const YourJobsBody = (props) => {
                         "COMPLETED" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "PENDING") {
-                            appliedJobs.push({
-                                ...appliedJob.job,
-                                userApplicationStatus: "APPLIED",
-                            });
+                            appliedJobs.push(appliedJob.job);
                         }
                         // If application status is accepted and job status is ongoing then the user is currently working on the job
                         if (appliedJob.userJobStatus.toUpperCase() ===
                         "ONGOING" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "ACCEPTED") {
-                            ongoingJobs.push({
-                                ...appliedJob.job,
-                                userApplicationStatus: "WORKING",
-                            });
+                            ongoingJobs.push(appliedJob.job);
                         }
                         // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
                         if (appliedJob.userJobStatus.toUpperCase() ===
                         "COMPLETED" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "ACCEPTED") {
-                            completedJobs.push({
-                                ...appliedJob.job,
-                                userApplicationStatus: "COMPLETED",
-                            });
+                            completedJobs.push(appliedJob.job);
                         }
                     });
                     updateState({
