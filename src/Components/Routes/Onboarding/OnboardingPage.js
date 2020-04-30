@@ -13,9 +13,9 @@ import Cookies from "js-cookie";
 
 const OnboardingPage = (props) => {
     //To verify if the user has already onboarded
-    // if(props.user.onboarded) {
-    //     return <Redirect to="/"/>;
-    // }
+    if(props.user.onboarded) {
+        return <Redirect to="/"/>;
+    }
 
     const form = {
         name: props.user.name ? props.user.name : "",

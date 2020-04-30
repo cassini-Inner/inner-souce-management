@@ -24,7 +24,7 @@ const Content = (props) => {
 
     if (loading || OngoingJobsLoad) {
         return "Loading...";
-    } else if (error) return (`Error! ${error.message}`);
+    } else if (OngoingJobsError) return (`Error! ${error.message}`);
 
     const userSkills = data.User.skills ? data.User.skills.map(
         (skill, key) => skill.value) : [];
