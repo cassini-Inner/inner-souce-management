@@ -19,6 +19,8 @@ const CreateJob = (props) =>  {
 
     const initialState = {
         milestoneModal: false,
+        editMilestoneState: false,
+        editMilestoneIndex: -1, //Index of the milestone in milestones list to be edit
         milestoneCount: -1, //No milestones in the job initially
         milestoneErrMsg: "",
         jobErrMsg: "",
@@ -62,9 +64,11 @@ const CreateJob = (props) =>  {
 
     const closeMilestoneModal = () => {
         setState({
-            ...state,
+            ...state,     //If the milestone modal was opened by edit milestone option the number of milestones shouldn't change
+            milestoneCount: state.editMilestoneState ? state.milestoneCount : state.milestoneCount - 1,
             milestoneModal: false,
-            milestoneCount: state.milestoneCount - 1,
+            editMilestoneState: false,
+            editMilestoneIndex: -1,
         });
     };
 
@@ -72,24 +76,34 @@ const CreateJob = (props) =>  {
     const saveMilestone = () => {
         const isMilestoneValid = validateMilestone(state.milestone);
         if(isMilestoneValid) {
+            var updatedMilestonesList = [];
             //To change the duration into days before saving it
             let newMilestone ={
-                id: state.milestoneCount+1,
                 title: state.milestone.title,
                 description: state.milestone.description,
                 duration: durationStringToDays(state.milestone.duration+" "+state.milestone.durationUnit),
                 skills: state.milestone.skills,
                 resolution: state.milestone.resolution,
-            };
-            
-            const updatedMilestones = [...state.job.milestones, newMilestone];
+            }; 
+            if(state.editMilestoneState) {
+                updatedMilestonesList = [
+                    ...state.job.milestones.slice(0, state.editMilestoneIndex),
+                    newMilestone,
+                    ...state.job.milestones.slice(state.editMilestoneIndex + 1)
+                ];
+            }
+            else {
+                updatedMilestonesList = [...state.job.milestones, newMilestone];
+            }
             //To save the newly created milestone into the existing list of milestones
             setState({
                 ...state,
                 milestoneModal: false,
+                editMilestoneIndex: -1,
+                editMilestoneState: false,
                 job: {
                     ...state.job,
-                    milestones: updatedMilestones,
+                    milestones: updatedMilestonesList,
                 },
                 //To empty the milestone after insertion
                 milestone: {
@@ -100,15 +114,46 @@ const CreateJob = (props) =>  {
                     skills: [],
                     resolution: ""
                 }
-            });
+            }); 
         }
         else {
             setState({
                 ...state,
-                milestoneErrMsg: "Empty fields!"
+                milestoneErrMsg: "Please fill valid values in all the fields!"
             });
         }
     };
+
+    const deleteMilestone = () => {
+        const confirmed = window.confirm("Are you sure you want to delete milestone " + (state.editMilestoneIndex+1) + "?");
+        if(confirmed) {
+            const newMilestoneList = [
+                ...state.job.milestones.slice(0, state.editMilestoneIndex),
+                ...state.job.milestones.slice(state.editMilestoneIndex + 1)
+            ];
+            setState({
+                ...state,
+                editMilestoneState: false,
+                milestoneModal: false,
+                editMilestoneIndex: -1,
+                milestoneCount: state.milestoneCount - 1,
+                job: {
+                    ...state.job,
+                    milestones: [...newMilestoneList]
+                }
+            })  
+        }
+    } 
+
+    const editMilestoneOpen = (event) => {
+        const milestoneIndex = parseInt(event.currentTarget.id.slice(1));
+        setState({
+            ...state,
+            editMilestoneState: true,
+            editMilestoneIndex: milestoneIndex,
+            milestoneModal: true,
+        });
+    }
 
     //To validate the whole form 
     const validateForm = () => {
@@ -146,7 +191,7 @@ const CreateJob = (props) =>  {
             console.log("Not hii");
             setState({
                 ...state,
-                jobErrMsg: "Please fill all the fields and add at least one milestone!",
+                jobErrMsg: "Please fill valid values in all the fields and add at least one milestone!",
             });
         }
     };
@@ -219,7 +264,7 @@ const CreateJob = (props) =>  {
             />
             <SplitContainer
                 leftView={<JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />}
-                rightView={<Milestones milestoneCount={state.milestoneCount} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />}
+                rightView={<Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />}
                 actions={ButtonRow}
             />
             <Portal isOpen={state.milestoneModal} >
@@ -229,8 +274,10 @@ const CreateJob = (props) =>  {
                         closeModal={closeMilestoneModal} 
                         getTagList = {getTagList}
                         onChange={onInputChangeHandler}
-                        errMsg={state.milestoneErrMsg}
-                        milestoneNo={state.milestoneCount+1}//milestoneCount refers to array index hence +1
+                        deleteMilestone = {deleteMilestone}
+                        errMsg = {state.milestoneErrMsg}          //milestoneCount & editMilestoneIndex refers to array index hence +1
+                        milestoneNo = {state.editMilestoneIndex > -1 ? state.editMilestoneIndex+1 : state.milestoneCount+1 }
+                        editMilestoneState = {state.editMilestoneState}
                     />
                 </ModalViewWithScrim>
             </Portal>
@@ -288,7 +335,12 @@ const Milestones = (props) => {
                             (milestone, index) => {
                                 return (
                                     <li key={index}>
-                                        <MilestoneCard milestone={milestone} isEditMode={true} index={index} lastIndex={props.milestoneCount+1} />
+                                        <MilestoneCard 
+                                            milestone={milestone}  
+                                            isEditMode={true} 
+                                            index={index} 
+                                            lastIndex={props.milestoneCount+1} 
+                                            editMilestone={props.editMilestone}/>
                                     </li>
                                 );
                             })

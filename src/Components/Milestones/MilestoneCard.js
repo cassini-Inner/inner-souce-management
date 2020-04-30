@@ -68,9 +68,9 @@ const MilestoneCard = (props) => {
                         <div className="h-4"/>
                     </div>
                     {isEditMode &&
-                        <div className="flex">
-                            <Icons.Edit className="text-nebula-blue mx-4" />
-                            <Icons.Delete className="text-nebula-red mx-4" />
+                        <div className="flex text-nebula-grey-500 hover:text-nebula-blue" id={"#"+props.index} onClick={props.editMilestone}>
+                            <Icons.Edit className=" mx-4" />
+                            {/* <Icons.Delete className="text-nebula-red mx-4" /> */}
                         </div>
                     }
                     {

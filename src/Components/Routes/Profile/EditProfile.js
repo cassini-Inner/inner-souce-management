@@ -133,7 +133,7 @@ const EditProfileBody = (props) => {
         } else {
             setState({
                 ...state,
-                errMsg: "Please fill all the fields!",
+                errMsg: "Please enter valid values in all fields!",
             });
         }
     };

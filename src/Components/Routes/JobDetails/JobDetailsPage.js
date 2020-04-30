@@ -14,12 +14,8 @@ import {
     GET_ALL_JOBS_FILTER,
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
-<<<<<<< HEAD
-} from "../../../queries";
-=======
     GET_USER_PROFILE,
 } from '../../../queries'
->>>>>>> ca62a23fef6f460b51c0f4031970e0c021c25acd
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from "@apollo/client";
@@ -254,7 +250,7 @@ const JobDetailsPage = (props) => {
                         ""
                 }
             </div>
-            <div className="fixed bottom-0 bg-white">
+            <div className="bottom-0 sticky bg-white">
                 <hr/>
                 <div className="px-4 flex flex-wrap-reverse items-center max-w-screen-lg mx-auto py-4 lg:px-10">
                     <div className="flex">

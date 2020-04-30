@@ -13,13 +13,14 @@ import Cookies from "js-cookie";
 
 const OnboardingPage = (props) => {
     //To verify if the user has already onboarded
-    if(props.user.onboarded) {
-        return <Redirect to="/"/>;
-    }
+    // if(props.user.onboarded) {
+    //     return <Redirect to="/"/>;
+    // }
 
     const form = {
         name: props.user.name ? props.user.name : "",
         position: "",
+        bio: "",
         department: "",
         contact: "",
         email: props.user.email ? props.user.email : "",
@@ -37,6 +38,7 @@ const OnboardingPage = (props) => {
         const value = event.currentTarget.value;
         switch(event.currentTarget.id) {
         case "name": setState({...state, name:value});break;
+        case "bio": setState({...state, bio:value});break;
         case "email": setState({...state, email:value});break;
         case "position":  setState({...state, position:value});break;
         case "department":  setState({...state, department:value});break;
@@ -61,6 +63,7 @@ const OnboardingPage = (props) => {
                         name: state.name,
                         email: state.email,
                         role: state.position,
+                        bio: state.bio,
                         department: state.department,
                         contact: state.contact,
                         skills: state.skills,
@@ -78,7 +81,7 @@ const OnboardingPage = (props) => {
         else {
             setState({
                 ...state,
-                errMsg: "Please fill in all fields!"
+                errMsg: "Please fill valid values in all fields!"
             });
         }
     };
@@ -99,6 +102,8 @@ const OnboardingPage = (props) => {
             <TextInput id="email" placeholder="Email" onChange={onInputChangeHandler} value={state.email}/>
             <label className="mt-10">Contact</label>
             <TextInput id="contact" placeholder="Slack ID, Microsoft Teams..." onChange={onInputChangeHandler} value={state.contact} />
+            <label className="mt-10">Bio</label>
+            <TextInput id="bio" placeholder="Bio" onChange={onInputChangeHandler} value={state.bio} />
             <label className="mt-10">Skills & areas of interest</label>
             <SearchTagsInput id="skills" getTagList = {getTagList} placeholder="Type and press enter to add skills"/>
             {

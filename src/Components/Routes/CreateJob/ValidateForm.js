@@ -13,7 +13,7 @@ export const validateMilestone = (milestone) => {
     console.log("Milestone Validation");
     if(!milestone.title || !milestone.title.trim()) return false;
     if(!milestone.description || !milestone.description.trim()) return false;
-    if(!milestone.duration || !milestone.duration.trim()) return false;
+    if(!milestone.duration || !milestone.duration.trim() || milestone.duration.includes("e")) return false;
     if(!milestone.skills || !milestone.skills.length) return false;
     if(!milestone.resolution || !milestone.resolution.trim()) return false;
     return true;
