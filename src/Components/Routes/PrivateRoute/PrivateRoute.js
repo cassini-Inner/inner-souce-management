@@ -18,8 +18,11 @@ const PrivateRoute = ({ children, ...props }) => {
             if (loading) return <LoadingIndicator/>;
             else if (error) {
                 isLoggedIn = false;
-                return (`get user profile error! ${error.message}`);
-
+                Cookies.remove("id");
+                Cookies.remove("token");
+                Cookies.remove("githubName");
+                alert(`User profile fetch error! Try logging in again${error.message}`);
+                return <Redirect to="/login"/>
             }
             props.setUserData({
                 token: Cookies.get("token"),

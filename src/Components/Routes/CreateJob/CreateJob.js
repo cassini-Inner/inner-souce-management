@@ -11,7 +11,7 @@ import Portal from "../../Containers/Portal";
 import { withRouter } from "react-router";
 import { validateJob, validateMilestone } from "./ValidateForm";
 import MilestoneCard from "../../Milestones/MilestoneCard";
-import { durationStringToDays } from "../../../HelperFunctions/DurationParser";
+import { durationStringToDays, DurationParser } from "../../../HelperFunctions/DurationParser";
 import { CREATE_JOB } from "../../../mutations";
 import { useMutation } from "@apollo/client";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
@@ -151,11 +151,20 @@ const CreateJob = (props) =>  {
 
     const editMilestoneOpen = (event) => {
         const milestoneIndex = parseInt(event.currentTarget.id.slice(1));
+        var duration = DurationParser(state.job.milestones[milestoneIndex].duration).split(' ');
         setState({
             ...state,
             editMilestoneState: true,
             editMilestoneIndex: milestoneIndex,
             milestoneModal: true,
+            milestone: {
+                title: state.job.milestones[milestoneIndex].title,
+                description: state.job.milestones[milestoneIndex].description,
+                duration: duration[0],
+                durationUnit: duration[1].charAt(0).toUpperCase() + duration[1].slice(1), //Default value in the dropdown
+                skills: state.job.milestones[milestoneIndex].skills,
+                resolution: state.job.milestones[milestoneIndex].resolution,
+            }
         });
     }
 
@@ -282,6 +291,7 @@ const CreateJob = (props) =>  {
                         errMsg = {state.milestoneErrMsg}          //milestoneCount & editMilestoneIndex refers to array index hence +1
                         milestoneNo = {state.editMilestoneIndex > -1 ? state.editMilestoneIndex+1 : state.milestoneCount+1 }
                         editMilestoneState = {state.editMilestoneState}
+                        milestone = {state.editMilestoneState ? state.milestone : ''}
                     />
                 </ModalViewWithScrim>
             </Portal>

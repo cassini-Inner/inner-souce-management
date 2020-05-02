@@ -19,6 +19,7 @@ const Dropdown = (props) => {
                 }
                 <select id={props.id}
                     onChange = {props.onChange ? props.onChange : null}
+                    value={props.value ? props.value: null}
                     className={"transition duration-150 rounded border border-2 border-nebula-grey-400 outline-none p-2 leading-tight hover:shadow-inner " + (props.className?props.className:"")} >
                     {dropdownList}
                 </select>
