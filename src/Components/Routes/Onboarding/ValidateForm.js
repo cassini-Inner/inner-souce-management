@@ -1,8 +1,8 @@
-import * as EmailValidator from 'email-validator';
+import * as EmailValidator from "email-validator";
 
 export const validateOnboarding = (userDetails) => {
     console.log("Onboarding Validation");
-    console.log(userDetails)
+    console.log(userDetails);
     if(!userDetails.name || !userDetails.name.trim()) return false;
     if(!userDetails.position || !userDetails.position.trim()) return false;
     if(!userDetails.bio || !userDetails.bio.trim()) return false;

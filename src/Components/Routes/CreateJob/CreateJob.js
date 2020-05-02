@@ -44,7 +44,7 @@ const CreateJob = (props) =>  {
 
     const [createJob, {loading, error}] = useMutation(CREATE_JOB);
     if(error) {
-        return 'Error!!'+error;
+        return "Error!!"+error;
     }
 
     //To set the skill tags of the milestone
@@ -145,13 +145,13 @@ const CreateJob = (props) =>  {
                     ...state.job,
                     milestones: [...newMilestoneList]
                 }
-            })  
+            });  
         }
-    } 
+    }; 
 
     const editMilestoneOpen = (event) => {
         const milestoneIndex = parseInt(event.currentTarget.id.slice(1));
-        var duration = DurationParser(state.job.milestones[milestoneIndex].duration).split(' ');
+        var duration = DurationParser(state.job.milestones[milestoneIndex].duration).split(" ");
         setState({
             ...state,
             editMilestoneState: true,
@@ -166,7 +166,7 @@ const CreateJob = (props) =>  {
                 resolution: state.job.milestones[milestoneIndex].resolution,
             }
         });
-    }
+    };
 
     //To validate the whole form 
     const validateForm = () => {
@@ -291,7 +291,7 @@ const CreateJob = (props) =>  {
                         errMsg = {state.milestoneErrMsg}          //milestoneCount & editMilestoneIndex refers to array index hence +1
                         milestoneNo = {state.editMilestoneIndex > -1 ? state.editMilestoneIndex+1 : state.milestoneCount+1 }
                         editMilestoneState = {state.editMilestoneState}
-                        milestone = {state.editMilestoneState ? state.milestone : ''}
+                        milestone = {state.editMilestoneState ? state.milestone : ""}
                     />
                 </ModalViewWithScrim>
             </Portal>

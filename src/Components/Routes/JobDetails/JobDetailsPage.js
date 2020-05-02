@@ -15,7 +15,7 @@ import {
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
     GET_USER_PROFILE,
-} from '../../../queries'
+} from "../../../queries";
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from "@apollo/client";
@@ -69,21 +69,16 @@ const JobDetailsPage = (props) => {
     if(deleteJobError) return <p>Delete job mutation Error! {deleteJobError}</p>;
 
     const applyToJobHandler = () => {
-        let confirmed = window.confirm("Apply to this job?");
-        if(confirmed) {
-            applyToJobMutation({
-                variables :{
-                    jobId: state.jobId
-                }
-            }).then(
-                res => {
-                    console.log(res);
-                    alert("Applied to the job successfully!");
-                    props.history.push("/jobDetails/"+state.jobId);
-                },
-                err => console.log(err)
-            );
-        }
+        applyToJobMutation({
+            variables :{
+                jobId: state.jobId
+            }
+        }).then(
+            res => {
+                console.log(res);
+            },
+            err => console.log(err)
+        );
     };
     // ToDo implement Modal for getting password
     const deleteJobHandler = () => {
@@ -226,7 +221,7 @@ const JobDetailsPage = (props) => {
 
     return (
         <Fragment>
-            <div className="px-4 pb-24 max-w-screen-lg mx-auto lg:px-10">
+            <div className="px-4 pb-24 max-w-screen-lg min-h-screen mx-auto lg:px-10">
                 <button onClick={() => {props.history.goBack();}} className="flex  py-4">
                     <ArrowLeft />
                     <p className="px-4">Back</p>

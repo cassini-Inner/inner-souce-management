@@ -35,16 +35,13 @@ const MilestoneCard = (props) => {
 
     const toggleMilestoneStatus = (event) => {
         const milestoneId = event.currentTarget.id;
-        let sure = window.confirm("Are you sure you want to change the milestone status?");
-        if(sure) {
-            toggleMilestoneMutation({
-                variables: {
-                    milestoneId: milestoneId,
-                }
-            }).then(res => console.log(res),
-                err => console.log(err)
-            );
-        }
+        toggleMilestoneMutation({
+            variables: {
+                milestoneId: milestoneId,
+            }
+        }).then(res => console.log(res),
+            err => console.log(err)
+        );
     };
 
     const isExpanded = state.isExpanded;
@@ -79,13 +76,14 @@ const MilestoneCard = (props) => {
                             ? 
                             isMilestoneCompleted
                                 ?
-                                <div id={props.milestone.id} onClick={toggleMilestoneStatus} className="text-nebula-blue mx-4 cursor-pointer flex">
+                                <div id={props.milestone.id} onClick={toggleMilestoneStatus} className="flex items-center text-nebula-blue mx-4 cursor-pointer flex">
                                     <div className="px-2">Completed</div>
-                                    <Icons.CheckCircle />
+                                    <Icons.CheckCircle className="h-4 w-4" />
                                 </div>
-                                : 
-                                <div id={props.milestone.id} onClick={toggleMilestoneStatus} className="text-nebula-grey hover:text-nebula-blue mx-4 cursor-pointer">
-                                    <Icons.CheckCircle />
+                                :
+                                <div id={props.milestone.id} onClick={toggleMilestoneStatus} className="flex items-center text-nebula-grey-600 hover:text-nebula-blue mx-4 cursor-pointer">
+                                    <div className="px-2">Mark as completed</div>
+                                    <Icons.CheckCircle className="h-4 w-4" />
                                 </div>
                             :
                             ""
