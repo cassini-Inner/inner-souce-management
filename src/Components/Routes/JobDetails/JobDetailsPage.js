@@ -126,7 +126,7 @@ const JobDetailsPage = (props) => {
     // If the user has applied to this job and user's application has not been accepted
     if(data.Job.applications.applications && data.Job.applications.applications.find((application) => ( application.applicant.id == props.user.id && application.status.toUpperCase() == "PENDING" ) ) ) {
         userActions = [
-            (<Button type="error" label="Withdraw application"
+            (<Button type="secondary" label="Withdraw application"
                 key="withdrawJobApplication"
                 className=" w-auto mr-4 "
                 onClick={withdrawApplicationHandler}
