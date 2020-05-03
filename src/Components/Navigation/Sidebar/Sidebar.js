@@ -34,6 +34,7 @@ class Sidebar extends Component {
         const desktopExpanded = this.state.desktopExpanded;
 
         return (
+
             <div className={"w-auto border-l-0 z-40 sticky top-0 text-black bg-nebula-grey-100 border-nebula-grey-400 border border-r-0 px-0 lg:z-10 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-t-0 lg:border-l-0 lg:w-72 xl:w-84"}>
                 <div className="w-full h-12 lg:mt-6 flex items-center ">
                     <NavLink
@@ -64,9 +65,7 @@ class Sidebar extends Component {
                                 onClick={() => { this.mobileExpandCollapseSidebar(false) }}
                             >
                                 <Icons.Home className="ml-6" />
-                                {desktopExpanded &&
                                     <div className="ml-10 whitespace-no-wrap ">{config.home}</div>
-                                }
                             </NavLink>
                         </li>
                         <li>
@@ -77,9 +76,7 @@ class Sidebar extends Component {
                                 onClick={() => { this.mobileExpandCollapseSidebar(false) }}
                             >
                                 <Icons.GitBranch className="ml-6" />
-                                {desktopExpanded &&
                                     <div className="ml-10 whitespace-no-wrap" >{config.yourJobs}</div>
-                                }
                             </NavLink>
                         </li>
                         <li>
@@ -90,9 +87,7 @@ class Sidebar extends Component {
                                 onClick={() => { this.mobileExpandCollapseSidebar(false) }}
                             >
                                 <Icons.Edit3 className="ml-6" />
-                                {desktopExpanded &&
                                     <div className="ml-10 whitespace-no-wrap" >{config.manageJobs}</div>
-                                }
                             </NavLink>
                         </li>
                     </ul>
