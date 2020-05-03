@@ -9,13 +9,13 @@ const JobCard = (props) => {
     return (
         <Link to={"/jobDetails/" + props.data.id}>
             <div className={"w-full p-6 bg-white mt-4 rounded-lg " +
-          (props.manageJobs
-              ? ""
-              : "transition duration-300 shadow-none cursor-pointer hover:shadow-lg border border-nebula-grey-400")}
-            key={props.data.id}>
-                <h1 className="text-lg font-semibold">{props.data.title}</h1>
+                (props.manageJobs
+                    ? ""
+                    : "transition duration-300 shadow-none cursor-pointer hover:shadow-lg border border-nebula-grey-400")}
+                key={props.data.id}>
+                <h1 className="text-base font-semibold">{props.data.title}</h1>
                 <div
-                    className="mt-2 text-md leading-relaxed text-nebula-grey-700 mb-4">
+                    className="mt-2 text-base leading-relaxed text-nebula-grey-700 mb-4">
                     {props.data.description}
                 </div>
                 <div className="flex flex-wrap items-center my-4">
@@ -26,29 +26,29 @@ const JobCard = (props) => {
                             <div className="mr-6">
                                 <InfoTag title="MILESTONES"
                                     data={props.data.milestones.totalCount +
-                                       " Milestones"}/>
+                                        " Milestones"} />
                             </div>
                             <div className="mr-6 md:mt-0">
                                 <InfoTag title="DIFFICULTY"
-                                    data={props.data.difficulty}/>
+                                    data={props.data.difficulty} />
                             </div>
                         </div>
                         <div
                             className="flex flex-1 flex-col md:flex-row md:flex-initial">
                             <div className="mr-6">
                                 <InfoTag title="DURATION" data={getDuration(
-                                    props.data["milestones"]["milestones"])}/>
+                                    props.data["milestones"]["milestones"])} />
                             </div>
                             <div className="mr-6 md:mt-0">
                                 <InfoTag title="WORKING"
                                     data={props.data.applications.acceptedCount +
-                                       (props.data.applications.acceptedCount >
-                                       1 ? " users" : " user")}/>
+                                        (props.data.applications.acceptedCount >
+                                            1 ? " users" : " user")} />
                             </div>
                             <div className="mr-6 md:mt-0">
                                 <InfoTag title="SKILLS NEEDED" limit={3}
                                     data={props.data.skills.map(
-                                        (skill, index) => skill.value + " ")}/>
+                                        (skill, index) => skill.value + " ")} />
                             </div>
                         </div>
                     </div>
@@ -59,18 +59,18 @@ const JobCard = (props) => {
                         img={props.data.createdBy.photoUrl}
                     />
                 </div>
-                <hr/>
+                <hr />
                 <div
                     className="flex flex-col flex-wrap mt-4 justify-left md:flex-row">
                     <div className="flex-1">
                         <div className="flex items-center">
                             <div><StatusTags statusTag={[
                                 props.data.status.toLowerCase(),
-                                props.data.viewerHasApplied ? "applied" : ""]}/>
+                                props.data.viewerHasApplied ? "applied" : ""]} />
                             </div>
                             <div
                                 className="text-nebula-grey-600 ml-2 text-sm">{"created on " +
-                          props.data.timeCreated.split("T")[0]}</div>
+                                    props.data.timeCreated.split("T")[0]}</div>
                         </div>
                     </div>
                     <div className="py-4 md:py-0">

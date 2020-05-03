@@ -4,7 +4,6 @@ const InfoTag = (props) => {
     let content = "";
     let remainingCount = "";
     if (Array.isArray(props.data)) {
-        const length = props.data.length - 1;
         const limit = props.limit ? props.limit : props.data.length;
         content = props.data.slice(0, limit).join(", ");
         if (limit != props.data.length) {
@@ -25,10 +24,10 @@ const InfoTag = (props) => {
                 <span
                     className="font-semibold leading-tight text-sm text-nebula-grey-700">
                     {content}
-                    {props.limit && !remainingCount.length==0 &&
-              <span className="text-nebula-grey-500">
-                  {remainingCount}
-              </span>
+                    {props.limit && !remainingCount.length == 0 &&
+                        <span className="text-nebula-grey-500">
+                            {remainingCount}
+                        </span>
                     }
                 </span>
             </span>
