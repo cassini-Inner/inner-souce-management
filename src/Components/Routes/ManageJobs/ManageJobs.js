@@ -50,6 +50,21 @@ const ManageJobs = (props) => {
         />
     );
 
+    const ongoingJobsPlaceholder = (
+        <Placeholder
+            heading="No created jobs with ongoing status!"
+            body="Once you accept any applicants into a job it will appear here."
+            image="../../../../assets/images/create_jobs_placeholder.svg"
+        />
+    );
+    const completedJobsPlaceholder = (
+        <Placeholder
+            heading="No jobs completed... yet!"
+            body="You'll find jobs created by you that were completed here."
+            image="../../../../assets/images/create_jobs_placeholder.svg"
+        />
+    );
+
     const tabList = [
         {
             title: "Open",
@@ -89,9 +104,9 @@ const ManageJobs = (props) => {
                 <Route exact path={props.match.url + "/open"}
                     component={(props) => <CreatedJobList jobs={openJobsCreated} placeholder={createJobsPlaceholder} />} />
                 <Route exact path={props.match.url + "/ongoing"}
-                    component={(props) => <CreatedJobList jobs={ongoingJobsCreated} placeholder={createJobsPlaceholder} />} />
+                    component={(props) => <CreatedJobList jobs={ongoingJobsCreated} placeholder={ongoingJobsPlaceholder} />} />
                 <Route exact path={props.match.url + "/completed"}
-                    component={(props) => <CreatedJobList jobs={completedJobsCreated} placeholder={createJobsPlaceholder} />} />
+                    component={(props) => <CreatedJobList jobs={completedJobsCreated} placeholder={completedJobsPlaceholder} />} />
             </div>
         </div>
     );

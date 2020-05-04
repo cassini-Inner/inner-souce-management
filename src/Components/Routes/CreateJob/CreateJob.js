@@ -16,7 +16,7 @@ import { CREATE_JOB } from "../../../mutations";
 import { useMutation } from "@apollo/client";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 
-const CreateJob = (props) =>  {
+const CreateJob = (props) => {
 
     const initialState = {
         milestoneModal: false,
@@ -26,7 +26,7 @@ const CreateJob = (props) =>  {
         milestoneErrMsg: "",
         jobErrMsg: "",
         job: {
-            title:"",
+            title: "",
             description: "",
             difficulty: "Intermediate", //Default value in the dropdown
             milestones: [],
@@ -40,15 +40,15 @@ const CreateJob = (props) =>  {
             resolution: ""
         }
     };
-    const [ state, setState ] = useState(initialState);
+    const [state, setState] = useState(initialState);
 
-    const [createJob, {loading, error}] = useMutation(CREATE_JOB);
-    if(error) {
-        return "Error!!"+error;
+    const [createJob, { loading, error }] = useMutation(CREATE_JOB);
+    if (error) {
+        return "Error!!" + error;
     }
 
     //To set the skill tags of the milestone
-    const getTagList = (skillList) => {   
+    const getTagList = (skillList) => {
         setState({
             ...state,
             milestone: {
@@ -57,7 +57,7 @@ const CreateJob = (props) =>  {
             }
         });
     };
-    
+
     const openMilestoneModal = () => {
         setState({
             ...state,
@@ -79,17 +79,17 @@ const CreateJob = (props) =>  {
     //To validate and save the milestone
     const saveMilestone = () => {
         const isMilestoneValid = validateMilestone(state.milestone);
-        if(isMilestoneValid) {
+        if (isMilestoneValid) {
             var updatedMilestonesList = [];
             //To change the duration into days before saving it
-            let newMilestone ={
+            let newMilestone = {
                 title: state.milestone.title,
                 description: state.milestone.description,
-                duration: durationStringToDays(state.milestone.duration+" "+state.milestone.durationUnit),
+                duration: durationStringToDays(state.milestone.duration + " " + state.milestone.durationUnit),
                 skills: state.milestone.skills,
                 resolution: state.milestone.resolution,
-            }; 
-            if(state.editMilestoneState) {
+            };
+            if (state.editMilestoneState) {
                 updatedMilestonesList = [
                     ...state.job.milestones.slice(0, state.editMilestoneIndex),
                     newMilestone,
@@ -118,7 +118,7 @@ const CreateJob = (props) =>  {
                     skills: [],
                     resolution: ""
                 }
-            }); 
+            });
         }
         else {
             setState({
@@ -129,8 +129,8 @@ const CreateJob = (props) =>  {
     };
 
     const deleteMilestone = () => {
-        const confirmed = window.confirm("Are you sure you want to delete milestone " + (state.editMilestoneIndex+1) + "?");
-        if(confirmed) {
+        const confirmed = window.confirm("Are you sure you want to delete milestone " + (state.editMilestoneIndex + 1) + "?");
+        if (confirmed) {
             const newMilestoneList = [
                 ...state.job.milestones.slice(0, state.editMilestoneIndex),
                 ...state.job.milestones.slice(state.editMilestoneIndex + 1)
@@ -145,9 +145,9 @@ const CreateJob = (props) =>  {
                     ...state.job,
                     milestones: [...newMilestoneList]
                 }
-            });  
+            });
         }
-    }; 
+    };
 
     const editMilestoneOpen = (event) => {
         const milestoneIndex = parseInt(event.currentTarget.id.slice(1));
@@ -171,7 +171,7 @@ const CreateJob = (props) =>  {
     //To validate the whole form 
     const validateForm = () => {
         const isFormValid = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
-        if(isFormValid) {
+        if (isFormValid) {
             const createJobInput = {
                 title: state.job.title,
                 desc: state.job.description,
@@ -194,10 +194,9 @@ const CreateJob = (props) =>  {
                 }
             }).catch((error) => alert("Failed to create a new job: " + error))
                 .then(res => {
-                    props.history.push("/jobDetails/"+res.data.createJob.id);
-                    alert("Job has been created successfully!");
+                    props.history.push("/jobDetails/" + res.data.createJob.id);
                 },
-                err => console.log(err));
+                    err => console.log(err));
         }
 
         else {
@@ -212,60 +211,76 @@ const CreateJob = (props) =>  {
     //To get all the input values and store them in the state
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
-        switch(event.currentTarget.id) {
-        case "jobTitle": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            job: {...state.job, title: value}});break;
+        switch (event.currentTarget.id) {
+            case "jobTitle": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                job: { ...state.job, title: value }
+            }); break;
 
-        case "jobDescription": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            job:{...state.job, description: value}});break;
+            case "jobDescription": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                job: { ...state.job, description: value }
+            }); break;
 
-        case "jobDifficulty": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            job:{...state.job, difficulty: value}});break;
+            case "jobDifficulty": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                job: { ...state.job, difficulty: value }
+            }); break;
 
-        case "milestoneTitle": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            milestone:{...state.milestone, title: value}});break;
+            case "milestoneTitle": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                milestone: { ...state.milestone, title: value }
+            }); break;
 
-        case "milestoneDescription": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            milestone:{...state.milestone, description: value}});break;
+            case "milestoneDescription": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                milestone: { ...state.milestone, description: value }
+            }); break;
 
-        case "milestoneDuration": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            milestone:{...state.milestone, duration: value}});break;
+            case "milestoneDuration": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                milestone: { ...state.milestone, duration: value }
+            }); break;
 
-        case "milestoneDurationUnit": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            milestone:{...state.milestone, durationUnit: value}});break;
+            case "milestoneDurationUnit": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                milestone: { ...state.milestone, durationUnit: value }
+            }); break;
 
-        case "milestoneResolution": setState({...state,
-            milestoneErrMsg:"",
-            jobErrMsg:"",
-            milestone:{...state.milestone, resolution: value}});break;
+            case "milestoneResolution": setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                milestone: { ...state.milestone, resolution: value }
+            }); break;
         }
     };
 
 
     const goBack = () => {
         const cancel = window.confirm("Are you sure you want cancel this job creation?");
-        if(cancel) {
+        if (cancel) {
             props.history.goBack();
         }
     };
 
     const ButtonRow = [
-        <Button type="secondary" label="Cancel Job Creation" onClick={() => goBack()}/>,
-        <Button type="primary" label="Submit Job" onClick={() => validateForm() }/>
+        <Button type="secondary" label="Cancel Job Creation" onClick={() => goBack()} />,
+        <Button type="primary" label="Submit Job" onClick={() => validateForm()} />
     ];
     return (
         <Fragment>
@@ -282,16 +297,16 @@ const CreateJob = (props) =>  {
             />
             <Portal isOpen={state.milestoneModal} >
                 <ModalViewWithScrim>
-                    <MilestoneModal 
-                        saveMilestone={saveMilestone} 
-                        closeModal={closeMilestoneModal} 
-                        getTagList = {getTagList}
+                    <MilestoneModal
+                        saveMilestone={saveMilestone}
+                        closeModal={closeMilestoneModal}
+                        getTagList={getTagList}
                         onChange={onInputChangeHandler}
-                        deleteMilestone = {deleteMilestone}
-                        errMsg = {state.milestoneErrMsg}          //milestoneCount & editMilestoneIndex refers to array index hence +1
-                        milestoneNo = {state.editMilestoneIndex > -1 ? state.editMilestoneIndex+1 : state.milestoneCount+1 }
-                        editMilestoneState = {state.editMilestoneState}
-                        milestone = {state.editMilestoneState ? state.milestone : ""}
+                        deleteMilestone={deleteMilestone}
+                        errMsg={state.milestoneErrMsg}          //milestoneCount & editMilestoneIndex refers to array index hence +1
+                        milestoneNo={state.editMilestoneIndex > -1 ? state.editMilestoneIndex + 1 : state.milestoneCount + 1}
+                        editMilestoneState={state.editMilestoneState}
+                        milestone={state.editMilestoneState ? state.milestone : ""}
                     />
                 </ModalViewWithScrim>
             </Portal>
@@ -315,9 +330,9 @@ const JobForm = (props) => {
                 <Dropdown id="jobDifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
             </div>
             { //To display error messages
-                props.jobErrMsg?
-                    <div 
-                        className = "mt-6 text-nebula-red" >
+                props.jobErrMsg ?
+                    <div
+                        className="mt-6 text-nebula-red" >
                         {props.jobErrMsg}
                     </div>
                     : ""
@@ -349,12 +364,12 @@ const Milestones = (props) => {
                             (milestone, index) => {
                                 return (
                                     <li key={index}>
-                                        <MilestoneCard 
-                                            milestone={milestone}  
-                                            isEditMode={true} 
-                                            index={index} 
-                                            lastIndex={props.milestoneCount+1} 
-                                            editMilestone={props.editMilestone}/>
+                                        <MilestoneCard
+                                            milestone={milestone}
+                                            isEditMode={true}
+                                            index={index}
+                                            lastIndex={props.milestoneCount + 1}
+                                            editMilestone={props.editMilestone} />
                                     </li>
                                 );
                             })

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const SidebarItem = (props) => {
     const selectedClasses = " text-sm text-nebula-blue bg-nebula-blue-light border-nebula-blue ";
-    const unselectedClasses = "flex flex-row items-center text-nebula-grey-600 text-sm h-12 my-4 font-semibold border-l-4 border-transparent ";
+    const unselectedClasses = "flex flex-row items-center text-nebula-grey-600 text-sm h-12 my-4 font-semibold border-l-4 border-transparent hover:bg-nebula-grey-400 ";
 
     return <NavLink
         exact={props.exactLink}

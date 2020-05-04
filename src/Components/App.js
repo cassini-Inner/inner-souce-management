@@ -37,7 +37,7 @@ const App = (props) => {
                                         >
                                             <div
                                                 className="flex flex-col lg:flex-row justify-center w-full mx-auto">
-                                                <div className="overflow-y-auto border-r border-nebula-grey-400">
+                                                <div className="ticky top-0 border-r border-nebula-grey-400">
                                                     <Sidebar />
 
                                                 </div>

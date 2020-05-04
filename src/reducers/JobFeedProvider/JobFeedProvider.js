@@ -17,9 +17,9 @@ export const actions = {
 };
 
 export const jobStatuses = {
-    OPEN: "open",
-    ONGOING: "completed",
-    COMPLETED: "completed",
+    OPEN: "OPEN",
+    ONGOING: "ONGOING",
+    COMPLETED: "COMPLETED",
 };
 
 function reducer(state, action) {
@@ -44,7 +44,7 @@ function reducer(state, action) {
             };
         }
         case actions.ADD_STATUS: {
-            const newStatus = [...state.status]
+            const newStatus = [...state.status];
             if (!state.status.includes(action.value.toUpperCase()))
                 newStatus.push(action.value.toUpperCase());
             return {
@@ -78,8 +78,8 @@ function reducer(state, action) {
         case actions.UPDATE_JOBS: {
             return {
                 ...state,
-                jobs: [...action.value]
-            }
+                jobs: action.value
+            };
         }
         default:
             return state;
@@ -116,17 +116,21 @@ export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) =>
                 status: state.status,
             }
         },
-        fetchPolicy: "cache-and-network",
+        fetchPolicy: "network-only",
         onCompleted: (data) => {
             if (data != null && data.allJobs != null) {
-                dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs })
+                dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
             }
         },
         onError: (error) => {
-            console.log(error)
+            console.log(error);
         }
     }
     );
+
+    const contextValue = useMemo(() => {
+        return { state, dispatch }
+    }, [state, dispatch])
 
 
     if (loading) {
@@ -136,7 +140,7 @@ export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) =>
         return "error";
     }
 
-    return <JobsFeedContext.Provider value={{ state, dispatch }}>
+    return <JobsFeedContext.Provider value={contextValue}>
         {children}
     </JobsFeedContext.Provider>;
 });

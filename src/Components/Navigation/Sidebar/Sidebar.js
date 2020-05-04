@@ -74,6 +74,7 @@ const Sidebar = (props) => {
                         />
                     </li>
                 </ul>
+                <hr className="my-8" />
                 <div>
                     {
                         window.location.pathname === "/" &&
@@ -115,8 +116,8 @@ const SidebarReactiveFilter = (props) => {
     const ongoingChecked = status.includes("ONGOING");
     const completedChecked = status.includes("COMPLETED");
     return (
-        <div className="mx-4 bg-white border border-nebula-grey-300 rounded-lg">
-            <h4 className="text-sm font-semibold text-nebula-grey-600 border-b border-gray-300 rounded-tl-lg rounded-tr-lg bg-nebula-grey-200 py-4 px-2">Filters</h4>
+        <div className="mx-4 bg-white border border-nebula-grey-400 rounded-lg">
+            <h4 className="text-md font-semibold text-nebula-blue border-b border-gray-300 rounded-tl-lg rounded-tr-lg bg-white py-4 pl-4">Filters</h4>
             <div className="px-4 py-2">
                 <h4 className="text-sm font-semibold text-nebula-grey-800 mt-4">Skills</h4>
                 <TextInput className="w-full my-2" placeholder="Add job skill filters" forwardedRef={skillsFilterRef} onKeyDown={(e) => inputOnKeyDown(e)} />
@@ -137,15 +138,15 @@ const SidebarReactiveFilter = (props) => {
                 </div>
                 <h4 className="text-sm font-semibold text-nebula-grey-800 mt-4">Job State</h4>
                 <div className="flex items-center my-1 py-1">
-                    <input type="checkbox" id="OPEN" onChange={(e) => checkboxOnChange(e)} defaultChecked={true} />
+                    <input type="checkbox" id="OPEN" onChange={(e) => checkboxOnChange(e)} checked={openChecked} />
                     <label htmlFor="OPEN" className="ml-2">Open</label>
                 </div>
                 <div className="flex items-center my-1 py-1">
-                    <input type="checkbox" id="ONGOING" onChange={(e) => checkboxOnChange(e)} />
+                    <input type="checkbox" id="ONGOING" onChange={(e) => checkboxOnChange(e)} checked={ongoingChecked} />
                     <label htmlFor="ONGOING" className="ml-2">Ongoing</label>
                 </div>
                 <div className="flex items-center my-1 py-1">
-                    <input type="checkbox" id="COMPLETED" onChange={(e) => checkboxOnChange(e)} defaultChecked={status.includes("COMPLETED")} />
+                    <input type="checkbox" id="COMPLETED" onChange={(e) => checkboxOnChange(e)} checked={completedChecked} />
                     <label htmlFor="COMPLETED" className="ml-2">Completed</label>
                 </div>
             </div>
