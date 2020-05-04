@@ -58,13 +58,10 @@ const Content = (props) => {
     }
 
     const placeholder = (<Placeholder
-        heading="This is your personalised job feed"
-        body="You can find projects and tasks based on your skills and interests.
-Have an interesting project? You can add that & invite people to collaborate with you."
+        heading="No jobs found with the set filters"
+        body="You can change the filters to explore more jobs. "
         buttonLabel="Create a new Job"
         image="../../../../assets/images/explore_jobs_placeholder.svg"
-        onClick={() => { }}
-        linkLocation="/createJob"
     />);
 
 

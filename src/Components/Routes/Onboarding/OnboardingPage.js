@@ -14,9 +14,9 @@ import Cookies from "js-cookie";
 
 const OnboardingPage = (props) => {
     //To verify if the user has already onboarded
-    if(props.user.onboarded) {
-        return <Redirect to="/"/>;
-    }
+    // if(props.user.onboarded) {
+    //     return <Redirect to="/"/>;
+    // }
 
     const form = {
         name: props.user.name ? props.user.name : "",
@@ -26,7 +26,15 @@ const OnboardingPage = (props) => {
         contact: "",
         email: props.user.email ? props.user.email : "",
         skills: [],
-        errMsg: "",
+        errorMessages: {
+            nameErr: "",
+            positionErr: "",
+            bioErr: "",
+            departmentErr: "",
+            contactErr: "",
+            emailErr: "",
+            skillsErr: "",
+        }
     };
     const [ state, setState ] = useState(form);
 
@@ -38,25 +46,29 @@ const OnboardingPage = (props) => {
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch(event.currentTarget.id) {
-        case "name": setState({...state, name:value});break;
-        case "bio": setState({...state, bio:value});break;
-        case "email": setState({...state, email:value});break;
-        case "position":  setState({...state, position:value});break;
-        case "department":  setState({...state, department:value});break;
-        case "contact":  setState({...state, contact:value});break;
+        case "name": setState({...state, name:value, errorMessages:{...state.errorMessages, nameErr:""}});break;
+        case "bio": setState({...state, bio:value, errorMessages:{...state.errorMessages, bioErr:""}});break;
+        case "email": setState({...state, email:value, errorMessages:{...state.errorMessages, emailErr:""}});break;
+        case "position":  setState({...state, position:value, errorMessages:{...state.errorMessages, positionErr:""}});break;
+        case "department":  setState({...state, department:value, errorMessages:{...state.errorMessages, departmentErr:""}});break;
+        case "contact":  setState({...state, contact:value, errorMessages:{...state.errorMessages, contactErr:""}});break;
         }
     };
 
     const getTagList = (skillList) => {   
         setState({
             ...state,
-            skills: skillList
+            skills: skillList,
+            errorMessages: {
+                ...state.errorMessages, 
+                skillsErr:""
+            } 
         }
         );
     };
 
     const validateAndSubmitForm = () => {
-        let isValid = validateOnboarding(state);
+        const [isValid, errorMessages] = validateOnboarding(state);
         if(isValid) {
             updateUserMutation({ 
                 variables: { 
@@ -82,7 +94,7 @@ const OnboardingPage = (props) => {
         else {
             setState({
                 ...state,
-                errMsg: "Please fill valid values in all fields!"
+                errorMessages: errorMessages
             });
         }
     };
@@ -93,25 +105,35 @@ const OnboardingPage = (props) => {
             <p className="text-3xl">{Cookies.get("githubName")}</p>
             <p className="text-lg text-nebula-grey-600 mt-2">Before we get
               started, we’d like get to know you a little better.</p>
+
             <label className="mt-10">Your Full Name</label>
             <TextInput id="name" placeholder="Full Name" onChange={onInputChangeHandler} value={state.name} />
+            {state.errorMessages.nameErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.nameErr}</div> : ""}
+
             <label className="mt-10">Your position in company</label>
             <TextInput id="position" placeholder="Position" onChange={onInputChangeHandler} value={state.position} />
+            {state.errorMessages.positionErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.positionErr}</div> : ""}
+
             <label className="mt-10">Your department</label>
             <TextInput id="department" placeholder="Department" onChange={onInputChangeHandler} value={state.department} />
+            {state.errorMessages.departmentErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.departmentErr}</div> : ""}
+
             <label className="mt-10">Email</label>
             <TextInput id="email" placeholder="Email" onChange={onInputChangeHandler} value={state.email}/>
+            {state.errorMessages.emailErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.emailErr}</div> : ""}
+
             <label className="mt-10">Contact</label>
             <TextInput id="contact" placeholder="Slack ID, Microsoft Teams..." onChange={onInputChangeHandler} value={state.contact} />
+            {state.errorMessages.contactErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.contactErr}</div> : ""}
+
             <label className="mt-10">Bio</label>
             <TextInput id="bio" placeholder="Bio" onChange={onInputChangeHandler} value={state.bio} />
+            {state.errorMessages.bioErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.bioErr}</div> : ""}
+
             <label className="mt-10">Skills & areas of interest</label>
             <SearchTagsInput id="skills" getTagList = {getTagList} placeholder="Type and press enter to add skills"/>
-            {
-                state.errMsg ? 
-                    <div className = "mt-6 text-nebula-red" >{state.errMsg}</div>
-                    : ""
-            }
+            {state.errorMessages.skillsErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.skillsErr}</div> : ""}
+
             <Button label="Let's go!" type="primary" className="px-8 mt-24" onClick={validateAndSubmitForm}/>
         </div>
     );
