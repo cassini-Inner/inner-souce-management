@@ -87,7 +87,7 @@ const Sidebar = (props) => {
 };
 
 const SidebarReactiveFilter = (props) => {
-    const skillsFilterRef = useRef()
+    const skillsFilterRef = useRef();
 
     const ctx = React.useContext(JobsFeedContext);
     const { state, dispatch } = ctx;
@@ -97,20 +97,20 @@ const SidebarReactiveFilter = (props) => {
     const inputOnKeyDown = (e) => {
         if (e.keyCode === 13 && skillsFilterRef.current.value != "") {
 
-            dispatch({ type: actions.ADD_SKILL, value: skillsFilterRef.current.value })
-            skillsFilterRef.current.value = ""
+            dispatch({ type: actions.ADD_SKILL, value: skillsFilterRef.current.value });
+            skillsFilterRef.current.value = "";
         }
-    }
+    };
 
-    const removeSkill = (value) => dispatch({ type: actions.REMOVE_SKILL, value: value })
+    const removeSkill = (value) => dispatch({ type: actions.REMOVE_SKILL, value: value });
 
     const checkboxOnChange = (e) => {
         if (e.currentTarget.checked) {
-            dispatch({ type: actions.ADD_STATUS, value: e.currentTarget.id })
+            dispatch({ type: actions.ADD_STATUS, value: e.currentTarget.id });
         } else {
-            dispatch({ type: actions.REMOVE_STATUS, value: e.currentTarget.id })
+            dispatch({ type: actions.REMOVE_STATUS, value: e.currentTarget.id });
         }
-    }
+    };
 
     const openChecked = status.includes("OPEN");
     const ongoingChecked = status.includes("ONGOING");
@@ -153,7 +153,7 @@ const SidebarReactiveFilter = (props) => {
         </div>
 
     );
-}
+};
 
 export default withRouter(Sidebar);
 

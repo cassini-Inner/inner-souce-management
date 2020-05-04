@@ -12,21 +12,21 @@ import { JobsFeedProvider } from "../../reducers/JobFeedProvider/JobFeedProvider
 
 const Routes = (props) => {
     return (
-            <Switch>
-                <Route path="/jobDetails/:id"
-                    component={(props) => { return <JobDetailsPage/>; }}/>
-                <Route path="/yourJobs"
-                    component={(props) => { return <YourJobs/>; }}/>
-                <Route path="/profile/edit"
-                    component={(props) => { return <EditProfile/>; }}/>
-                <Route path="/profile/:id" component={(props) => { return <Profile/>; }}/>
-                <Route path="/manageJobs"
-                    component={(props) => { return <ManageJobs/>; }}/>
-                <Route exact path="/applyToMilestones"
-                    component={(props) => { return <ApplyToMilestones/>; }}/>
-                <Route exact path="/createJob" component={(props) => { return <CreateJob />; }} />
-                <Route exact path="/" component={(props) => { return <Home />; }} />
-            </Switch>
+        <Switch>
+            <Route path="/jobDetails/:id"
+                component={(props) => { return <JobDetailsPage/>; }}/>
+            <Route path="/yourJobs"
+                component={(props) => { return <YourJobs/>; }}/>
+            <Route path="/profile/edit"
+                component={(props) => { return <EditProfile/>; }}/>
+            <Route path="/profile/:id" component={(props) => { return <Profile/>; }}/>
+            <Route path="/manageJobs"
+                component={(props) => { return <ManageJobs/>; }}/>
+            <Route exact path="/applyToMilestones"
+                component={(props) => { return <ApplyToMilestones/>; }}/>
+            <Route exact path="/createJob" component={(props) => { return <CreateJob />; }} />
+            <Route exact path="/" component={(props) => { return <Home />; }} />
+        </Switch>
     );
 };
 

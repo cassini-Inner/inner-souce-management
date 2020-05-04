@@ -12,7 +12,7 @@ const JobCard = (props) => {
                 (props.manageJobs
                     ? ""
                     : "transition duration-300 shadow-none cursor-pointer hover:shadow-lg border border-nebula-grey-400")}
-                key={props.data.id}>
+            key={props.data.id}>
                 <h1 className="text-base font-semibold">{props.data.title}</h1>
                 <div
                     className="mt-2 text-base leading-relaxed text-nebula-grey-700 mb-4">

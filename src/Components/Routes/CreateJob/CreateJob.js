@@ -196,7 +196,7 @@ const CreateJob = (props) => {
                 .then(res => {
                     props.history.push("/jobDetails/" + res.data.createJob.id);
                 },
-                    err => console.log(err));
+                err => console.log(err));
         }
 
         else {
@@ -212,61 +212,61 @@ const CreateJob = (props) => {
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch (event.currentTarget.id) {
-            case "jobTitle": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                job: { ...state.job, title: value }
-            }); break;
+        case "jobTitle": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            job: { ...state.job, title: value }
+        }); break;
 
-            case "jobDescription": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                job: { ...state.job, description: value }
-            }); break;
+        case "jobDescription": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            job: { ...state.job, description: value }
+        }); break;
 
-            case "jobDifficulty": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                job: { ...state.job, difficulty: value }
-            }); break;
+        case "jobDifficulty": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            job: { ...state.job, difficulty: value }
+        }); break;
 
-            case "milestoneTitle": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                milestone: { ...state.milestone, title: value }
-            }); break;
+        case "milestoneTitle": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            milestone: { ...state.milestone, title: value }
+        }); break;
 
-            case "milestoneDescription": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                milestone: { ...state.milestone, description: value }
-            }); break;
+        case "milestoneDescription": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            milestone: { ...state.milestone, description: value }
+        }); break;
 
-            case "milestoneDuration": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                milestone: { ...state.milestone, duration: value }
-            }); break;
+        case "milestoneDuration": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            milestone: { ...state.milestone, duration: value }
+        }); break;
 
-            case "milestoneDurationUnit": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                milestone: { ...state.milestone, durationUnit: value }
-            }); break;
+        case "milestoneDurationUnit": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            milestone: { ...state.milestone, durationUnit: value }
+        }); break;
 
-            case "milestoneResolution": setState({
-                ...state,
-                milestoneErrMsg: "",
-                jobErrMsg: "",
-                milestone: { ...state.milestone, resolution: value }
-            }); break;
+        case "milestoneResolution": setState({
+            ...state,
+            milestoneErrMsg: "",
+            jobErrMsg: "",
+            milestone: { ...state.milestone, resolution: value }
+        }); break;
         }
     };
 
