@@ -92,6 +92,7 @@ export const GET_USER_PROFILE = gql`
     query($userId: ID!){
         User(id: $userId){
             id
+            onboarded
             name
             githubName
             githubUrl

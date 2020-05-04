@@ -11,7 +11,7 @@ import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 const PrivateRoute = ({ children, ...props }) => {
     let isLoggedIn = false;
     //Checks if the user is logged in and sets the user redux store with cookies if it is empty
-    if(!(props.user.id && props.user.token)) {
+    if(!(props.user.id && props.user.token)) { 
         //Check if cookies are set then set the user redux store with respective values
         if(Cookies.get("token") != undefined && Cookies.get("id") != undefined && Cookies.get("token") && Cookies.get("id")) {
             const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: Cookies.get("id").toString() } });

@@ -85,7 +85,12 @@ class JobList extends Component {
 
     filterModalJobStatusDropdown = (event) => {
         let value = []
-        value = [event.currentTarget.value.toUpperCase()]
+        if(event.currentTarget.value === "OPEN & ONGOING") {
+            value = event.currentTarget.value.replace(/ /g,'').split('&');
+        } 
+        else {
+            value = [event.currentTarget.value.toUpperCase()];
+        }
         this.setState({
             filterModalJobStatusValue: value,
         })
@@ -120,8 +125,10 @@ class JobList extends Component {
                                       getTagList={this.filterModalSkillTags}
                                       applyFilter={this.applyFilter}
                                       resetFilter={this.resetFilter}
+                                      jobStatusValue={this.state.filterModalJobStatusValue}
+                                      initialSkillsList={this.state.skills}
                                     />
-                                </ModalViewWithScrim>
+                                </ModalViewWithScrim> 
                             </Portal>
                             <div className="cursor-default ">
                                 <div className=" w-full mt-6 ">
