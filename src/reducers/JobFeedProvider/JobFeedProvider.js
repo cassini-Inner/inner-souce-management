@@ -118,7 +118,8 @@ export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) =>
             },
             fetchPolicy: "network-only",
             onCompleted: (data) => {
-                if (data != null && data.allJobs != null) {
+                if (data != null) {
+                    const jobs = data.allJobs != null ? data.allJobs : [];
                     dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
                 }
             },
