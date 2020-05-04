@@ -72,7 +72,7 @@ const Content = (props) => {
 
             <div className="flex mt-4 h-12 w-full cursor-default">
                 <div
-                    className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue">
+                    className="flex bg-white rounded items-center pl-4 pr-2">
                     <h4 className="text-lg font-semi-bold pr-1">Explore Jobs</h4>
                 </div>
                 <div className="flex-1" />
