@@ -8,6 +8,7 @@ import ApplyToMilestones from "./JobDetails/ApplyToMilestones";
 import Profile from "./Profile/Profile";
 import ManageJobs from "./ManageJobs/ManageJobs";
 import EditProfile from "./Profile/EditProfile";
+import { JobsFeedProvider } from "../../reducers/JobFeedProvider/JobFeedProvider";
 
 const Routes = (props) => {
     return (

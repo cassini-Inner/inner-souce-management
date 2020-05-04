@@ -8,25 +8,28 @@ const Placeholder = (props) => {
         <div className="col-span-3 flex flex-col justify-center  p-8 ">
             <div>
                 <h2 className="text-2xl text-nebula-blue font-semibold">{props.heading}</h2>
-                <h3 className="text-md text-nebula-blue font-semibold mt-4 opacity-75">{props.body}</h3>
+                <h3 className="text-lg text-nebula-blue mt-4 opacity-75">{props.body}</h3>
             </div>
             <div className="mt-12">
-                <Link to={props.linkLocation}>
-                    <Button
-                        type="primary"
-                        label={props.buttonLabel}
-                        onClick={props.onClick}
-                    />
-                </Link>
+                {
+                    props.linkLocation &&
+                    <Link to={props.linkLocation}>
+                        <Button
+                            type="primary"
+                            label={props.buttonLabel}
+                            onClick={props.onClick}
+                        />
+                    </Link>
+                }
             </div>
         </div>
         <div className="col-span-2">
-            <img src={props.image} className="object-center w-full"/>
+            <img src={props.image} className="object-center w-full" />
         </div>
     </div>;
 };
 Placeholder.propTypes = {
-    heading: PropTypes.string ,
+    heading: PropTypes.string,
     body: PropTypes.string,
     buttonLabel: PropTypes.string,
     image: PropTypes.string,

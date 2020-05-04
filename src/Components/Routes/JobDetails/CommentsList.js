@@ -96,13 +96,9 @@ const CommentItem = (props) => {
 
     const discardOnClick = (e) => {
         e.preventDefault();
-        const confirmed = window.confirm(
-            "Are you sure you want to discard changes?");
-        if (confirmed) {
-            updateState({
-                editing: false,
-            });
-        }
+        updateState({
+            editing: false,
+        });
     };
 
     return <div
