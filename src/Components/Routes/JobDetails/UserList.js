@@ -88,34 +88,34 @@ const UserList = (props) => {
                   return (
                       <div className="border-b border-nebula-gray-400"
                           key={application.applicant.id}>
-                            <div className="mt-4 mb-2 flex">
-                                <Avatar imagePath={application.applicant.photoUrl}/>
-                                <div className="flex-col ml-4 mb-2 flex-1">
-                                    <Link to={"/profile/"+application.applicant.id}>
-                                        <div
-                                            className="text-lg font-semibold hover:text-nebula-blue">{application.applicant.name}</div>
-                                    </Link>
-                                    <div
-                                        className="text-nebula-grey-600">{application.applicant.role}</div>
-                                    {/*Functionality to be added in version 2
+                          <div className="mt-4 mb-2 flex">
+                              <Avatar imagePath={application.applicant.photoUrl}/>
+                              <div className="flex-col ml-4 mb-2 flex-1">
+                                  <Link to={"/profile/"+application.applicant.id}>
+                                      <div
+                                          className="text-lg font-semibold hover:text-nebula-blue">{application.applicant.name}</div>
+                                  </Link>
+                                  <div
+                                      className="text-nebula-grey-600">{application.applicant.role}</div>
+                                  {/*Functionality to be added in version 2
                                             <div className = "text-nebula-blue font-semibold">{ milestones ? ("Milestones "+milestones) : "" }</div>
                                             */}
-                                </div>
+                              </div>
 
-                                {/* Functionality to be added in version 2
+                              {/* Functionality to be added in version 2
                                         <div className = "flex self-center">
                                             <StatusTag statusTag = { [type] } />
                                         </div>
                                         */}
 
-                                <div className="flex">
-                                    <button
-                                        onClick={(e) => rejectOnClick(e, application.applicant.id)}
-                                        className="cursor-pointer self-center p-3 mx-2 rounded-full bg-nebula-red-light">
-                                        <Icons.X
-                                            className=" h-4 w-4 stroke-current text-nebula-red hover:text-black"/>
-                                    </button>
-                                    {props.type == "APPLICATIONS" &&
+                              <div className="flex">
+                                  <button
+                                      onClick={(e) => rejectOnClick(e, application.applicant.id)}
+                                      className="cursor-pointer self-center p-3 mx-2 rounded-full bg-nebula-red-light">
+                                      <Icons.X
+                                          className=" h-4 w-4 stroke-current text-nebula-red hover:text-black"/>
+                                  </button>
+                                  {props.type == "APPLICATIONS" &&
                                     <button
                                         onClick={(e) => acceptOnClick(e, application.applicant.id)}
                                         className="cursor-pointer self-center p-3 mx-2 rounded-full bg-nebula-blue-light"
@@ -123,9 +123,9 @@ const UserList = (props) => {
                                         <Icons.Check
                                             className=" h-4 w-4 stroke-current text-nebula-blue hover:text-black"/>
                                     </button>}
-                                </div>
-                            </div>
-                    </div>
+                              </div>
+                          </div>
+                      </div>
                   );
               }
           },

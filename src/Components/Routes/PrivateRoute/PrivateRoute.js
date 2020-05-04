@@ -22,7 +22,7 @@ const PrivateRoute = ({ children, ...props }) => {
                 Cookies.remove("token");
                 Cookies.remove("githubName");
                 alert(`User profile fetch error! Try logging in again${error.message}`);
-                return <Redirect to="/login"/>
+                return <Redirect to="/login"/>;
             }
             props.setUserData({
                 token: Cookies.get("token"),
