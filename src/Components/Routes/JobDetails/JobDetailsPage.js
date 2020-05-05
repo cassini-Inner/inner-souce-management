@@ -99,7 +99,7 @@ const JobDetailsPage = (props) => {
             );
         }
     };
- 
+
     const withdrawApplicationHandler = () => {
         let confirmed = window.confirm("Are you sure you want to withdraw from this job?");
         if (confirmed) {
@@ -108,7 +108,7 @@ const JobDetailsPage = (props) => {
                     jobId: state.jobId,
                 }
             }).then(
-                res => {},
+                res => { },
                 err => console.log(err)
             );
         }
@@ -173,7 +173,7 @@ const JobDetailsPage = (props) => {
             />),
                 */
         ];
-        if(state.footerMessage || state.footerSubMessage) {
+        if (state.footerMessage || state.footerSubMessage) {
             setState({
                 ...state,
                 footerMessage: "",

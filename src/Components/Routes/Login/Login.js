@@ -1,10 +1,14 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
 import { githubAuthUrl } from "../../../Configuration";
+import { connect } from "react-redux";
 
 const LoginPage = (props) => {
+    if (props.user.id) {
+        return <Redirect to="/" />;
+    }
     const body = (
         <div className="max-w-screen-sm w-full px-4 lg:px-8">
             <div className="leading-none font-semibold">
@@ -13,7 +17,7 @@ const LoginPage = (props) => {
             </div>
             <p
                 className="text-nebula-grey-600 mt-5 font-semibold text-lg">
-              Innersource helps you find awesome projects and collaboration opportunities within your organisation.
+                Innersource helps you find awesome projects and collaboration opportunities within your organisation.
             </p>
             {
                 // (props.location.state && props.location.state.msg) 
@@ -22,17 +26,17 @@ const LoginPage = (props) => {
                 // :
                 <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
             }
-            
-            <button className="w-full md:w-auto" onClick={()=>Authenticator()}>
+
+            <button className="w-full md:w-auto" onClick={() => Authenticator()}>
                 <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-lg items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
-                    <Icons.GitHub className="text-white "/>
+                    <Icons.GitHub className="text-white " />
                     <p className="px-6 text-white font-semibold whitespace-no-wrap">Continue with GitHub</p>
                 </div>
             </button>
         </div>
     );
     return (
-        <SplitContainerWithImage body={body}/>
+        <SplitContainerWithImage body={body} />
     );
 };
 
@@ -41,4 +45,11 @@ const Authenticator = () => {
 };
 
 
-export default withRouter(LoginPage);
+
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+
+export default connect(mapStateToProps)(withRouter(LoginPage));
