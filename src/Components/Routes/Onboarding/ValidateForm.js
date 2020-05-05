@@ -13,15 +13,15 @@ export const validateOnboarding = (userDetails) => {
     }
     console.log(userDetails);
     if(!userDetails.name || !userDetails.name.trim()) {
-        errorMessages.nameErr = "Empty field!";
+        errorMessages.nameErr = "Enter your name";
         isvalid = false;
     }
     if(!userDetails.position || !userDetails.position.trim())  {
-        errorMessages.positionErr = "Empty field!";
+        errorMessages.positionErr = "Enter your position/designation";
         isvalid = false;
     }
     if(!userDetails.bio || !userDetails.bio.trim())  {
-        errorMessages.bioErr = "Empty field!";
+        errorMessages.bioErr = "Enter your bio";
         isvalid = false;
     }
     if(!userDetails.email || !userDetails.email.trim() || !EmailValidator.validate(userDetails.email))  {
@@ -29,15 +29,15 @@ export const validateOnboarding = (userDetails) => {
         isvalid = false;
     }
     if(!userDetails.department || !userDetails.department.trim())  {
-        errorMessages.departmentErr = "Empty field!";
+        errorMessages.departmentErr = "Enter your department";
         isvalid = false;
     }
     if(!userDetails.contact || !userDetails.contact.trim())  {
-        errorMessages.contactErr = "Empty field!";
+        errorMessages.contactErr = "Enter your contact";
         isvalid = false;
     }
     if(!userDetails.skills || !userDetails.skills.length)  {
-        errorMessages.skillsErr = "Empty field!";
+        errorMessages.skillsErr = "Type a skill and press Enter key";
         isvalid = false;
     }
     return [isvalid, errorMessages];
