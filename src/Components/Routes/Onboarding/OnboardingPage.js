@@ -9,8 +9,6 @@ import { validateOnboarding } from "./ValidateForm";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_PROFILE } from "../../../mutations";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
-import Cookies from "js-cookie";
-
 
 const OnboardingPage = (props) => {
     //To verify if the user has already onboarded

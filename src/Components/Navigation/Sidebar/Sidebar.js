@@ -11,6 +11,7 @@ import {
 } from "../../../reducers/JobFeedProvider/JobFeedProvider";
 import TextInput from "../../Common/InputFields/TextInput";
 import ActionChip from "../../Common/Chips/ActionChip";
+import Button from "../../Common/Button/Button";
 
 const Sidebar = (props) => {
     const [expansionState, changeExpansionStatus] = React.useState({ expanded: false });
@@ -104,6 +105,8 @@ const SidebarReactiveFilter = (props) => {
 
     const removeSkill = (value) => dispatch({ type: actions.REMOVE_SKILL, value: value });
 
+    const resetFilter = () => dispatch({ type: actions.RESET });
+
     const checkboxOnChange = (e) => {
         if (e.currentTarget.checked) {
             dispatch({ type: actions.ADD_STATUS, value: e.currentTarget.id });
@@ -148,6 +151,9 @@ const SidebarReactiveFilter = (props) => {
                 <div className="flex items-center my-1 py-1">
                     <input type="checkbox" id="COMPLETED" onChange={(e) => checkboxOnChange(e)} checked={completedChecked} />
                     <label htmlFor="COMPLETED" className="ml-2">Completed</label>
+                </div>
+                <div className="flex items-center my-1 py-1">
+                    <Button type="secondary" label="Reset" onClick = { resetFilter } />
                 </div>
             </div>
         </div>

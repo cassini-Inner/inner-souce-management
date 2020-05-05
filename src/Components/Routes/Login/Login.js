@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
-import { githubAuthUrl } from "../../../githubAuthConfig";
+import { githubAuthUrl } from "../../../Configuration";
 
 const LoginPage = (props) => {
     const body = (

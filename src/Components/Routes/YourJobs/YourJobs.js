@@ -10,7 +10,6 @@ import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import Placeholder from "../../Placeholders/placeholder";
 import JobList from "../../Jobs/JobList";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
-
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) => {
     //Query to get your jobs
@@ -37,9 +36,7 @@ const YourJobs = (props) => {
         </Fragment>
     );
 };
-
 const YourJobsBody = (props) => {
-
     const intialState = {
         tabList: [
             {
@@ -61,11 +58,8 @@ const YourJobsBody = (props) => {
         appliedJobs: [],
         ongoingJobs: [],
         completedJobs: [],
-        jobsProcessed: false,
     };
-
     const [state, updateState] = useState(intialState);
-
     const { loading: yourJobsInfoLoading, error: yourJobsInfoError, data } = useQuery(
         GET_YOUR_JOBS, {
             variables: { userId: props.user.id },
@@ -73,11 +67,9 @@ const YourJobsBody = (props) => {
             onCompleted: data1 => {
                 const jobs = data1.User.appliedJobs;
                 console.log(data1);
-
                 const appliedJobs = [];
                 const ongoingJobs = [];
                 const completedJobs = [];
-
                 if (jobs) {
                     jobs.forEach(appliedJob => {
                     // If application status is pending and job status is either open or ongoing then the user is awaiting approval
@@ -123,12 +115,10 @@ const YourJobsBody = (props) => {
                         ongoingJobs: ongoingJobs,
                         appliedJobs: appliedJobs,
                         completedJobs: completedJobs,
-                        jobsProcessed: true,
                     });
                 }
             },
         });
-
     const OngoingJobsPlaceholder = (
         <Placeholder
             heading="You don’t have any ongoing jobs."
@@ -139,7 +129,6 @@ const YourJobsBody = (props) => {
             linkLocation="/"
         />
     );
-
     const JobApplicationsPlaceholder = (
         <Placeholder
             heading="You’ll find your pending job applications here"
@@ -160,7 +149,6 @@ const YourJobsBody = (props) => {
             linkLocation="/"
         />
     );
-
     return (
         <Fragment>
             <TabStrip tabs={state.tabList} />
@@ -170,7 +158,6 @@ const YourJobsBody = (props) => {
             }
             {
                 !yourJobsInfoLoading && !yourJobsInfoError &&
-                state.jobsProcessed &&
                 <div>
                     <Route exact path={props.match.url + "/ongoing"}
                         component={() => {
@@ -205,5 +192,4 @@ const mapStateToProps = state => {
         user: state.user,
     };
 };
-
 export default connect(mapStateToProps)(withRouter(YourJobs));

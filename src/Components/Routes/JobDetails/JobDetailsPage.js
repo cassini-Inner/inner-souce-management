@@ -99,21 +99,18 @@ const JobDetailsPage = (props) => {
             );
         }
     };
-
+ 
     const withdrawApplicationHandler = () => {
         let confirmed = window.confirm("Are you sure you want to withdraw from this job?");
         if (confirmed) {
-            setState({
-                ...state,
-                footerMessage: "",
-                footerSubMessage: "",
-            });
             withdrawApplicationMutation({
                 variables: {
                     jobId: state.jobId,
                 }
-            }).then(res => props.history.push("/jobDetails/" + state.jobId),
-                err => console.log(err));
+            }).then(
+                res => {},
+                err => console.log(err)
+            );
         }
     };
 
@@ -126,7 +123,7 @@ const JobDetailsPage = (props) => {
     var userActions = [];
     var isJobAuthor = false;
     // If the user has applied to this job and user's application has not been accepted
-    if (data.Job.applications.applications && data.Job.applications.applications.find((application) => (application.applicant.id == props.user.id && application.status.toUpperCase() == "PENDING"))) {
+    if (data.Job.viewerHasApplied) {
         userActions = [
             (<Button type="secondary" label="Withdraw application"
                 key="withdrawJobApplication"
@@ -176,6 +173,13 @@ const JobDetailsPage = (props) => {
             />),
                 */
         ];
+        if(state.footerMessage || state.footerSubMessage) {
+            setState({
+                ...state,
+                footerMessage: "",
+                footerSubMessage: "",
+            });
+        }
     }
 
     const authorActions = [

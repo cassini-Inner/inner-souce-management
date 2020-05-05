@@ -6,6 +6,8 @@ import { useLazyQuery } from "react-apollo";
 
 export const JobsFeedContext = React.createContext();
 
+var initialState;
+
 export const actions = {
     ADD_SKILL: "ADD_SKILL",
     UPDATE_JOBS: "UPDATE_JOBS",
@@ -72,6 +74,7 @@ function reducer(state, action) {
     }
     case actions.RESET: {
         return {
+            ...state,
             ...initialState,
         };
     }
@@ -103,7 +106,12 @@ export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) =>
         fetchPolicy: "cache-first",
         onCompleted: (data) => {
             if (data.User.skills) {
-                dispatch({ type: actions.INIT_SKILLS, value: data.User.skills.map(skill => skill.value) });
+                const skills = data.User.skills.map(skill => skill.value);
+                initialState = {
+                    status: ["OPEN", "ONGOING"],
+                    skills: skills,
+                }
+                dispatch({ type: actions.INIT_SKILLS, value: skills});
             }
         }
     });
