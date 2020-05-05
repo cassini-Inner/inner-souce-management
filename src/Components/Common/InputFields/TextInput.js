@@ -4,7 +4,7 @@ import TextInputLabel from "./TextInputLabel";
 
 const TextInput = (props) => {
     return (
-        <Fragment>
+        <div className="flex flex-col">
             <TextInputLabel label={props.label} />
             <input
                 ref={props.forwardedRef}
@@ -19,7 +19,7 @@ const TextInput = (props) => {
                 onKeyDown={props.onKeyDown ? props.onKeyDown : null}
 
             />
-        </Fragment>
+        </div>
     );
 };
 

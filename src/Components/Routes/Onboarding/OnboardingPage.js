@@ -34,43 +34,43 @@ const OnboardingPage = (props) => {
             skillsErr: "",
         }
     };
-    const [ state, setState ] = useState(form);
+    const [state, setState] = useState(form);
 
     // For update user mutation 
-    const [updateUserMutation, {loading, error}] = useMutation(UPDATE_USER_PROFILE);
-    if(loading) return<LoadingIndicator/>;
-    if(error) return <p>Error! {error}</p>;
+    const [updateUserMutation, { loading, error }] = useMutation(UPDATE_USER_PROFILE);
+    if (loading) return <LoadingIndicator />;
+    if (error) return <p>Error! {error}</p>;
 
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         const field = event.currentTarget.id;
-        setState({ 
-            ...state, 
+        setState({
+            ...state,
             [field]: value,
             errorMessages: {
-                ...state.errorMessages, 
-                [field + "Err"]:""
+                ...state.errorMessages,
+                [field + "Err"]: ""
             }
         });
     };
 
-    const getTagList = (skillList) => {   
+    const getTagList = (skillList) => {
         setState({
             ...state,
             skills: skillList,
             errorMessages: {
-                ...state.errorMessages, 
-                skillsErr:""
-            } 
+                ...state.errorMessages,
+                skillsErr: ""
+            }
         }
         );
     };
 
     const validateAndSubmitForm = () => {
-        const [isValid,errorMessages] = validateOnboarding(state);
-        if(isValid) {
-            updateUserMutation({ 
-                variables: { 
+        const [isValid, errorMessages] = validateOnboarding(state);
+        if (isValid) {
+            updateUserMutation({
+                variables: {
                     userInput: {
                         name: state.name,
                         email: state.email,
@@ -82,9 +82,9 @@ const OnboardingPage = (props) => {
                     }
                 }
             }
-            ).then(res => 
+            ).then(res =>
                 props.history.push("/"), //Navigate to home page on success
-            err => console.log(err));
+                err => console.log(err));
             setState({
                 ...state,
                 errMsg: ""
@@ -97,48 +97,50 @@ const OnboardingPage = (props) => {
             });
         }
     };
-    
+
     const body = (
-        <div className="flex flex-col w-full px-4 font-semibold ">
-            <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
-            <p className="text-3xl">{props.user.githubName}</p>
-            <p className="text-lg text-nebula-grey-600 mt-2">Before we get
+        <div className=" w-full px-4 py-8  font-semibold ">
+            <div className="flex flex-col">
+                <div>
+                    <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
+                    <p className="text-3xl">{Cookies.get("githubName")}</p>
+                    <p className="text-lg text-nebula-grey-600 mt-2">Before we get
               started, we’d like get to know you a little better.</p>
+                </div>
+                <div>
+                    <TextInput id="name" label="Your Full Name" placeholder="Full Name" onChange={onInputChangeHandler} value={state.name} />
+                    {state.errorMessages.nameErr ? <div className="mt-2 text-nebula-red" >{state.errorMessages.nameErr}</div> : ""}
 
-            <label className="mt-10">Your Full Name</label>
-            <TextInput id="name" placeholder="Full Name" onChange={onInputChangeHandler} value={state.name} />
-            {state.errorMessages.nameErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.nameErr}</div> : ""}
+                </div>
 
-            <label className="mt-10">Your position in company</label>
-            <TextInput id="position" placeholder="Position" onChange={onInputChangeHandler} value={state.position} />
-            {state.errorMessages.positionErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.positionErr}</div> : ""}
+                <TextInput id="position" label="Your position in company" placeholder="Position" onChange={onInputChangeHandler} value={state.position} />
+                {state.errorMessages.positionErr ? <div className="mt-2 text-nebula-red" >{state.errorMessages.positionErr}</div> : ""}
 
-            <label className="mt-10">Your department</label>
-            <TextInput id="department" placeholder="Department" onChange={onInputChangeHandler} value={state.department} />
-            {state.errorMessages.departmentErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.departmentErr}</div> : ""}
+                <TextInput id="department" label="Your department" placeholder="Department" onChange={onInputChangeHandler} value={state.department} />
+                {state.errorMessages.departmentErr ? <div className="mt-2 text-nebula-red" >{state.errorMessages.departmentErr}</div> : ""}
 
-            <label className="mt-10">Email</label>
-            <TextInput id="email" placeholder="Email" onChange={onInputChangeHandler} value={state.email}/>
-            {state.errorMessages.emailErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.emailErr}</div> : ""}
+                <TextInput id="email" label="Email" placeholder="Email" onChange={onInputChangeHandler} value={state.email} />
+                {state.errorMessages.emailErr ? <div className="mt-2 text-nebula-red" >{state.errorMessages.emailErr}</div> : ""}
 
-            <label className="mt-10">Contact</label>
-            <TextInput id="contact" placeholder="Slack ID, Microsoft Teams..." onChange={onInputChangeHandler} value={state.contact} />
-            {state.errorMessages.contactErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.contactErr}</div> : ""}
+                <TextInput id="contact" label="Contact" placeholder="Slack ID, Microsoft Teams..." onChange={onInputChangeHandler} value={state.contact} />
+                {state.errorMessages.contactErr ? <div className="mt-2 text-nebula-red" >{state.errorMessages.contactErr}</div> : ""}
 
-            <label className="mt-10">Bio</label>
-            <TextInput id="bio" placeholder="Bio" onChange={onInputChangeHandler} value={state.bio} />
-            {state.errorMessages.bioErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.bioErr}</div> : ""}
+                <TextInput id="bio" label="Bio" placeholder="Bio" onChange={onInputChangeHandler} value={state.bio} />
+                {state.errorMessages.bioErr ? <div className="mt-2 text-nebula-red" >{state.errorMessages.bioErr}</div> : ""}
 
-            <label className="mt-10">Skills & areas of interest</label>
-            <SearchTagsInput id="skills" getTagList = {getTagList} placeholder="Type and press enter to add skills"/>
-            {state.errorMessages.skillsErr ? <div className = "mt-2 text-nebula-red" >{state.errorMessages.skillsErr}</div> : ""}
-
-            <Button label="Let's go!" type="primary" className="px-8 mt-24" onClick={validateAndSubmitForm}/>
+                <label className="mt-8 text-sm">Skills & areas of interest</label>
+                <SearchTagsInput id="skills" getTagList={getTagList} placeholder="Type and press enter to add skills" />
+                {state.errorMessages.skillsErr ? <div className="mt-2 text-nebula-red" >{state.errorMessages.skillsErr}</div> : ""}
+                <div className="mt-8" />
+                <div className="sticky bottom-0 w-full bg-white py-4 border-t border-nebula-grey-400">
+                    <Button label="Let's go!" type="primary" className="" onClick={validateAndSubmitForm} />
+                </div>
+            </div>
         </div>
     );
 
     return (
-        <SplitContainerWithImage body={body}/>
+        <SplitContainerWithImage body={body} />
     );
 };
 
