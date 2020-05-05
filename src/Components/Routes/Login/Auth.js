@@ -1,70 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router";
-import { AUTHENTICATE } from "../../../mutations";
-import { useMutation } from "@apollo/client";
 import { withRouter } from "react-router";
-import Cookies from "js-cookie";
+import Axios from "axios";
+
+import { connect } from "react-redux";
+import { SET_USER_DATA } from "../../../Store/actions";
 
 const Authenticate = (props) => {
-    const initialState = {
-        authenticationLoading: false
-    };
 
-    const [state, updateState] = useState(initialState);
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const code = params.get("code");
-    const [login, {loading, error}] = useMutation(AUTHENTICATE);
-    if(loading) return <p>Authenticating...</p>;
-    if(error) return <p>Authentication Error!</p>;
 
-    if(code && !state.authenticationLoading) {
-        updateState({authenticationLoading: true});
-        login({
-            variables: {
-                githubCode: code
+    useEffect(
+        () => {
+            if (code != "") {
+                Axios.post("http://localhost:8080/authenticate", { "code": code }, {
+                    withCredentials: true,
+                }).then(() => {
+                    Axios.get("http://localhost:8080/read-cookie", { withCredentials: true },
+                    ).then((data) => {
+                        console.log(data);
+                        props.setUserData({ id: data.data.user_id });
+                        console.log("got cookie");
+                    }).catch((e) => {
+                        console.log(e);
+                    });
+                });
             }
-        }).then(res => {
-            // To set the cookie after authentication
-            // console.log("Auth:",res.data);
-            var cookieExpiry = new Date(new Date().getTime() +  600 * 60 * 1000); //15 minutes
-            if(res.data.authenticate.profile.id) {
-                Cookies.set("id", res.data.authenticate.profile.id, { expires:cookieExpiry });
-            }
-            if(res.data.authenticate.token) {
-                Cookies.set("token", res.data.authenticate.token, { expires:cookieExpiry });
-            }
-            if(res.data.authenticate.profile.githubName) {
-                Cookies.set("githubName",res.data.authenticate.profile.githubName, { expires:cookieExpiry });
-            }
-            if(res.data.authenticate.profile.onboarded) {
-                props.history.push("/");
-            }
-            else {
-                props.history.push("/onboard");
-            }
-        },
-        err => {
-            Cookies.remove("id");
-            Cookies.remove("token");
-            Cookies.remove("githubName");
-            updateState({authenticationLoading: false});
-            console.log(err);
-            props.history.push({
-                pathname: "/login",
-                search: "",
-                state: { msg: "Authentication error!" }
-            });
-        });
+            return (() => { });
+        }, []);
+
+    if (props.user.id) {
+        return <Redirect to="/" />;
+    } else {
+        return <p>not signed in</p>;
     }
-
-    return <Redirect to={{
-        pathname: "/login",
-        search: "",
-        state: { msg: "Please sign in with github to continue!" }
-    }} />;
 };
 
 
 
-export default withRouter(Authenticate);
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        setUserData: (profile) => dispatch({ type: SET_USER_DATA, payload: { profile: profile } })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Authenticate));
