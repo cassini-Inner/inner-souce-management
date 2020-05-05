@@ -15,9 +15,9 @@ const FilterModal = (props) => {
             <div id="content" className="mt-4 mb-4 bg-white max-w-xl">
                 <div className="flex-col w-full my-2">
                     <div className="flex mr-64">
-                        <Dropdown title="Sort By" label="Newest" list={["Newest", "Oldest"]} onChange = {props.sortDropdown} />
+                        <Dropdown title="Sort By" list={["NEWEST", "OLDEST"]} onChange = {props.sortDropdown} />
                         <div className="m-4" />
-                        <Dropdown title="Job status" list={["Open & Ongoing", "Open", "Ongoing", "Completed"]} onChange = {props.jobStatusDropdown} />
+                        <Dropdown title="Job status" value={jobStatusValue?jobStatusValue == ["OPEN"]} list={["OPEN & ONGOING", "OPEN", "ONGOING", "COMPLETED"]} onChange = {props.jobStatusDropdown} />
                     </div>
                     <h2 className="text-base mt-6">Job Tags</h2>
                     <SearchTagsInput getTagList={props.getTagList} placeholder="Search for tags to add" className="mb-16" />

@@ -58,13 +58,10 @@ const Content = (props) => {
     }
 
     const placeholder = (<Placeholder
-        heading="This is your personalised job feed"
-        body="You can find projects and tasks based on your skills and interests.
-Have an interesting project? You can add that & invite people to collaborate with you."
+        heading="No jobs found with the set filters"
+        body="You can change the filters to explore more jobs. "
         buttonLabel="Create a new Job"
         image="../../../../assets/images/explore_jobs_placeholder.svg"
-        onClick={() => { }}
-        linkLocation="/createJob"
     />);
 
 
@@ -75,7 +72,7 @@ Have an interesting project? You can add that & invite people to collaborate wit
 
             <div className="flex mt-4 h-12 w-full cursor-default">
                 <div
-                    className="flex bg-white rounded items-center pl-4 pr-2 cursor-pointer transition duration-150 hover:bg-nebula-blue-light hover:text-nebula-blue">
+                    className="flex bg-white rounded items-center pl-4 pr-2">
                     <h4 className="text-lg font-semi-bold pr-1">Explore Jobs</h4>
                 </div>
                 <div className="flex-1" />

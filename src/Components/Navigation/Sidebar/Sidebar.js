@@ -70,7 +70,7 @@ const Sidebar = (props) => {
                             icon={<Icons.Edit3 />}
                             location="/manageJobs"
                             exactLink={false}
-                            label="Manage Jobs"
+                            label="Created Jobs"
                         />
                     </li>
                 </ul>

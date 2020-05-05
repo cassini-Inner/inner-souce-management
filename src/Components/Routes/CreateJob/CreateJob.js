@@ -30,6 +30,7 @@ const CreateJob = (props) => {
             description: "",
             difficulty: "Intermediate", //Default value in the dropdown
             milestones: [],
+            errorMessages: {}
         },
         milestone: {
             title: "",
@@ -37,14 +38,15 @@ const CreateJob = (props) => {
             duration: "",
             durationUnit: "Weeks", //Default value in the dropdown
             skills: [],
-            resolution: ""
+            resolution: "",
+            errorMessages: {}
         }
     };
     const [state, setState] = useState(initialState);
 
     const [createJob, { loading, error }] = useMutation(CREATE_JOB);
     if (error) {
-        return "Error!!" + error;
+        console.log(error);
     }
 
     //To set the skill tags of the milestone
@@ -54,6 +56,10 @@ const CreateJob = (props) => {
             milestone: {
                 ...state.milestone,
                 skills: skillList,
+                errorMessages: {
+                    ...state.milestone.errorMessages,
+                    skillsErr: "",
+                }
             }
         });
     };
@@ -73,12 +79,25 @@ const CreateJob = (props) => {
             milestoneModal: false,
             editMilestoneState: false,
             editMilestoneIndex: -1,
+            job: {
+                ...state.job,
+                errorMessages: {}
+            },
+            milestone: {
+                title: "",
+                description: "",
+                duration: "",
+                durationUnit: "Weeks",
+                skills: [],
+                resolution: "",
+                errorMessages: {}
+            }
         });
     };
 
     //To validate and save the milestone
     const saveMilestone = () => {
-        const isMilestoneValid = validateMilestone(state.milestone);
+        const [isMilestoneValid,errorMessages] = validateMilestone(state.milestone);
         if (isMilestoneValid) {
             var updatedMilestonesList = [];
             //To change the duration into days before saving it
@@ -114,16 +133,21 @@ const CreateJob = (props) => {
                     title: "",
                     description: "",
                     duration: "",
-                    durationUnit: "Weeks", //Default value in the dropdown
+                    durationUnit: "Weeks",
                     skills: [],
-                    resolution: ""
+                    resolution: "",
+                    errorMessages: {}
                 }
             });
         }
         else {
             setState({
                 ...state,
-                milestoneErrMsg: "Please fill valid values in all the fields!"
+                milestoneErrMsg: "",
+                milestone: {
+                    ...state.milestone,
+                    errorMessages: errorMessages
+                }
             });
         }
     };
@@ -144,6 +168,15 @@ const CreateJob = (props) => {
                 job: {
                     ...state.job,
                     milestones: [...newMilestoneList]
+                },
+                milestone: {
+                    title: "",
+                    description: "",
+                    duration: "",
+                    durationUnit: "Weeks",
+                    skills: [],
+                    resolution: "",
+                    errorMessages: {}
                 }
             });
         }
@@ -170,7 +203,7 @@ const CreateJob = (props) => {
 
     //To validate the whole form 
     const validateForm = () => {
-        const isFormValid = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
+        const [isFormValid,errorMessages]  = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
         if (isFormValid) {
             const createJobInput = {
                 title: state.job.title,
@@ -187,86 +220,65 @@ const CreateJob = (props) => {
                     };
                 })
             };
-            console.log(createJobInput);
             createJob({
                 variables: {
                     job: createJobInput,
                 }
-            }).catch((error) => alert("Failed to create a new job: " + error))
-                .then(res => {
-                    props.history.push("/jobDetails/" + res.data.createJob.id);
-                },
-                err => console.log(err));
+            }).then(
+                res => props.history.push("/jobDetails/" + res.data.createJob.id),
+                err => alert("Failed to create a new job: " + err)
+            );
         }
 
         else {
-            console.log("Not hii");
             setState({
                 ...state,
-                jobErrMsg: "Please fill valid values in all the fields and add at least one milestone!",
+                jobErrMsg: errorMessages.jobErrMsg,
+                job: {
+                    ...state.job,
+                    errorMessages: errorMessages
+                }
             });
         }
     };
 
     //To get all the input values and store them in the state
     const onInputChangeHandler = (event) => {
-        const value = event.currentTarget.value;
-        switch (event.currentTarget.id) {
-        case "jobTitle": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            job: { ...state.job, title: value }
-        }); break;
+        var value = event.currentTarget.value;
+        var field = event.currentTarget.id;
 
-        case "jobDescription": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            job: { ...state.job, description: value }
-        }); break;
+        if(field.includes("job")) {
+            field = field.replace("job",'');
+            setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                job: { 
+                    ...state.job, 
+                    [field]: value,
+                    errorMessages: {
+                        ...state.job.errorMessages,
+                        [field+"Err"]: "",
+                    }
+                }
+            });
+        }
 
-        case "jobDifficulty": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            job: { ...state.job, difficulty: value }
-        }); break;
-
-        case "milestoneTitle": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, title: value }
-        }); break;
-
-        case "milestoneDescription": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, description: value }
-        }); break;
-
-        case "milestoneDuration": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, duration: value }
-        }); break;
-
-        case "milestoneDurationUnit": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, durationUnit: value }
-        }); break;
-
-        case "milestoneResolution": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, resolution: value }
-        }); break;
+        else if(field.includes("milestone")) {
+            field = field.replace("milestone",'');
+            setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                milestone: { 
+                    ...state.milestone, 
+                    [field]: value,
+                    errorMessages: {
+                        ...state.milestone.errorMessages,
+                        [field+"Err"]: "",
+                    }
+                }
+            });
         }
     };
 
@@ -306,7 +318,7 @@ const CreateJob = (props) => {
                         errMsg={state.milestoneErrMsg}          //milestoneCount & editMilestoneIndex refers to array index hence +1
                         milestoneNo={state.editMilestoneIndex > -1 ? state.editMilestoneIndex + 1 : state.milestoneCount + 1}
                         editMilestoneState={state.editMilestoneState}
-                        milestone={state.editMilestoneState ? state.milestone : ""}
+                        milestone={state.milestone}
                     />
                 </ModalViewWithScrim>
             </Portal>
@@ -319,15 +331,17 @@ const JobForm = (props) => {
     return (
         <div className="bg-white flex flex-col w-full h-full mt-10">
             <h2 className="text-sm font-semibold ">Job Title</h2>
-            <TextInput id="jobTitle" className="mt-2 w-full" placeholder="Give your Job a small title" onChange={props.onChange} />
+            <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} />
+            {props.state.job.errorMessages.titleErr ? <div className = "mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
-            <TextAreaInput id="jobDescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
+            <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
+            {props.state.job.errorMessages.descriptionErr ? <div className = "mt-2 text-nebula-red" >{props.state.job.errorMessages.descriptionErr}</div> : ""}
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
                     <p className="text-nebula-grey-700 leading-tight text-sm">How difficult is the job?</p>
                 </div>
-                <Dropdown id="jobDifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
+                <Dropdown id="jobdifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
             </div>
             { //To display error messages
                 props.jobErrMsg ?

@@ -93,8 +93,8 @@ class ProfileModal extends Component {
                     exitActive: "transition duration-300 opacity-0 transform -translate-y-4 translate-x-4",
                 }}
             >
-                <div className={"w-96 mt-2 absolute top-0 right-0 inline-block" + this.props.className || ""} onMouseOver={() => this.props.onMouseOver(true)} onMouseLeave={this.props.onMouseLeave}>
-                    <div className="overflow-hidden w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 z-50 bg-white" >
+                <div className={"z-50 w-96 mt-2 absolute top-0 right-0 inline-block" + this.props.className || ""} onMouseOver={() => this.props.onMouseOver(true)} onMouseLeave={this.props.onMouseLeave}>
+                    <div className="overflow-hidden w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 bg-white" >
                         <div className="flex p-4" >
                             <img src={this.props.user.photoUrl} className="h-10 w-10 rounded-full" />
                             <div className="font-semibold leading-tight ml-8">
