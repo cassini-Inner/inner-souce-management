@@ -248,7 +248,7 @@ const CreateJob = (props) => {
         var field = event.currentTarget.id;
 
         if(field.includes("job")) {
-            field = field.replace("job",'');
+            field = field.replace("job","");
             setState({
                 ...state,
                 milestoneErrMsg: "",
@@ -265,7 +265,7 @@ const CreateJob = (props) => {
         }
 
         else if(field.includes("milestone")) {
-            field = field.replace("milestone",'');
+            field = field.replace("milestone","");
             setState({
                 ...state,
                 milestoneErrMsg: "",
@@ -291,8 +291,8 @@ const CreateJob = (props) => {
     };
 
     const ButtonRow = [
+        <Button type="primary" label="Submit Job" onClick={() => validateForm()} />,
         <Button type="secondary" label="Cancel Job Creation" onClick={() => goBack()} />,
-        <Button type="primary" label="Submit Job" onClick={() => validateForm()} />
     ];
     return (
         <Fragment>

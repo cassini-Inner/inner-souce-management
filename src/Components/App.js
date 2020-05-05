@@ -7,21 +7,22 @@ import Authenticate from "./Routes/Login/Auth";
 import { Switch } from "react-router";
 import OnboardingPage from "./Routes/Onboarding/OnboardingPage";
 import PrivateRoute from "./Routes/PrivateRoute/PrivateRoute";
-import AuthProvider from "./Routes/AuthProvider/AuthProvider";
 import { JobsFeedProvider } from "../reducers/JobFeedProvider/JobFeedProvider";
+import AuthProvider from "../reducers/AuthProvider";
 
 const App = (props) => {
     return (
         <React.StrictMode>
             <BrowserRouter>
-                <Switch>
-                    <Route path="/login" exact={true}
-                        component={(props) => { return (<LoginPage />); }} />
-                    <Route path="/auth/result" exact={true}
-                        component={(props) => (<Authenticate />)} />
+                <AuthProvider>
 
-                    {/* User redux store is passed for checking if the user is logged in */}
-                    <AuthProvider>
+                    <Switch>
+                        <Route path="/login" exact={true}
+                            component={(props) => { return (<LoginPage />); }} />
+                        <Route path="/auth/result" exact={true}
+                            component={(props) => (<Authenticate />)} />
+
+                        {/* User redux store is passed for checking if the user is logged in */}
                         <PrivateRoute>
                             <Switch>
                                 <Route
@@ -54,8 +55,9 @@ const App = (props) => {
                                 }} />
                             </Switch>
                         </PrivateRoute>
-                    </AuthProvider>
-                </Switch>
+                    </Switch>
+
+                </AuthProvider>
             </BrowserRouter>
         </React.StrictMode>
     );

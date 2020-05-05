@@ -17,13 +17,6 @@ const httpLink = new createHttpLink({ uri: "http://localhost:8080/query", creden
 
 //To set the authorization header from cookies
 const authLink = setContext((_, { headers }) => {
-    // const token = Cookies.get("token");
-    // return {
-    //     headers: {
-    //         ...headers,
-    //         authorization: token ? `bearer ${token}` : "",
-    //     },
-    // };
      return {
         headers: {
             ...headers,

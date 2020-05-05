@@ -1,35 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router";
 import { withRouter } from "react-router";
-import { authenticateUserUrl } from "../../../Configuration";
-import axios from "axios";
+import Axios from "axios";
+
+import { connect } from "react-redux";
+import { SET_USER_DATA } from "../../../Store/actions";
 
 const Authenticate = (props) => {
+
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const code = params.get("code");
-    if(code) {
-        axios.post(authenticateUserUrl, {
-            Code: code,
-          },  {withCredentials: true})
-          .then(
-              res => {
-                props.history.push("/");
-            },
-            err => {
-                alert("Authentication error:"+ err);
-            }
-          );
-        
-    }
 
-    return <Redirect to={{
-        pathname: "/login",
-        search: "",
-        state: { msg: "Please sign in with github to continue!" }
-    }} />;
+    useEffect(
+        () => {
+            if (code != "") {
+                Axios.post("http://localhost:8080/authenticate", { "code": code }, {
+                    withCredentials: true,
+                }).then(() => {
+                    Axios.get("http://localhost:8080/read-cookie", { withCredentials: true },
+                    ).then((data) => {
+                        console.log(data);
+                        props.setUserData({ id: data.data.user_id });
+                        console.log("got cookie");
+                    }).catch((e) => {
+                        console.log(e);
+                    });
+                });
+            }
+            return (() => { });
+        }, []);
+
+    if (props.user.id) {
+        return <Redirect to="/" />;
+    } else {
+        return <p>Authenticating...</p>;
+    }
 };
 
 
 
-export default withRouter(Authenticate);
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    };
+};
+const mapDispatchToProps = dispatch => {
+    return {
+        setUserData: (profile) => dispatch({ type: SET_USER_DATA, payload: { profile: profile } })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Authenticate));
