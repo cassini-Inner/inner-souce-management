@@ -291,8 +291,8 @@ const CreateJob = (props) => {
     };
 
     const ButtonRow = [
+        <Button type="primary" label="Submit Job" onClick={() => validateForm()} />,
         <Button type="secondary" label="Cancel Job Creation" onClick={() => goBack()} />,
-        <Button type="primary" label="Submit Job" onClick={() => validateForm()} />
     ];
     return (
         <Fragment>

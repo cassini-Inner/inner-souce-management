@@ -5,7 +5,6 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import Cookies from 'js-cookie';
 import Axios from "axios";
 import { SET_USER_DATA } from "../../Store/actions";
 import Avatar from "../Common/Avatar/Avatar";

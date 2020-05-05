@@ -9,14 +9,12 @@ import { validateOnboarding } from "./ValidateForm";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_PROFILE } from "../../../mutations";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
-import Cookies from "js-cookie";
-
 
 const OnboardingPage = (props) => {
     //To verify if the user has already onboarded
-    if(props.user.onboarded) {
-        return <Redirect to="/"/>;
-    }
+    // if(props.user.onboarded) {
+    //     return <Redirect to="/"/>;
+    // }
 
     const form = {
         name: props.user.name ? props.user.name : "",
@@ -103,7 +101,7 @@ const OnboardingPage = (props) => {
     const body = (
         <div className="flex flex-col w-full px-4 font-semibold ">
             <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
-            <p className="text-3xl">{Cookies.get("githubName")}</p>
+            <p className="text-3xl">{props.user.githubName}</p>
             <p className="text-lg text-nebula-grey-600 mt-2">Before we get
               started, we’d like get to know you a little better.</p>
 

@@ -34,7 +34,7 @@ const Authenticate = (props) => {
     if (props.user.id) {
         return <Redirect to="/" />;
     } else {
-        return <p>not signed in</p>;
+        return <p>Authenticating...</p>;
     }
 };
 

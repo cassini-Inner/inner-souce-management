@@ -27,7 +27,7 @@ const AuthProvider = ({ children, ...props }) => {
                 setLoading(false);
             });
             return (() => { });
-        }, []);
+        }, [props.user.id]);
 
 
     if (loading) {

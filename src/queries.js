@@ -115,6 +115,7 @@ export const GET_JOB_APPLICANTS = gql`
     query($jobId: ID!) {
         Job(id: $jobId){
             id
+            viewerHasApplied
             applications {
                 pendingCount
                 acceptedCount
@@ -206,7 +207,8 @@ export const GET_USER_ONGOING_JOBS = gql`
 export const GET_JOB_INFO = gql`
     query($jobId: ID!){
         Job(id: $jobId) {
-            id 
+            id
+            viewerHasApplied 
             createdBy {
                 id
             }

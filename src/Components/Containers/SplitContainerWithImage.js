@@ -3,7 +3,7 @@ import React from "react";
 const SplitContainerWithImage = (props) => {
     return (
         <div className="flex flex-row w-screen h-screen bg-nebula-blue-light">
-            <div className="w-full bg-white flex flex-col justify-center items-end px-4 lg:px-16 md:w-2/3 lg:w-1/2">
+            <div className="w-full bg-white flex flex-col overflow-y-auto justify-center items-end px-4 lg:px-16 md:w-2/3 lg:w-1/2">
                 <div className="w-full md:max-w-screen-sm">
                     {props.body}
                 </div>
