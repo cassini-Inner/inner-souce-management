@@ -10,7 +10,7 @@ export const validateOnboarding = (userDetails) => {
         contactErr: "",
         emailErr: "",
         skillsErr: "",
-    }
+    };
     console.log(userDetails);
     if(!userDetails.name || !userDetails.name.trim()) {
         errorMessages.nameErr = "Enter your name";

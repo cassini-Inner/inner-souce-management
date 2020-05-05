@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import Cookies from 'js-cookie';
+import Axios from "axios";
+import { SET_USER_DATA } from "../../Store/actions";
 
 class Navbar extends Component {
     constructor(props) {
@@ -56,14 +58,15 @@ class Navbar extends Component {
                         <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
                     </div>
                     <button onClick={this.openProfilePopup} >
-                        <img src = {this.props.user.photoUrl} className="flex-0 h-8 w-8 rounded-full" />
+                        <img src={this.props.user.photoUrl} className="flex-0 h-8 w-8 rounded-full" />
                     </button>
                     <ProfileModal
                         {...this.props}
-                        user = {this.props.user}
+                        user={this.props.user}
                         onMouseOver={this.handleMouseOver}
                         onMouseLeave={this.closePopup}
                         profileModalOpen={this.state.profileModalOpen}
+                        setUserData={this.props.setUserData}
                     />
                 </div >
             </div>
@@ -73,10 +76,15 @@ class Navbar extends Component {
 
 class ProfileModal extends Component {
     logout = () => {
-        Cookies.remove('id');
-        Cookies.remove('token');
-        Cookies.remove('githubName');
-        this.props.history.push('/login');
+        Axios.post("http://localhost:8080/logout", {}, { withCredentials: true }).then(
+            () => {
+                this.props.setUserData({});
+
+            }
+        ).catch((e) => {
+            console.log("Error logging out")
+            console.log(e)
+        });
     }
 
     render() {
@@ -99,8 +107,8 @@ class ProfileModal extends Component {
                             <img src={this.props.user.photoUrl} className="h-10 w-10 rounded-full" />
                             <div className="font-semibold leading-tight ml-8">
                                 <p className="text-nebula-grey-600 text-xs">Signed in as</p>
-                                    <p className="text-lg mb-2">{this.props.user.name}</p>
-                                <Link to = {"/profile/"+this.props.user.id} className="text-xs text-nebula-blue tracking-widest">VIEW PROFILE</Link>
+                                <p className="text-lg mb-2">{this.props.user.name}</p>
+                                <Link to={"/profile/" + this.props.user.id} className="text-xs text-nebula-blue tracking-widest">VIEW PROFILE</Link>
                             </div>
                         </div>
                         <hr />
@@ -129,4 +137,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(withRouter(Navbar));
+const mapDispatchToProps = dispatch => {
+    return {
+        setUserData: (profile) => dispatch({ type: SET_USER_DATA, payload: { profile: profile } })
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));
