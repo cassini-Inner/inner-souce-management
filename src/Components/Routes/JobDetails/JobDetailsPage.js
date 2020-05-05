@@ -14,7 +14,6 @@ import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import {
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
-    GET_USER_PROFILE,
 } from "../../../queries";
 import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
