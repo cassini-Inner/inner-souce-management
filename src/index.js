@@ -12,17 +12,21 @@ import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import Cookies from "js-cookie";
-
 
 const httpLink = new createHttpLink({ uri: "http://localhost:8080/query", credentials: "include" });
+
 //To set the authorization header from cookies
 const authLink = setContext((_, { headers }) => {
-    const token = Cookies.get("token");
-    return {
+    // const token = Cookies.get("token");
+    // return {
+    //     headers: {
+    //         ...headers,
+    //         authorization: token ? `bearer ${token}` : "",
+    //     },
+    // };
+     return {
         headers: {
             ...headers,
-            authorization: token ? `bearer ${token}` : "",
         },
     };
 });

@@ -5,7 +5,6 @@ import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import Cookies from 'js-cookie';
 
 class Navbar extends Component {
     constructor(props) {
@@ -73,9 +72,6 @@ class Navbar extends Component {
 
 class ProfileModal extends Component {
     logout = () => {
-        Cookies.remove('id');
-        Cookies.remove('token');
-        Cookies.remove('githubName');
         this.props.history.push('/login');
     }
 
