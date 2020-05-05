@@ -42,3 +42,33 @@ export const validateOnboarding = (userDetails) => {
     }
     return [isvalid, errorMessages];
 };
+
+// export const validateText = (textInput) => {
+//     var isvalid = true;
+//     if(!textInput)  {
+//         errorMessages.bioErr = "Empty field!";
+//         isvalid = false;
+//     }
+//     else if(!textInput.trim()) {
+//         errorMessages.bioErr = "Invalid input!";
+//         isvalid = false;
+//     }
+//     return [isvalid, errorMessages];
+// }
+
+// export const validateEmail = (emailInput) => {
+//     var isvalid = true;
+//     if(!emailInput)  {
+//         errorMessages.bioErr = "Empty field!";
+//         isvalid = false;
+//     }
+//     else if(!emailInput.trim()) {
+//         errorMessages.bioErr = "Invalid input!";
+//         isvalid = false;
+//     }
+//     else if(!EmailValidator.validate(userDetails.email)) {
+//         errorMessages.bioErr = "Invalid email ID!";
+//         isvalid = false;
+//     }
+//     return [isvalid, errorMessages];
+// }

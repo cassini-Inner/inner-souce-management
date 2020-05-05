@@ -13,22 +13,22 @@ const MilestoneModal = (props) => {
             <hr />
             <div id="content" className="mt-4 mb-10 bg-white w-full h-full">
                 <div className="flex flex-col">
-                    <TextInput id="milestoneTitle" placeholder="Title of the Milestone" label="Title" className="w-full" onChange={props.onChange} value={props.editMilestoneState ? props.milestone.title : ""} />
-                    <TextAreaInput id="milestoneDescription" className="my-4" rows="3" label="Description" placeholder="Add a clear description of the Milestone" onChange={props.onChange} value={props.editMilestoneState ? props.milestone.description : ""} />
+                    <TextInput id="milestonetitle" placeholder="Title of the Milestone" label="Title" className="w-full" onChange={props.onChange} value={props.editMilestoneState ? props.milestone.title : ""} />
+                    <TextAreaInput id="milestonedescription" className="my-4" rows="3" label="Description" placeholder="Add a clear description of the Milestone" onChange={props.onChange} value={props.editMilestoneState ? props.milestone.description : ""} />
                     <div className="flex py-4 flex-col md:flex-row">
                         <div className="flex-col flex-1">
                             <h2 className="text-sm font-semibold">Duration</h2>
                             <p className="text-sm text-nebula-grey-600">How long do you think completing this milestone will take?</p>
                         </div>
                         <div className="flex flex-1 ml-4">
-                            <TextInput id="milestoneDuration" number min="1" className="mr-2 w-24 self-center" placeholder="Duration" onChange={props.onChange} value={props.editMilestoneState ? props.milestone.duration : ""} />
-                            <Dropdown id="milestoneDurationUnit" className="self-center" list={["Weeks", "Days", "Months"]} onChange={props.onChange}  value={props.editMilestoneState ? props.milestone.durationUnit : null}/>
+                            <TextInput id="milestoneduration" number min="1" className="mr-2 w-24 self-center" placeholder="Duration" onChange={props.onChange} value={props.editMilestoneState ? props.milestone.duration : ""} />
+                            <Dropdown id="milestonedurationUnit" className="self-center" list={["Weeks", "Days", "Months"]} onChange={props.onChange}  value={props.editMilestoneState ? props.milestone.durationUnit : null}/>
                         </div>
                     </div>
                     <h2 className="text-sm font-semibold mt-4">Skills Required</h2>
                     <SearchTagsInput getTagList={props.getTagList} initialList={props.editMilestoneState ? props.milestone.skills : []} placeholder="Type the skills required and press Enter key" />
                     <h2 className="text-sm font-semibold my-4">Milestone Resolution Method</h2>
-                    <TextInput id="milestoneResolution" value={props.editMilestoneState ? props.milestone.resolution : ""} placeholder="eg. Accepted Github pull request" onChange={props.onChange} />
+                    <TextInput id="milestoneresolution" value={props.editMilestoneState ? props.milestone.resolution : ""} placeholder="eg. Accepted Github pull request" onChange={props.onChange} />
                 </div>
             </div>
             <div id="footer" className="py-4 sticky bottom-0 bg-white">

@@ -45,14 +45,15 @@ const OnboardingPage = (props) => {
 
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
-        switch(event.currentTarget.id) {
-        case "name": setState({...state, name:value, errorMessages:{...state.errorMessages, nameErr:""}});break;
-        case "bio": setState({...state, bio:value, errorMessages:{...state.errorMessages, bioErr:""}});break;
-        case "email": setState({...state, email:value, errorMessages:{...state.errorMessages, emailErr:""}});break;
-        case "position":  setState({...state, position:value, errorMessages:{...state.errorMessages, positionErr:""}});break;
-        case "department":  setState({...state, department:value, errorMessages:{...state.errorMessages, departmentErr:""}});break;
-        case "contact":  setState({...state, contact:value, errorMessages:{...state.errorMessages, contactErr:""}});break;
-        }
+        const field = event.currentTarget.id;
+        setState({ 
+            ...state, 
+            [field]: value,
+            errorMessages: {
+                ...state.errorMessages, 
+                [field + "Err"]:""
+            }
+        });
     };
 
     const getTagList = (skillList) => {   
@@ -68,7 +69,7 @@ const OnboardingPage = (props) => {
     };
 
     const validateAndSubmitForm = () => {
-        const [isValid, errorMessages] = validateOnboarding(state);
+        const [isValid,errorMessages] = validateOnboarding(state);
         if(isValid) {
             updateUserMutation({ 
                 variables: { 

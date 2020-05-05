@@ -210,65 +210,35 @@ const CreateJob = (props) => {
 
     //To get all the input values and store them in the state
     const onInputChangeHandler = (event) => {
-        const value = event.currentTarget.value;
-        switch (event.currentTarget.id) {
-        case "jobTitle": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            job: { ...state.job, title: value }
-        }); break;
+        var value = event.currentTarget.value;
+        var field = event.currentTarget.id;
 
-        case "jobDescription": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            job: { ...state.job, description: value }
-        }); break;
-
-        case "jobDifficulty": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            job: { ...state.job, difficulty: value }
-        }); break;
-
-        case "milestoneTitle": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, title: value }
-        }); break;
-
-        case "milestoneDescription": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, description: value }
-        }); break;
-
-        case "milestoneDuration": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, duration: value }
-        }); break;
-
-        case "milestoneDurationUnit": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, durationUnit: value }
-        }); break;
-
-        case "milestoneResolution": setState({
-            ...state,
-            milestoneErrMsg: "",
-            jobErrMsg: "",
-            milestone: { ...state.milestone, resolution: value }
-        }); break;
+        if(field.includes("job")) {
+            field = field.replace("job",'');
+            setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                job: { 
+                    ...state.job, 
+                    [field]: value 
+                }
+            });
         }
-    };
+
+        else if(field.includes("milestone")) {
+            field = field.replace("milestone",'');
+            setState({
+                ...state,
+                milestoneErrMsg: "",
+                jobErrMsg: "",
+                milestone: { 
+                    ...state.milestone, 
+                    [field]: value 
+                }
+            });
+        }
+};
 
 
     const goBack = () => {
@@ -319,15 +289,15 @@ const JobForm = (props) => {
     return (
         <div className="bg-white flex flex-col w-full h-full mt-10">
             <h2 className="text-sm font-semibold ">Job Title</h2>
-            <TextInput id="jobTitle" className="mt-2 w-full" placeholder="Give your Job a small title" onChange={props.onChange} />
+            <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job a small title" onChange={props.onChange} />
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
-            <TextAreaInput id="jobDescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
+            <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
                     <p className="text-nebula-grey-700 leading-tight text-sm">How difficult is the job?</p>
                 </div>
-                <Dropdown id="jobDifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
+                <Dropdown id="jobdifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
             </div>
             { //To display error messages
                 props.jobErrMsg ?
