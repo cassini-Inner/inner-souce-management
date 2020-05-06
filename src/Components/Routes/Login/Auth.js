@@ -1,16 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import { withRouter } from "react-router";
 import Axios from "axios";
 
 import { connect } from "react-redux";
 import { SET_USER_DATA } from "../../../Store/actions";
+import { useLazyQuery } from "@apollo/client";
+import { GET_USER_PROFILE } from "../../../queries";
 
 const Authenticate = (props) => {
 
     const search = window.location.search;
     const params = new URLSearchParams(search);
     const code = params.get("code");
+
+    const [loading, setLoading] = useState(true);
+
+    const [getUser, { data, error }] = useLazyQuery(GET_USER_PROFILE, {
+        onCompleted: (data) => {
+            props.setUserData(data.User);
+            console.log("auth provider saved user", data);
+            setLoading(false);
+        }
+    });
 
     useEffect(
         () => {
@@ -21,7 +33,10 @@ const Authenticate = (props) => {
                     Axios.get("http://localhost:8080/read-cookie", { withCredentials: true },
                     ).then((data) => {
                         console.log(data);
-                        props.setUserData({ id: data.data.user_id });
+                        getUser({ variables: { userId: data.data.user_id } }).then((data) => {
+                            props.setUserData(data);
+                            setLoading(false);
+                        });
                         console.log("got cookie");
                     }).catch((e) => {
                         console.log(e);
@@ -31,7 +46,7 @@ const Authenticate = (props) => {
             return (() => { });
         }, []);
 
-    if (props.user.id) {
+    if (props.user.id && !loading) {
         return <Redirect to="/" />;
     } else {
         return <p>Authenticating...</p>;

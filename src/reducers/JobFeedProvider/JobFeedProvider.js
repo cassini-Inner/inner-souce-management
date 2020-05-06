@@ -26,66 +26,66 @@ export const jobStatuses = {
 
 function reducer(state, action) {
     switch (action.type) {
-    case actions.ADD_SKILL: {
-        const newSkills = [...state.skills];
-        if (!state.skills.includes(action.value))
-            newSkills.push(action.value.toLowerCase());
-        return {
-            ...state,
-            skills: newSkills,
-        };
-    }
-    case actions.REMOVE_SKILL: {
-        const newSkills =
+        case actions.ADD_SKILL: {
+            const newSkills = [...state.skills];
+            if (!state.skills.includes(action.value))
+                newSkills.push(action.value.toLowerCase());
+            return {
+                ...state,
+                skills: newSkills,
+            };
+        }
+        case actions.REMOVE_SKILL: {
+            const newSkills =
                 state.skills.includes(action.value.toLowerCase())
                     ? state.skills.filter(skill => skill != action.value)
                     : state.skills;
-        return {
-            ...state,
-            skills: newSkills,
-        };
-    }
-    case actions.ADD_STATUS: {
-        const newStatus = [...state.status];
-        if (!state.status.includes(action.value.toUpperCase()))
-            newStatus.push(action.value.toUpperCase());
-        return {
-            ...state,
-            status: newStatus,
-        };
-    }
-    case actions.REMOVE_STATUS: {
-        const newStatus =
+            return {
+                ...state,
+                skills: newSkills,
+            };
+        }
+        case actions.ADD_STATUS: {
+            const newStatus = [...state.status];
+            if (!state.status.includes(action.value.toUpperCase()))
+                newStatus.push(action.value.toUpperCase());
+            return {
+                ...state,
+                status: newStatus,
+            };
+        }
+        case actions.REMOVE_STATUS: {
+            const newStatus =
                 state.status.filter(
                     status => status != action.value.toUpperCase());
-        return {
-            ...state,
-            status: newStatus,
-        };
+            return {
+                ...state,
+                status: newStatus,
+            };
 
-    }
-    case actions.INIT_SKILLS: {
-        const skills = [...action.value];
-        return {
-            ...state,
-            skills: skills,
-            status: ["OPEN", "ONGOING"]
-        };
-    }
-    case actions.RESET: {
-        return {
-            ...state,
-            ...initialState,
-        };
-    }
-    case actions.UPDATE_JOBS: {
-        return {
-            ...state,
-            jobs: action.value
-        };
-    }
-    default:
-        return state;
+        }
+        case actions.INIT_SKILLS: {
+            const skills = [...action.value];
+            return {
+                ...state,
+                skills: skills,
+                status: ["OPEN", "ONGOING"]
+            };
+        }
+        case actions.RESET: {
+            return {
+                ...state,
+                ...initialState,
+            };
+        }
+        case actions.UPDATE_JOBS: {
+            return {
+                ...state,
+                jobs: action.value
+            };
+        }
+        default:
+            return state;
     }
 }
 
@@ -98,8 +98,8 @@ const mapStateToProps = state => {
 
 
 export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) => {
-
-    const [state, dispatch] = useReducer(reducer, { skills: [], status: [], jobs: [] });
+    console.log("job feed")
+    const [state, dispatch] = useReducer(reducer, { skills: user.skills != null ? user.skills.map(({ value }) => value) : [], status: [], jobs: [] });
 
     const { loading, error, data } = useQuery(GET_USER_SKILLS, {
         variables: { userId: user.id },
@@ -110,31 +110,31 @@ export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) =>
                 initialState = {
                     status: ["OPEN", "ONGOING"],
                     skills: skills,
-                }
-                dispatch({ type: actions.INIT_SKILLS, value: skills});
+                };
+                dispatch({ type: actions.INIT_SKILLS, value: skills });
             }
         }
     });
 
     const { loading: jobsLoading, data: jobsData } = useQuery(
         GET_ALL_JOBS_FILTER, {
-            variables: {
-                filter: {
-                    skills: state.skills,
-                    status: state.status,
-                }
-            },
-            fetchPolicy: "network-only",
-            onCompleted: (data) => {
-                if (data != null) {
-                    const jobs = data.allJobs != null ? data.allJobs : [];
-                    dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
-                }
-            },
-            onError: (error) => {
-                console.log(error);
+        variables: {
+            filter: {
+                skills: state.skills,
+                status: state.status,
             }
+        },
+        fetchPolicy: "network-only",
+        onCompleted: (data) => {
+            if (data != null) {
+                const jobs = data.allJobs != null ? data.allJobs : [];
+                dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
+            }
+        },
+        onError: (error) => {
+            console.log(error);
         }
+    }
     );
 
     const contextValue = useMemo(() => {
@@ -153,5 +153,6 @@ export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) =>
         {children}
     </JobsFeedContext.Provider>;
 });
+
 
 

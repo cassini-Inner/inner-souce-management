@@ -8,6 +8,7 @@ const initialState = {
     photoUrl: "",
     email: "",
     githubUrl: "",
+    skills: [],
 };
 
 
@@ -22,7 +23,7 @@ const userReducer = (state = initialState, action) => {
             githubName: action.payload.profile.githubName,
             photoUrl: action.payload.profile.photoUrl,
             githubUrl: action.payload.profile.githubUrl,
-
+            skills: action.payload.profile.skills,
         });
     }
     console.log("user reducer");

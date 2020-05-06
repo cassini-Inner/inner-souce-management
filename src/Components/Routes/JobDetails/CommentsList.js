@@ -15,7 +15,7 @@ const CommentsList = (props) => {
         GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId }, fetchPolicy: "cache-and-network" },
     );
     if (discussionsLoading) {
-        return <LoadingIndicator/>;
+        return <LoadingIndicator />;
     }
     if (discussionsError) console.log(`Error! ${discussionsError}`);
     console.log(data.Job.discussion.discussions);
@@ -24,7 +24,7 @@ const CommentsList = (props) => {
     if (commentsList) {
         return (commentsList.map((comment, key) => {
             return (<CommentItem key={key} comment={comment} user={props.user}
-                jobId={props.jobId}/>);
+                jobId={props.jobId} />);
         }));
     } else {
         return (<div>No Comments! </div>);
@@ -68,17 +68,19 @@ const CommentItem = (props) => {
 
     const submitOnClick = (e) => {
         e.preventDefault();
-        updateComment({
-            variables: {
-                commentId: comment.id,
-                comment: textInputRef.current.value,
-            },
-            optimisticResponse: {},
-        }).then(() => {
-            updateState({ editing: false });
-        }).catch(() => {
-            alert("Error updating comment");
-        });
+        if (textInputRef.current.value !== "") {
+            updateComment({
+                variables: {
+                    commentId: comment.id,
+                    comment: textInputRef.current.value,
+                },
+                optimisticResponse: {},
+            }).then(() => {
+                updateState({ editing: false });
+            }).catch(() => {
+                alert("Error updating comment");
+            });
+        }
     };
 
     const deleteOnClick = (e) => {
@@ -90,7 +92,7 @@ const CommentItem = (props) => {
                 () => {
                     updateState({ editing: false });
                 },
-            ).catch(() => {alert("Error deleting comment");});
+            ).catch(() => { alert("Error deleting comment"); });
         }
     };
 
@@ -103,9 +105,9 @@ const CommentItem = (props) => {
 
     return <div
         className={"mt-2 flex w-full  transition duration-150 rounded-md " +
-      (state.editing ? " shadow-md" : "   border-b border-nebula-grey-400 ")}>
+            (state.editing ? " shadow-md" : "   border-b border-nebula-grey-400 ")}>
         <div className="flex p-4 flex-row flex-auto items-start ">
-            <Avatar imagePath={comment.createdBy.photoUrl}/>
+            <Avatar imagePath={comment.createdBy.photoUrl} />
             <div className="ml-4 flex-grow ">
                 <p className="text-sm font-semibold text-nebula-grey-700">
                     {comment.createdBy.name}
@@ -123,20 +125,20 @@ const CommentItem = (props) => {
                                 <TextAreaInput forwardedRef={textInputRef}
                                     rows={"5"}
                                     defaultValue={comment.content}
-                                    value={null} className="w-full"/>
+                                    value={null} className="w-full" />
                                 <div className="flex justify-between mt-2">
                                     <div>
                                         <Button type="submit"
                                             label={updateCommentLoading
                                                 ? "Saving"
-                                                : "Save"} className="mr-2"/>
+                                                : "Save"} className="mr-2" />
                                         <Button type="secondary" label="Discard"
                                             onClick={(e) => discardOnClick(
-                                                e)}/>
+                                                e)} />
 
                                     </div>
                                     <Button type="error" label="Delete"
-                                        onClick={(e) => deleteOnClick(e)}/>
+                                        onClick={(e) => deleteOnClick(e)} />
                                 </div>
                             </form>
                             :
@@ -149,11 +151,11 @@ const CommentItem = (props) => {
             </div>
         </div>
         {comment.createdBy.id == props.user.id && !state.editing &&
-        <div className="text-nebula-grey-500 mt-2">
-            <button onClick={() => updateState({ editing: true })}>
-                <Icons.Edit/>
-            </button>
-        </div>
+            <div className="text-nebula-grey-500 mt-2">
+                <button onClick={() => updateState({ editing: true })}>
+                    <Icons.Edit />
+                </button>
+            </div>
         }
     </div>;
 };
