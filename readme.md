@@ -10,7 +10,7 @@ Additionally, it allows teams to collaborate with people past their departmental
 
 ## Core Functionalities
 - Authentication with Github 
-- Users can create Tasks/Jobs that people can apply to 
+- Users can create Tasks/Jobs that other users can apply to 
 - Post comments on a Task/Job 
 - Users can explore jobs created by other ***Innersource*** members 
   - Filtering jobs based on skills and status
@@ -33,7 +33,7 @@ Additionally, it allows teams to collaborate with people past their departmental
 - More flexibility in terms of Job creation, customised for specific domains
 
 ## Tech Stack
-Since the essence of the POC was to explore new domains, we wanted so explore tech stacks that we a little unconventional. 
+Since the essence of the POC was to explore new domains, we wanted to explore tech stacks that were a little unconventional. 
 - *Backend*: The backend is comprised of a GraphQL API backed by a Golang 1.15 server. It is using Postgresql DB as the persistence layer. 
     The choice for Golang was for 2 main reasons.
     - The performance due to code being compiled to native binaries.

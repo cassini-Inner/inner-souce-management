@@ -9,9 +9,15 @@ import { validateOnboarding } from "./ValidateForm";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_PROFILE } from "../../../mutations";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { SET_USER_DATA } from "../../../Store/actions";
 
 const OnboardingPage = (props) => {
     //To verify if the user has already onboarded
+    console.log("props");
+    console.log(props.user.onboarded);
+    if (!props.user.id) {
+        return <Redirect to="/login" />
+    }
     console.log(props.user.onboarded)
     if (props.user.onboarded) {
         return <Redirect to="/" />;
@@ -38,9 +44,15 @@ const OnboardingPage = (props) => {
     const [state, setState] = useState(form);
 
     // For update user mutation 
-    const [updateUserMutation, { loading, error }] = useMutation(UPDATE_USER_PROFILE);
+    const [updateUserMutation, { loading, error }] = useMutation(UPDATE_USER_PROFILE, {
+        onCompleted: (res) => {
+            console.log(res);
+            props.setUserData(res.updateProfile);
+            props.history.push("/");
+        }
+    });
     if (loading) return <LoadingIndicator />;
-    if (error) return <p>Error! {error}</p>;
+    if (error) return <div>Error occured</div>;
 
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
@@ -81,15 +93,9 @@ const OnboardingPage = (props) => {
                         contact: state.contact,
                         skills: state.skills,
                     }
-                }
+                },
             }
-            ).then(res =>
-                props.history.push("/"), //Navigate to home page on success
-                err => console.log(err));
-            setState({
-                ...state,
-                errMsg: ""
-            });
+            );
         }
         else {
             setState({
@@ -151,4 +157,11 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(withRouter(OnboardingPage));
+const mapDispatchToProps = dispatch => {
+    return {
+        setUserData: (profile) => dispatch({ type: SET_USER_DATA, payload: { profile: profile } })
+    };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OnboardingPage));

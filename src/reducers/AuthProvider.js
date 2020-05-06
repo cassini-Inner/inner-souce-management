@@ -13,7 +13,7 @@ const AuthProvider = ({ children, ...props }) => {
     const [getUser, { data, error }] = useLazyQuery(GET_USER_PROFILE, {
         onCompleted: (data) => {
             props.setUserData(data.User);
-            console.log(props.user);
+            console.log("auth provider saved user", data);
             setLoading(false);
         }
     });
@@ -22,6 +22,7 @@ const AuthProvider = ({ children, ...props }) => {
         () => {
             Axios.get("http://localhost:8080/read-cookie", { withCredentials: true },
             ).then((data) => {
+                console.log("saving user");
                 getUser({ variables: { userId: data.data.user_id } });
             }).catch((e) => {
                 setLoading(false);
@@ -31,11 +32,14 @@ const AuthProvider = ({ children, ...props }) => {
 
 
     if (loading) {
+        console.log("loading provider");
         return <div>
             <LoadingIndicator />
         </div>;
     }
+    console.log("loading complete");
     return <div>{children}</div>;
+
 };
 
 

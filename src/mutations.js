@@ -22,6 +22,11 @@ export const UPDATE_USER_PROFILE = gql`
     mutation ($userInput: UpdateUserInput) {
         updateProfile(user: $userInput){
             id
+            name
+            email
+            githubName
+            onboarded
+            photoUrl
         }
     }
 `;
