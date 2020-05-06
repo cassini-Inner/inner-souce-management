@@ -123,7 +123,7 @@ const JobDetailsPage = (props) => {
     var userActions = [];
     var isJobAuthor = false;
     // If the user has applied to this job and user's application has not been accepted
-    if (data.Job.viewerHasApplied) {
+    if (data.Job.viewerHasApplied && data.Job.applications.applications.find((application) => (application.applicant.id == props.user.id && application.status.toUpperCase() == "PENDING"))) {
         userActions = [
             (<Button type="secondary" label="Withdraw application"
                 key="withdrawJobApplication"
