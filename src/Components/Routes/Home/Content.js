@@ -18,30 +18,30 @@ const Content = (props) => {
 
     const { loading: OngoingJobsLoad, error: OngoingJobsError, data: OngoingJobsData } = useQuery(
         GET_YOUR_JOBS, {
-        variables: { userId: user.id },
-        fetchPolicy: "cache-and-network",
-    });
+            variables: { userId: user.id },
+            fetchPolicy: "cache-and-network",
+        });
 
     const { state, dispatch } = useContext(JobsFeedContext);
 
     const { loading: jobsLoading, data: jobsData } = useQuery(
         GET_ALL_JOBS_FILTER, {
-        variables: {
-            filter: {
-                skills: state.skills,
-                status: state.status,
+            variables: {
+                filter: {
+                    skills: state.skills,
+                    status: state.status,
+                }
+            },
+            fetchPolicy: "cache-and-network",
+            onCompleted: (data) => {
+                if (data != null && data.allJobs != null) {
+                    dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
+                }
+            },
+            onError: (error) => {
+                console.log(error);
             }
-        },
-        fetchPolicy: "cache-and-network",
-        onCompleted: (data) => {
-            if (data != null && data.allJobs != null) {
-                dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
-            }
-        },
-        onError: (error) => {
-            console.log(error);
         }
-    }
     );
 
 

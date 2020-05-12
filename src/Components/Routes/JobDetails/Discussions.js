@@ -40,8 +40,8 @@ const AddComment = (props) => {
                 }
             }).then(res =>
                 commentInputRef.current.value = "",
-                err =>
-                    console.log(err));
+            err =>
+                console.log(err));
         }
     };
 

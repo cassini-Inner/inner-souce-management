@@ -68,63 +68,63 @@ const YourJobsBody = (props) => {
     const [state, updateState] = useState(intialState);
     const { loading: yourJobsInfoLoading, error: yourJobsInfoError, data } = useQuery(
         GET_YOUR_JOBS, {
-        variables: { userId: user.id },
-        fetchPolicy: "network-only",
-        onCompleted: data1 => {
-            const jobs = data1.User.appliedJobs;
-            console.log(data1);
-            const appliedJobs = [];
-            const ongoingJobs = [];
-            const completedJobs = [];
-            if (jobs) {
-                jobs.forEach(appliedJob => {
+            variables: { userId: user.id },
+            fetchPolicy: "network-only",
+            onCompleted: data1 => {
+                const jobs = data1.User.appliedJobs;
+                console.log(data1);
+                const appliedJobs = [];
+                const ongoingJobs = [];
+                const completedJobs = [];
+                if (jobs) {
+                    jobs.forEach(appliedJob => {
                     // If application status is pending and job status is either open or ongoing then the user is awaiting approval
-                    if (appliedJob.userJobStatus.toUpperCase() !==
+                        if (appliedJob.userJobStatus.toUpperCase() !==
                         "COMPLETED" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "PENDING") {
-                        appliedJobs.push(appliedJob.job);
-                    }
-                    // If application status is accepted and job status is ongoing then the user is currently working on the job
-                    if (appliedJob.userJobStatus.toUpperCase() ===
+                            appliedJobs.push(appliedJob.job);
+                        }
+                        // If application status is accepted and job status is ongoing then the user is currently working on the job
+                        if (appliedJob.userJobStatus.toUpperCase() ===
                         "ONGOING" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "ACCEPTED") {
-                        ongoingJobs.push(appliedJob.job);
-                    }
-                    // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
-                    if (appliedJob.userJobStatus.toUpperCase() ===
+                            ongoingJobs.push(appliedJob.job);
+                        }
+                        // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
+                        if (appliedJob.userJobStatus.toUpperCase() ===
                         "COMPLETED" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "ACCEPTED") {
-                        completedJobs.push(appliedJob.job);
-                    }
-                });
-                updateState({
-                    tabList: [
-                        {
-                            title: "Working On",
-                            location: "ongoing",
-                            count: ongoingJobs.length,
-                        },
-                        {
-                            title: "Awaiting Approval",
-                            location: "applications",
-                            count: appliedJobs.length,
-                        },
-                        {
-                            title: "Completed",
-                            location: "completed",
-                            count: completedJobs.length,
-                        },
-                    ],
-                    ongoingJobs: ongoingJobs,
-                    appliedJobs: appliedJobs,
-                    completedJobs: completedJobs,
-                });
-            }
-        },
-    });
+                            completedJobs.push(appliedJob.job);
+                        }
+                    });
+                    updateState({
+                        tabList: [
+                            {
+                                title: "Working On",
+                                location: "ongoing",
+                                count: ongoingJobs.length,
+                            },
+                            {
+                                title: "Awaiting Approval",
+                                location: "applications",
+                                count: appliedJobs.length,
+                            },
+                            {
+                                title: "Completed",
+                                location: "completed",
+                                count: completedJobs.length,
+                            },
+                        ],
+                        ongoingJobs: ongoingJobs,
+                        appliedJobs: appliedJobs,
+                        completedJobs: completedJobs,
+                    });
+                }
+            },
+        });
     const OngoingJobsPlaceholder = (
         <Placeholder
             heading="You don’t have any ongoing jobs."

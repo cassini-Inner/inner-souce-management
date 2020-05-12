@@ -47,54 +47,54 @@ const EditProfileBody = (props) => {
 
     const [updateUserMutation, { loading, error }] = useMutation(
         UPDATE_USER_PROFILE, {
-        refetchQueries: [
-            {
-                query: GET_USER_PROFILE,
-                variables: { userId: userData.id },
-            },
-        ],
-    });
+            refetchQueries: [
+                {
+                    query: GET_USER_PROFILE,
+                    variables: { userId: userData.id },
+                },
+            ],
+        });
     const [state, setState] = useState(initialState);
 
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch (event.currentTarget.id) {
-            case "name":
-                setState({
-                    ...state,
-                    name: value,
-                });
-                break;
-            case "email":
-                setState({
-                    ...state,
-                    email: value,
-                });
-                break;
-            case "bio":
-                setState({
-                    ...state,
-                    bio: value,
-                });
-                break;
-            case "position":
-                setState({
-                    ...state,
-                    position: value,
-                });
-                break;
-            case "department":
-                setState({
-                    ...state,
-                    department: value,
-                });
-                break;
-            case "contact":
-                setState({
-                    ...state,
-                    contact: value,
-                });
-                break;
+        case "name":
+            setState({
+                ...state,
+                name: value,
+            });
+            break;
+        case "email":
+            setState({
+                ...state,
+                email: value,
+            });
+            break;
+        case "bio":
+            setState({
+                ...state,
+                bio: value,
+            });
+            break;
+        case "position":
+            setState({
+                ...state,
+                position: value,
+            });
+            break;
+        case "department":
+            setState({
+                ...state,
+                department: value,
+            });
+            break;
+        case "contact":
+            setState({
+                ...state,
+                contact: value,
+            });
+            break;
         }
     };
 
@@ -125,9 +125,9 @@ const EditProfileBody = (props) => {
             ).then(res => {
                 props.history.push("/profile/" + parseInt(state.id));
             }, //Navigate to profile page on success
-                err => {
-                    console.log(err);
-                },
+            err => {
+                console.log(err);
+            },
             );
             setState({
                 ...state,
