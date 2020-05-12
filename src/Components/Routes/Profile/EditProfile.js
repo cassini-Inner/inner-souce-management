@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "../../Navigation/Navbar";
 import Button from "../../Common/Button/Button";
 import TextInput from "../../Common/InputFields/TextInput";
@@ -12,13 +12,15 @@ import { Query } from "react-apollo";
 import { useMutation } from "@apollo/client";
 import { validateProfileUpdate } from "./ValidateForm";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const EditProfile = (props) => {
+    const { user } = useContext(AuthenticationContext);
     return (
-        <Query query={GET_USER_PROFILE} variables={{ userId: props.user.id }}>
+        <Query query={GET_USER_PROFILE} variables={{ userId: user.id }}>
             {({ loading, error, data }) => {
                 if (loading) {
-                    return <LoadingIndicator/>;
+                    return <LoadingIndicator />;
                 } else if (error) alert(`Error! ${error.message}`);
                 return (
                     <EditProfileBody data={data} {...props} />
@@ -45,54 +47,54 @@ const EditProfileBody = (props) => {
 
     const [updateUserMutation, { loading, error }] = useMutation(
         UPDATE_USER_PROFILE, {
-            refetchQueries: [
-                {
-                    query: GET_USER_PROFILE,
-                    variables: { userId: userData.id },
-                },
-            ],
-        });
+        refetchQueries: [
+            {
+                query: GET_USER_PROFILE,
+                variables: { userId: userData.id },
+            },
+        ],
+    });
     const [state, setState] = useState(initialState);
 
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch (event.currentTarget.id) {
-        case "name":
-            setState({
-                ...state,
-                name: value,
-            });
-            break;
-        case "email":
-            setState({
-                ...state,
-                email: value,
-            });
-            break;
-        case "bio":
-            setState({
-                ...state,
-                bio: value,
-            });
-            break;
-        case "position":
-            setState({
-                ...state,
-                position: value,
-            });
-            break;
-        case "department":
-            setState({
-                ...state,
-                department: value,
-            });
-            break;
-        case "contact":
-            setState({
-                ...state,
-                contact: value,
-            });
-            break;
+            case "name":
+                setState({
+                    ...state,
+                    name: value,
+                });
+                break;
+            case "email":
+                setState({
+                    ...state,
+                    email: value,
+                });
+                break;
+            case "bio":
+                setState({
+                    ...state,
+                    bio: value,
+                });
+                break;
+            case "position":
+                setState({
+                    ...state,
+                    position: value,
+                });
+                break;
+            case "department":
+                setState({
+                    ...state,
+                    department: value,
+                });
+                break;
+            case "contact":
+                setState({
+                    ...state,
+                    contact: value,
+                });
+                break;
         }
     };
 
@@ -123,9 +125,9 @@ const EditProfileBody = (props) => {
             ).then(res => {
                 props.history.push("/profile/" + parseInt(state.id));
             }, //Navigate to profile page on success
-            err => {
-                console.log(err);
-            },
+                err => {
+                    console.log(err);
+                },
             );
             setState({
                 ...state,
@@ -140,13 +142,13 @@ const EditProfileBody = (props) => {
         }
     };
 
-    if (loading) return <LoadingIndicator/>;
+    if (loading) return <LoadingIndicator />;
     if (error) return <p>Error! {error}</p>;
 
     return (
         <div className=" ">
             <div className="container mx-auto">
-                <Navbar/>
+                <Navbar />
                 <div
                     className="mx-auto max-w-screen-md flex flex-col justify-center">
                     <div className="flex flex-row">
@@ -157,7 +159,7 @@ const EditProfileBody = (props) => {
                         <div
                             className="flex flex-row items-center mt-16 mb-4 justify-center">
                             <img src={state.photoUrl}
-                                className="flex-0 h-24 w-24 rounded-full"/>
+                                className="flex-0 h-24 w-24 rounded-full" />
                         </div>
                         <div className="flex flex-col mt-8">
                             <TextInput
@@ -227,20 +229,14 @@ const EditProfileBody = (props) => {
                 <div className="max-w-screen-md w-full mx-auto">
 
                     <Button label="Save changes" type="primary"
-                        className="mx-2" onClick={updateProfile}/>
+                        className="mx-2" onClick={updateProfile} />
                     <Button label="Discard changes" type="secondary"
                         className="mx-2"
-                        onClick={() => props.history.goBack()}/>
+                        onClick={() => props.history.goBack()} />
                 </div>
             </div>
         </div>
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default withRouter(connect(mapStateToProps)(EditProfile));
+export default (EditProfile);

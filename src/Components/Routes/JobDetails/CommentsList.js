@@ -1,16 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import Avatar from "../../Common/Avatar/Avatar";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
 import * as Icons from "react-feather";
 import { useQuery } from "@apollo/client";
-import { connect } from "react-redux";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import Button from "../../Common/Button/Button";
 import { useMutation } from "@apollo/react-hooks";
 import { DELETE_COMMENT, UPDATE_COMMENT } from "../../../mutations";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const CommentsList = (props) => {
+    const { user } = useContext(AuthenticationContext);
     const { loading: discussionsLoading, error: discussionsError, data } = useQuery(
         GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId }, fetchPolicy: "cache-and-network" },
     );
@@ -23,7 +24,7 @@ const CommentsList = (props) => {
     const commentsList = data.Job.discussion.discussions;
     if (commentsList) {
         return (commentsList.map((comment, key) => {
-            return (<CommentItem key={key} comment={comment} user={props.user}
+            return (<CommentItem key={key} comment={comment} user={user}
                 jobId={props.jobId} />);
         }));
     } else {
@@ -36,6 +37,7 @@ const CommentItem = (props) => {
         editing: false,
     };
     const [state, updateState] = useState(initialState);
+    const { user } = useContext(AuthenticationContext);
 
     const [updateComment, { loading: updateCommentLoading }] = useMutation(
         UPDATE_COMMENT,
@@ -150,7 +152,7 @@ const CommentItem = (props) => {
                 </div>
             </div>
         </div>
-        {comment.createdBy.id == props.user.id && !state.editing &&
+        {comment.createdBy.id == user.id && !state.editing &&
             <div className="text-nebula-grey-500 mt-2">
                 <button onClick={() => updateState({ editing: true })}>
                     <Icons.Edit />
@@ -159,11 +161,4 @@ const CommentItem = (props) => {
         }
     </div>;
 };
-
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default connect(mapStateToProps)(CommentsList);
+export default (CommentsList);

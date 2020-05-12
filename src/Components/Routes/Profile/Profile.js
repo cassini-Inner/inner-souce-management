@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "../../Navigation/Navbar";
 import Button from "../../Common/Button/Button";
 import Card from "../../Common/Card/Card";
@@ -11,18 +11,19 @@ import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../../queries";
 import { connect } from "react-redux";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const Profile = (props) => {
     //To get the user id from url
     const { id } = useParams();
     const userId = id;
 
-    //For invalid routes
-    if (!parseInt(userId)) {
-        return <Redirect to='/' />;
-    }
+    const { user } = useContext(AuthenticationContext);
+    const { loading, error, data } = useQuery(GET_USER_PROFILE, {
+        variables: { userId: userId }, onCompleted: (data) => {
 
-    const { loading, error, data } = useQuery(GET_USER_PROFILE, { variables: { userId: userId } });
+        }
+    });
     if (loading) return <LoadingIndicator />;
     else if (error) alert(`Error! ${error.message}`);
 
@@ -32,7 +33,7 @@ const Profile = (props) => {
             <div className="flex flex-row mt-8 mb-4 justify-between">
                 <h1 className="text-2xl">Profile</h1>
                 {
-                    userId == props.user.id
+                    userId == user.id
                         ?
                         <Link to="/profile/edit">
                             <Button type="primary" label="Edit Profile" />
@@ -98,10 +99,4 @@ const Profile = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.user
-    };
-};
-
-export default connect(mapStateToProps)(Profile);
+export default (Profile);

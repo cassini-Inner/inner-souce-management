@@ -3,21 +3,22 @@ import JobList from "../../Jobs/JobList";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import {
     GET_ALL_JOBS_FILTER,
-    GET_USER_SKILLS,
     GET_YOUR_JOBS,
 } from "../../../queries";
 import { useQuery } from "@apollo/client";
-import { connect } from "react-redux";
 import Placeholder from "../../Placeholders/placeholder";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { Link } from "react-router-dom";
 import Button from "../../Common/Button/Button";
-import { JobsFeedContext, actions } from "../../../reducers/JobFeedProvider/JobFeedProvider";
+import { JobsFeedContext, actions } from "../../../hooks/JobFeedProvider/JobFeedProvider";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const Content = (props) => {
+    const { user } = useContext(AuthenticationContext);
+
     const { loading: OngoingJobsLoad, error: OngoingJobsError, data: OngoingJobsData } = useQuery(
         GET_YOUR_JOBS, {
-        variables: { userId: props.user.id },
+        variables: { userId: user.id },
         fetchPolicy: "cache-and-network",
     });
 
@@ -85,10 +86,4 @@ const Content = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default connect(mapStateToProps)(Content);
+export default (Content);

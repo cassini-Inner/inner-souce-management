@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import { Redirect, Route, withRouter } from "react-router";
 import { Link } from "react-router-dom";
@@ -11,25 +11,27 @@ import { GET_CREATED_JOBS } from "../../../queries";
 import { connect } from "react-redux";
 import Placeholder from "../../Placeholders/placeholder";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const ManageJobs = (props) => {
+    const { user } = useContext(AuthenticationContext);
     if (location.pathname === "/manageJobs") {
         return (<Redirect to={props.match.url + "/open"} />);
     }
 
     var openJobsCreated = [], ongoingJobsCreated = [], completedJobsCreated = [];
-    const { loading, error, data } = useQuery(GET_CREATED_JOBS, { variables: { userId: props.user.id }, fetchPolicy: "cache-first" });
+    const { loading, error, data } = useQuery(GET_CREATED_JOBS, { variables: { userId: user.id }, fetchPolicy: "cache-first" });
 
     //TODO: Try to figure out how to update cache without making another query
-    const [getJobs, { loading: l2, error: e2, data: d2 }] = useLazyQuery(GET_CREATED_JOBS, { variables: { userId: props.user.id }, fetchPolicy: "cache-and-network" });
+    const [getJobs, { loading: l2, error: e2, data: d2 }] = useLazyQuery(GET_CREATED_JOBS, { variables: { userId: user.id }, fetchPolicy: "cache-and-network" });
 
     useEffect(() => {
-        getJobs({ variables: { userId: props.user.id } });
+        getJobs({ variables: { userId: user.id } });
         return (() => { });
     }, [props]);
 
     if (loading || !data) return <LoadingIndicator />;
-    else if (error) return `error!`;
+    else if (error) return "error!";
 
 
 
@@ -171,10 +173,5 @@ const CreatedJobList = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
 
-export default connect(mapStateToProps)(withRouter(ManageJobs));
+export default (withRouter(ManageJobs));

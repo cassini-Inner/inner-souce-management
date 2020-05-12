@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import Navbar from "../../Navigation/Navbar";
 import { Redirect, Route, withRouter } from "react-router";
 import TabStrip from "../../Common/TabStrip/TabStrip";
@@ -10,8 +10,10 @@ import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import Placeholder from "../../Placeholders/placeholder";
 import JobList from "../../Jobs/JobList";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) => {
+
     //Query to get your jobs
     return (
         <Fragment>
@@ -36,7 +38,11 @@ const YourJobs = (props) => {
         </Fragment>
     );
 };
+
+
 const YourJobsBody = (props) => {
+    const { user } = useContext(AuthenticationContext);
+
     const intialState = {
         tabList: [
             {
@@ -62,63 +68,63 @@ const YourJobsBody = (props) => {
     const [state, updateState] = useState(intialState);
     const { loading: yourJobsInfoLoading, error: yourJobsInfoError, data } = useQuery(
         GET_YOUR_JOBS, {
-            variables: { userId: props.user.id },
-            fetchPolicy: "network-only",
-            onCompleted: data1 => {
-                const jobs = data1.User.appliedJobs;
-                console.log(data1);
-                const appliedJobs = [];
-                const ongoingJobs = [];
-                const completedJobs = [];
-                if (jobs) {
-                    jobs.forEach(appliedJob => {
+        variables: { userId: user.id },
+        fetchPolicy: "network-only",
+        onCompleted: data1 => {
+            const jobs = data1.User.appliedJobs;
+            console.log(data1);
+            const appliedJobs = [];
+            const ongoingJobs = [];
+            const completedJobs = [];
+            if (jobs) {
+                jobs.forEach(appliedJob => {
                     // If application status is pending and job status is either open or ongoing then the user is awaiting approval
-                        if (appliedJob.userJobStatus.toUpperCase() !==
+                    if (appliedJob.userJobStatus.toUpperCase() !==
                         "COMPLETED" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "PENDING") {
-                            appliedJobs.push(appliedJob.job);
-                        }
-                        // If application status is accepted and job status is ongoing then the user is currently working on the job
-                        if (appliedJob.userJobStatus.toUpperCase() ===
+                        appliedJobs.push(appliedJob.job);
+                    }
+                    // If application status is accepted and job status is ongoing then the user is currently working on the job
+                    if (appliedJob.userJobStatus.toUpperCase() ===
                         "ONGOING" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "ACCEPTED") {
-                            ongoingJobs.push(appliedJob.job);
-                        }
-                        // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
-                        if (appliedJob.userJobStatus.toUpperCase() ===
+                        ongoingJobs.push(appliedJob.job);
+                    }
+                    // If the application status is accepted and job status is completed then the job the user has taken(maybe milestones) is completed
+                    if (appliedJob.userJobStatus.toUpperCase() ===
                         "COMPLETED" &&
                         appliedJob.applicationStatus.toUpperCase() ===
                         "ACCEPTED") {
-                            completedJobs.push(appliedJob.job);
-                        }
-                    });
-                    updateState({
-                        tabList: [
-                            {
-                                title: "Working On",
-                                location: "ongoing",
-                                count: ongoingJobs.length,
-                            },
-                            {
-                                title: "Awaiting Approval",
-                                location: "applications",
-                                count: appliedJobs.length,
-                            },
-                            {
-                                title: "Completed",
-                                location: "completed",
-                                count: completedJobs.length,
-                            },
-                        ],
-                        ongoingJobs: ongoingJobs,
-                        appliedJobs: appliedJobs,
-                        completedJobs: completedJobs,
-                    });
-                }
-            },
-        });
+                        completedJobs.push(appliedJob.job);
+                    }
+                });
+                updateState({
+                    tabList: [
+                        {
+                            title: "Working On",
+                            location: "ongoing",
+                            count: ongoingJobs.length,
+                        },
+                        {
+                            title: "Awaiting Approval",
+                            location: "applications",
+                            count: appliedJobs.length,
+                        },
+                        {
+                            title: "Completed",
+                            location: "completed",
+                            count: completedJobs.length,
+                        },
+                    ],
+                    ongoingJobs: ongoingJobs,
+                    appliedJobs: appliedJobs,
+                    completedJobs: completedJobs,
+                });
+            }
+        },
+    });
     const OngoingJobsPlaceholder = (
         <Placeholder
             heading="You don’t have any ongoing jobs."
@@ -187,9 +193,4 @@ const YourJobsBody = (props) => {
         </Fragment>
     );
 };
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-export default connect(mapStateToProps)(withRouter(YourJobs));
+export default (withRouter(YourJobs));

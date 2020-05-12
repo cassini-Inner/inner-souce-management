@@ -1,14 +1,10 @@
 import React from "react";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
 import { githubAuthUrl } from "../../../Configuration";
-import { connect } from "react-redux";
 
-const LoginPage = (props) => {
-    if (props.user.id) {
-        return <Redirect to="/" />;
-    }
+const LoginPage = () => {
     const body = (
         <div className="max-w-screen-sm w-full px-4 lg:px-8">
             <div className="leading-none font-semibold">
@@ -20,10 +16,6 @@ const LoginPage = (props) => {
                 Innersource helps you find awesome projects and collaboration opportunities within your organisation.
             </p>
             {
-                // (props.location.state && props.location.state.msg) 
-                // ?
-                //     <p className="mt-12 mb-6 text-nebula-red">{props.location.state.msg}</p>
-                // :
                 <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
             }
 
@@ -46,10 +38,4 @@ const Authenticator = () => {
 
 
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default connect(mapStateToProps)(withRouter(LoginPage));
+export default (withRouter(LoginPage));

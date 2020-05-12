@@ -1,8 +1,7 @@
-import React, { useMemo, useReducer } from "react";
+import React, { useMemo, useReducer, useContext } from "react";
 import { GET_USER_SKILLS, GET_ALL_JOBS_FILTER } from "../../queries";
 import { useQuery } from "@apollo/client";
-import { connect } from "react-redux";
-import { useLazyQuery } from "react-apollo";
+import { AuthenticationContext } from "../useAuthentication/provider";
 
 export const JobsFeedContext = React.createContext();
 
@@ -90,15 +89,12 @@ function reducer(state, action) {
 }
 
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
+export const JobsFeedProvider = (({ children }) => {
 
+    const { user } = useContext(AuthenticationContext);
+    console.log("jobs feed provider, user: ", user);
 
-export const JobsFeedProvider = connect(mapStateToProps)(({ children, user }) => {
-    console.log("job feed")
+    console.log("job feed");
     const [state, dispatch] = useReducer(reducer, { skills: user.skills != null ? user.skills.map(({ value }) => value) : [], status: [], jobs: [] });
 
     const { loading, error, data } = useQuery(GET_USER_SKILLS, {

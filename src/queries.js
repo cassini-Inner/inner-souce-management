@@ -215,6 +215,9 @@ export const GET_JOB_INFO = gql`
             }
             milestones{
                 totalCount
+                milestones{
+                    status
+                }
             }
             discussion{
                 totalCount
