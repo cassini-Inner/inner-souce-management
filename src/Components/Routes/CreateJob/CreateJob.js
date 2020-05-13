@@ -302,11 +302,28 @@ const CreateJob = (props) => {
                 closeMilestoneModal={closeMilestoneModal}
                 milestoneNo="4"
             />
-            <SplitContainer
+            {/* <SplitContainer
                 leftView={<JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />}
                 rightView={<Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />}
                 actions={ButtonRow}
-            />
+            /> */}
+            <div className="max-w-screen-md min-h-screen mx-auto px-8">
+                <JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />
+                <hr />
+                <Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />
+            </div>
+            <div className="flex w-full bg-white justify-start flex-col md:flex-row sticky bottom-0 border-t border-nebula-grey-400">
+                <div className="max-w-screen-md mx-auto w-full flex flex-row">
+                    {ButtonRow.map((button, index) => {
+                        return (
+                            <div className={"py-4 pl-4 flex"} key={index}>
+                                {button}
+                            </div>
+                        );
+                    })
+                    }
+                </div>
+            </div>
             <Portal isOpen={state.milestoneModal} >
                 <ModalViewWithScrim>
                     <MilestoneModal
@@ -329,7 +346,10 @@ const CreateJob = (props) => {
 
 const JobForm = (props) => {
     return (
-        <div className="bg-white flex flex-col w-full h-full mt-10">
+        <div className="bg-white flex flex-col w-full h-full mt-10 mb-12">
+            <div className="text-2xl mb-6">
+                Job Details
+            </div>
             <h2 className="text-sm font-semibold ">Job Title</h2>
             <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} />
             {props.state.job.errorMessages.titleErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
@@ -351,6 +371,7 @@ const JobForm = (props) => {
                     </div>
                     : ""
             }
+
         </div>
     );
 
@@ -359,11 +380,11 @@ const JobForm = (props) => {
 const Milestones = (props) => {
     return (
         <div>
-            <div className="flex-col p-2 pt-0">
+            <div className="flex-col pt-12">
                 <div className="text-2xl">
                     Milestones
                 </div>
-                <div className="mt-6 flex-wrap">
+                <div className="mt-6 flex-wrap text-nebula-grey-700">
                     Break down your job into smaller actionable milestones to help people understand it better.
                     They can also choose to work on individual milestones they find interesting.
                 </div>

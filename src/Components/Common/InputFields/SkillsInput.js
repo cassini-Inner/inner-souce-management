@@ -6,7 +6,7 @@ import TextInput from "./TextInput";
 import LabelChip from "../Chips/LabelChip";
 import ActionChip from "../Chips/ActionChip";
 
-export const SkillsInput = ({ skills, addSkill, removeSkill, reset }) => {
+export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCallback }) => {
     const inputRef = useRef();
     const [skillSuggestions, setSkillSuggestions] = useState([]);
     const [typingTimeOut, setTypingTimeOut] = useState();
@@ -23,8 +23,15 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset }) => {
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && e.target.value !== "") {
-            addSkill(e.target.value);
-            inputRef.current.value = "";
+            addSkillToList(e.target.value);
+        }
+    };
+
+    const addSkillToList = (value) => {
+        addSkill(value);
+        inputRef.current.value = "";
+        if (skillAddCallback) {
+            skillAddCallback(skills);
         }
     };
 
@@ -63,8 +70,7 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset }) => {
                             label={skill}
                             className="my-4 mr-2"
                             onClick={() => {
-                                inputRef.current.value = "";
-                                addSkill(skill);
+                                addSkillToList(skill);
                             }}
                         />;
                     })
