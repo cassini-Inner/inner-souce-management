@@ -11,7 +11,7 @@ const TextInput = (props) => {
                 id={props.id ? props.id : ""}
                 type={props.number ? "number" : "text"}
                 min={props.min ? props.min : ""}
-                className={"pl-1 h-8 text-sm  outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 placeholder-nebula-grey-500 " +
+                className={"pl-1 h-10 text-sm  outline-none border-b-2 transition duration-300 focus:border-nebula-grey-600 placeholder-nebula-grey-500 " +
                     props.className}
                 placeholder={props.placeholder}
                 onChange={props.onChange ? props.onChange : null}

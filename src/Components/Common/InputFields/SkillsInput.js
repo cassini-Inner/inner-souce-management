@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { GET_SKILLS_SUGGESTIONS } from "../../../queries";
 import React from "react";
@@ -23,6 +23,14 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
         }
     );
 
+    useEffect(
+        () => {
+            if (skillAddCallback) {
+                skillAddCallback(skills);
+            }
+        }, [skills]
+    );
+
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && e.target.value !== "") {
             addSkillToList(e.target.value);
@@ -31,10 +39,9 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
 
     const addSkillToList = (value) => {
         addSkill(value);
-        if (skillAddCallback) {
-            skillAddCallback([...skills, value]);
-        }
     };
+
+
 
     const handleChange = (e) => {
         const value = e.target.value;
