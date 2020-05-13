@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import Avatar from "../../Common/Avatar/Avatar";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
 import * as Icons from "react-feather";
@@ -7,26 +7,61 @@ import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import Button from "../../Common/Button/Button";
 import { useMutation } from "@apollo/react-hooks";
 import { DELETE_COMMENT, UPDATE_COMMENT } from "../../../mutations";
-import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-const CommentsList = (props) => {
-    const { user } = useContext(AuthenticationContext);
-    const { loading: discussionsLoading, error: discussionsError, data } = useQuery(
-        GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId }, fetchPolicy: "cache-and-network" },
+const CommentsList = ({ jobId }) => {
+    const [comments, setComments] = useState([]);
+    const { data, loading, error } = useQuery(
+        GET_JOB_DISCUSSIONS,
+        {
+            variables: { jobId: jobId },
+            onCompleted: (data) => {
+                console.log(data);
+                setComments(data.Job.discussion.discussions);
+            },
+        },
     );
-    if (discussionsLoading) {
-        return <LoadingIndicator />;
-    }
-    if (discussionsError) console.log(`Error! ${discussionsError}`);
-    console.log(data.Job.discussion.discussions);
 
-    const commentsList = data.Job.discussion.discussions;
-    if (commentsList) {
-        return (commentsList.map((comment, key) => {
-            return (<CommentItem key={key} comment={comment} user={user}
-                jobId={props.jobId} />);
-        }));
+    useEffect(() => {
+        const prevComments = comments;
+        const newComments = data != null ? data.Job.discussion.discussions : prevComments;
+        setComments(newComments);
+        return (() => { });
+    }, [data]);
+
+    const { user } = useContext(AuthenticationContext);
+
+    if (comments) {
+        return (
+            <TransitionGroup
+                component="ul"
+            >
+                {
+                    comments.map((comment) => {
+                        return (
+                            <CSSTransition
+                                key={comment.id}
+                                timeout={200}
+                                classNames={{
+                                    enter: "opacity-0 transition duration-500",
+                                    enterDone: "opacity-100 transition duration-500",
+                                    exit: "opacity-0 transition duration-500",
+                                }}
+                            >
+                                <li className="appearance-none">
+                                    <CommentItem
+                                        comment={comment}
+                                        user={user}
+                                        jobId={jobId}
+                                    />
+                                </li>
+                            </CSSTransition>
+                        );
+                    })
+                }
+            </TransitionGroup>
+        );
     } else {
         return (<div>No Comments! </div>);
     }
@@ -109,7 +144,7 @@ const CommentItem = (props) => {
         className={"mt-2 flex w-full  transition duration-150 rounded-md " +
             (state.editing ? " shadow-md" : "   border-b border-nebula-grey-400 ")}>
         <div className="flex p-4 flex-row flex-auto items-start ">
-            <Avatar imagePath={comment.createdBy.photoUrl} />
+            <Avatar className="h-8 w-8" imagePath={comment.createdBy.photoUrl} />
             <div className="ml-4 flex-grow ">
                 <p className="text-sm font-semibold text-nebula-grey-700">
                     {comment.createdBy.name}

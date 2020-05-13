@@ -17,7 +17,7 @@ const TextInput = (props) => {
                 onChange={props.onChange ? props.onChange : null}
                 value={props.value ? props.value : undefined}
                 onKeyDown={props.onKeyDown ? props.onKeyDown : null}
-
+                onKeyPress={props.onKeyPress ? props.onKeyPress : null}
             />
         </div>
     );
@@ -30,6 +30,7 @@ TextInput.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func,
+    forwardedRef: PropTypes.any,
 };
 
 export default TextInput;

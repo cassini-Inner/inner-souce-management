@@ -92,9 +92,9 @@ function reducer(state, action) {
 export const JobsFeedProvider = (({ children }) => {
 
     const { user } = useContext(AuthenticationContext);
-    console.log("jobs feed provider, user: ", user);
+    // console.log("jobs feed provider, user: ", user);
 
-    console.log("job feed");
+    // console.log("job feed");
     const [state, dispatch] = useReducer(reducer, { skills: user.skills != null ? user.skills.map(({ value }) => value) : [], status: [], jobs: [] });
 
     const { loading, error, data } = useQuery(GET_USER_SKILLS, {
@@ -128,7 +128,7 @@ export const JobsFeedProvider = (({ children }) => {
                 }
             },
             onError: (error) => {
-                console.log(error);
+            // console.log(error);
             }
         }
     );

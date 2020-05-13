@@ -66,7 +66,7 @@ const JobDetailsPage = (props) => {
             ],
         });
 
-    const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId }, fetchPolicy: "cache-first" });
+    const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId } });
 
     if (applyToJobLoading) return <LoadingIndicator />;
     if (applyToJobError) return <p>Apply to job mutation Error! {applyToJobError}</p>;
@@ -85,10 +85,11 @@ const JobDetailsPage = (props) => {
             }
         }).then(
             res => {
-                console.log(res);
+                // console.log(res);
             },
-            err => console.log(err)
-        );
+        ).catch((e) => {
+            alert("Could not apply to job", e);
+        });
     };
     // ToDo implement Modal for getting password
     const deleteJobHandler = () => {
@@ -100,11 +101,12 @@ const JobDetailsPage = (props) => {
                 }
             }).then(
                 res => {
-                    console.log(res);
+                    // console.log(res);
                     props.history.push("/");
                 },
-                err => console.log(err)
-            );
+            ).catch((e) => {
+                alert("Could not delete job", e);
+            });
         }
     };
 
@@ -117,8 +119,9 @@ const JobDetailsPage = (props) => {
                 }
             }).then(
                 res => { },
-                err => console.log(err)
-            );
+            ).catch((e) => {
+                alert("Could not delete job", e);
+            });
         }
     };
 

@@ -72,7 +72,7 @@ const YourJobsBody = (props) => {
             fetchPolicy: "network-only",
             onCompleted: data1 => {
                 const jobs = data1.User.appliedJobs;
-                console.log(data1);
+                // console.log(data1);
                 const appliedJobs = [];
                 const ongoingJobs = [];
                 const completedJobs = [];

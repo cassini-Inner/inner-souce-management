@@ -1,18 +1,20 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useRef, useEffect, useState } from "react";
 import Button from "../../Common/Button/Button";
 import { useMutation } from "@apollo/react-hooks";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
 import { POST_COMMENT } from "../../../mutations";
 import CommentsList from "./CommentsList";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { useQuery } from "@apollo/client";
 
 const Discussions = (props) => {
+
+
     return (
         <Fragment>
             <AddComment jobId={props.jobId} />
-            <CommentsList
-                jobId={props.jobId}
-            />
+            <CommentsList jobId={props.jobId} />
         </Fragment>
     );
 };
@@ -38,10 +40,9 @@ const AddComment = (props) => {
                     comment: commentInputRef.current.value,
                     jobId: props.jobId,
                 }
-            }).then(res =>
-                commentInputRef.current.value = "",
-            err =>
-                console.log(err));
+            }).catch((e) => {
+                alert("Error adding comment: ", e);
+            });
         }
     };
 

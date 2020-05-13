@@ -350,3 +350,11 @@ export const GET_CREATED_JOBS = gql`
         }
     }
 `;
+
+export const GET_SKILLS_SUGGESTIONS = gql`
+    query($query: String!) {
+        Skills(query: $query){
+            value
+        }
+    }
+`;

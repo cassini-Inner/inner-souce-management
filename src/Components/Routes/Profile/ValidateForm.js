@@ -1,12 +1,12 @@
-export const validateProfileUpdate = (userDetails) => {
-    console.log("Edit Job Validation");
-    if(!userDetails.name || !userDetails.name.trim()) return false;
-    if(!userDetails.email || !userDetails.email.trim() || !validateEmail(userDetails.email)) return false;
-    if(!userDetails.bio || !userDetails.bio.trim()) return false;
-    if(!userDetails.position || !userDetails.position.trim()) return false;
-    if(!userDetails.department || !userDetails.department.trim()) return false;
-    if(!userDetails.contact || !userDetails.contact.trim()) return false;
-    if(!userDetails.skills || !userDetails.skills.length) return false;
+export const validateProfileUpdate = ({ name, email, bio, position, skills, department, contact }) => {
+    // console.log("Edit Job Validation");
+    if (!name || !name.trim()) return false;
+    if (!email || !email.trim() || !validateEmail(email)) return false;
+    if (!bio || !bio.trim()) return false;
+    if (!position || !position.trim()) return false;
+    if (!department || !department.trim()) return false;
+    if (!contact || !contact.trim()) return false;
+    if (!skills || !skills.length) return false;
     return true;
 };
 

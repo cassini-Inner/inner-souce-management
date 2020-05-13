@@ -15,15 +15,16 @@ import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 import OnboardingPage from "./Onboarding/OnboardingPage";
 import { JobsFeedProvider } from "../../hooks/JobFeedProvider/JobFeedProvider";
 import Sidebar from "../Navigation/Sidebar/Sidebar";
+import { SkillsTest } from "./skilsltest/skillstest";
 
 const Routes = (props) => {
 
     const { authenticated, loading, user } = useContext(AuthenticationContext);
 
-    console.log("Routes", authenticated);
-    console.log("User", user);
-    console.log("Authenticated", authenticated);
-    console.log("onboarded", user.onboarded);
+    // console.log("Routes", authenticated);
+    // console.log("User", user);
+    // console.log("Authenticated", authenticated);
+    // console.log("onboarded", user.onboarded);
     if (loading) {
         return (
             <Route path="/" component={LoadingIndicator} />
@@ -54,7 +55,8 @@ const Routes = (props) => {
                                 <div
                                     className="bg-white lg:flex-row lg:max-w-screen-lg w-full">
                                     <Switch>
-                                        < Route path="/jobDetails/:id" component={JobDetailsPage} />
+                                        <Route path="/skillstest" component={SkillsTest} />
+                                        <Route path="/jobDetails/:id" component={JobDetailsPage} />
                                         <Route path="/yourJobs" component={YourJobs} />
                                         <Route path="/profile/edit" component={EditProfile} />
                                         <Route path="/profile/:id" component={Profile} />

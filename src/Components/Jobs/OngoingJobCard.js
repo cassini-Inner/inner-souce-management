@@ -4,7 +4,7 @@ import StatusTags from "../Common/StatusTags/StatusTags";
 import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 
 const OngoingJobCard = (props) => {
-    console.log(props.job);
+    // console.log(props.job);
     const job = props.job;
     //ToDo change logic with allowing milestones to be applied 
     const completedMilestones = job.milestones.milestones.filter((milestone) => milestone.status.toUpperCase() === "COMPLETED").length;

@@ -7,7 +7,7 @@ const JobList = ({ jobs, placeholder, loading }) => {
     if (loading) {
         return <LoadingIndicator />;
     }
-    console.log("jobs:",placeholder);
+    // console.log("jobs:",placeholder);
     return (<div>
         {
             jobs && (jobs.length > 0) &&

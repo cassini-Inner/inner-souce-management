@@ -46,7 +46,7 @@ const CreateJob = (props) => {
 
     const [createJob, { loading, error }] = useMutation(CREATE_JOB);
     if (error) {
-        console.log(error);
+        // console.log(error);
     }
 
     //To set the skill tags of the milestone
@@ -97,7 +97,7 @@ const CreateJob = (props) => {
 
     //To validate and save the milestone
     const saveMilestone = () => {
-        const [isMilestoneValid,errorMessages] = validateMilestone(state.milestone);
+        const [isMilestoneValid, errorMessages] = validateMilestone(state.milestone);
         if (isMilestoneValid) {
             var updatedMilestonesList = [];
             //To change the duration into days before saving it
@@ -203,7 +203,7 @@ const CreateJob = (props) => {
 
     //To validate the whole form 
     const validateForm = () => {
-        const [isFormValid,errorMessages]  = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
+        const [isFormValid, errorMessages] = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
         if (isFormValid) {
             const createJobInput = {
                 title: state.job.title,
@@ -247,35 +247,35 @@ const CreateJob = (props) => {
         var value = event.currentTarget.value;
         var field = event.currentTarget.id;
 
-        if(field.includes("job")) {
-            field = field.replace("job","");
+        if (field.includes("job")) {
+            field = field.replace("job", "");
             setState({
                 ...state,
                 milestoneErrMsg: "",
                 jobErrMsg: "",
-                job: { 
-                    ...state.job, 
+                job: {
+                    ...state.job,
                     [field]: value,
                     errorMessages: {
                         ...state.job.errorMessages,
-                        [field+"Err"]: "",
+                        [field + "Err"]: "",
                     }
                 }
             });
         }
 
-        else if(field.includes("milestone")) {
-            field = field.replace("milestone","");
+        else if (field.includes("milestone")) {
+            field = field.replace("milestone", "");
             setState({
                 ...state,
                 milestoneErrMsg: "",
                 jobErrMsg: "",
-                milestone: { 
-                    ...state.milestone, 
+                milestone: {
+                    ...state.milestone,
                     [field]: value,
                     errorMessages: {
                         ...state.milestone.errorMessages,
-                        [field+"Err"]: "",
+                        [field + "Err"]: "",
                     }
                 }
             });
@@ -332,10 +332,10 @@ const JobForm = (props) => {
         <div className="bg-white flex flex-col w-full h-full mt-10">
             <h2 className="text-sm font-semibold ">Job Title</h2>
             <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} />
-            {props.state.job.errorMessages.titleErr ? <div className = "mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
+            {props.state.job.errorMessages.titleErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
             <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
-            {props.state.job.errorMessages.descriptionErr ? <div className = "mt-2 text-nebula-red" >{props.state.job.errorMessages.descriptionErr}</div> : ""}
+            {props.state.job.errorMessages.descriptionErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.descriptionErr}</div> : ""}
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>

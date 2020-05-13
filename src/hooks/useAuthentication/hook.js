@@ -21,7 +21,7 @@ export function useAuthentication() {
             alert("Error while querying: ", e);
             setLoading(false);
         },
-        fetchPolicy: "cache-and-network",
+        fetchPolicy: "network-only",
     });
 
     useEffect(() => {
@@ -31,17 +31,18 @@ export function useAuthentication() {
                 getUserInfo({ variables: { userId: data.data.user_id } });
             }
         ).catch((e) => {
-            console.log(e);
+            // console.log(e);
             setLoading(false);
         });
 
-    }, [getUserInfo]);
+    }, [authenticated]);
 
     const beginAuth = () => {
         window.open(githubAuthUrl, "_self");
     };
 
     const finishAuth = (code) => {
+        console.log("finish auth");
         if (code !== "") {
             setLoading(true);
             Axios.post("http://localhost:8080/authenticate", { "code": code }, {
@@ -52,7 +53,7 @@ export function useAuthentication() {
                     setAuthenticated(true);
                     getUserInfo({ variables: { userId: data.data.user_id } });
                 }).catch((e) => {
-                    console.log(e);
+                    // console.log(e);
                     setLoading(false);
                 });
             }).catch((e) => {

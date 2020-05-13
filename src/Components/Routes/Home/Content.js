@@ -39,7 +39,7 @@ const Content = (props) => {
                 }
             },
             onError: (error) => {
-                console.log(error);
+            // console.log(error);
             }
         }
     );

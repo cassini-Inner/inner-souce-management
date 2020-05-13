@@ -12,6 +12,7 @@ import { GET_USER_PROFILE } from "../../../queries";
 import { connect } from "react-redux";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import { useSkills } from "../../../hooks/useSkills/hook";
 
 const Profile = (props) => {
     //To get the user id from url
@@ -21,12 +22,12 @@ const Profile = (props) => {
     const { user } = useContext(AuthenticationContext);
     const { loading, error, data } = useQuery(GET_USER_PROFILE, {
         variables: { userId: userId }, onCompleted: (data) => {
-
         }
     });
     if (loading) return <LoadingIndicator />;
     else if (error) alert(`Error! ${error.message}`);
 
+    const userSkills = data["User"].skills ? data.User.skills.map((skill) => skill.value) : [];
     return (
         <div className="px-4 lg:px-10 container mx-auto">
             <Navbar />
@@ -82,7 +83,7 @@ const Profile = (props) => {
                         </div>
                         <div className="mt-4">
                             <p className="font-semibold mb-4 ">Skills</p>
-                            <LabelChipBuilder labels={data["User"].skills.map((skill, index) => skill.value)} />
+                            <LabelChipBuilder labels={userSkills} />
                         </div>
 
                         <div className="mt-4">
