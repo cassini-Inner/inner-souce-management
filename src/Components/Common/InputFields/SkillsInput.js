@@ -16,7 +16,9 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
             onCompleted: (data) => {
                 const skillValues = (data.Skills.map((skill) => { return skill.value; }));
                 console.log(skillValues);
-                setSkillSuggestions(skillValues);
+                if (inputRef.current.value !== "") {
+                    setSkillSuggestions(skillValues);
+                }
             }
         }
     );
@@ -29,14 +31,17 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
 
     const addSkillToList = (value) => {
         addSkill(value);
-        inputRef.current.value = "";
         if (skillAddCallback) {
-            skillAddCallback(skills);
+            skillAddCallback([...skills, value]);
         }
     };
 
     const handleChange = (e) => {
         const value = e.target.value;
+        if (value === "") {
+            setSkillSuggestions([]);
+            return;
+        }
         if (typingTimeOut) {
             clearTimeout(typingTimeOut);
         }
@@ -49,7 +54,7 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
 
     return (
         <div
-            className="flex flex-col space-y-4"
+            className="flex flex-col space-y-2"
         >
             <TextInput
                 label="Type yo skills"
@@ -68,7 +73,7 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
                         return <LabelChip
                             key={skill}
                             label={skill}
-                            className="my-4 mr-2"
+                            className="my-2 mr-2"
                             onClick={() => {
                                 addSkillToList(skill);
                             }}

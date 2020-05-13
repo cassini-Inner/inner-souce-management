@@ -15,6 +15,7 @@ import { durationStringToDays, DurationParser } from "../../../HelperFunctions/D
 import { CREATE_JOB } from "../../../mutations";
 import { useMutation } from "@apollo/client";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { ArrowLeft } from "react-feather";
 
 const CreateJob = (props) => {
 
@@ -308,6 +309,10 @@ const CreateJob = (props) => {
                 actions={ButtonRow}
             /> */}
             <div className="max-w-screen-md min-h-screen mx-auto px-8">
+                <button onClick={() => { props.history.goBack(); }} className="flex mt-8  py-4 select-none text-nebula-grey-600">
+                    <ArrowLeft />
+                    <p className="px-4">Back</p>
+                </button>
                 <JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />
                 <hr />
                 <Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />
