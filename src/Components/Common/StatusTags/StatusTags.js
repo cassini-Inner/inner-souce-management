@@ -1,7 +1,7 @@
 import React from "react";
 
-const StatusTags = (props) => {
-    const statusTags = [...props.statusTag];
+const StatusTags = ({ statusTag }) => {
+    const statusTags = [...statusTag];
     const style = {
         open: "bg-nebula-blue-light text-nebula-blue",
         applied: "bg-nebula-yellow-light text-nebula-yellow",

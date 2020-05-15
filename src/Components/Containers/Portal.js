@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("modal-root");
 
-const Portal = (props) => {
+const Portal = ({isOpen, children, scrim, close}) => {
 
-    if (props.isOpen) {
-        disableScroll();
-        return ReactDOM.createPortal(
-            <div className="fixed z-50 mx-auto inset-0">
-                {props.children}
-            </div>,
-            modalRoot
-        );
-    }
-    else {
-        enableScroll();
-        return ReactDOM.createPortal("", modalRoot);
-    }
+    useEffect(()=> {
+        setScrollState(isOpen);
+        return (()=> {enableScroll();});
+    }, [isOpen]);
+    return ReactDOM.createPortal(
+        <>
+            {
+                isOpen &&
+                      <div>
+                          {scrim && <div className="fixed z-40 inset-0 bg-nebula-grey-400 opacity-50"/>}
+                          <div className="fixed z-50 mx-auto inset-0" onClick={close } onKeyDown={(e) => {if (e.key === "Escape" && close) {
+                              close();
+                          }}}>
+                              {children}
+                          </div>
+                      </div>
+            }
+        </>,
+        modalRoot
+    );
+};
+
+const setScrollState = (isOpen) =>{
+    if (isOpen) {disableScroll();}
+    else {enableScroll();}
 };
 
 const disableScroll = () => {

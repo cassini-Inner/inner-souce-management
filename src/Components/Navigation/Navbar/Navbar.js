@@ -8,13 +8,16 @@ import { connect } from "react-redux";
 import Axios from "axios";
 import Avatar from "../../Common/Avatar/Avatar";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import Button from "../../Common/Button/Button";
+import Portal from "../../Containers/Portal";
+import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
 
 const Navbar = () => {
     const { user } = useContext(AuthenticationContext);
 
-    const profileIcon = useRef();
     const [profileModalState, setProfileModalState] = useState(false);
     const [mouseInside, setMouseInside] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
 
     const openProfilePopup = (event) => {
         setProfileModalState(true);
@@ -40,31 +43,53 @@ const Navbar = () => {
     };
 
     return (
-        <div className="h-24 items-center flex z-10 relative" ref={profileIcon} >
-            <div className="flex-1 flex items-center h-8 ">
-                <SearchBar className="h-10 mr-4 bg-nebula-grey-100 border border-nebula-gray-400" inputClass="bg-transparent placeholder-nebula-grey-500 text-sm " />
-                {/* Svg for notifications */}
-                <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-8 w-8 flex items-center">
+        <div className="sticky bg-white top-0 py-4">
+            <div className="flex items-center justify-end flex-row w-full">
+                <Portal isOpen={searchOpen} scrim={true} close={()=> setSearchOpen(false)}>
+                    <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen}/>
+                </Portal>
+                <button onClick={()=> {setSearchOpen(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 mt-2 flex items-center">
+                    <Icons.Search className="h-6 w-6 flex-1 hover:text-nebula-blue" />
+                </button>
+                <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 mt-2 flex items-center">
                     <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
                 </div>
                 <button onClick={openProfilePopup} >
-                    <Avatar imagePath={user.photoUrl} className="w-8 h-8" />
+                    <Avatar imagePath={user.photoUrl} className="w-10 h-10 mt-2" />
                 </button>
                 <ProfileModal
                     onMouseOver={handleMouseOver}
                     onMouseLeave={closePopup}
                     profileModalOpen={profileModalState}
                 />
-            </div >
+            </div>
         </div>
+        // <div className="h-24 items-center flex z-10 sticky top-0" ref={profileIcon} >
+        //     <div className="flex-1 flex items-center h-8 ">
+        //         <SearchBar/>
+        //         {/* Svg for notifications */}
+        //         <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-8 w-8 flex items-center">
+        //             <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
+        //         </div>
+        //         <button onClick={openProfilePopup} >
+        //             <Avatar imagePath={user.photoUrl} className="w-8 h-8" />
+        //         </button>
+        //         <ProfileModal
+        //             onMouseOver={handleMouseOver}
+        //             onMouseLeave={closePopup}
+        //             profileModalOpen={profileModalState}
+        //         />
+        //     </div >
+        // </div>
     );
 };
 
 const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, handleMouseOver }) => {
     const { user, signOut } = useContext(AuthenticationContext);
-
+    const modalRef = useRef();
     return (
         <CSSTransition
+
             in={profileModalOpen}
             timeout={150}
             appear
@@ -75,7 +100,7 @@ const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, 
                 exit: "opacity-0 transition duration-150 transform -translate-y-1/2 translate-x-1/2",
             }}
         >
-            <div className={"z-50 w-96 mt-2 absolute top-0 right-0 inline-block" + className || ""} onMouseOver={() => onMouseOver(true)} onMouseLeave={onMouseLeave}>
+            <div ref = {modalRef} className={"z-50 w-96 mt-2 absolute top-0 right-0 inline-block" + className || ""} onMouseOver={() => onMouseOver(true)} onMouseLeave={onMouseLeave}>
                 <div className="overflow-hidden  w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 bg-white" >
                     <div className="flex p-4" >
                         <Avatar imagePath={user.photoUrl} className="h-10 w-10 " />
