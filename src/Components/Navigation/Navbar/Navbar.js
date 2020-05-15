@@ -1,13 +1,13 @@
 import React, { Component, useContext, useRef, useState } from "react";
 import * as Icons from "react-feather";
-import SearchBar from "../Common/SearchBar/SearchBar";
+import SearchBar from "../../Common/SearchBar/SearchBar";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 import Axios from "axios";
-import Avatar from "../Common/Avatar/Avatar";
-import { AuthenticationContext } from "../../hooks/useAuthentication/provider";
+import Avatar from "../../Common/Avatar/Avatar";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const Navbar = () => {
     const { user } = useContext(AuthenticationContext);

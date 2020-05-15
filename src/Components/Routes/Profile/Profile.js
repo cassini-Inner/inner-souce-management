@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Navbar from "../../Navigation/Navbar";
+import Navbar from "../../Navigation/Navbar/Navbar";
 import Button from "../../Common/Button/Button";
 import Card from "../../Common/Card/Card";
 import { profileData } from "../../../../assets/placeholder";

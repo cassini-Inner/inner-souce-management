@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import { Redirect, Route, withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import Navbar from "../../Navigation/Navbar";
+import Navbar from "../../Navigation/Navbar/Navbar";
 import JobCard from "../../Jobs/JobCard";
 import Button from "../../Common/Button/Button";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";
