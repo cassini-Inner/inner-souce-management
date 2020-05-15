@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router";
-import { withRouter } from "react-router";
-import Axios from "axios";
 
-import { connect } from "react-redux";
-import { SET_USER_DATA } from "../../../Store/actions";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
-const Authenticate = (props) => {
+export const AuthCompletionHandler = () => {
+    const { authenticated, finishAuth, loading } = useContext(AuthenticationContext);
 
     const search = window.location.search;
     const params = new URLSearchParams(search);
@@ -14,41 +12,18 @@ const Authenticate = (props) => {
 
     useEffect(
         () => {
-            if (code != "") {
-                Axios.post("http://localhost:8080/authenticate", { "code": code }, {
-                    withCredentials: true,
-                }).then(() => {
-                    Axios.get("http://localhost:8080/read-cookie", { withCredentials: true },
-                    ).then((data) => {
-                        console.log(data);
-                        props.setUserData({ id: data.data.user_id });
-                        console.log("got cookie");
-                    }).catch((e) => {
-                        console.log(e);
-                    });
-                });
-            }
+            finishAuth(code);
             return (() => { });
-        }, []);
+        }, [code]
+    );
 
-    if (props.user.id) {
+    if (authenticated && !loading) {
         return <Redirect to="/" />;
-    } else {
-        return <p>Authenticating...</p>;
     }
+
+    return (
+        <div className="App">
+            Signing you in...
+        </div>
+    );
 };
-
-
-
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-const mapDispatchToProps = dispatch => {
-    return {
-        setUserData: (profile) => dispatch({ type: SET_USER_DATA, payload: { profile: profile } })
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Authenticate));

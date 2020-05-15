@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState, useRef, useContext } from "react";
 import JobInformation from "./JobInformation";
 import MilestonesList from "../../Milestones/MilestonesList";
 import Button from "../../Common/Button/Button";
@@ -15,11 +15,14 @@ import {
     GET_JOB_APPLICANTS,
     GET_JOB_INFO,
 } from "../../../queries";
-import { connect } from "react-redux";
 import { DELETE_JOB, APPLY_TO_JOB, WITHDRAW_JOB_APPLICATION } from "../../../mutations";
 import { useMutation } from "@apollo/client";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const JobDetailsPage = (props) => {
+
+    const { user } = useContext(AuthenticationContext);
+
     const initialState = {
         isEditMode: true,
         jobId: props.match.params.id,
@@ -32,6 +35,7 @@ const JobDetailsPage = (props) => {
     //Mutation for applying to a job
     const [applyToJobMutation, { applyToJobLoading, applyToJobError }] = useMutation(APPLY_TO_JOB, {
         refetchQueries: [
+
             {
                 query: GET_JOB_APPLICANTS,
                 variables: { jobId: state.jobId }
@@ -55,10 +59,14 @@ const JobDetailsPage = (props) => {
                     query: GET_JOB_APPLICANTS,
                     variables: { jobId: state.jobId }
                 },
+                {
+                    query: GET_JOB_INFO,
+                    variables: { jobId: state.jobId }
+                },
             ],
         });
 
-    const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId }, fetchPolicy: "cache-first" });
+    const { loading, error, data } = useQuery(GET_JOB_INFO, { variables: { jobId: state.jobId } });
 
     if (applyToJobLoading) return <LoadingIndicator />;
     if (applyToJobError) return <p>Apply to job mutation Error! {applyToJobError}</p>;
@@ -77,10 +85,11 @@ const JobDetailsPage = (props) => {
             }
         }).then(
             res => {
-                console.log(res);
+                // console.log(res);
             },
-            err => console.log(err)
-        );
+        ).catch((e) => {
+            alert("Could not apply to job", e);
+        });
     };
     // ToDo implement Modal for getting password
     const deleteJobHandler = () => {
@@ -92,14 +101,15 @@ const JobDetailsPage = (props) => {
                 }
             }).then(
                 res => {
-                    console.log(res);
+                    // console.log(res);
                     props.history.push("/");
                 },
-                err => console.log(err)
-            );
+            ).catch((e) => {
+                alert("Could not delete job", e);
+            });
         }
     };
- 
+
     const withdrawApplicationHandler = () => {
         let confirmed = window.confirm("Are you sure you want to withdraw from this job?");
         if (confirmed) {
@@ -108,9 +118,10 @@ const JobDetailsPage = (props) => {
                     jobId: state.jobId,
                 }
             }).then(
-                res => {},
-                err => console.log(err)
-            );
+                res => { },
+            ).catch((e) => {
+                alert("Could not delete job", e);
+            });
         }
     };
 
@@ -123,7 +134,7 @@ const JobDetailsPage = (props) => {
     var userActions = [];
     var isJobAuthor = false;
     // If the user has applied to this job and user's application has not been accepted
-    if (data.Job.viewerHasApplied) {
+    if (data.Job.viewerHasApplied && data.Job.applications.applications.find((application) => (application.applicant.id == user.id && application.status.toUpperCase() == "PENDING"))) {
         userActions = [
             (<Button type="secondary" label="Withdraw application"
                 key="withdrawJobApplication"
@@ -142,7 +153,7 @@ const JobDetailsPage = (props) => {
     }
 
     // If the user has applied to this job and if the application has been accepted
-    else if (data.Job.applications.applications && data.Job.applications.applications.find((application) => (application.applicant.id == props.user.id && application.status.toUpperCase() == "ACCEPTED"))) {
+    else if (data.Job.applications.applications && data.Job.applications.applications.find((application) => (application.applicant.id == user.id && application.status.toUpperCase() == "ACCEPTED"))) {
         userActions = [
             (<Button type="secondary" label="Leave Job"
                 key="leaveJob"
@@ -173,7 +184,7 @@ const JobDetailsPage = (props) => {
             />),
                 */
         ];
-        if(state.footerMessage || state.footerSubMessage) {
+        if (state.footerMessage || state.footerSubMessage) {
             setState({
                 ...state,
                 footerMessage: "",
@@ -207,7 +218,7 @@ const JobDetailsPage = (props) => {
         },
     ];
     // Only the author of the job can view applications and currently working tab
-    if (props.user.id == data.Job.createdBy.id) {
+    if (user.id == data.Job.createdBy.id) {
         tabList.push({
             title: "Applications",
             location: "applications",
@@ -221,7 +232,7 @@ const JobDetailsPage = (props) => {
         });
     }
     //To check if the user is the author of the job
-    if (props.user.id == data.Job.createdBy.id) {
+    if (user.id == data.Job.createdBy.id) {
         isJobAuthor = true;
     }
 
@@ -240,7 +251,7 @@ const JobDetailsPage = (props) => {
                 <Route exact path={props.match.url + "/milestones"} component={(props) => <MilestonesList jobId={state.jobId} isJobAuthor={isJobAuthor} />} />
                 <Route exact path={props.match.url + "/discussions"} component={(props) => <Discussions jobId={state.jobId} />} />
                 {
-                    data.Job.createdBy.id == props.user.id
+                    data.Job.createdBy.id == user.id
                         ?
                         <Fragment>
                             <Route exact path={props.match.url + "/applications"} component={(props) => <Applications jobId={state.jobId} />} />
@@ -267,10 +278,4 @@ const JobDetailsPage = (props) => {
 };
 
 
-const mapStateToProps = state => {
-    return {
-        user: state.user
-    };
-};
-
-export default connect(mapStateToProps)(withRouter(JobDetailsPage));
+export default (withRouter(JobDetailsPage));

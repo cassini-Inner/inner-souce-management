@@ -1,13 +1,23 @@
 import React from "react";
 import LabelChip from "./LabelChip";
 
-const LabelChipBuilder = (props) => {
+const LabelChipBuilder = ({ labels, onClick }) => {
+    if (!labels) {
+        return <></>;
+    }
     return (
         <div className="flex flex-row flex-wrap">
-            {
-                props.labels.map(
+            {labels &&
+                labels.map(
                     (label, index) => {
-                        return (<LabelChip label={label} key={index} className="mr-2"></LabelChip>);
+                        return (
+                            <LabelChip
+                                label={label}
+                                key={index}
+                                className="my-1 mr-2"
+                                onClick={onClick}
+                            />
+                        );
                     }
                 )
             }

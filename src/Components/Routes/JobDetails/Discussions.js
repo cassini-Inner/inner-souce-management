@@ -1,20 +1,20 @@
-import React, { Fragment, useRef } from "react";
-import TextInput from "../../Common/InputFields/TextInput";
+import React, { Fragment, useRef, useEffect, useState } from "react";
 import Button from "../../Common/Button/Button";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
-import { connect } from "react-redux";
 import { POST_COMMENT } from "../../../mutations";
 import CommentsList from "./CommentsList";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { useQuery } from "@apollo/client";
 
 const Discussions = (props) => {
+
+
     return (
         <Fragment>
-            <AddComment jobId={props.jobId}/>
-            <CommentsList
-                jobId={props.jobId}
-            />
+            <AddComment jobId={props.jobId} />
+            <CommentsList jobId={props.jobId} />
         </Fragment>
     );
 };
@@ -25,7 +25,8 @@ const AddComment = (props) => {
     const [postCommentMutation, { error }] = useMutation(POST_COMMENT,
         {
             refetchQueries: [
-                { query: GET_JOB_DISCUSSIONS,
+                {
+                    query: GET_JOB_DISCUSSIONS,
                     variables: { jobId: props.jobId }
                 },
             ],
@@ -39,10 +40,9 @@ const AddComment = (props) => {
                     comment: commentInputRef.current.value,
                     jobId: props.jobId,
                 }
-            }).then(res =>
-                commentInputRef.current.value= "",
-            err =>
-                console.log(err));
+            }).catch((e) => {
+                alert("Error adding comment: ", e);
+            });
         }
     };
 
@@ -55,10 +55,10 @@ const AddComment = (props) => {
                 className="my-6 flex-col w-full rounded py-5 px-4 border border-2 border-nebula-grey-400">
                 <div
                     className="mb-6 font-semibold text-nebula-grey-600 text-lg">Add
-                  a new Comment
+                    a new Comment
                 </div>
                 <TextAreaInput forwardedRef={commentInputRef} id="addComment"
-                    placeholder="Add comment" className="mb-6 w-full"/>
+                    placeholder="Add comment" className="mb-6 w-full" />
                 <div className="flex justify-end">
                     <Button type="submit" label="Post Comment" />
                 </div>
@@ -67,10 +67,4 @@ const AddComment = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default connect(mapStateToProps)(Discussions);
+export default (Discussions);

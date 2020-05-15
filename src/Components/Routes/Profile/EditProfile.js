@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "../../Navigation/Navbar";
 import Button from "../../Common/Button/Button";
 import TextInput from "../../Common/InputFields/TextInput";
@@ -12,13 +12,16 @@ import { Query } from "react-apollo";
 import { useMutation } from "@apollo/client";
 import { validateProfileUpdate } from "./ValidateForm";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
-
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import { useSkills } from "../../../hooks/useSkills/hook";
+import { SkillsInput } from "../../Common/InputFields/SkillsInput";
 const EditProfile = (props) => {
+    const { user } = useContext(AuthenticationContext);
     return (
-        <Query query={GET_USER_PROFILE} variables={{ userId: props.user.id }}>
+        <Query query={GET_USER_PROFILE} variables={{ userId: user.id }}>
             {({ loading, error, data }) => {
                 if (loading) {
-                    return <LoadingIndicator/>;
+                    return <LoadingIndicator />;
                 } else if (error) alert(`Error! ${error.message}`);
                 return (
                     <EditProfileBody data={data} {...props} />
@@ -39,7 +42,6 @@ const EditProfileBody = (props) => {
         contact: userData.contact,
         email: userData.email,
         photoUrl: userData.photoUrl,
-        skills: userData.skills.map((skill, key) => skill.value),
         errMsg: "",
     };
 
@@ -52,8 +54,12 @@ const EditProfileBody = (props) => {
                 },
             ],
         });
+
     const [state, setState] = useState(initialState);
 
+    const { skills, addSkill, removeSkill } = useSkills(userData.skills ? userData.skills.map((skill) => skill.value) : []);
+
+    console.log("skells", skills);
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch (event.currentTarget.id) {
@@ -95,17 +101,8 @@ const EditProfileBody = (props) => {
             break;
         }
     };
-
-    const getTagList = (skillList) => {
-        setState({
-            ...state,
-            skills: skillList,
-        },
-        );
-    };
-
     const updateProfile = () => {
-        let isValid = validateProfileUpdate(state);
+        let isValid = validateProfileUpdate({ ...state, skills: skills });
         if (isValid) {
             updateUserMutation({
                 variables: {
@@ -116,7 +113,7 @@ const EditProfileBody = (props) => {
                         role: state.position,
                         department: state.department,
                         contact: state.contact,
-                        skills: state.skills,
+                        skills: skills,
                     },
                 },
             },
@@ -124,7 +121,7 @@ const EditProfileBody = (props) => {
                 props.history.push("/profile/" + parseInt(state.id));
             }, //Navigate to profile page on success
             err => {
-                console.log(err);
+                // console.log(err);
             },
             );
             setState({
@@ -140,13 +137,13 @@ const EditProfileBody = (props) => {
         }
     };
 
-    if (loading) return <LoadingIndicator/>;
+    if (loading) return <LoadingIndicator />;
     if (error) return <p>Error! {error}</p>;
 
     return (
         <div className=" ">
             <div className="container mx-auto">
-                <Navbar/>
+                <Navbar />
                 <div
                     className="mx-auto max-w-screen-md flex flex-col justify-center">
                     <div className="flex flex-row">
@@ -157,7 +154,7 @@ const EditProfileBody = (props) => {
                         <div
                             className="flex flex-row items-center mt-16 mb-4 justify-center">
                             <img src={state.photoUrl}
-                                className="flex-0 h-24 w-24 rounded-full"/>
+                                className="flex-0 h-24 w-24 rounded-full" />
                         </div>
                         <div className="flex flex-col mt-8">
                             <TextInput
@@ -203,14 +200,15 @@ const EditProfileBody = (props) => {
                                 value={state.bio}
                                 onChange={onInputChangeHandler}
                             />
-                            <SearchTagsInput
+                            {/* <SearchTagsInput
                                 id="skills"
                                 label="Skills"
                                 className="mt-8"
                                 placeholder="Type and press Enter to add skills"
                                 initialList={state.skills}
                                 getTagList={getTagList}
-                            />
+                            /> */}
+                            <SkillsInput skills={skills} addSkill={addSkill} removeSkill={removeSkill}></SkillsInput>
                             {
                                 state.errMsg ?
                                     <div
@@ -225,22 +223,15 @@ const EditProfileBody = (props) => {
             <div
                 className="flex sticky bottom-0 flex-row flex-wrap bg-white py-4 border-t border-nebula-grey-400 ">
                 <div className="max-w-screen-md w-full mx-auto">
-
                     <Button label="Save changes" type="primary"
-                        className="mx-2" onClick={updateProfile}/>
+                        className="mx-2" onClick={updateProfile} />
                     <Button label="Discard changes" type="secondary"
                         className="mx-2"
-                        onClick={() => props.history.goBack()}/>
+                        onClick={() => props.history.goBack()} />
                 </div>
             </div>
         </div>
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default withRouter(connect(mapStateToProps)(EditProfile));
+export default (EditProfile);

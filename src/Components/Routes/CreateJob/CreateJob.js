@@ -15,6 +15,7 @@ import { durationStringToDays, DurationParser } from "../../../HelperFunctions/D
 import { CREATE_JOB } from "../../../mutations";
 import { useMutation } from "@apollo/client";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { ArrowLeft } from "react-feather";
 
 const CreateJob = (props) => {
 
@@ -46,7 +47,7 @@ const CreateJob = (props) => {
 
     const [createJob, { loading, error }] = useMutation(CREATE_JOB);
     if (error) {
-        console.log(error);
+        // console.log(error);
     }
 
     //To set the skill tags of the milestone
@@ -97,7 +98,7 @@ const CreateJob = (props) => {
 
     //To validate and save the milestone
     const saveMilestone = () => {
-        const [isMilestoneValid,errorMessages] = validateMilestone(state.milestone);
+        const [isMilestoneValid, errorMessages] = validateMilestone(state.milestone);
         if (isMilestoneValid) {
             var updatedMilestonesList = [];
             //To change the duration into days before saving it
@@ -203,7 +204,7 @@ const CreateJob = (props) => {
 
     //To validate the whole form 
     const validateForm = () => {
-        const [isFormValid,errorMessages]  = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
+        const [isFormValid, errorMessages] = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
         if (isFormValid) {
             const createJobInput = {
                 title: state.job.title,
@@ -247,35 +248,35 @@ const CreateJob = (props) => {
         var value = event.currentTarget.value;
         var field = event.currentTarget.id;
 
-        if(field.includes("job")) {
-            field = field.replace("job","");
+        if (field.includes("job")) {
+            field = field.replace("job", "");
             setState({
                 ...state,
                 milestoneErrMsg: "",
                 jobErrMsg: "",
-                job: { 
-                    ...state.job, 
+                job: {
+                    ...state.job,
                     [field]: value,
                     errorMessages: {
                         ...state.job.errorMessages,
-                        [field+"Err"]: "",
+                        [field + "Err"]: "",
                     }
                 }
             });
         }
 
-        else if(field.includes("milestone")) {
-            field = field.replace("milestone","");
+        else if (field.includes("milestone")) {
+            field = field.replace("milestone", "");
             setState({
                 ...state,
                 milestoneErrMsg: "",
                 jobErrMsg: "",
-                milestone: { 
-                    ...state.milestone, 
+                milestone: {
+                    ...state.milestone,
                     [field]: value,
                     errorMessages: {
                         ...state.milestone.errorMessages,
-                        [field+"Err"]: "",
+                        [field + "Err"]: "",
                     }
                 }
             });
@@ -302,11 +303,32 @@ const CreateJob = (props) => {
                 closeMilestoneModal={closeMilestoneModal}
                 milestoneNo="4"
             />
-            <SplitContainer
+            {/* <SplitContainer
                 leftView={<JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />}
                 rightView={<Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />}
                 actions={ButtonRow}
-            />
+            /> */}
+            <div className="max-w-screen-md min-h-screen mx-auto px-8">
+                <button onClick={() => { props.history.goBack(); }} className="flex mt-8  py-4 select-none text-nebula-grey-600">
+                    <ArrowLeft />
+                    <p className="px-4">Back</p>
+                </button>
+                <JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />
+                <hr />
+                <Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />
+            </div>
+            <div className="flex w-full bg-white justify-start flex-col md:flex-row sticky bottom-0 border-t border-nebula-grey-400">
+                <div className="max-w-screen-md mx-auto w-full flex flex-row">
+                    {ButtonRow.map((button, index) => {
+                        return (
+                            <div className={"py-4 pl-4 flex"} key={index}>
+                                {button}
+                            </div>
+                        );
+                    })
+                    }
+                </div>
+            </div>
             <Portal isOpen={state.milestoneModal} >
                 <ModalViewWithScrim>
                     <MilestoneModal
@@ -329,13 +351,16 @@ const CreateJob = (props) => {
 
 const JobForm = (props) => {
     return (
-        <div className="bg-white flex flex-col w-full h-full mt-10">
+        <div className="bg-white flex flex-col w-full h-full mt-10 mb-12">
+            <div className="text-2xl mb-6">
+                Job Details
+            </div>
             <h2 className="text-sm font-semibold ">Job Title</h2>
             <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} />
-            {props.state.job.errorMessages.titleErr ? <div className = "mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
+            {props.state.job.errorMessages.titleErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
             <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
-            {props.state.job.errorMessages.descriptionErr ? <div className = "mt-2 text-nebula-red" >{props.state.job.errorMessages.descriptionErr}</div> : ""}
+            {props.state.job.errorMessages.descriptionErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.descriptionErr}</div> : ""}
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
@@ -351,6 +376,7 @@ const JobForm = (props) => {
                     </div>
                     : ""
             }
+
         </div>
     );
 
@@ -359,11 +385,11 @@ const JobForm = (props) => {
 const Milestones = (props) => {
     return (
         <div>
-            <div className="flex-col p-2 pt-0">
+            <div className="flex-col pt-12">
                 <div className="text-2xl">
                     Milestones
                 </div>
-                <div className="mt-6 flex-wrap">
+                <div className="mt-6 flex-wrap text-nebula-grey-700">
                     Break down your job into smaller actionable milestones to help people understand it better.
                     They can also choose to work on individual milestones they find interesting.
                 </div>

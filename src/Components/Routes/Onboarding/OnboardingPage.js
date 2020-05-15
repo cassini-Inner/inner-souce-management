@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
 import TextInput from "../../Common/InputFields/TextInput";
 import SearchTagsInput from "../../Common/InputFields/SearchTagsInput";
 import Button from "../../Common/Button/Button";
-import { withRouter, Redirect } from "react-router";
-import { connect } from "react-redux";
+import { withRouter } from "react-router";
 import { validateOnboarding } from "./ValidateForm";
 import { useMutation } from "@apollo/client";
 import { UPDATE_USER_PROFILE } from "../../../mutations";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const OnboardingPage = (props) => {
-    //To verify if the user has already onboarded
-    // if(props.user.onboarded) {
-    //     return <Redirect to="/"/>;
-    // }
+
+    //TODO : Use useAuthentication hook to prefil the user information
+    const { user, refetchProfile } = useContext(AuthenticationContext);
+
 
     const form = {
-        name: props.user.name ? props.user.name : "",
+        name: user.name ? user.name : "",
         position: "",
         bio: "",
         department: "",
         contact: "",
-        email: props.user.email ? props.user.email : "",
+        email: user.email ? user.email : "",
         skills: [],
         errorMessages: {
             nameErr: "",
@@ -37,9 +37,13 @@ const OnboardingPage = (props) => {
     const [state, setState] = useState(form);
 
     // For update user mutation 
-    const [updateUserMutation, { loading, error }] = useMutation(UPDATE_USER_PROFILE);
+    const [updateUserMutation, { loading, error }] = useMutation(UPDATE_USER_PROFILE, {
+        onCompleted: (res) => {
+            refetchProfile();
+        }
+    });
     if (loading) return <LoadingIndicator />;
-    if (error) return <p>Error! {error}</p>;
+    if (error) return <div>Error occured</div>;
 
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
@@ -80,15 +84,9 @@ const OnboardingPage = (props) => {
                         contact: state.contact,
                         skills: state.skills,
                     }
-                }
+                },
             }
-            ).then(res =>
-                props.history.push("/"), //Navigate to home page on success
-                err => console.log(err));
-            setState({
-                ...state,
-                errMsg: ""
-            });
+            );
         }
         else {
             setState({
@@ -103,7 +101,7 @@ const OnboardingPage = (props) => {
             <div className="flex flex-col">
                 <div>
                     <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
-                    <p className="text-3xl">{Cookies.get("githubName")}</p>
+                    <p className="text-3xl">{user.githubName}</p>
                     <p className="text-lg text-nebula-grey-600 mt-2">Before we get
               started, we’d like get to know you a little better.</p>
                 </div>
@@ -144,10 +142,5 @@ const OnboardingPage = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
 
-export default connect(mapStateToProps)(withRouter(OnboardingPage));
+export default (withRouter(OnboardingPage));

@@ -7,6 +7,7 @@ import { TOGGLE_MILESTONE_COMPLETED } from "../../mutations";
 import { useMutation } from "@apollo/client";
 import { GET_MILESTONES, GET_JOB_DETAILS } from "../../queries";
 import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
+import { CSSTransition } from "react-transition-group";
 
 const MilestoneCard = (props) => {
 
@@ -45,9 +46,9 @@ const MilestoneCard = (props) => {
             variables: {
                 milestoneId: milestoneId,
             }
-        }).then(res => console.log(res),
-            err => console.log(err)
-        );
+        }).catch((e) => {
+            alert("Could not toggle milestones status: ", e);
+        });
     };
 
     const isExpanded = state.isExpanded;
@@ -108,8 +109,16 @@ const MilestoneCard = (props) => {
                             <StatusTags statusTag={[props.milestone.status.toLowerCase()]} />
                             : ""
                     }
-                    {
-                        isExpanded &&
+                    <CSSTransition
+                        in={isExpanded}
+                        timeout={100}
+                        unmountOnExit
+                        classNames={{
+                            enter: "opacity-0 transition duration-100 transform",
+                            enterDone: "opacity-100 transition duration-100 transform",
+                            exit: "opacity-0 transition duration-100 transform"
+                        }}
+                    >
                         <div >
                             <p className="pt-4 text-sm text-nebula-grey-700 leading-relaxed" >{props.milestone.description}</p>
                             <div className="flex flex-row flex-wrap">
@@ -127,7 +136,8 @@ const MilestoneCard = (props) => {
                                 }
                             </div>
                         </div>
-                    }
+
+                    </CSSTransition>
                 </div>
             </div>
         </div>

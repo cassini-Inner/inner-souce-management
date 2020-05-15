@@ -1,31 +1,67 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import Avatar from "../../Common/Avatar/Avatar";
 import { GET_JOB_DISCUSSIONS } from "../../../queries";
 import * as Icons from "react-feather";
 import { useQuery } from "@apollo/client";
-import { connect } from "react-redux";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import Button from "../../Common/Button/Button";
 import { useMutation } from "@apollo/react-hooks";
 import { DELETE_COMMENT, UPDATE_COMMENT } from "../../../mutations";
-import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-const CommentsList = (props) => {
-    const { loading: discussionsLoading, error: discussionsError, data } = useQuery(
-        GET_JOB_DISCUSSIONS, { variables: { jobId: props.jobId }, fetchPolicy: "cache-and-network" },
+const CommentsList = ({ jobId }) => {
+    const [comments, setComments] = useState([]);
+    const { data, loading, error } = useQuery(
+        GET_JOB_DISCUSSIONS,
+        {
+            variables: { jobId: jobId },
+            onCompleted: (data) => {
+                console.log(data);
+                setComments(data.Job.discussion.discussions);
+            },
+        },
     );
-    if (discussionsLoading) {
-        return <LoadingIndicator/>;
-    }
-    if (discussionsError) console.log(`Error! ${discussionsError}`);
-    console.log(data.Job.discussion.discussions);
 
-    const commentsList = data.Job.discussion.discussions;
-    if (commentsList) {
-        return (commentsList.map((comment, key) => {
-            return (<CommentItem key={key} comment={comment} user={props.user}
-                jobId={props.jobId}/>);
-        }));
+    useEffect(() => {
+        const prevComments = comments;
+        const newComments = data != null ? data.Job.discussion.discussions : prevComments;
+        setComments(newComments);
+        return (() => { });
+    }, [data]);
+
+    const { user } = useContext(AuthenticationContext);
+
+    if (comments) {
+        return (
+            <TransitionGroup
+                component="ul"
+            >
+                {
+                    comments.map((comment) => {
+                        return (
+                            <CSSTransition
+                                key={comment.id}
+                                timeout={200}
+                                classNames={{
+                                    enter: "opacity-0 transition duration-500",
+                                    enterDone: "opacity-100 transition duration-500",
+                                    exit: "opacity-0 transition duration-500",
+                                }}
+                            >
+                                <li className="appearance-none">
+                                    <CommentItem
+                                        comment={comment}
+                                        user={user}
+                                        jobId={jobId}
+                                    />
+                                </li>
+                            </CSSTransition>
+                        );
+                    })
+                }
+            </TransitionGroup>
+        );
     } else {
         return (<div>No Comments! </div>);
     }
@@ -36,6 +72,7 @@ const CommentItem = (props) => {
         editing: false,
     };
     const [state, updateState] = useState(initialState);
+    const { user } = useContext(AuthenticationContext);
 
     const [updateComment, { loading: updateCommentLoading }] = useMutation(
         UPDATE_COMMENT,
@@ -68,17 +105,19 @@ const CommentItem = (props) => {
 
     const submitOnClick = (e) => {
         e.preventDefault();
-        updateComment({
-            variables: {
-                commentId: comment.id,
-                comment: textInputRef.current.value,
-            },
-            optimisticResponse: {},
-        }).then(() => {
-            updateState({ editing: false });
-        }).catch(() => {
-            alert("Error updating comment");
-        });
+        if (textInputRef.current.value !== "") {
+            updateComment({
+                variables: {
+                    commentId: comment.id,
+                    comment: textInputRef.current.value,
+                },
+                optimisticResponse: {},
+            }).then(() => {
+                updateState({ editing: false });
+            }).catch(() => {
+                alert("Error updating comment");
+            });
+        }
     };
 
     const deleteOnClick = (e) => {
@@ -90,7 +129,7 @@ const CommentItem = (props) => {
                 () => {
                     updateState({ editing: false });
                 },
-            ).catch(() => {alert("Error deleting comment");});
+            ).catch(() => { alert("Error deleting comment"); });
         }
     };
 
@@ -103,9 +142,9 @@ const CommentItem = (props) => {
 
     return <div
         className={"mt-2 flex w-full  transition duration-150 rounded-md " +
-      (state.editing ? " shadow-md" : "   border-b border-nebula-grey-400 ")}>
+            (state.editing ? " shadow-md" : "   border-b border-nebula-grey-400 ")}>
         <div className="flex p-4 flex-row flex-auto items-start ">
-            <Avatar imagePath={comment.createdBy.photoUrl}/>
+            <Avatar className="h-8 w-8" imagePath={comment.createdBy.photoUrl} />
             <div className="ml-4 flex-grow ">
                 <p className="text-sm font-semibold text-nebula-grey-700">
                     {comment.createdBy.name}
@@ -123,20 +162,20 @@ const CommentItem = (props) => {
                                 <TextAreaInput forwardedRef={textInputRef}
                                     rows={"5"}
                                     defaultValue={comment.content}
-                                    value={null} className="w-full"/>
+                                    value={null} className="w-full" />
                                 <div className="flex justify-between mt-2">
                                     <div>
                                         <Button type="submit"
                                             label={updateCommentLoading
                                                 ? "Saving"
-                                                : "Save"} className="mr-2"/>
+                                                : "Save"} className="mr-2" />
                                         <Button type="secondary" label="Discard"
                                             onClick={(e) => discardOnClick(
-                                                e)}/>
+                                                e)} />
 
                                     </div>
                                     <Button type="error" label="Delete"
-                                        onClick={(e) => deleteOnClick(e)}/>
+                                        onClick={(e) => deleteOnClick(e)} />
                                 </div>
                             </form>
                             :
@@ -148,20 +187,13 @@ const CommentItem = (props) => {
                 </div>
             </div>
         </div>
-        {comment.createdBy.id == props.user.id && !state.editing &&
-        <div className="text-nebula-grey-500 mt-2">
-            <button onClick={() => updateState({ editing: true })}>
-                <Icons.Edit/>
-            </button>
-        </div>
+        {comment.createdBy.id == user.id && !state.editing &&
+            <div className="text-nebula-grey-500 mt-2">
+                <button onClick={() => updateState({ editing: true })}>
+                    <Icons.Edit />
+                </button>
+            </div>
         }
     </div>;
 };
-
-const mapStateToProps = state => {
-    return {
-        user: state.user,
-    };
-};
-
-export default connect(mapStateToProps)(CommentsList);
+export default (CommentsList);

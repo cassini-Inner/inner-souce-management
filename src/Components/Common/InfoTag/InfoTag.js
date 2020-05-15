@@ -6,7 +6,7 @@ const InfoTag = (props) => {
     if (Array.isArray(props.data)) {
         const limit = props.limit ? props.limit : props.data.length;
         content = props.data.slice(0, limit).join(", ");
-        if (limit !== props.data.length) {
+        if (limit !== props.data.length - 1) {
             remainingCount = "+ " + (props.data.length - props.limit) + " more";
         }
     } else {

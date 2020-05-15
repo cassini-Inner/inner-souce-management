@@ -5,10 +5,10 @@ import * as config from "../../../../assets/placeholder";
 import { appName } from "../../../../assets/placeholder";
 import { NavLink, withRouter } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
-import { actions } from "../../../reducers/JobFeedProvider/JobFeedProvider";
+import { actions } from "../../../hooks/JobFeedProvider/JobFeedProvider";
 import {
     JobsFeedContext,
-} from "../../../reducers/JobFeedProvider/JobFeedProvider";
+} from "../../../hooks/JobFeedProvider/JobFeedProvider";
 import TextInput from "../../Common/InputFields/TextInput";
 import ActionChip from "../../Common/Chips/ActionChip";
 import Button from "../../Common/Button/Button";
@@ -153,7 +153,7 @@ const SidebarReactiveFilter = (props) => {
                     <label htmlFor="COMPLETED" className="ml-2">Completed</label>
                 </div>
                 <div className="flex items-center my-1 py-1">
-                    <Button type="secondary" label="Reset" onClick = { resetFilter } />
+                    <Button type="secondary" label="Reset" onClick={resetFilter} />
                 </div>
             </div>
         </div>

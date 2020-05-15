@@ -116,6 +116,7 @@ export const GET_JOB_APPLICANTS = gql`
         Job(id: $jobId){
             id
             viewerHasApplied
+            status
             applications {
                 pendingCount
                 acceptedCount
@@ -169,7 +170,7 @@ export const GET_ALL_JOBS_FILTER = gql`
         }
     }
 `;
-  
+
 // To get the ongoing jobs of a user based on user id
 export const GET_USER_ONGOING_JOBS = gql`
     query($userId: ID!){
@@ -201,7 +202,7 @@ export const GET_USER_ONGOING_JOBS = gql`
         }
     }
 `;
-  
+
 
 // To get the number of milestones, applications, discussions and currently working for tabs and other info
 export const GET_JOB_INFO = gql`
@@ -214,6 +215,9 @@ export const GET_JOB_INFO = gql`
             }
             milestones{
                 totalCount
+                milestones{
+                    status
+                }
             }
             discussion{
                 totalCount
@@ -244,7 +248,7 @@ export const GET_USER_SKILLS = gql`
         }
     }
 `;
-  
+
 // To check if onboarding is done already
 export const GET_USER_ONBOARDED = gql`
     query($userId: ID!){
@@ -343,6 +347,14 @@ export const GET_CREATED_JOBS = gql`
                     }
                 }
             }
+        }
+    }
+`;
+
+export const GET_SKILLS_SUGGESTIONS = gql`
+    query($query: String!) {
+        Skills(query: $query){
+            value
         }
     }
 `;

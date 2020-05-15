@@ -16,10 +16,9 @@ const JobInformation = (props) => {
     });
     if (loading) {
         return (<LoadingIndicator />);
-    } else if (error) {
-        console.log(`Error! ${error.message}`);
-        props.history.push("/");
     }
+
+    //TODO: show show an error state in case the job is not found
 
     //To get the duration of the job by summing the duration of milestones
     return (
