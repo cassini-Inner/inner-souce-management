@@ -34,6 +34,7 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
     const handleKeyDown = (e) => {
         if (e.key === "Enter" && e.target.value !== "") {
             addSkillToList(e.target.value);
+            e.target.value = "";
         }
     };
 
