@@ -8,20 +8,14 @@ import Button from "../../Common/Button/Button";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CREATED_JOBS } from "../../../queries";
-import { connect } from "react-redux";
 import Placeholder from "../../Placeholders/placeholder";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import CreateJobsPlaceholder from "../../../assets/images/create_jobs_placeholder.svg";
 
 const ManageJobs = (props) => {
     const { user } = useContext(AuthenticationContext);
-    if (location.pathname === "/manageJobs") {
-        return (<Redirect to={props.match.url + "/open"} />);
-    }
-
-    var openJobsCreated = [], ongoingJobsCreated = [], completedJobsCreated = [];
     const { loading, error, data } = useQuery(GET_CREATED_JOBS, { variables: { userId: user.id }, fetchPolicy: "cache-first" });
-
     //TODO: Try to figure out how to update cache without making another query
     const [getJobs, { loading: l2, error: e2, data: d2 }] = useLazyQuery(GET_CREATED_JOBS, { variables: { userId: user.id }, fetchPolicy: "cache-and-network" });
 
@@ -29,6 +23,12 @@ const ManageJobs = (props) => {
         getJobs({ variables: { userId: user.id } });
         return (() => { });
     }, [props]);
+
+    if (location.pathname === "/manageJobs") {
+        return (<Redirect to={props.match.url + "/open"} />);
+    }
+
+    var openJobsCreated = [], ongoingJobsCreated = [], completedJobsCreated = [];
 
     if (loading || !data) return <LoadingIndicator />;
     else if (error) return "error!";
@@ -58,7 +58,7 @@ const ManageJobs = (props) => {
             heading="Create jobs for people to apply to!"
             body="Once you create a job and publish it, people will be able to apply to it and work on the whole job or specific milestones."
             buttonLabel="Create Job"
-            image="../../../../assets/images/create_jobs_placeholder.svg"
+            image={CreateJobsPlaceholder}
             linkLocation="/createJob"
         />
     );
@@ -67,14 +67,14 @@ const ManageJobs = (props) => {
         <Placeholder
             heading="No created jobs with ongoing status!"
             body="Once you accept any applicants into a job it will appear here."
-            image="../../../../assets/images/create_jobs_placeholder.svg"
+            image={CreateJobsPlaceholder}
         />
     );
     const completedJobsPlaceholder = (
         <Placeholder
             heading="No jobs completed... yet!"
             body="You'll find jobs created by you that were completed here."
-            image="../../../../assets/images/create_jobs_placeholder.svg"
+            image={CreateJobsPlaceholder}
         />
     );
 

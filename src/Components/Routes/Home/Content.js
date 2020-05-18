@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import Button from "../../Common/Button/Button";
 import { JobsFeedContext, actions } from "../../../hooks/JobFeedProvider/JobFeedProvider";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import NoJobsFilterImage from "../../../assets/images/explore_jobs_placeholder.svg";
 
 const Content = (props) => {
     const { user } = useContext(AuthenticationContext);
@@ -62,7 +63,7 @@ const Content = (props) => {
         heading="No jobs found with the set filters"
         body="You can change the filters to explore more jobs. "
         buttonLabel="Create a new Job"
-        image="../../../../assets/images/explore_jobs_placeholder.svg"
+        image={NoJobsFilterImage}
     />);
 
 
