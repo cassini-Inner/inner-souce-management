@@ -7,16 +7,6 @@ const OngoingJobsGrid = (props) => {
     const { user } = useContext(AuthenticationContext);
 
     //The ongoing jobs header in the home page
-    var displayOngoingJobsHeader = false;
-
-    let queryVariables = {};
-    if (props.location == "home") {
-        queryVariables = { userId: user.id };
-    }
-    else if (props.queryVariables) {
-        queryVariables = props.queryVariables;
-    }
-
     if (props.jobs != null && props.jobs.length === 0) {
         const placeholder = props.placeholder;
         return (placeholder);

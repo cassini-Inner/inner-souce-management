@@ -1,7 +1,7 @@
 import React from "react";
 
 const Button = (props) => {
-    const commonStyle = " text-sm whitespace-no-wrap h-10 rounded w-auto select-none font-semibold px-8 py-2 text-center transition duration-150 shadow-none hover:shadow-lg  ";
+    const commonStyle = " text-sm whitespace-no-wrap h-10 rounded w-auto select-none font-semibold px-8 py-2 text-center transition duration-150 shadow-none hover:shadow-xl focus:shadow-xl  ";
 
     switch (props.type) {
     case "primary":
@@ -16,7 +16,7 @@ const Button = (props) => {
     case "secondary":
         return (
             <button
-                className={commonStyle + "bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue " +
+                className={commonStyle + "bg-nebula-blue-light transition duration-150 shadow-none hover:shadow-lg text-nebula-blue border-2 border-nebula-blue  " +
                 props.className}
                 onClick={props.onClick}>
                 {props.label}

@@ -68,16 +68,13 @@ const Content = (props) => {
 
 
     return (
-        <div className="h-auto mt-4">
+        <div className="h-auto">
             <OngoingJobsGrid maxCount={2} location="home" title="Ongoing Jobs"
                 jobs={ongoingJobs} placeholder={(<div></div>)} />
-
-            <div className="flex mt-4 h-12 w-full cursor-default">
-                <div
-                    className="flex bg-white rounded items-center pl-4 pr-2">
-                    <h4 className="text-lg font-semi-bold pr-1">Explore Jobs</h4>
+            <div className="flex flex-row justify-between items-center  ">
+                <div className="text-xl font-semibold flex-1 py-4">
+                    Explore Jobs
                 </div>
-                <div className="flex-1" />
                 <Link to="/createJob"><Button label="Create a new Job"
                     type="primary" /></Link>
             </div>

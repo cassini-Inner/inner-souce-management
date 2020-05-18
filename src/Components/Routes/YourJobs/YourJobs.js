@@ -11,6 +11,8 @@ import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 import ExploreJobsPlaceholder from "../../../assets/images/explore_jobs_placeholder.svg";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
+import { Link } from "react-router-dom";
+import Button from "../../Common/Button/Button";
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) => {
 
@@ -25,8 +27,10 @@ const YourJobs = (props) => {
                 <Navbar />
                 <div className="h-auto pb-4">
                     <StickyHeader>
-                        <div className="text-xl font-semibold flex-1 py-4">
-                            Your Jobs
+                        <div className="flex flex-row justify-between items-center  ">
+                            <div className="text-xl font-semibold flex-1 py-4">
+                                Your Jobs
+                            </div>
                         </div>
                     </StickyHeader>
                     <div className="my-2" />

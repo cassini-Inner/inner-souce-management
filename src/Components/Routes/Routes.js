@@ -45,17 +45,18 @@ const Routes = (props) => {
                 <>
                     <JobsFeedProvider>
                         <div
-                            className=" bg-white w-full h-full antialiased"
+                            className="bg-white flex flex-row w-full h-full antialiased"
                         >
+
                             <div
-                                className="flex flex-col lg:flex-row justify-center w-full mx-auto">
+                                className="flex flex-col lg:flex-row justify-center container w-full mx-auto">
+
                                 <div className="ticky top-0 border-r border-nebula-grey-400">
                                     <Sidebar />
                                 </div>
                                 <div
-                                    className="bg-white lg:flex-row lg:max-w-screen-lg w-full">
+                                    className="bg-white lg:flex-row w-full">
                                     <Switch>
-                                        <Route path="/skillstest" component={SkillsTest} />
                                         <Route path="/jobDetails/:id" component={JobDetailsPage} />
                                         <Route path="/yourJobs" component={YourJobs} />
                                         <Route path="/profile/edit" component={EditProfile} />

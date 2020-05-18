@@ -98,18 +98,15 @@ const ManageJobs = (props) => {
     ];
 
     return (
-        <div className="px-8">
+        <div className="px-10">
             <Navbar />
             <StickyHeader>
-                <div className="flex py-4 mx-1 z-20">
-                    <div className="text-xl font-semibold flex-1">
-                        Created Jobs
+                <div className="flex flex-row justify-between items-center  ">
+                    <div className="text-xl font-semibold flex-1 py-4">
+                        Manage Jobs
                     </div>
-                    <div className="flex">
-                        <Link to="/createJob">
-                            <Button type="primary" label="Create new job" />
-                        </Link>
-                    </div>
+                    <Link to="/createJob"><Button label="Create a new Job"
+                        type="primary" /></Link>
                 </div>
                 <TabStrip tabs={tabList} />
             </StickyHeader>
