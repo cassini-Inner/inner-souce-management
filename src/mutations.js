@@ -129,6 +129,7 @@ export const TOGGLE_MILESTONE_COMPLETED = gql`
     mutation($milestoneId: String!){
         toggleMilestoneCompleted(milestoneID: $milestoneId) {
             id
+            status
         }
     }
 `;

@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from "react";
-import Navbar from "../../Navigation/Navbar";
+import Navbar from "../../Navigation/Navbar/Navbar";
 import { Redirect, Route, withRouter } from "react-router";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";

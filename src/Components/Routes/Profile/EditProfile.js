@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import Navbar from "../../Navigation/Navbar";
+import Navbar from "../../Navigation/Navbar/Navbar";
 import Button from "../../Common/Button/Button";
 import TextInput from "../../Common/InputFields/TextInput";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
