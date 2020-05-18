@@ -197,6 +197,7 @@ const JobDetailsPage = (props) => {
         (<Button type="secondary" label="Edit Job"
             key="editjob"
             className=" w-auto mr-4 "
+            onClick={ () => props.history.push("/editJob/" + state.jobId) }
         />),
         (<Button type="error" label="Delete Job"
             className=" w-auto mr-4 "
@@ -239,7 +240,7 @@ const JobDetailsPage = (props) => {
     return (
         <Fragment>
             <div className="px-4 pb-24 max-w-screen-lg min-h-screen mx-auto lg:px-10">
-                <button onClick={() => { props.history.goBack(); }} className="flex  py-4">
+                <button onClick={() => { props.history.goBack(); }} className="flex py-4 hover:text-nebula-blue">
                     <ArrowLeft />
                     <p className="px-4">Back</p>
                 </button>

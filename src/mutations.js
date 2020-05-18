@@ -133,3 +133,11 @@ export const TOGGLE_MILESTONE_COMPLETED = gql`
     }
 `;
 
+// To update a job
+export const UPDATE_JOB = gql`
+    mutation($job: UpdateJobInput){
+        updateJob(job: $job) {
+            id
+        }
+    }
+`;

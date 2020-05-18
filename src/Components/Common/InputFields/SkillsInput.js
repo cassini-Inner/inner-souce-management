@@ -6,7 +6,7 @@ import TextInput from "./TextInput";
 import LabelChip from "../Chips/LabelChip";
 import ActionChip from "../Chips/ActionChip";
 
-export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCallback }) => {
+export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCallback, label }) => {
     const inputRef = useRef();
     const [skillSuggestions, setSkillSuggestions] = useState([]);
     const [typingTimeOut, setTypingTimeOut] = useState();
@@ -64,7 +64,7 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
             className="flex flex-col space-y-2"
         >
             <TextInput
-                label="Type yo skills"
+                label={label}
                 onKeyDown={(e) => { handleKeyDown(e); }}
                 onChange={(e) => { handleChange(e); }}
                 forwardedRef={inputRef}

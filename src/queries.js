@@ -358,3 +358,29 @@ export const GET_SKILLS_SUGGESTIONS = gql`
         }
     }
 `;
+
+// To get all the job details based on job id for edit 
+export const GET_EDIT_JOB_DETAILS = gql`
+    query GET_EDIT_JOB_DETAILS($jobId:ID!){
+        Job(id:$jobId){
+            id
+            title
+            description: desc 
+            difficulty
+            milestones {
+                totalCount
+                milestones{
+                    id
+                    title
+                    description: desc
+                    duration
+                    resolution
+                    skills {
+                        id
+                        value
+                    }
+                }
+            }
+        }
+    }
+`;

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
 import TextInput from "../../Common/InputFields/TextInput";
 import Dropdown from "../../Common/Dropdown/Dropdown";
@@ -7,15 +7,16 @@ import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
 import MilestoneModal from "../../Modals/MilestoneModal";
 import Portal from "../../Containers/Portal";
 import { withRouter } from "react-router";
-import { validateJob, validateMilestone } from "./ValidateForm";
+import { validateJob, validateMilestone } from "../CreateJob/ValidateForm";
 import MilestoneCard from "../../Milestones/MilestoneCard";
 import { durationStringToDays, DurationParser } from "../../../HelperFunctions/DurationParser";
-import { CREATE_JOB } from "../../../mutations";
+import { GET_EDIT_JOB_DETAILS } from "../../../queries";
+import { useLazyQuery } from "@apollo/client";
 import { useMutation } from "@apollo/client";
-import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import { UPDATE_JOB } from "../../../mutations";
 import { ArrowLeft } from "react-feather";
-
-const CreateJob = (props) => {
+import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+const EditJob = (props) => {
 
     const initialState = {
         milestoneModal: false,
@@ -25,9 +26,10 @@ const CreateJob = (props) => {
         milestoneErrMsg: "",
         jobErrMsg: "",
         job: {
+            id: props.match.params.id,
             title: "",
             description: "",
-            difficulty: "Intermediate", //Default value in the dropdown
+            difficulty: "", 
             milestones: [],
             errorMessages: {}
         },
@@ -41,12 +43,52 @@ const CreateJob = (props) => {
             errorMessages: {}
         }
     };
-    const [state, setState] = useState(initialState);
 
-    const [createJob, { loading, error }] = useMutation(CREATE_JOB);
-    if (error) {
-        // console.log(error);
-    }
+    const [state, setState] = useState(initialState);
+    const [loading, setLoading] = useState(true);
+    const [updateJob, { mutationLoading, mutationError }] = useMutation(UPDATE_JOB);
+
+    if(mutationLoading) return <LoadingIndicator />;
+    if(mutationError) return `Update job mutation error: ${mutationError}`;
+
+    // To fetch the job details
+    const [getJobDetails] = useLazyQuery(GET_EDIT_JOB_DETAILS, {
+        onCompleted: (data) => {
+            setState({
+                ...state,
+                milestoneCount: data.Job.milestones.totalCount,
+                job:{
+                    ...state.job,
+                    title: data.Job.title,
+                    description: data.Job.description,
+                    difficulty: data.Job.difficulty,
+                    milestones: data.Job.milestones.milestones.map((milestone, index) => {
+                        return {
+                            id: milestone.id,
+                            title: milestone.title,
+                            description: milestone.description,
+                            resolution: milestone.resolution,
+                            duration: milestone.duration,
+                            skills: milestone.skills.map((skill, _) => skill.value)
+                        }
+                    }),
+                        
+                }
+            });
+            setLoading(false);
+        },
+        onError: (e) => {
+            alert("Error while querying: ", e);
+            setLoading(false);
+        },
+        fetchPolicy: "cache-first",
+    });
+
+
+    useEffect(() => {
+        getJobDetails({variables: { jobId: state.job.id }});
+    }, [state.job.id]);
+
 
     //To set the skill tags of the milestone
     const getTagList = (skillList) => {
@@ -202,14 +244,17 @@ const CreateJob = (props) => {
 
     //To validate the whole form 
     const validateForm = () => {
-        const [isFormValid, errorMessages] = validateJob(state.milestoneCount + 1, state.job); //milestoneCount refers to array index hence +1
+        const [isFormValid, errorMessages] = validateJob(state.milestoneCount, state.job); //milestoneCount refers to array index hence +1
         if (isFormValid) {
-            const createJobInput = {
+            const updateJobInput = {
+                id: parseInt(state.job.id),
+                status: "OPEN",
                 title: state.job.title,
                 desc: state.job.description,
                 difficulty: state.job.difficulty.toUpperCase(),
                 milestones: state.job.milestones.map((milestone, key) => {
                     return {
+                        id: parseInt(milestone.id),
                         title: milestone.title,
                         desc: milestone.description,
                         resolution: milestone.resolution,
@@ -219,13 +264,14 @@ const CreateJob = (props) => {
                     };
                 })
             };
-            createJob({
+            console.log(JSON.stringify(updateJobInput));
+            updateJob({
                 variables: {
-                    job: createJobInput,
+                    job: updateJobInput,
                 }
             }).then(
                 res => props.history.push("/jobDetails/" + res.data.createJob.id),
-                err => alert("Failed to create a new job: " + err)
+                err => alert("Failed to update job: " + err)
             );
         }
 
@@ -283,25 +329,28 @@ const CreateJob = (props) => {
 
 
     const goBack = () => {
-        const cancel = window.confirm("Are you sure you want cancel this job creation?");
+        const cancel = window.confirm("Are you sure you want cancel the job update?");
         if (cancel) {
             props.history.goBack();
         }
     };
 
     const ButtonRow = [
-        <Button type="primary" label="Submit Job" onClick={() => validateForm()} />,
-        <Button type="secondary" label="Cancel Job Creation" onClick={() => goBack()} />,
+        <Button type="primary" label="Update Job" onClick={() => validateForm()} />,
+        <Button type="secondary" label="Cancel Job Update" onClick={() => goBack()} />,
     ];
+    
+    if (loading) return (<LoadingIndicator />);
+    
     return (
         <Fragment>
             <div className="max-w-screen-md min-h-screen mx-auto px-8">
-                <button onClick={() => { props.history.goBack(); }} className="flex mt-8  py-4 select-none text-nebula-grey-600">
+                <button onClick={() => { props.history.goBack(); }} className="flex mt-8  py-4 select-none hover:text-nebula-blue">
                     <ArrowLeft />
                     <p className="px-4">Back</p>
                 </button>
                 <JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />
-                <hr />
+
                 <Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />
             </div>
             <div className="flex w-full bg-white justify-start flex-col md:flex-row sticky bottom-0 border-t border-nebula-grey-400">
@@ -325,7 +374,7 @@ const CreateJob = (props) => {
                         onChange={onInputChangeHandler}
                         deleteMilestone={deleteMilestone}
                         errMsg={state.milestoneErrMsg}          //milestoneCount & editMilestoneIndex refers to array index hence +1
-                        milestoneNo={state.editMilestoneIndex > -1 ? state.editMilestoneIndex + 1 : state.milestoneCount + 1}
+                        milestoneNo={state.editMilestoneIndex > -1 ? state.editMilestoneIndex + 1 : state.milestoneCount }
                         editMilestoneState={state.editMilestoneState}
                         milestone={state.milestone}
                     />
@@ -343,17 +392,17 @@ const JobForm = (props) => {
                 Job Details
             </div>
             <h2 className="text-sm font-semibold ">Job Title</h2>
-            <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} />
+            <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} value ={props.state.job.title?props.state.job.title:'' }/>
             {props.state.job.errorMessages.titleErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
-            <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} />
+            <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} value ={props.state.job.description?props.state.job.description:'' } />
             {props.state.job.errorMessages.descriptionErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.descriptionErr}</div> : ""}
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
                     <p className="text-nebula-grey-700 leading-tight text-sm">How difficult is the job?</p>
                 </div>
-                <Dropdown id="jobdifficulty" list={["Intermediate", "Easy", "Hard"]} onChange={props.onChange} />
+                <Dropdown id="jobdifficulty" list={["INTERMEDIATE", "EASY", "HARD"]} value ={props.state.job.difficulty?props.state.job.difficulty:'' } onChange={props.onChange} />
             </div>
             { //To display error messages
                 props.jobErrMsg ?
@@ -376,10 +425,6 @@ const Milestones = (props) => {
                 <div className="text-2xl">
                     Milestones
                 </div>
-                <div className="mt-6 flex-wrap text-nebula-grey-700">
-                    Break down your job into smaller actionable milestones to help people understand it better.
-                    They can also choose to work on individual milestones they find interesting.
-                </div>
                 <div className="mt-6">
                     <Button type="primary" label="Add a new Milestone" onClick={props.openMilestoneModal} />
                 </div>
@@ -395,7 +440,7 @@ const Milestones = (props) => {
                                             milestone={milestone}
                                             isEditMode={true}
                                             index={index}
-                                            lastIndex={props.milestoneCount + 1}
+                                            lastIndex={props.milestoneCount}
                                             editMilestone={props.editMilestone} />
                                     </li>
                                 );
@@ -408,4 +453,4 @@ const Milestones = (props) => {
     );
 };
 
-export default withRouter(CreateJob);
+export default withRouter(EditJob);

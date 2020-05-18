@@ -4,6 +4,7 @@ import Home from "./Home/Home";
 import YourJobs from "./YourJobs/YourJobs";
 import CreateJob from "./CreateJob/CreateJob";
 import JobDetailsPage from "./JobDetails/JobDetailsPage";
+import EditJob from "./EditJob/EditJob";
 import ApplyToMilestones from "./JobDetails/ApplyToMilestones";
 import Profile from "./Profile/Profile";
 import ManageJobs from "./ManageJobs/ManageJobs";
@@ -21,10 +22,6 @@ const Routes = (props) => {
 
     const { authenticated, loading, user } = useContext(AuthenticationContext);
 
-    // console.log("Routes", authenticated);
-    // console.log("User", user);
-    // console.log("Authenticated", authenticated);
-    // console.log("onboarded", user.onboarded);
     if (loading) {
         return (
             <Route path="/" component={LoadingIndicator} />
@@ -57,6 +54,7 @@ const Routes = (props) => {
                                     <Switch>
                                         <Route path="/skillstest" component={SkillsTest} />
                                         <Route path="/jobDetails/:id" component={JobDetailsPage} />
+                                        <Route path="/editJob/:id" component={EditJob} />
                                         <Route path="/yourJobs" component={YourJobs} />
                                         <Route path="/profile/edit" component={EditProfile} />
                                         <Route path="/profile/:id" component={Profile} />
