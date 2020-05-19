@@ -35,7 +35,7 @@ const MilestoneModal = (props) => {
                     {props.milestone.errorMessages && props.milestone.errorMessages.durationErr ? <div className="mt-2 text-nebula-red" >{props.milestone.errorMessages.durationErr}</div> : ""}
 
 
-                    <SkillsInput addSkill={addSkill} removeSkill={removeSkill} skills={skills} skillAddCallback={props.getTagList} />
+                    <SkillsInput label="Skills Required" addSkill={addSkill} removeSkill={removeSkill} skills={skills} skillAddCallback={props.getTagList} />
                     {props.milestone.errorMessages && props.milestone.errorMessages.skillsErr ? <div className="mt-2 text-nebula-red" >{props.milestone.errorMessages.skillsErr}</div> : ""}
 
 

@@ -3,9 +3,8 @@ import Axios from "axios";
 import { useLazyQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../queries";
 
-const CLIENT_ID = "5a4ff35b849d9cc3cab7";
-const redirect_url = "http://localhost:3000/auth/result";
-const githubAuthUrl = "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID + "&redirect_uri=" + redirect_url + "&scope=read:user user:email";
+const CLIENT_ID = process.env.CLIENT_ID;
+const githubAuthUrl = "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID + "&scope=read:user user:email";
 
 export function useAuthentication() {
     const [authenticated, setAuthenticated] = useState(false);

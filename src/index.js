@@ -28,7 +28,6 @@ const client = new ApolloClient({
     link: authLink.concat(httpLink),
 });
 
-
 ReactDOM.render(
     <ApolloHooksProvider client={client}>
         <ApolloProvider client={client}>

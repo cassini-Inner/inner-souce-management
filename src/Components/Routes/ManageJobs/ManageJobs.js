@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Navbar from "../../Navigation/Navbar/Navbar";
 import JobCard from "../../Jobs/JobCard";
 import Button from "../../Common/Button/Button";
-import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CREATED_JOBS } from "../../../queries";
 import Placeholder from "../../Placeholders/placeholder";
@@ -100,16 +99,19 @@ const ManageJobs = (props) => {
     return (
         <div className="px-10">
             <Navbar />
-            <StickyHeader>
-                <div className="flex flex-row justify-between items-center  ">
-                    <div className="text-xl font-semibold flex-1 py-4">
-                        Manage Jobs
+                <div className="flex py-4 mx-1 z-20">
+                    <div className="text-xl font-semibold flex-1">
+                        Created Jobs
+                    </div>
+                    <div className="flex">
+                        <Link to="/createJob">
+                            <Button type="primary" label="Create new job" />
+                        </Link>
                     </div>
                     <Link to="/createJob"><Button label="Create a new Job"
                         type="primary" /></Link>
                 </div>
                 <TabStrip tabs={tabList} />
-            </StickyHeader>
             <div className="my-2">
                 <Route exact path={props.match.url + "/open"}
                     component={(props) => <CreatedJobList jobs={openJobsCreated} placeholder={createJobsPlaceholder} />} />

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router-dom";
 import * as Icons from "react-feather";
 import SplitContainerWithImage from "../../Containers/SplitContainerWithImage";
-import { githubAuthUrl } from "../../../Configuration";
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 
 const LoginPage = () => {
+    const auth = useContext(AuthenticationContext);
     const body = (
         <div className="max-w-screen-sm w-full px-4 lg:px-8">
             <div className="leading-none font-semibold">
@@ -19,7 +20,7 @@ const LoginPage = () => {
                 <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>
             }
 
-            <button className="w-full md:w-auto" onClick={() => Authenticator()}>
+            <button className="w-full md:w-auto" onClick={() => auth.beginAuth()}>
                 <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-lg items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
                     <Icons.GitHub className="text-white " />
                     <p className="px-6 text-white font-semibold whitespace-no-wrap">Continue with GitHub</p>
@@ -31,11 +32,6 @@ const LoginPage = () => {
         <SplitContainerWithImage body={body} />
     );
 };
-
-const Authenticator = () => {
-    window.open(githubAuthUrl, "_self");
-};
-
 
 
 export default (withRouter(LoginPage));
