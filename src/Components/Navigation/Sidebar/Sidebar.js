@@ -1,5 +1,4 @@
-import React, { Component, useRef } from "react";
-import "../../../assets/style/tailwind.css";
+import React, { useRef } from "react";
 import * as Icons from "react-feather";
 import { appName } from "../../../assets/placeholder";
 import { NavLink, withRouter } from "react-router-dom";
@@ -25,7 +24,7 @@ const Sidebar = (props) => {
 
     return (
 
-        <div className={"w-auto border-l-0 z-40 sticky top-0 text-black bg-white border-nebula-grey-400 border border-r-0 px-0 lg:z-10 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-t-0 lg:border-l-0 lg:w-84 xl:w-84"}>
+        <div className={"w-auto border-l-0 z-40 sticky top-0 text-black bg-white border-nebula-grey-400 border border-r-0 px-0 lg:z-10 lg:h-screen lg:border-r-1 lg:border-b-0 lg:border-t-0 lg:border-l-0 lg:w-72  xl:w-72"}>
             <div className="w-full h-12 lg:mt-6 flex items-center ">
                 <NavLink
                     className="flex-1 text-xl pl-3 font-semibold hover:text-nebula-blue outline-none cursor-pointer"
@@ -74,7 +73,6 @@ const Sidebar = (props) => {
                         />
                     </li>
                 </ul>
-                <hr className="my-8" />
                 <div>
                     {
                         window.location.pathname === "/" &&
@@ -118,7 +116,7 @@ const SidebarReactiveFilter = (props) => {
     const ongoingChecked = status.includes("ONGOING");
     const completedChecked = status.includes("COMPLETED");
     return (
-        <div className="mx-4 bg-white border border-nebula-grey-400 rounded-lg">
+        <div className="mx-4 bg-white border border-nebula-grey-400 rounded-lg mt-8">
             <h4 className="text-md font-semibold text-nebula-blue border-b border-gray-300 rounded-tl-lg rounded-tr-lg bg-white py-4 pl-4">Filters</h4>
             <div className="px-4 py-2">
                 <h4 className="text-sm font-semibold text-nebula-grey-800 mt-4">Skills</h4>

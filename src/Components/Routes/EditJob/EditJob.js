@@ -350,7 +350,6 @@ const EditJob = (props) => {
                     <p className="px-4">Back</p>
                 </button>
                 <JobForm jobErrMsg={state.jobErrMsg} state={state} onChange={onInputChangeHandler} />
-
                 <Milestones milestoneCount={state.milestoneCount} editMilestone={editMilestoneOpen} milestones={state.job.milestones} openMilestoneModal={openMilestoneModal} />
             </div>
             <div className="flex w-full bg-white justify-start flex-col md:flex-row sticky bottom-0 border-t border-nebula-grey-400">
@@ -421,7 +420,7 @@ const JobForm = (props) => {
 const Milestones = (props) => {
     return (
         <div>
-            <div className="flex-col pt-12">
+            <div className="flex-col pt-4">
                 <div className="text-2xl">
                     Milestones
                 </div>

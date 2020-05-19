@@ -32,9 +32,9 @@ class ApplyToMilestones extends Component {
                     {milestones.map(
                         (milestone, index) => {
                             return (
-                                <div className="w-full flex">
+                                <div key={milestone.id} className="w-full flex">
                                     <MilestoneCard expanded={false} index={index} milestone={milestone} lastIndex={milestones.length} className="flex-1" />
-                                    <input type="checkbox" id={milestone.id}></input>
+                                    <input type="checkbox" id={milestone.id}/>
                                 </div>
                             );
                         }

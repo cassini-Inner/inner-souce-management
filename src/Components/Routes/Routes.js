@@ -16,7 +16,6 @@ import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 import OnboardingPage from "./Onboarding/OnboardingPage";
 import { JobsFeedProvider } from "../../hooks/JobFeedProvider/JobFeedProvider";
 import Sidebar from "../Navigation/Sidebar/Sidebar";
-import { SkillsTest } from "./skilsltest/skillstest";
 
 const Routes = (props) => {
 
@@ -42,17 +41,18 @@ const Routes = (props) => {
                 <>
                     <JobsFeedProvider>
                         <div
-                            className=" bg-white w-full h-full antialiased"
+                            className="bg-white flex flex-row w-full h-full antialiased"
                         >
+
                             <div
-                                className="flex flex-col lg:flex-row justify-center w-full mx-auto">
+                                className="flex flex-col lg:flex-row justify-center container w-full mx-auto">
+
                                 <div className="ticky top-0 border-r border-nebula-grey-400">
                                     <Sidebar />
                                 </div>
                                 <div
-                                    className="bg-white lg:flex-row lg:max-w-screen-lg w-full">
+                                    className="bg-white lg:flex-row w-full">
                                     <Switch>
-                                        <Route path="/skillstest" component={SkillsTest} />
                                         <Route path="/jobDetails/:id" component={JobDetailsPage} />
                                         <Route path="/editJob/:id" component={EditJob} />
                                         <Route path="/yourJobs" component={YourJobs} />

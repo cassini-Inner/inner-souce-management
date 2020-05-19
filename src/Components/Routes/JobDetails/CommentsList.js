@@ -150,7 +150,7 @@ const CommentItem = (props) => {
                     {comment.createdBy.name}
                 </p>
                 <p className="text-xs text-nebula-grey-600">
-                    {dateTimeString}
+                    { "Commented on " + dateTimeString}
                 </p>
                 <div>
                     {

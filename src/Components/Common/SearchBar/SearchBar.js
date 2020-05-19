@@ -4,8 +4,6 @@ import { SEARCH_JOBS_USERS_LIMIT } from "../../../queries";
 import Avatar from "../Avatar/Avatar";
 import {Briefcase} from "react-feather";
 import StatusTags from "../StatusTags/StatusTags";
-import Portal from "../../Containers/Portal";
-import Button from "../Button/Button";
 import { Link } from "react-router-dom";
 const SearchBar = ({searchOpen,setSearchOpen}) => {
     const searchInputRef = useRef();
@@ -58,7 +56,7 @@ const SearchBar = ({searchOpen,setSearchOpen}) => {
                     }}
                     onChange={(e) => {handleChange(e);}}
                     onClick={(e)=> {e.stopPropagation();}}
-                    placeholder="search lmao"
+                    placeholder="Search for jobs and users by name"
                     className={
                         " appearance-none bg-white transition duration-300 outline-none bg-transparent w-full py-4 px-4 flex-1 mx-auto "
                           + " focus:shadow-lg focus:border focus:border-nebula-grey-200 "
