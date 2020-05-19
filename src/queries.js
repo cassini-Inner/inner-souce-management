@@ -384,3 +384,24 @@ export const GET_EDIT_JOB_DETAILS = gql`
         }
     }
 `;
+
+export const SEARCH_JOBS_USERS_LIMIT = gql`
+  query ($query: String!, $limit: Int!) {
+       Search(query: $query, limit: $limit) {
+            jobs{
+                id
+                title
+                status
+                viewerHasApplied
+                description: desc
+            }
+            users {
+                id
+                name
+                role
+                department
+                photoUrl
+            }   
+       }
+  }
+`;

@@ -8,7 +8,7 @@ const AuthorInfo = (props) => {
       <div className={"flex items-center " + props.className}>
           <Avatar imagePath={props.img
               ? props.img
-              : "../assets/icons/image 1.png"}
+              : "../../../assets/icons/image 1.png"}
           className={props.iconClass}></Avatar>
           <div className="pl-3">
               <p className="text-sm font-semibold">{props.name}</p>

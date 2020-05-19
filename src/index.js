@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./Components/App";
-import "../assets/style/index.css";
+import "./assets/style/index.css";
 import { ApolloProvider } from "@apollo/react-components";
 import { ApolloProvider as ApolloHooksProvider } from "@apollo/client";
 import { createStore, combineReducers } from "redux";

@@ -1,8 +1,7 @@
 import React, { Component, useRef } from "react";
-import "../../../../assets/style/tailwind.css";
+import "../../../assets/style/tailwind.css";
 import * as Icons from "react-feather";
-import * as config from "../../../../assets/placeholder";
-import { appName } from "../../../../assets/placeholder";
+import { appName } from "../../../assets/placeholder";
 import { NavLink, withRouter } from "react-router-dom";
 import SidebarItem from "./SidebarItem";
 import { actions } from "../../../hooks/JobFeedProvider/JobFeedProvider";

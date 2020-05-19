@@ -4,8 +4,8 @@
   "description": "A tool for insourcing jobs.",
   "main": "index.js",
   "scripts": {
-    "build:css": "postcss ./assets/style/tailwind.css -o ./assets/style/index.css",
-    "watch:css": "postcss ./assets/style/tailwind.css -o ./assets/style/index.css",
+    "build:css": "postcss ./src/assets/style/tailwind.css -o ./src/assets/style/index.css",
+    "watch:css": "postcss ./src/assets/style/tailwind.css -o ./src/assets/style/index.css",
     "test": "jest --transformIgnorePatterns",
     "start": "npm run watch:css && webpack-dev-server --open",
     "build": "webpack --config ./webpack.prod.js"

@@ -2,10 +2,9 @@ import React, { useEffect, useContext } from "react";
 import TabStrip from "../../Common/TabStrip/TabStrip";
 import { Redirect, Route, withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import Navbar from "../../Navigation/Navbar";
+import Navbar from "../../Navigation/Navbar/Navbar";
 import JobCard from "../../Jobs/JobCard";
 import Button from "../../Common/Button/Button";
-import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CREATED_JOBS } from "../../../queries";
 import { connect } from "react-redux";
@@ -58,7 +57,7 @@ const ManageJobs = (props) => {
             heading="Create jobs for people to apply to!"
             body="Once you create a job and publish it, people will be able to apply to it and work on the whole job or specific milestones."
             buttonLabel="Create Job"
-            image="../../../../assets/images/create_jobs_placeholder.svg"
+            image="../../../assets/images/create_jobs_placeholder.svg"
             linkLocation="/createJob"
         />
     );
@@ -67,14 +66,14 @@ const ManageJobs = (props) => {
         <Placeholder
             heading="No created jobs with ongoing status!"
             body="Once you accept any applicants into a job it will appear here."
-            image="../../../../assets/images/create_jobs_placeholder.svg"
+            image="../../../assets/images/create_jobs_placeholder.svg"
         />
     );
     const completedJobsPlaceholder = (
         <Placeholder
             heading="No jobs completed... yet!"
             body="You'll find jobs created by you that were completed here."
-            image="../../../../assets/images/create_jobs_placeholder.svg"
+            image="../../../assets/images/create_jobs_placeholder.svg"
         />
     );
 
@@ -100,7 +99,6 @@ const ManageJobs = (props) => {
     return (
         <div className="px-8">
             <Navbar />
-            <StickyHeader>
                 <div className="flex py-4 mx-1 z-20">
                     <div className="text-xl font-semibold flex-1">
                         Created Jobs
@@ -112,7 +110,6 @@ const ManageJobs = (props) => {
                     </div>
                 </div>
                 <TabStrip tabs={tabList} />
-            </StickyHeader>
             <div className="my-2">
                 <Route exact path={props.match.url + "/open"}
                     component={(props) => <CreatedJobList jobs={openJobsCreated} placeholder={createJobsPlaceholder} />} />

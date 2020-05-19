@@ -1,8 +1,7 @@
 import React, { Fragment, useState, useContext } from "react";
-import Navbar from "../../Navigation/Navbar";
+import Navbar from "../../Navigation/Navbar/Navbar";
 import { Redirect, Route, withRouter } from "react-router";
 import TabStrip from "../../Common/TabStrip/TabStrip";
-import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery } from "@apollo/client";
 import { GET_YOUR_JOBS } from "../../../queries";
 import { connect } from "react-redux";
@@ -24,11 +23,9 @@ const YourJobs = (props) => {
             <div className="px-4 lg:px-10">
                 <Navbar />
                 <div className="h-auto pb-4">
-                    <StickyHeader>
                         <div className="text-xl font-semibold flex-1 py-4">
                             Your Jobs
                         </div>
-                    </StickyHeader>
                     <div className="my-2" />
                 </div>
                 <YourJobsBody
@@ -131,7 +128,7 @@ const YourJobsBody = (props) => {
             body="You can always head to explore new jobs or projects and apply to them!"
             onClick={() => <Redirect to="/" />}
             buttonLabel="Explore Jobs"
-            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            image="../../../assets/images/explore_jobs_placeholder.svg"
             linkLocation="/"
         />
     );
@@ -141,7 +138,7 @@ const YourJobsBody = (props) => {
             body="You currently don't have any pending applications. Once you do, your applications will appear here."
             onClick={() => <Redirect to="/" />}
             buttonLabel="Explore Jobs"
-            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            image="../../../assets/images/explore_jobs_placeholder.svg"
             linkLocation="/"
         />
     );
@@ -151,7 +148,7 @@ const YourJobsBody = (props) => {
             body="You haven’t completed any jobs yet. Once you do, your completed jobs will appear here."
             onClick={() => <Redirect to="/" />}
             buttonLabel="Explore Jobs"
-            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            image="../../../assets/images/explore_jobs_placeholder.svg"
             linkLocation="/"
         />
     );
