@@ -5,12 +5,14 @@ import TabStrip from "../../Common/TabStrip/TabStrip";
 import StickyHeader from "../../Common/StickyHeader/StickyHeader";
 import { useQuery } from "@apollo/client";
 import { GET_YOUR_JOBS } from "../../../queries";
-import { connect } from "react-redux";
-import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import Placeholder from "../../Placeholders/placeholder";
 import JobList from "../../Jobs/JobList";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import ExploreJobsPlaceholder from "../../../assets/images/explore_jobs_placeholder.svg";
+import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
+import { Link } from "react-router-dom";
+import Button from "../../Common/Button/Button";
 // To get the tabs(Working on, awaiting approval..) values
 const YourJobs = (props) => {
 
@@ -25,8 +27,10 @@ const YourJobs = (props) => {
                 <Navbar />
                 <div className="h-auto pb-4">
                     <StickyHeader>
-                        <div className="text-xl font-semibold flex-1 py-4">
-                            Your Jobs
+                        <div className="flex flex-row justify-between items-center  ">
+                            <div className="text-xl font-semibold flex-1 py-4">
+                                Your Jobs
+                            </div>
                         </div>
                     </StickyHeader>
                     <div className="my-2" />
@@ -131,7 +135,7 @@ const YourJobsBody = (props) => {
             body="You can always head to explore new jobs or projects and apply to them!"
             onClick={() => <Redirect to="/" />}
             buttonLabel="Explore Jobs"
-            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            image={ExploreJobsPlaceholder}
             linkLocation="/"
         />
     );
@@ -141,7 +145,7 @@ const YourJobsBody = (props) => {
             body="You currently don't have any pending applications. Once you do, your applications will appear here."
             onClick={() => <Redirect to="/" />}
             buttonLabel="Explore Jobs"
-            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            image={ExploreJobsPlaceholder}
             linkLocation="/"
         />
     );
@@ -151,7 +155,7 @@ const YourJobsBody = (props) => {
             body="You haven’t completed any jobs yet. Once you do, your completed jobs will appear here."
             onClick={() => <Redirect to="/" />}
             buttonLabel="Explore Jobs"
-            image="../../../../assets/images/explore_jobs_placeholder.svg"
+            image={ExploreJobsPlaceholder}
             linkLocation="/"
         />
     );
