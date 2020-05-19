@@ -43,6 +43,7 @@ module.exports = {
         }),
         new webpack.DefinePlugin({
             "process.env.CLIENT_ID": JSON.stringify(process.env.CLIENT_ID),
+            "process.env.API_URL": JSON.stringify(process.env.API_URL),
         }),
     ],
     devServer: {

@@ -10,3 +10,11 @@ services:
     - 80:80
     env_file:
       - .env
+    networks:
+      - innersource
+
+networks:
+  innersource:
+    external:
+      name: innersource
+
