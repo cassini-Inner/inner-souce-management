@@ -1,9 +1,11 @@
-version: 3
+version: '3'
 services:
   innersource_ui:
     build:
       context: ./
       dockerfile: Dockerfile
+      args:
+        CLIENT_ID: ${CLIENT_ID}
     ports:
     - 80:80
     env_file:

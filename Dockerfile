@@ -10,6 +10,6 @@ RUN npm run build
 
 # Stage 2 - start the production environment
 CMD ["node","server.js"]
-EXPOSE 3000
+EXPOSE 80
 
 
