@@ -1,0 +1,10 @@
+version: 3
+services:
+  innersource_ui:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+    - 80:80
+    env_file:
+      - .env
