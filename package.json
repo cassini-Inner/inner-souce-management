@@ -1,7 +1,7 @@
 {
   "name": "nebula",
   "version": "1.0.0",
-  "description": "A tool for insourcing jobs.",
+  "description": "A tool for inner-sourcing jobs.",
   "main": "index.js",
   "scripts": {
     "build:css": "postcss ./src/assets/style/tailwind.css -o ./src/assets/style/index.css",
