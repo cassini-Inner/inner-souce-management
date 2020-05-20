@@ -4,8 +4,11 @@ import { useLazyQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../queries";
 
 const CLIENT_ID = process.env.CLIENT_ID;
-const githubAuthUrl = "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID + "&scope=read:user user:email";
+const GITHUB_DOMAIN = process.env.GITHUB_DOMAIN;
+const API_URL = process.env.API_URL;
+const githubAuthUrl = `https://${GITHUB_DOMAIN}/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:user user:email`;
 
+console.log(API_URL);
 export function useAuthentication() {
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState({});
@@ -25,7 +28,7 @@ export function useAuthentication() {
 
     useEffect(() => {
         setLoading(true);
-        Axios.get("http://localhost:8080/read-cookie", { withCredentials: true }).then(
+        Axios.get(`${API_URL}/read-cookie`, { withCredentials: true }).then(
             (data) => {
                 getUserInfo({ variables: { userId: data.data.user_id } });
             }
@@ -44,10 +47,10 @@ export function useAuthentication() {
         console.log("finish auth");
         if (code !== "") {
             setLoading(true);
-            Axios.post("http://localhost:8080/authenticate", { "code": code }, {
+            Axios.post(`${API_URL}/authenticate`, { "code": code }, {
                 withCredentials: true,
             }).then(() => {
-                Axios.get("http://localhost:8080/read-cookie", { withCredentials: true },
+                Axios.get(`${API_URL}/read-cookie`, { withCredentials: true },
                 ).then((data) => {
                     setAuthenticated(true);
                     getUserInfo({ variables: { userId: data.data.user_id } });
@@ -62,7 +65,7 @@ export function useAuthentication() {
     };
 
     const signOut = () => {
-        Axios.post("http://localhost:8080/logout", null, { withCredentials: true }).then(
+        Axios.post(`${API_URL}/logout`, null, { withCredentials: true }).then(
             () => {
                 setAuthenticated(false);
                 setUser(null);

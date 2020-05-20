@@ -12,7 +12,9 @@ import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
-const httpLink = new createHttpLink({ uri: "http://localhost:8080/query", credentials: "include" });
+
+const GRAPH_API_URL = process.env.GRAPH_API_URL;
+const httpLink = new createHttpLink({ uri: `${GRAPH_API_URL}`, credentials: "include" });
 
 //To set the authorization header from cookies
 const authLink = setContext((_, { headers }) => {
