@@ -99,19 +99,17 @@ const ManageJobs = (props) => {
     return (
         <div className="px-10">
             <Navbar />
-                <div className="flex py-4 mx-1 z-20">
-                    <div className="text-xl font-semibold flex-1">
+            <div className="flex py-4 mx-1 z-20">
+                <div className="text-xl font-semibold flex-1">
                         Created Jobs
-                    </div>
-                    <div className="flex">
-                        <Link to="/createJob">
-                            <Button type="primary" label="Create new job" />
-                        </Link>
-                    </div>
-                    <Link to="/createJob"><Button label="Create a new Job"
-                        type="primary" /></Link>
                 </div>
-                <TabStrip tabs={tabList} />
+                <div className="flex">
+                    <Link to="/createJob">
+                        <Button type="primary" label="Create new job" />
+                    </Link>
+                </div>
+            </div>
+            <TabStrip tabs={tabList} />
             <div className="my-2">
                 <Route exact path={props.match.url + "/open"}
                     component={(props) => <CreatedJobList jobs={openJobsCreated} placeholder={createJobsPlaceholder} />} />
