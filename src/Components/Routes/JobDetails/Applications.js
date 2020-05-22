@@ -11,11 +11,11 @@ const Applications = (props) => {
             {
                 displayHeaderState
                     ?
-                    <div className="mt-6 mb-8 flex-col px-2">
-                        <div className="flex mb-2">
+                    <div className="mt-6 mb-8 px-2">
+                        <div className="flex-col md:flex md:flex-row mb-2">
                             <div className="self-center flex-1 ">
                                 <p className="text-base font-semibold">Filter applications by type</p>
-                                <p className="text-sm text-gray-700">
+                                <p className="text-sm text-gray-600">
                                 Since applicants can apply to specific milestones or complete job, you can filter applicants by application type.
                                 </p>
                             </div>

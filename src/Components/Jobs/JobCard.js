@@ -15,7 +15,7 @@ const JobCard = (props) => {
             key={props.data.id}>
                 <h1 className="text-base font-semibold">{props.data.title}</h1>
                 <div
-                    className="mt-2 text-base leading-relaxed text-nebula-grey-700 mb-4">
+                    className="mt-2 text-base leading-relaxed text-nebula-grey-700 mb-6">
                     {props.data.description}
                 </div>
                 <div className="flex flex-wrap items-center my-4">

@@ -48,14 +48,14 @@ const Navbar = () => {
                 <Portal isOpen={searchOpen} scrim={true} close={()=> setSearchOpen(false)}>
                     <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen}/>
                 </Portal>
-                <button onClick={()=> {setSearchOpen(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 mt-2 flex items-center">
+                <button onClick={()=> {setSearchOpen(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
                     <Icons.Search className="h-6 w-6 flex-1 hover:text-nebula-blue" />
                 </button>
-                <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 mt-2 flex items-center">
+                <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
                     <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
                 </div>
                 <button onClick={openProfilePopup} >
-                    <Avatar imagePath={user.photoUrl} className="w-10 h-10 mt-2" />
+                    <Avatar imagePath={user.photoUrl} className="w-10 h-10" />
                 </button>
                 <ProfileModal
                     onMouseOver={handleMouseOver}
