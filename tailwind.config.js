@@ -1,9 +1,13 @@
 module.exports = {
+    purge: [
+        "./src/**/*.html",
+        "./src/**/*.js",
+    ],
     theme: {
         extend: {
             fontFamily: {
                 sans: [
-                    "\"Source Sans Pro\"",
+                    "Inter",
                     "system-ui",
                     "-apple-system",
                     "BlinkMacSystemFont",
