@@ -3,7 +3,7 @@ import Axios from "axios";
 import { useLazyQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../queries";
 
-const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_ID =  "5a4ff35b849d9cc3cab7"//process.env.CLIENT_ID;
 const githubAuthUrl = "https://github.com/login/oauth/authorize?client_id=" + CLIENT_ID + "&scope=read:user user:email";
 
 export function useAuthentication() {
