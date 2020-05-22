@@ -1,17 +1,20 @@
 version: '3'
 services:
   innersource_ui:
+    working_dir: /innersource
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       args:
         CLIENT_ID: ${CLIENT_ID}
         API_URL: ${API_URL}
         GITHUB_DOMAIN: ${GITHUB_DOMAIN}
         GRAPH_API_URL: ${GRAPH_API_URL}
-        PORT: 80
+        PORT: 3000
+    volumes:
+    - .:/innersource
     ports:
-    - 80:80
+    - 3000:3000
     env_file:
       - .env
 

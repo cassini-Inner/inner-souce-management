@@ -61,7 +61,7 @@ module.exports =  {
         }),
     ],
     devServer: {
-        port: 80,
+        port: process.env.PORT,
         historyApiFallback: true,
     },
     devtool: "cheap-module-eval-source-map",
