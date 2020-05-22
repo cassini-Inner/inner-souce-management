@@ -70,7 +70,7 @@ const EditJob = (props) => {
                             resolution: milestone.resolution,
                             duration: milestone.duration,
                             skills: milestone.skills.map((skill, _) => skill.value)
-                        }
+                        };
                     }),
                         
                 }
@@ -391,17 +391,17 @@ const JobForm = (props) => {
                 Job Details
             </div>
             <h2 className="text-sm font-semibold ">Job Title</h2>
-            <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} value ={props.state.job.title?props.state.job.title:'' }/>
+            <TextInput id="jobtitle" className="mt-2 w-full" placeholder="Give your Job an appropriate title" onChange={props.onChange} value ={props.state.job.title?props.state.job.title:"" }/>
             {props.state.job.errorMessages.titleErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.titleErr}</div> : ""}
             <h2 className="text-sm font-semibold mt-10">Job Description</h2>
-            <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} value ={props.state.job.description?props.state.job.description:'' } />
+            <TextAreaInput id="jobdescription" className="mt-2 w-full" placeholder="Enter a brief overview of the job" onChange={props.onChange} value ={props.state.job.description?props.state.job.description:"" } />
             {props.state.job.errorMessages.descriptionErr ? <div className="mt-2 text-nebula-red" >{props.state.job.errorMessages.descriptionErr}</div> : ""}
             <div className="flex mt-10">
                 <div className="flex-col flex-1 pr-1">
                     <h2 className="text-sm font-semibold">Difficulty</h2>
                     <p className="text-nebula-grey-700 leading-tight text-sm">How difficult is the job?</p>
                 </div>
-                <Dropdown id="jobdifficulty" list={["INTERMEDIATE", "EASY", "HARD"]} value ={props.state.job.difficulty?props.state.job.difficulty:'' } onChange={props.onChange} />
+                <Dropdown id="jobdifficulty" list={["INTERMEDIATE", "EASY", "HARD"]} value ={props.state.job.difficulty?props.state.job.difficulty:"" } onChange={props.onChange} />
             </div>
             { //To display error messages
                 props.jobErrMsg ?
