@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CompressionPlugin = require('compression-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require("brotli-webpack-plugin");
 const webpack = require("webpack");
 
@@ -60,16 +60,16 @@ module.exports =  {
                 process.env.GRAPH_API_URL),
         }),
         new CompressionPlugin({
-                algorithm: 'gzip',
-                test: /\.js$|\.css$|\.html$/,
-                threshold: 10240,
-                minRatio: 0.7
-            }),
-                new BrotliPlugin({
-                test: /\.js$|\.css$|\.html$/,
-                threshold: 10240,
-                minRatio: 0.7
-            })
+            algorithm: "gzip",
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.7
+        }),
+        new BrotliPlugin({
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.7
+        })
     ],
     devServer: {
         port: 80,
