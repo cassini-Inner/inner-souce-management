@@ -25,9 +25,9 @@ const YourJobs = (props) => {
             <div className="px-4 lg:px-10">
                 <Navbar />
                 <div className="h-auto pb-4">
-                        <div className="text-xl font-semibold flex-1 py-4">
+                    <div className="text-xl font-semibold flex-1 py-4">
                             Your Jobs
-                        </div>
+                    </div>
                     <div className="my-2" />
                 </div>
                 <YourJobsBody

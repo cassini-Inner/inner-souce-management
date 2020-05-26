@@ -6,15 +6,11 @@ services:
       dockerfile: Dockerfile
       args:
         CLIENT_ID: ${CLIENT_ID}
+        API_URL: ${API_URL}
+        GITHUB_DOMAIN: ${GITHUB_DOMAIN}
+        GRAPH_API_URL: ${GRAPH_API_URL}
     ports:
     - 80:80
     env_file:
       - .env
-    networks:
-      - innersource
-
-networks:
-  innersource:
-    external:
-      name: innersource
 

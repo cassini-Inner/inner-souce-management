@@ -21,7 +21,7 @@ const LoginPage = () => {
             }
 
             <button className="w-full md:w-auto" onClick={() => auth.beginAuth()}>
-                <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-lg items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
+                <div className="flex w-full bg-nebula-grey-800 px-4 h-12 rounded shadow-md items-center hover:shadow-2xl hover:bg-nebula-grey-900 transition duration-300 lg:px-12">
                     <Icons.GitHub className="text-white " />
                     <p className="px-6 text-white font-semibold whitespace-no-wrap">Continue with GitHub</p>
                 </div>
