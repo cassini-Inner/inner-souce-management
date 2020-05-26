@@ -6,6 +6,7 @@ const port = 80;
 const app = express();
 
 app.use("/", expressStaticGzip("dist/", {
+    index: "index.html",
     enableBrotli: true,
     orderPreference: ["br", "gz"],
 }));
@@ -15,8 +16,8 @@ app.use("/", expressStaticGzip("dist/", {
 app.get("/ping", function (req, res) {
     return res.send("pong");
 });
-// app.get("/*", function (req, res) {
-//     res.sendFile(path.join(__dirname, "dist", "index.html"));
-// });
+app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 app.listen(port);

@@ -38,7 +38,7 @@ module.exports =  {
                 exclude: /node_modules/,
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif|tiff|ttf)$/,
+                test: /\.(png|svg|jpg|jpeg|gif|tiff|ttf|woff|woff2)$/,
                 use: [
                     "file-loader?name=assets/[name].[ext]",
                 ],
@@ -61,7 +61,7 @@ module.exports =  {
         }),
     ],
     devServer: {
-        port: 80,
+        port: process.env.PORT,
         historyApiFallback: true,
     },
     devtool: "cheap-module-eval-source-map",

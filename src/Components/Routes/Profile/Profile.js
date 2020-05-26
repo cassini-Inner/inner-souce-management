@@ -53,7 +53,7 @@ const Profile = (props) => {
                         <div className="mt-8 mb-4 flex">
                             <GitHub />
                             <p className="font-semibold ml-4">
-                                {data["User"].photoUrl}
+                                {data["User"].githubUrl}
                             </p>
                         </div>
                         <hr className="my-4" />

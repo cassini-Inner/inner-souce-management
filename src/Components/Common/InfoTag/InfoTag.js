@@ -16,13 +16,13 @@ const InfoTag = (props) => {
         <div className={props.className}>
             <div>
                 <p
-                    className="leading-tight tracking-widest text-xs text-nebula-grey-600 mb-1">
+                    className="leading-tight tracking-widest text-xs text-nebula-grey-600">
                     {props.title.toUpperCase()}
                 </p>
             </div>
             <span>
                 <span
-                    className="font-semibold leading-tight text-sm text-nebula-grey-700">
+                    className="font-medium leading-tight text-sm text-nebula-grey-800">
                     {content}
                     {props.limit && !remainingCount.length != 0 &&
                         <span className="text-nebula-grey-500">

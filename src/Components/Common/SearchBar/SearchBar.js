@@ -144,7 +144,7 @@ const JobSearchListing = ({title, status,viewerHasApplied, description, id}) => 
                 </div>
                 <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
                     <div className=" text-sm font-semibold text-nebula-grey-800 mb-2">{title}</div>
-                    <div className="text-sm text-nebula-grey-700 mb-2">{description.slice(0,200)}</div>
+                    <div className="text-sm text-nebula-grey-700 mb-3">{description.slice(0,200)}</div>
                     <StatusTags statusTag={tags} />
                 </div>
             </div>
