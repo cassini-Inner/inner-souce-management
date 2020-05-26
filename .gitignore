@@ -3,3 +3,4 @@ node_modules
 src\Components\Routes\Onboarding\OnboardingPage.js
 yarn.lock
 /.env
+/.env.dev

@@ -7,7 +7,7 @@
     "build:css": "postcss ./src/assets/style/tailwind.css -o ./src/assets/style/index.css",
     "watch:css": "postcss ./src/assets/style/tailwind.css -o ./src/assets/style/index.css",
     "test": "jest --transformIgnorePatterns",
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server --open --host 0.0.0.0",
     "build": "webpack --config ./webpack.prod.js --env.NODE_ENV=production"
   },
   "repository": {

@@ -67,7 +67,7 @@ const JobInformation = (props) => {
                 </div>
             </div>
             <AuthorInfo
-                className="mt-2 pb-8"
+                className="mt-4 pb-8"
                 iconClass="w-12 h-12"
                 redirectUrl={data["Job"].createdBy.id}
                 department={data["Job"].createdBy.department}

@@ -146,10 +146,10 @@ const CommentItem = (props) => {
         <div className="flex p-4 flex-row flex-auto items-start ">
             <Avatar className="h-8 w-8" imagePath={comment.createdBy.photoUrl} />
             <div className="ml-4 flex-grow ">
-                <p className="text-sm font-semibold text-nebula-grey-700">
+                <p className="text-md font-medium text-nebula-grey-800">
                     {comment.createdBy.name}
                 </p>
-                <p className="text-xs text-nebula-grey-600">
+                <p className="text-sm text-nebula-grey-600">
                     { "Commented on " + dateTimeString}
                 </p>
                 <div>

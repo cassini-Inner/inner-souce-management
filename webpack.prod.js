@@ -8,12 +8,12 @@ module.exports = merge(common, {
     plugins: [
         new CompressionPlugin({
             algorithm: "gzip",
-            test: /\.js$|\.css$|\.html$/,
+            test: /\.js$|\.css$|\.html$|\.woff$|\.woff2$/,
             threshold: 10240,
             minRatio: 0.7,
         }),
         new BrotliPlugin({
-            test: /\.js$|\.css$|\.html$/,
+            test: /\.js$|\.css$|\.html$|\.woff$|\.woff2$/,
             threshold: 10240,
             minRatio: 0.7,
         }),

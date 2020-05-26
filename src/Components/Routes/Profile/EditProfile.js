@@ -3,11 +3,8 @@ import Navbar from "../../Navigation/Navbar/Navbar";
 import Button from "../../Common/Button/Button";
 import TextInput from "../../Common/InputFields/TextInput";
 import TextAreaInput from "../../Common/InputFields/TextAreaInput";
-import SearchTagsInput from "../../Common/InputFields/SearchTagsInput";
 import { UPDATE_USER_PROFILE } from "../../../mutations";
 import { GET_USER_PROFILE } from "../../../queries";
-import { withRouter } from "react-router";
-import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import { useMutation } from "@apollo/client";
 import { validateProfileUpdate } from "./ValidateForm";
@@ -15,6 +12,9 @@ import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 import { useSkills } from "../../../hooks/useSkills/hook";
 import { SkillsInput } from "../../Common/InputFields/SkillsInput";
+import {Fragment} from "react";
+
+
 const EditProfile = (props) => {
     const { user } = useContext(AuthenticationContext);
     return (
@@ -141,8 +141,8 @@ const EditProfileBody = (props) => {
     if (error) return <p>Error! {error}</p>;
 
     return (
-        <div className=" ">
-            <div className="container mx-auto">
+        <Fragment>
+            <div className="container mx-auto px-8">
                 <Navbar />
                 <div
                     className="mx-auto max-w-screen-md flex flex-col justify-center">
@@ -208,7 +208,12 @@ const EditProfileBody = (props) => {
                                 initialList={state.skills}
                                 getTagList={getTagList}
                             /> */}
-                            <SkillsInput skills={skills} addSkill={addSkill} removeSkill={removeSkill}></SkillsInput>
+                            <SkillsInput
+                                skills={skills}
+                                addSkill={addSkill}
+                                removeSkill={removeSkill}
+                                label="Skills and areas of interest"
+                            />
                             {
                                 state.errMsg ?
                                     <div
@@ -221,16 +226,16 @@ const EditProfileBody = (props) => {
                 </div>
             </div>
             <div
-                className="flex sticky bottom-0 flex-row flex-wrap bg-white py-4 border-t border-nebula-grey-400 ">
+                className="flex px-8 sticky bottom-0 flex-row flex-wrap bg-white py-4 border-t border-nebula-grey-400 ">
                 <div className="max-w-screen-md w-full mx-auto">
                     <Button label="Save changes" type="primary"
-                        className="mx-2" onClick={updateProfile} />
+                        className="mr-2" onClick={updateProfile} />
                     <Button label="Discard changes" type="secondary"
-                        className="mx-2"
+                        className="mr-2"
                         onClick={() => props.history.goBack()} />
                 </div>
             </div>
-        </div>
+        </Fragment>
     );
 };
 
