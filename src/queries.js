@@ -405,3 +405,48 @@ export const SEARCH_JOBS_USERS_LIMIT = gql`
        }
   }
 `;
+
+//Get all jobs with filter -  paginated 
+export const GET_PAGINATED_JOBS_FILTER = gql`
+    query Jobs($filter: JobsFilterInput, $limit: Int!, $after: ID) {
+        Jobs(filter: $filter, limit: $limit, after: $after) {
+            totalCount
+            pageInfo {
+                hasNextPage
+            }
+            allJobs: edges {
+                cursor
+                Job: node {
+                    id
+                    title
+                    createdBy {
+                        id
+                        name
+                        department
+                        photoUrl
+                    }
+                    description: desc
+                    duration
+                    difficulty
+                    status
+                    skills {
+                        id
+                        value
+                    }
+                    timeCreated
+                    viewerHasApplied
+                    milestones {
+                        totalCount
+                        milestones{
+                            id
+                            duration
+                        }
+                    }
+                    applications {
+                        acceptedCount
+                    }
+                }
+            }
+        }
+    }
+`;

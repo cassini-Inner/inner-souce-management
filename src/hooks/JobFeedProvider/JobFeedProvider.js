@@ -1,6 +1,7 @@
-import React, { useMemo, useReducer, useContext } from "react";
-import { GET_USER_SKILLS, GET_ALL_JOBS_FILTER } from "../../queries";
+import React, { useMemo, useReducer, useContext, useEffect, useState } from "react";
+import { GET_USER_SKILLS, GET_ALL_JOBS_FILTER, GET_PAGINATED_JOBS_FILTER } from "../../queries";
 import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { AuthenticationContext } from "../useAuthentication/provider";
 
 export const JobsFeedContext = React.createContext();
@@ -15,6 +16,7 @@ export const actions = {
     REMOVE_STATUS: "REMOVE_STATUS",
     INIT_SKILLS: "INIT_SKILLS",
     RESET: "RESET",
+    APPEND_JOBS: "APPEND_JOBS"
 };
 
 export const jobStatuses = {
@@ -83,6 +85,12 @@ function reducer(state, action) {
             jobs: action.value
         };
     }
+    case actions.APPEND_JOBS: {
+        return {
+            ...state,
+            jobs: [...state.jobs, ...action.value]
+        };
+    }
     default:
         return state;
     }
@@ -91,10 +99,13 @@ function reducer(state, action) {
 
 export const JobsFeedProvider = (({ children }) => {
 
-    const { user } = useContext(AuthenticationContext);
-    // console.log("jobs feed provider, user: ", user);
+    const jobListLimit = 3;
+ 
+    const [ lastJobCursor, setLastJobCursor ] = useState(null)
+    const [ updateJobListType, setUpdateJobListType ] = useState("scroll")
 
-    // console.log("job feed");
+    const { user } = useContext(AuthenticationContext);
+
     const [state, dispatch] = useReducer(reducer, { skills: user.skills != null ? user.skills.map(({ value }) => value) : [], status: [], jobs: [] });
 
     const { loading, error, data } = useQuery(GET_USER_SKILLS, {
@@ -112,26 +123,65 @@ export const JobsFeedProvider = (({ children }) => {
         }
     });
 
-    const { loading: jobsLoading, data: jobsData } = useQuery(
-        GET_ALL_JOBS_FILTER, {
+
+    const [getJobList, { loading: jobsLoading, data: jobsData }] = useLazyQuery(GET_PAGINATED_JOBS_FILTER, {
+        onCompleted: (data) => {
+            if (data != null &&  data.Jobs.allJobs != null &&  data.Jobs.allJobs != []) {
+                let jobs =  data.Jobs.allJobs.map((value, key) => {
+                    if(key == data.Jobs.allJobs.length-1) {
+                        setLastJobCursor(value.cursor)
+                    }
+                    return value.Job
+                })
+                if(updateJobListType == "scroll") {
+                    dispatch({ type: actions.APPEND_JOBS, value: jobs });
+                }
+                else if(updateJobListType == "filter") {
+                    dispatch({ type: actions.UPDATE_JOBS, value: jobs });
+                }
+            }
+        },
+        onError: (error) => {
+            console.log(error);
+        },
+        fetchPolicy: "cache-and-network",
+    });
+
+    useEffect(
+        () => {
+            setUpdateJobListType("filter")
+            getJobList({
+                variables: {
+                    filter: {
+                        skills: state.skills,
+                        status: state.status,
+                    },
+                    limit: jobListLimit,
+                }
+            }) 
+        },
+        [state.skills, state.status]
+    );
+
+    const loadJobList = () => {
+        setUpdateJobListType("scroll")
+        getJobList({
             variables: {
                 filter: {
                     skills: state.skills,
                     status: state.status,
-                }
-            },
-            fetchPolicy: "network-only",
-            onCompleted: (data) => {
-                if (data != null) {
-                    const jobs = data.allJobs != null ? data.allJobs : [];
-                    dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
-                }
-            },
-            onError: (error) => {
-            // console.log(error);
+                },
+                limit: jobListLimit,
+                after: lastJobCursor
             }
+        }) 
+    }
+
+    window.onscroll = (ev) => {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            loadJobList()      
         }
-    );
+    }; 
 
     const contextValue = useMemo(() => {
         return { state, dispatch };

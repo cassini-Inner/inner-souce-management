@@ -1,10 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import JobList from "../../Jobs/JobList";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
-import {
-    GET_ALL_JOBS_FILTER,
-    GET_YOUR_JOBS,
-} from "../../../queries";
+import { GET_YOUR_JOBS } from "../../../queries";
 import { useQuery } from "@apollo/client";
 import Placeholder from "../../Placeholders/placeholder";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
@@ -24,28 +21,6 @@ const Content = (props) => {
         });
 
     const { state, dispatch } = useContext(JobsFeedContext);
-
-    const { loading: jobsLoading, data: jobsData } = useQuery(
-        GET_ALL_JOBS_FILTER, {
-            variables: {
-                filter: {
-                    skills: state.skills,
-                    status: state.status,
-                }
-            },
-            fetchPolicy: "cache-and-network",
-            onCompleted: (data) => {
-                if (data != null && data.allJobs != null) {
-                    dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
-                }
-            },
-            onError: (error) => {
-            // console.log(error);
-            }
-        }
-    );
-
-
 
     if (OngoingJobsLoad) {
         return <LoadingIndicator />;
@@ -79,7 +54,7 @@ const Content = (props) => {
                     type="primary" /></Link>
             </div>
             <JobList jobs={state.jobs}
-                placeholder={placeholder} loading={jobsLoading} />
+                placeholder={placeholder} />
         </div>
     );
 };
