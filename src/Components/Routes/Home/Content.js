@@ -1,8 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import JobList from "../../Jobs/JobList";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import {
-    GET_ALL_JOBS_FILTER,
     GET_YOUR_JOBS,
 } from "../../../queries";
 import { useQuery } from "@apollo/client";
@@ -15,6 +20,7 @@ import { AuthenticationContext } from "../../../hooks/useAuthentication/provider
 import NoJobsFilterImage from "../../../assets/images/explore_jobs_placeholder.svg";
 
 const Content = (props) => {
+
     const { user } = useContext(AuthenticationContext);
 
     const { loading: OngoingJobsLoad, error: OngoingJobsError, data: OngoingJobsData } = useQuery(
@@ -23,27 +29,17 @@ const Content = (props) => {
             fetchPolicy: "cache-and-network",
         });
 
-    const { state, dispatch } = useContext(JobsFeedContext);
-
-    const { loading: jobsLoading, data: jobsData } = useQuery(
-        GET_ALL_JOBS_FILTER, {
-            variables: {
-                filter: {
-                    skills: state.skills,
-                    status: state.status,
-                }
-            },
-            fetchPolicy: "cache-and-network",
-            onCompleted: (data) => {
-                if (data != null && data.allJobs != null) {
-                    dispatch({ type: actions.UPDATE_JOBS, value: data.allJobs });
-                }
-            },
-            onError: (error) => {
-            // console.log(error);
+    const { jobData,loading, loadMoreJobs } = useContext(JobsFeedContext);
+    const observer = useRef();
+    const loadMoreRef = useCallback(node => {
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && !loading && jobData.hasNextPage) {
+                loadMoreJobs();
             }
-        }
-    );
+        });
+        if (node) observer.current.observe(node);
+    }, [jobData]);
 
 
 
@@ -66,7 +62,6 @@ const Content = (props) => {
         image={NoJobsFilterImage}
     />);
 
-
     return (
         <div className="h-auto">
             <OngoingJobsGrid maxCount={2} location="home" title="Ongoing Jobs"
@@ -78,8 +73,13 @@ const Content = (props) => {
                 <Link to="/createJob"><Button label="Create a new Job"
                     type="primary" /></Link>
             </div>
-            <JobList jobs={state.jobs}
-                placeholder={placeholder} loading={jobsLoading} />
+            <JobList
+                jobs={jobData.jobs}
+                placeholder={placeholder}
+                loading={loading}
+            />
+            <div ref={loadMoreRef} className=""></div>
+            {/*<button onClick={loadMoreJobs} >Load more jobs</button>*/}
         </div>
     );
 };
