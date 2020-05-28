@@ -55,6 +55,7 @@ const Content = (props) => {
             </div>
             <JobList jobs={state.jobs}
                 placeholder={placeholder} />
+            <div id="scrollObserver" >Hii</div>
         </div>
     );
 };

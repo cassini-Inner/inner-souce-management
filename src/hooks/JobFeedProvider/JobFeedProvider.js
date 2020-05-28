@@ -99,8 +99,7 @@ function reducer(state, action) {
 
 export const JobsFeedProvider = (({ children }) => {
 
-    const jobListLimit = 3;
- 
+    const jobListLimit = 5;
     const [ lastJobCursor, setLastJobCursor ] = useState(null)
     const [ updateJobListType, setUpdateJobListType ] = useState("scroll")
 
@@ -147,6 +146,12 @@ export const JobsFeedProvider = (({ children }) => {
         fetchPolicy: "cache-and-network",
     });
 
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        let observer = new IntersectionObserver((entries) => alert("hii") , null);
+        let target = document.getElementById('scrollObserver');
+        observer.observe(target);
+      });
+
     useEffect(
         () => {
             setUpdateJobListType("filter")
@@ -163,25 +168,25 @@ export const JobsFeedProvider = (({ children }) => {
         [state.skills, state.status]
     );
 
-    const loadJobList = () => {
-        setUpdateJobListType("scroll")
-        getJobList({
-            variables: {
-                filter: {
-                    skills: state.skills,
-                    status: state.status,
-                },
-                limit: jobListLimit,
-                after: lastJobCursor
-            }
-        }) 
-    }
+    // const loadJobList = () => {
+    //     setUpdateJobListType("scroll")
+    //     getJobList({
+    //         variables: {
+    //             filter: {
+    //                 skills: state.skills,
+    //                 status: state.status,
+    //             },
+    //             limit: jobListLimit,
+    //             after: lastJobCursor
+    //         }
+    //     }) 
+    // }
 
-    window.onscroll = (ev) => {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            loadJobList()      
-        }
-    }; 
+    // window.onscroll = (ev) => {
+    //     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    //         loadJobList()      
+    //     }
+    // }; 
 
     const contextValue = useMemo(() => {
         return { state, dispatch };
