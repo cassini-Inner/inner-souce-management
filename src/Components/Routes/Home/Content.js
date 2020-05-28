@@ -79,7 +79,6 @@ const Content = (props) => {
                 loading={loading}
             />
             <div ref={loadMoreRef} className=""></div>
-            {/*<button onClick={loadMoreJobs} >Load more jobs</button>*/}
         </div>
     );
 };

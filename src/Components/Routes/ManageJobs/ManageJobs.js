@@ -135,17 +135,19 @@ const CreatedJobList = (props) => {
                             ?
                             <Link to={"/jobDetails/" + job.id} >
                                 <div className="flex mt-1">
-                                    <div className="self-center font-semibold text-nebula-blue text-sm ml-6 ">
-                                        View {job.applications.pendingCount} Applications
+                                    <div className="self-center font-semibold hover:text-nebula-blue text-sm ml-6 ">
+                                        <Link to={"/jobDetails/" + job.id+"/applications"} >
+                                            View {job.applications.pendingCount} Applications
+                                        </Link>
                                     </div>
-                                    <div className="flex py-8 px-8">
+                                    <div className="flex flex-row py-8 px-8">
                                         {
                                             job.applications.applications
                                                 ?
                                                 job.applications.applications.slice(0, 3).map((application, key) => {
                                                     if (application.status.toUpperCase() == "PENDING") {
                                                         return (
-                                                            <div key={application.applicant.id} className="self-center rounded-full bg-nebula-blue-light p-1 z-0 absolute">
+                                                            <div key={application.applicant.id} className={"self-center rounded-full bg-nebula-blue-light p-1 z-0 absolute " + "ml-"+(key*4)}>
                                                                 <img src={application.applicant.photoUrl} className="flex-0 h-8 w-8 rounded-full" />
                                                             </div>
                                                         );

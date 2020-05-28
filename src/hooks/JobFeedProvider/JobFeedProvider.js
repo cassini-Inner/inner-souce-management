@@ -1,6 +1,7 @@
-import React, { useMemo, useReducer, useContext } from "react";
-import { GET_USER_SKILLS, GET_ALL_JOBS_FILTER } from "../../queries";
+import React, { useMemo, useReducer, useContext, useEffect, useState } from "react";
+import { GET_USER_SKILLS, GET_ALL_JOBS_FILTER, GET_PAGINATED_JOBS_FILTER } from "../../queries";
 import { useQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { AuthenticationContext } from "../useAuthentication/provider";
 import { useJobsFeed } from "./hook";
 
