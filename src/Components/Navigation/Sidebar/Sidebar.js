@@ -43,7 +43,7 @@ const Sidebar = (props) => {
                     }
                 </button>
             </div>
-            <div className={expansionState.expanded ? "block " : "hidden lg:block "}>
+            <div className={expansionState.expanded ? "absolute w-full bg-white sm:shadow-lg pb-4 " : "hidden lg:block "}>
                 <ul>
                     <li>
                         <SidebarItem
@@ -87,28 +87,21 @@ const Sidebar = (props) => {
 const SidebarReactiveFilter = (props) => {
     const skillsFilterRef = useRef();
 
-    const ctx = React.useContext(JobsFeedContext);
-    const { state, dispatch } = ctx;
-    const { skills, status } = state;
+    const {skills, status, addSkill, removeSkill, resetFilter, addStatus, removeStatus} = React.useContext(JobsFeedContext);
 
 
     const inputOnKeyDown = (e) => {
         if (e.keyCode === 13 && skillsFilterRef.current.value != "") {
-
-            dispatch({ type: actions.ADD_SKILL, value: skillsFilterRef.current.value });
+            addSkill(skillsFilterRef.current.value);
             skillsFilterRef.current.value = "";
         }
     };
 
-    const removeSkill = (value) => dispatch({ type: actions.REMOVE_SKILL, value: value });
-
-    const resetFilter = () => dispatch({ type: actions.RESET });
-
     const checkboxOnChange = (e) => {
         if (e.currentTarget.checked) {
-            dispatch({ type: actions.ADD_STATUS, value: e.currentTarget.id });
+            addStatus( e.currentTarget.id );
         } else {
-            dispatch({ type: actions.REMOVE_STATUS, value: e.currentTarget.id });
+            removeStatus( e.currentTarget.id );
         }
     };
 
