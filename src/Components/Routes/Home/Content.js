@@ -1,7 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, {
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import JobList from "../../Jobs/JobList";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
-import { GET_YOUR_JOBS } from "../../../queries";
+import {
+    GET_YOUR_JOBS,
+} from "../../../queries";
 import { useQuery } from "@apollo/client";
 import Placeholder from "../../Placeholders/placeholder";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
@@ -12,6 +20,7 @@ import { AuthenticationContext } from "../../../hooks/useAuthentication/provider
 import NoJobsFilterImage from "../../../assets/images/explore_jobs_placeholder.svg";
 
 const Content = (props) => {
+
     const { user } = useContext(AuthenticationContext);
 
     const { loading: OngoingJobsLoad, error: OngoingJobsError, data: OngoingJobsData } = useQuery(
@@ -20,7 +29,19 @@ const Content = (props) => {
             fetchPolicy: "cache-and-network",
         });
 
-    const { state, dispatch } = useContext(JobsFeedContext);
+    const { jobData,loading, loadMoreJobs } = useContext(JobsFeedContext);
+    const observer = useRef();
+    const loadMoreRef = useCallback(node => {
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && !loading && jobData.hasNextPage) {
+                loadMoreJobs();
+            }
+        });
+        if (node) observer.current.observe(node);
+    }, [jobData]);
+
+
 
     if (OngoingJobsLoad) {
         return <LoadingIndicator />;
@@ -41,7 +62,6 @@ const Content = (props) => {
         image={NoJobsFilterImage}
     />);
 
-
     return (
         <div className="h-auto">
             <OngoingJobsGrid maxCount={2} location="home" title="Ongoing Jobs"
@@ -53,9 +73,12 @@ const Content = (props) => {
                 <Link to="/createJob"><Button label="Create a new Job"
                     type="primary" /></Link>
             </div>
-            <JobList jobs={state.jobs}
-                placeholder={placeholder} />
-            <div id="scrollObserver" >Hii</div>
+            <JobList
+                jobs={jobData.jobs}
+                placeholder={placeholder}
+                loading={loading}
+            />
+            <div ref={loadMoreRef} className=""></div>
         </div>
     );
 };

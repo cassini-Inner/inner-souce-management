@@ -137,38 +137,46 @@ export const GET_JOB_APPLICANTS = gql`
 
 // To get all the jobs based filter
 export const GET_ALL_JOBS_FILTER = gql`
-    query allJobs($filter: JobsFilterInput) {
-        allJobs(filter: $filter) {
-            id
-            title
-            createdBy {
+query Jobs($filter: JobsFilterInput!, $limit: Int!, $after: ID) {
+    Jobs(filter: $filter, limit: $limit, after:$after) {
+        edges {
+            node {
                 id
-                name
-                department
-                photoUrl
-            }
-            description: desc
-            duration
-            difficulty
-            status
-            skills {
-                id
-                value
-            }
-            timeCreated
-            viewerHasApplied
-            milestones {
-                totalCount
-                milestones{
+                title
+                createdBy {
                     id
-                    duration
+                    name
+                    department
+                    photoUrl
+                }
+                description: desc
+                duration
+                difficulty
+                status
+                skills {
+                    id
+                    value
+                }
+                timeCreated
+                viewerHasApplied
+                milestones {
+                    totalCount
+                    milestones {
+                        id
+                        duration
+                    }
+                }
+                applications {
+                    acceptedCount
                 }
             }
-            applications {
-                acceptedCount
-            }
+        }
+        pageInfo {
+            hasNextPage
+            endCursor
         }
     }
+}
 `;
 
 // To get the ongoing jobs of a user based on user id
@@ -259,7 +267,7 @@ export const GET_USER_ONBOARDED = gql`
     }
 `;
 
-// To get your jobs 
+// To get your jobs
 export const GET_YOUR_JOBS = gql`
     query($userId: ID!){
         User(id: $userId){
@@ -304,7 +312,7 @@ export const GET_YOUR_JOBS = gql`
 `;
 
 
-// To get created jobs 
+// To get created jobs
 export const GET_CREATED_JOBS = gql`
     query($userId: ID!){
         User(id: $userId){
@@ -359,7 +367,7 @@ export const GET_SKILLS_SUGGESTIONS = gql`
     }
 `;
 
-// To get all the job details based on job id for edit 
+// To get all the job details based on job id for edit
 export const GET_EDIT_JOB_DETAILS = gql`
     query GET_EDIT_JOB_DETAILS($jobId:ID!){
         Job(id:$jobId){
