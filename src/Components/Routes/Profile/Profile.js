@@ -9,10 +9,10 @@ import InfoTag from "../../Common/InfoTag/InfoTag";
 import { Link, useParams, Redirect } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../../queries";
-import { connect } from "react-redux";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 import { useSkills } from "../../../hooks/useSkills/hook";
+import JobsBackup from "../JobsBackup/JobsBackup";
 
 const Profile = (props) => {
     //To get the user id from url
@@ -85,7 +85,6 @@ const Profile = (props) => {
                             <p className="font-semibold mb-4 ">Skills</p>
                             <LabelChipBuilder labels={userSkills} />
                         </div>
-
                         <div className="mt-4">
                             <p className="font-semibold mb-4 ">Job Stats</p>
                             <div className="flex flex-row">
@@ -93,6 +92,14 @@ const Profile = (props) => {
                                 <InfoTag title="Ongoing Jobs" data={profileData.jobStats.ongoing + " Ongoing"}></InfoTag>
                             </div>
                         </div>
+                        { 
+                            userId == user.id 
+                            ?
+                            <div className="mt-8">
+                                <JobsBackup />
+                            </div>
+                            : ""
+                        }
                     </div>
                 </div>
             </Card>

@@ -458,3 +458,34 @@ export const GET_PAGINATED_JOBS_FILTER = gql`
         }
     }
 `;
+
+// To get all created jobs for download
+export const GET_JOBS_BACKUP = gql`
+    query($userId: ID!){
+        User(id: $userId){
+            id
+            createdJobs {    
+                id
+                title
+                desc
+                status
+                difficulty
+                milestones {
+                    totalCount
+                    milestones{
+                        id
+                        title 
+                        status
+                        duration
+                        desc 
+                        skills {
+                            id
+                            value
+                        }
+                        resolution
+                    }
+                }
+            }
+        }
+    }
+`;

@@ -45,7 +45,7 @@ const CreateJob = (props) => {
 
     const [createJob, { loading, error }] = useMutation(CREATE_JOB);
     if (error) {
-        // console.log(error);
+        console.log(error);
     }
 
     //To set the skill tags of the milestone
@@ -296,7 +296,7 @@ const CreateJob = (props) => {
     return (
         <Fragment>
             <div className="max-w-screen-md min-h-screen mx-auto px-8">
-                <button onClick={() => { props.history.goBack(); }} className="flex mt-8  py-4 select-none text-nebula-grey-600">
+                <button onClick={() => { props.history.goBack(); }} className="flex mt-8  py-4 select-none hover:text-nebula-blue text-nebula-grey-800">
                     <ArrowLeft />
                     <p className="px-4">Back</p>
                 </button>

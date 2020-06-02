@@ -20,7 +20,6 @@ import { AuthenticationContext } from "../../../hooks/useAuthentication/provider
 import NoJobsFilterImage from "../../../assets/images/explore_jobs_placeholder.svg";
 
 const Content = (props) => {
-
     const { user } = useContext(AuthenticationContext);
 
     const { loading: OngoingJobsLoad, error: OngoingJobsError, data: OngoingJobsData } = useQuery(
@@ -61,6 +60,7 @@ const Content = (props) => {
         buttonLabel="Create a new Job"
         image={NoJobsFilterImage}
     />);
+ 
 
     return (
         <div className="h-auto">
@@ -79,6 +79,7 @@ const Content = (props) => {
                 loading={loading}
             />
             <div ref={loadMoreRef} className=""></div>
+            
         </div>
     );
 };

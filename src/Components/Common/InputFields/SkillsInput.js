@@ -15,7 +15,6 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
         {
             onCompleted: (data) => {
                 const skillValues = (data.Skills.map((skill) => { return skill.value; }));
-                console.log(skillValues);
                 if (inputRef.current.value !== "") {
                     setSkillSuggestions(skillValues);
                 }
@@ -55,7 +54,6 @@ export const SkillsInput = ({ skills, addSkill, removeSkill, reset, skillAddCall
         }
 
         setTypingTimeOut(setTimeout(() => {
-            console.log("timed out");
             getSkillsSuggestions({ variables: { query: value } });
         }, 500));
     };

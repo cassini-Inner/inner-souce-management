@@ -11,7 +11,6 @@ export const validateOnboarding = (userDetails) => {
         emailErr: "",
         skillsErr: "",
     };
-    // console.log(userDetails);
     if (!userDetails.name || !userDetails.name.trim()) {
         errorMessages.nameErr = "Enter your name";
         isvalid = false;

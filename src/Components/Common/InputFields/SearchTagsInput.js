@@ -23,7 +23,6 @@ const SearchTagsInput = (props) => {
         {
             onCompleted: (data) => {
                 const skillValues = (data.Skills.map((skill) => { return skill.value; })).slice(0, 4);
-                console.log(skillValues);
                 setSkillSuggestions(skillValues);
             }
         }
@@ -80,7 +79,6 @@ const SearchTagsInput = (props) => {
         }
 
         setTypingTimeOut(setTimeout(() => {
-            console.log("timed out");
             getSkillsSuggestions({ variables: { query: value } });
         }, 300));
     };

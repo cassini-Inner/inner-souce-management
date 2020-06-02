@@ -33,7 +33,7 @@ export function useAuthentication() {
                 getUserInfo({ variables: { userId: data.data.user_id } });
             }
         ).catch((e) => {
-            // console.log(e);
+            console.log(e);
             setLoading(false);
         });
 
@@ -55,7 +55,7 @@ export function useAuthentication() {
                     setAuthenticated(true);
                     getUserInfo({ variables: { userId: data.data.user_id } });
                 }).catch((e) => {
-                    // console.log(e);
+                    console.log(e);
                     setLoading(false);
                 });
             }).catch((e) => {
