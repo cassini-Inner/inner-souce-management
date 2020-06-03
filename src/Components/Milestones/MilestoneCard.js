@@ -120,7 +120,7 @@ const MilestoneCard = (props) => {
                         }}
                     >
                         <div >
-                            <p className="pt-4 text-sm text-nebula-grey-700 leading-relaxed" >{props.milestone.description}</p>
+                            <p className="pt-4 text-sm text-nebula-grey-700 leading-relaxed" >{props.milestone.description || props.milestone.desc}</p>
                             <div className="flex flex-row flex-wrap">
                                 <InfoTag className="mr-6 mt-4" title="DURATION" data={DurationParser(props.milestone.duration)} />
                                 <InfoTag className="mr-6 mt-4" title="RESOLUTION METHODS" data={props.milestone.resolution} />
