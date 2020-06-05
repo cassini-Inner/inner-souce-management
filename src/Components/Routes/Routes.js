@@ -9,7 +9,7 @@ import ApplyToMilestones from "./JobDetails/ApplyToMilestones";
 import Profile from "./Profile/Profile";
 import ManageJobs from "./ManageJobs/ManageJobs";
 import EditProfile from "./Profile/EditProfile";
-
+import UploadJobsList from "./JobsBackup/UploadJobsList";
 import { AuthenticationContext } from "../../hooks/useAuthentication/provider";
 import Login from "./Login/Login";
 import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
@@ -56,6 +56,7 @@ const Routes = (props) => {
                                         <Route path="/jobDetails/:id" component={JobDetailsPage} />
                                         <Route path="/editJob/:id" component={EditJob} />
                                         <Route path="/yourJobs" component={YourJobs} />
+                                        <Route path="/profile/:id/uploadJobs" component={UploadJobsList} />
                                         <Route path="/profile/edit" component={EditProfile} />
                                         <Route path="/profile/:id" component={Profile} />
                                         <Route path="/manageJobs" component={ManageJobs} />

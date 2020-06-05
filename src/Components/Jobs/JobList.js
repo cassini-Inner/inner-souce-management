@@ -4,7 +4,6 @@ import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 
 const JobList = ({ jobs, placeholder, loading }) => {
 
-    // console.log("jobs:",placeholder);
     return (<div>
         {
             jobs && (jobs.length > 0) &&

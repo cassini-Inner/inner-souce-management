@@ -17,7 +17,6 @@ const CommentsList = ({ jobId }) => {
         {
             variables: { jobId: jobId },
             onCompleted: (data) => {
-                console.log(data);
                 setComments(data.Job.discussion.discussions);
             },
         },

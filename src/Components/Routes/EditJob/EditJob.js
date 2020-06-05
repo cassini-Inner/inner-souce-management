@@ -264,7 +264,6 @@ const EditJob = (props) => {
                     };
                 })
             };
-            console.log(JSON.stringify(updateJobInput));
             updateJob({
                 variables: {
                     job: updateJobInput,

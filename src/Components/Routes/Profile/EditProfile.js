@@ -59,7 +59,6 @@ const EditProfileBody = (props) => {
 
     const { skills, addSkill, removeSkill } = useSkills(userData.skills ? userData.skills.map((skill) => skill.value) : []);
 
-    console.log("skells", skills);
     const onInputChangeHandler = (event) => {
         const value = event.currentTarget.value;
         switch (event.currentTarget.id) {
@@ -121,7 +120,7 @@ const EditProfileBody = (props) => {
                 props.history.push("/profile/" + parseInt(state.id));
             }, //Navigate to profile page on success
             err => {
-                // console.log(err);
+                console.log(err);
             },
             );
             setState({

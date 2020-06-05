@@ -29,7 +29,6 @@ const Navbar = () => {
         const allowClose = !mouseInside;
         setTimeout(
             () => {
-                // console.log(allowClose);
                 if (!allowClose) {
                     setProfileModalState(false);
                 }

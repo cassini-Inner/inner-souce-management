@@ -35,7 +35,6 @@ const SearchBar = ({searchOpen,setSearchOpen}) => {
         }
 
         const timeout = setTimeout(() => {
-            console.log("timed out");
             getSearchResults({
                 variables: {
                     query: value,
@@ -52,7 +51,6 @@ const SearchBar = ({searchOpen,setSearchOpen}) => {
                     ref={searchInputRef}
                     onFocus={(event) => {
                         setSearchOpen(true);
-                        console.log(event.currentTarget);
                     }}
                     onChange={(e) => {handleChange(e);}}
                     onClick={(e)=> {e.stopPropagation();}}
