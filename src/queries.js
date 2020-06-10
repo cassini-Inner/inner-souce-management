@@ -20,6 +20,20 @@ export const GET_MILESTONES = gql`
                     status
                     duration
                     resolution
+                    assignedTo {
+                        id
+                        name
+                    }
+                    review {
+                        id
+                        rating
+                        remark
+                        timeCreated
+                        createdFor {
+                            id
+                            name
+                        }
+                    }
                 }
             }
         } 
@@ -220,6 +234,7 @@ export const GET_JOB_INFO = gql`
             viewerHasApplied 
             createdBy {
                 id
+                name
             }
             milestones{
                 totalCount
@@ -486,6 +501,33 @@ export const GET_JOBS_BACKUP = gql`
                     }
                 }
             }
+        }
+    }
+`;
+
+export const CREATE_REVIEW_MUTATION = gql`
+    mutation CreateReview($review: ReviewInput!, $milestoneId: ID!) {
+        createMilestonePerformanceReview(review: $review, milestoneId: $milestoneId) {
+            id
+            rating
+            createdFor {
+                name
+                id
+            }
+        }
+    }
+`;
+
+export const UPDATE_REVIEW_MUTATION = gql`
+    mutation  UpdateReview($review: ReviewInput!, $id: ID!) {
+        updateMilestonePerformanceReview(review:$review, id: $id) {
+            id
+            rating
+            createdFor {
+                id
+                name
+            }
+            remark
         }
     }
 `;

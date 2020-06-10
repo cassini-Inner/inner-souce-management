@@ -18,6 +18,8 @@ const TextAreaInput = (props) => {
                 onKeyDown={props.onKeyDown ? props.onKeyDown : null}
                 value = {props.value ? props.value : null }
                 defaultValue={props.defaultValue}
+                rows={props.rows}
+                cols={props.cols}
             />
         </Fragment>
     );

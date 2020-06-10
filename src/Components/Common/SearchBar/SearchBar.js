@@ -5,7 +5,7 @@ import Avatar from "../Avatar/Avatar";
 import {Briefcase} from "react-feather";
 import StatusTags from "../StatusTags/StatusTags";
 import { Link } from "react-router-dom";
-const SearchBar = ({searchOpen,setSearchOpen}) => {
+const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
     const searchInputRef = useRef();
     const [jobs, setJobs] = useState([]);
     const [users, setUsers] = useState([]);
@@ -45,7 +45,7 @@ const SearchBar = ({searchOpen,setSearchOpen}) => {
         setTypingTimeout(timeout);
     };
     return (
-        <div className="flex-1">
+        <div ref={forwardedRef} className="flex-1">
             <div className="mx-auto pt-8 w-full max-w-screen-md">
                 <input
                     ref={searchInputRef}

@@ -11,14 +11,19 @@ import { AuthenticationContext } from "../../../hooks/useAuthentication/provider
 import Button from "../../Common/Button/Button";
 import Portal from "../../Containers/Portal";
 import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
+import { useClickOutside } from "../../../hooks/useClickOutside/hook";
 
 const Navbar = () => {
     const { user } = useContext(AuthenticationContext);
 
     const [profileModalState, setProfileModalState] = useState(false);
     const [mouseInside, setMouseInside] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false);
-
+    const {
+        ref: searchRef,
+        setIsComponentVisible: setSearchVisible,
+        isComponentVisible: searchVisible,
+    } = useClickOutside(false);
+    
     const openProfilePopup = (event) => {
         setProfileModalState(true);
         setMouseInside(true);
@@ -44,10 +49,10 @@ const Navbar = () => {
     return (
         <div className="sticky bg-white top-0 py-4">
             <div className="flex items-center justify-end flex-row w-full">
-                <Portal isOpen={searchOpen} scrim={true} close={()=> setSearchOpen(false)}>
-                    <SearchBar searchOpen={searchOpen} setSearchOpen={setSearchOpen}/>
+                <Portal isOpen={searchVisible} scrim={true} >
+                    <SearchBar forwardedRef={searchRef} searchOpen={searchVisible} setSearchOpen={(value)=>setSearchVisible(value)}/>
                 </Portal>
-                <button onClick={()=> {setSearchOpen(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
+                <button onClick={()=> {setSearchVisible(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
                     <Icons.Search className="h-6 w-6 flex-1 hover:text-nebula-blue" />
                 </button>
                 <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
@@ -63,23 +68,7 @@ const Navbar = () => {
                 />
             </div>
         </div>
-        // <div className="h-24 items-center flex z-10 sticky top-0" ref={profileIcon} >
-        //     <div className="flex-1 flex items-center h-8 ">
-        //         <SearchBar/>
-        //         {/* Svg for notifications */}
-        //         <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-8 w-8 flex items-center">
-        //             <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
-        //         </div>
-        //         <button onClick={openProfilePopup} >
-        //             <Avatar imagePath={user.photoUrl} className="w-8 h-8" />
-        //         </button>
-        //         <ProfileModal
-        //             onMouseOver={handleMouseOver}
-        //             onMouseLeave={closePopup}
-        //             profileModalOpen={profileModalState}
-        //         />
-        //     </div >
-        // </div>
+
     );
 };
 

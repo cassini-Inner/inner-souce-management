@@ -1,37 +1,68 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as Icons from "react-feather";
 import InfoTag from "../Common/InfoTag/InfoTag";
 import StatusTags from "../Common/StatusTags/StatusTags";
 import { DurationParser } from "../../HelperFunctions/DurationParser";
 import { TOGGLE_MILESTONE_COMPLETED } from "../../mutations";
 import { useMutation } from "@apollo/client";
-import { GET_MILESTONES, GET_JOB_DETAILS } from "../../queries";
+import {
+    CREATE_REVIEW_MUTATION,
+    GET_JOB_DETAILS,
+    GET_MILESTONES, UPDATE_REVIEW_MUTATION,
+} from "../../queries";
 import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
-import { CSSTransition } from "react-transition-group";
+import PropTypes from "prop-types";
+import { AuthenticationContext } from "../../hooks/useAuthentication/provider";
+import Portal from "../Containers/Portal";
+import ModalViewWithScrim from "../Modals/ModalViewWithScrim";
+import { useClickOutside } from "../../hooks/useClickOutside/hook";
+import Button from "../Common/Button/Button";
+import TextAreaInput from "../Common/InputFields/TextAreaInput";
+import { AddUpdateReviewModal } from "../Modals/AddUpdateReviewModal";
+import { ViewFeedbackModal } from "../Modals/ViewFeedbackModal";
+import { RatingDisplay } from "../Ratings/RatingDisplay";
+import { MilestoneReviewTag } from "../Ratings/MilestoneReviewTag";
 
-const MilestoneCard = (props) => {
+const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, className, index, lastIndex, editMilestone, jobAuthorName }) => {
 
     const initialState = {
-        isExpanded: props.expanded,
+        isExpanded: expanded,
     };
     const [state, setState] = useState(initialState);
 
-    //Toggle milestone as completed
-    const [toggleMilestoneMutation, { toggleMilestoneLoading, toggleMilestoneError }] = useMutation(TOGGLE_MILESTONE_COMPLETED, {
-        refetchQueries: [
-            {
-                query: GET_JOB_DETAILS,
-                variables: { jobId: props.jobId },
-            },
-            {
-                query: GET_MILESTONES,
-                variables: { jobId: props.jobId },
-            },
-        ],
 
-    });
-    if (toggleMilestoneLoading) return <LoadingIndicator />;
-    if (toggleMilestoneError) return <p>Toggle milestone mutation Error! {toggleMilestoneError}</p>;
+    const {
+        ref: addReviewModalRef,
+        isComponentVisible: addReviewModalVisible,
+        setIsComponentVisible: setAddReviewModalVisible,
+    } = useClickOutside(false);
+
+
+    //Toggle milestone as completed
+    const [toggleMilestoneMutation, { toggleMilestoneLoading, toggleMilestoneError }] = useMutation(
+        TOGGLE_MILESTONE_COMPLETED,
+        {
+            refetchQueries: [
+                {
+                    query: GET_JOB_DETAILS,
+                    variables: { jobId: jobId },
+                },
+                {
+                    query: GET_MILESTONES,
+                    variables: { jobId: jobId },
+                },
+            ],
+            onCompleted: (data => {
+                setAddReviewModalVisible(true);
+            }),
+        },
+    );
+
+    if (toggleMilestoneLoading) return <LoadingIndicator/>;
+    if (toggleMilestoneError) {
+        return <p>Toggle milestone mutation
+            Error! {toggleMilestoneError}</p>;
+    }
 
     const toggleExpandedState = () => {
         const currentState = state.isExpanded;
@@ -45,104 +76,180 @@ const MilestoneCard = (props) => {
         toggleMilestoneMutation({
             variables: {
                 milestoneId: milestoneId,
-            }
+            },
         }).catch((e) => {
             alert("Could not toggle milestones status: ", e);
         });
     };
 
     const isExpanded = state.isExpanded;
-    const isEditMode = props.isEditMode;
-    const isJobAuthor = props.isJobAuthor;
-    const isMilestoneCompleted = props.milestone.status ? (props.milestone.status.toUpperCase() == "COMPLETED" ? true : false) : false;
+    const isMilestoneCompleted = milestone.status
+        ? (milestone.status.toUpperCase() == "COMPLETED" ? true : false)
+        : false;
+
+    console.log(milestone.review);
     return (
-        <div className={"flex " + props.className}>
+        <div className={"flex " + className}>
             <div>
-                <svg className="w-3 relative mt-6 fill-current text-nebula-grey-400" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="6" cy="6" r="6" fill="" />
+                <svg
+                    className="w-3 relative mt-6 fill-current text-nebula-grey-400"
+                    viewBox="0 0 12 12" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="6" cy="6" r="6" fill=""/>
                 </svg>
-                <div className={(props.index === props.lastIndex - 1 ? "" : "h-full ") + " w-px mx-auto bg-nebula-grey-400"} />
+                <div className={(index === lastIndex - 1 ? "" : "h-full ") +
+              " w-px mx-auto bg-nebula-grey-400"}/>
             </div>
             <div className="mx-4 flex-1 ">
                 <div className="flex items-center flex-wrap">
                     <div className="flex flex-1 flex-col">
-                        <div className="h-4" />
+                        <div className="h-4"/>
                         <div className="flex-1">
-                            <p className="font-semibold text-nebula-grey-600">Milestone #{props.index + 1}</p>
+                            <p
+                                className="font-semibold text-nebula-grey-600">Milestone
+                              #{index + 1}</p>
                         </div>
-                        <div className="h-4" />
+                        <div className="h-4"/>
                     </div>
                     {isEditMode &&
-                        <div className="flex text-nebula-grey-500 hover:text-nebula-blue" id={"#" + props.index} onClick={props.editMilestone}>
-                            <Icons.Edit className=" mx-4" />
-                            {/* <Icons.Delete className="text-nebula-red mx-4" /> */}
-                        </div>
+                  <div
+                      className="flex text-nebula-grey-500 hover:text-nebula-blue"
+                      id={"#" + index}
+                      onClick={editMilestone}
+                  >
+                      <Icons.Edit className=" mx-4"/>
+                      {/* <Icons.Delete className="text-nebula-red mx-4" /> */}
+                  </div>
                     }
                     {
                         isJobAuthor
                             ?
                             isMilestoneCompleted
-                                ?
-                                <div id={props.milestone.id} onClick={toggleMilestoneStatus} className="flex items-center text-nebula-blue mx-4 cursor-pointer flex">
+                                ?<div id={milestone.id}
+                                    className="flex items-center text-nebula-blue mx-4"
+                                >
                                     <div className="px-2">Completed</div>
-                                    <Icons.CheckCircle className="h-4 w-4" />
+                                    <Icons.CheckCircle className="h-4 w-4"/>
                                 </div>
-                                :
-                                <div id={props.milestone.id} onClick={toggleMilestoneStatus} className="flex items-center text-nebula-grey-600 hover:text-nebula-blue mx-4 cursor-pointer">
+                                : <div
+                                    id={milestone.id}
+                                    onClick={toggleMilestoneStatus}
+                                    className="flex items-center text-nebula-grey-600 hover:text-nebula-blue mx-4 cursor-pointer"
+                                >
                                     <div className="px-2">Mark as completed</div>
-                                    <Icons.CheckCircle className="h-4 w-4" />
+                                    <Icons.CheckCircle className="h-4 w-4"/>
                                 </div>
                             :
                             ""
                     }
                 </div>
-                <div className="bg-white rounded-md shadow-none border-nebula-grey-400 border p-6 cursor-pointer transition duration-100 hover:shadow-md" onClick={toggleExpandedState}>
+                <div
+                    className="bg-white rounded-md shadow-none border-nebula-grey-400 border px-6 py-6 cursor-pointer transition duration-100 hover:shadow-md"
+                    onClick={toggleExpandedState}>
                     <div className="flex flex-row justify-start items-start">
-                        <p className="text-base leading-tight flex-1 font-semibold mb-2 pr-4 ">{props.milestone.title}</p>
+                        <p
+                            className="text-base leading-tight flex-1 font-semibold mb-2 pr-4 ">{milestone.title}</p>
 
-                        <button className={" transition duration-150 ease-in-out transform " + (isExpanded ? "rotate-0" : "rotate-180")}>
-                            <Icons.ChevronUp />
+                        <button
+                            className={" transition duration-150 ease-in-out transform " +
+                        (isExpanded ? "rotate-0" : "rotate-180")}>
+                            <Icons.ChevronUp/>
                         </button>
                     </div>
                     {
-                        props.milestone.status ?
-                            <StatusTags statusTag={[props.milestone.status.toLowerCase()]} />
+                        milestone.status ?
+                            <StatusTags
+                                statusTag={[milestone.status.toLowerCase()]}/>
                             : ""
                     }
-                    <CSSTransition
-                        in={isExpanded}
-                        timeout={100}
-                        unmountOnExit
-                        classNames={{
-                            enter: "opacity-0 transition duration-100 transform",
-                            enterDone: "opacity-100 transition duration-100 transform",
-                            exit: "opacity-0 transition duration-100 transform"
-                        }}
-                    >
-                        <div >
-                            <p className="pt-4 text-sm text-nebula-grey-700 leading-relaxed" >{props.milestone.description || props.milestone.desc}</p>
-                            <div className="flex flex-row flex-wrap">
-                                <InfoTag className="mr-6 mt-4" title="DURATION" data={DurationParser(props.milestone.duration)} />
-                                <InfoTag className="mr-6 mt-4" title="RESOLUTION METHODS" data={props.milestone.resolution} />
-                                {
-                                    props.milestone.skills ?
-                                        <InfoTag
-                                            className="mr-6 mt-4"
-                                            title="SKILLS NEEDED"
-                                            // To convert the incoming type of (if object type) skills to array 
-                                            data={props.milestone.skills.map((skill, key) => typeof skill === "object" ? skill.value : skill)}
-                                        />
-                                        : []
-                                }
-                            </div>
-                        </div>
+                    {milestone.review &&
+                    <MilestoneReviewTag
+                        isAuthor={isJobAuthor}
+                        className="mt-4"
+                        milestone = {milestone}
+                        jobAuthorName={jobAuthorName}
+                        jobId={jobId}
+                        milestoneNumber={index}
+                    />
+                    }
+                    {milestone.review == null && isJobAuthor && milestone.assignedTo &&
+                        <AddReviewButton milestone={milestone} jobId={jobId}/>
+                    }
 
-                    </CSSTransition>
+                    {isExpanded &&
+                  <div>
+                      <p
+                          className="pt-4 text-sm text-nebula-grey-700 leading-relaxed">{milestone.description ||
+                      milestone.desc}</p>
+                      <div className="flex flex-row flex-wrap">
+                          <InfoTag className="mr-6 mt-4" title="DURATION"
+                              data={DurationParser(milestone.duration)}/>
+                          <InfoTag className="mr-6 mt-4"
+                              title="RESOLUTION METHODS"
+                              data={milestone.resolution}/>
+                          {
+                              milestone.skills ?
+                                  <InfoTag
+                                      className="mr-6 mt-4"
+                                      title="SKILLS NEEDED"
+                                      // To convert the incoming type of (if object type) skills to array
+                                      data={milestone.skills.map(
+                                          (skill, key) => typeof skill === "object"
+                                              ? skill.value
+                                              : skill)}
+                                  />
+                                  : []
+                          }
+                      </div>
+                  </div>
+                    }
+
                 </div>
             </div>
+            <Portal isOpen={addReviewModalVisible}>
+                <AddUpdateReviewModal
+                    milestoneNumber={index}
+                    forwardedRef={addReviewModalRef}
+                    close={() => setAddReviewModalVisible(false)}
+                    milestone={milestone}
+                    jobId={jobId}
+                />
+            </Portal>
         </div>
     );
 };
 
+const AddReviewButton = ({milestone, jobId, milestoneNumber})=> {
+    const {
+        ref: addReviewModalRef,
+        isComponentVisible: addReviewModalVisible,
+        setIsComponentVisible: setAddReviewModalVisible,
+    } = useClickOutside(false);
+
+    return (
+        <div className="mt-4">
+            <button
+                aria-label="edit feedback"
+                className="text-xs  text-nebula-blue"
+                onClick={event => {
+                    event.stopPropagation();
+                    setAddReviewModalVisible(true);
+                }}
+            >
+              Add a review for {milestone.assignedTo.name}
+            </button>
+            <Portal isOpen={addReviewModalVisible}>
+                <AddUpdateReviewModal
+                    forwardedRef={addReviewModalRef}
+                    assignedUser = {milestone.assignedTo.name}
+                    close={() => setAddReviewModalVisible(false)}
+                    milestone={milestone}
+                    jobId={jobId}
+                    milestoneNumber={milestoneNumber}
+                />
+            </Portal>
+        </div>
+    );
+};
 
 export default MilestoneCard;
