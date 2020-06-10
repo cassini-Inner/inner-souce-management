@@ -73,13 +73,13 @@ const UserList = (props) => {
     if (applications) {
         const userList =
             applications.map((application, key) => {
-                if ((props.type == "APPLICATIONS" &&
-                    application.status.toUpperCase() == "PENDING") ||
-                    (props.type == "WORKING" && application.status.toUpperCase() ==
+                if ((props.type === "APPLICATIONS" &&
+                    application.status.toUpperCase() === "PENDING") ||
+                    (props.type === "WORKING" && application.status.toUpperCase() ===
                         "ACCEPTED")) {
                     //Only for version 1  v1
                     if (applicationIdList.find(
-                        (id) => application.applicant.id == id)) {
+                        (id) => application.applicant.id === id)) {
                         return "";
                     }
                     applicationIdList.push(application.applicant.id);
@@ -92,10 +92,10 @@ const UserList = (props) => {
                                 <div className="flex-col ml-4 mb-2 flex-1">
                                     <Link to={"/profile/" + application.applicant.id}>
                                         <div
-                                            className="text-lg font-semibold hover:text-nebula-blue">{application.applicant.name}</div>
+                                            className="text-sm font-semibold hover:text-nebula-blue">{application.applicant.name}</div>
                                     </Link>
                                     <div
-                                        className="text-nebula-grey-600">{application.applicant.role}</div>
+                                        className="text-xs text-nebula-grey-600">{application.applicant.role}</div>
                                     {/*Functionality to be added in version 2
                                             <div className = "text-nebula-blue font-semibold">{ milestones ? ("Milestones "+milestones) : "" }</div>
                                             */}

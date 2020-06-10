@@ -249,7 +249,7 @@ const JobDetailsPage = (props) => {
                 {
                     location.pathname === ("/jobDetails/" + state.jobId) ? <Redirect to={props.match.url + "/milestones"} /> : ""
                 }
-                <Route exact path={props.match.url + "/milestones"} component={(props) => <MilestonesList jobId={state.jobId} isJobAuthor={isJobAuthor} />} />
+                <Route exact path={props.match.url + "/milestones"} component={(props) => <MilestonesList jobId={state.jobId} isJobAuthor={isJobAuthor} createdBy={data.Job.createdBy}/>} />
                 <Route exact path={props.match.url + "/discussions"} component={(props) => <Discussions jobId={state.jobId} />} />
                 {
                     data.Job.createdBy.id == user.id

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const modalRoot = document.getElementById("modal-root");
 
-const Portal = ({isOpen, children, scrim, close}) => {
+const Portal = ({isOpen, children, scrim}) => {
 
     useEffect(()=> {
         setScrollState(isOpen);
@@ -16,9 +16,7 @@ const Portal = ({isOpen, children, scrim, close}) => {
                 isOpen &&
                       <div>
                           {scrim && <div className="fixed z-40 inset-0 bg-nebula-grey-400 opacity-50"/>}
-                          <div className="fixed z-50 mx-auto inset-0" onClick={close } onKeyDown={(e) => {if (e.key === "Escape" && close) {
-                              close();
-                          }}}>
+                          <div className="fixed z-50 mx-auto inset-0">
                               {children}
                           </div>
                       </div>

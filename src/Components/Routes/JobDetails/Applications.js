@@ -14,7 +14,7 @@ const Applications = (props) => {
                     <div className="mt-6 mb-8 px-2">
                         <div className="flex-col md:flex md:flex-row mb-2">
                             <div className="self-center flex-1 ">
-                                <p className="text-base font-semibold">Filter applications by type</p>
+                                <p className="text-sm font-semibold">Filter applications by type</p>
                                 <p className="text-sm text-gray-600">
                                 Since applicants can apply to specific milestones or complete job, you can filter applicants by application type.
                                 </p>
