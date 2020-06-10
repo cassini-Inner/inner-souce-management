@@ -2,7 +2,7 @@ import * as Icons from "react-feather";
 import PropTypes from "prop-types";
 import React from "react";
 
-export const RatingDisplayWidget = ({ expanded, rating, setRating, editable }) => {
+export const RatingDisplay = ({ expanded, rating, setRating, editable }) => {
     let color = "";
     if (rating >= 1 && rating < 2) {
         color = "nebula-red";
@@ -11,7 +11,6 @@ export const RatingDisplayWidget = ({ expanded, rating, setRating, editable }) =
     } else if (rating > 3) {
         color = "nebula-green";
     }
-
 
     return (
         <div className="flex flex-row cursor-pointer" >
@@ -43,7 +42,7 @@ export const RatingDisplayWidget = ({ expanded, rating, setRating, editable }) =
     );
 };
 
-RatingDisplayWidget.propTypes = {
+RatingDisplay.propTypes = {
     expanded: PropTypes.bool,
     rating: PropTypes.number,
 };

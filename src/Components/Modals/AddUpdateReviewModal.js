@@ -8,6 +8,7 @@ import {
 import ModalViewWithScrim from "./ModalViewWithScrim";
 import TextAreaInput from "../Common/InputFields/TextAreaInput";
 import Button from "../Common/Button/Button";
+import { RatingDisplay } from "../Ratings/RatingDisplay";
 
 export const AddUpdateReviewModal = ({ forwardedRef, close, milestone, initialReviewData, jobId, milestoneNumber }) => {
     const [rating, setRating] = useState(
@@ -83,7 +84,7 @@ export const AddUpdateReviewModal = ({ forwardedRef, close, milestone, initialRe
                     This will be reflected on Tushar’s profile and will help other Innersource members judge them in a better way.</span>
                 <p className="text-sm text-nebula-grey-600 pt-6">Overall
                   Rating</p>
-                <RatingDisplayWidget
+                <RatingDisplay
                     expanded={true}
                     rating={rating}
                     setRating={setRating}

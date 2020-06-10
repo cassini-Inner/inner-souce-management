@@ -20,7 +20,7 @@ import Button from "../Common/Button/Button";
 import TextAreaInput from "../Common/InputFields/TextAreaInput";
 import { AddUpdateReviewModal } from "../Modals/AddUpdateReviewModal";
 import { ViewFeedbackModal } from "../Modals/ViewFeedbackModal";
-import { RatingDisplayWidget } from "../Ratings/RatingDisplayWidget";
+import { RatingDisplay } from "../Ratings/RatingDisplay";
 import { MilestoneReviewTag } from "../Ratings/MilestoneReviewTag";
 
 const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, className, index, lastIndex, editMilestone, jobAuthorName }) => {

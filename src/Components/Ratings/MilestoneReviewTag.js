@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthenticationContext } from "../../hooks/useAuthentication/provider";
 import { useClickOutside } from "../../hooks/useClickOutside/hook";
-import { RatingDisplayWidget } from "./RatingDisplayWidget";
+import { RatingDisplay } from "./RatingDisplay";
 import Portal from "../Containers/Portal";
 import { ViewFeedbackModal } from "../Modals/ViewFeedbackModal";
 import { AddUpdateReviewModal } from "../Modals/AddUpdateReviewModal";
@@ -52,7 +52,7 @@ export const MilestoneReviewTag = ({
                 {isAuthor && `You rated ${milestone.review.createdFor.name}`}
                 {isRatingReceiver && `${jobAuthorName.split(" ")[0]} rated you`}
             </p>
-            <RatingDisplayWidget expanded={false} rating={milestone.review.rating}/>
+            <RatingDisplay expanded={false} rating={milestone.review.rating}/>
             {isAuthor &&
           <button
               aria-label="edit feedback"

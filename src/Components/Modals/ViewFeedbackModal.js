@@ -1,6 +1,7 @@
 import ModalViewWithScrim from "./ModalViewWithScrim";
 import Button from "../Common/Button/Button";
 import React from "react";
+import { RatingDisplay } from "../Ratings/RatingDisplay";
 
 export const ViewFeedbackModal = ({ review, forwardedRef, close }) => {
     return (
@@ -9,7 +10,7 @@ export const ViewFeedbackModal = ({ review, forwardedRef, close }) => {
                 className="bg-white border border-nebula-grey-400 rounded-lg shadow-2xl flex flex-col space-y-4 px-6 py-6">
                 <h2 className="text-xl text-black">Feedback</h2>
                 <p className="text-sm text-nebula-grey-600">Overall Rating</p>
-                <RatingDisplayWidget expanded={true} rating={review.rating}/>
+                <RatingDisplay expanded={true} rating={review.rating}/>
                 <p className="text-sm text-nebula-grey-600 pt-6">Additional
                   Comments</p>
                 <p className="text-sm text-nebula-grey-700">{
