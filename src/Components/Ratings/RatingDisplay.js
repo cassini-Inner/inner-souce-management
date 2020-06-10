@@ -2,6 +2,10 @@ import * as Icons from "react-feather";
 import PropTypes from "prop-types";
 import React from "react";
 
+// expanded: show all the starts on only one start with color
+// rating: integer value denoting the rating
+// setRating: a callback function to set the rating
+// editable: if the rating displayed is editable. Calls setRating on clicking a star
 export const RatingDisplay = ({ expanded, rating, setRating, editable }) => {
     let color = "";
     if (rating >= 1 && rating < 2) {
