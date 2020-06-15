@@ -77,11 +77,11 @@ export const AddUpdateReviewModal = ({ forwardedRef, close, milestone, initialRe
                 className="bg-white  border border-nebula-grey-400 rounded-lg shadow-2xl flex flex-col space-y-4 px-6 py-6">
                 <h2 className="text-xl text-black">Add Review</h2>
                 <span
-                    className="text-sm text-nebula-grey-600">Add a review for <strong
+                    className="text-sm text-nebula-grey-700">Add a review for <strong
                         className="text-grey-900">{milestone.assignedTo.name}</strong> on their work for <strong
                         className="text-grey-900">Milestone #{milestoneNumber +
               1}</strong>.
-                    This will be reflected on Tushar’s profile and will help other Innersource members judge them in a better way.</span>
+                    This will be reflected on their profile and will help other Innersource members judge them in a better way.</span>
                 <p className="text-sm text-nebula-grey-600 pt-6">Overall
                   Rating</p>
                 <RatingDisplay
