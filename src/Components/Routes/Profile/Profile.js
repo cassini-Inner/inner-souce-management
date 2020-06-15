@@ -134,7 +134,7 @@ export const UserReviews = ({ reviews }) => {
           <Placeholder
               image={NoReviewsPlaceholder}
               heading="User doesn't have any reviews"
-              body="Performance review from the jobs user has worked on will appear here"
+              body="Performance review from the jobs user has worked on will appear here."
           />
             }
             {(reviews != null || reviews.length !== 0) &&

@@ -7,8 +7,8 @@ const Placeholder = (props) => {
     return <div className="grid grid-cols-5 h-auto bg-nebula-blue-light my-4 rounded-lg select-none">
         <div className="col-span-3 flex flex-col justify-center  p-8 ">
             <div>
-                <h2 className="text-2xl text-nebula-blue font-semibold">{props.heading}</h2>
-                <h3 className="text-lg text-nebula-blue mt-4 opacity-75">{props.body}</h3>
+                <h2 className="text-2xl leading-tight text-nebula-blue pt-4 font-medium ">{props.heading}</h2>
+                <h3 className="text-md text-nebula-blue mt-4 ">{props.body}</h3>
             </div>
             <div className="mt-12">
                 {
