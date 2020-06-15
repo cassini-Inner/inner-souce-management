@@ -1,19 +1,19 @@
 import React, { useContext } from "react";
-import Navbar from "../../Navigation/Navbar/Navbar";
+import { Link, useParams } from "react-router-dom";
+import { GitHub } from "react-feather";
+
+import { useQuery } from "@apollo/client";
 import Button from "../../Common/Button/Button";
 import Card from "../../Common/Card/Card";
-import { profileData } from "../../../assets/placeholder";
-import { GitHub } from "react-feather";
 import LabelChipBuilder from "../../Common/Chips/LabelChipBuilder";
-import InfoTag from "../../Common/InfoTag/InfoTag";
-import { Link, useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
 import { GET_USER_PROFILE } from "../../../queries";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 import JobsBackup from "../JobsBackup/JobsBackup";
-import { RatingDisplay } from "../../Ratings/RatingDisplay";
+import Navbar from "../../Navigation/Navbar/Navbar";
 import { JobReview } from "../../Ratings/job_review";
+import NoReviewsPlaceholder from "../../../assets/images/reviews.svg";
+import Placeholder from "../../Placeholders/placeholder";
 
 const Profile = (props) => {
     //To get the user id from url
@@ -125,19 +125,25 @@ const Profile = (props) => {
 };
 
 export const UserReviews = ({ reviews }) => {
-    if (reviews == null || reviews.length == 0) {
-        return "User has no reviews";
-    }
+
     return (
         <div>
             <h2
-                className="pt-12 pb-4 text-md font-semibold text-nebula-grey-800">Reviews</h2>
-            {reviews.map((review, key) => {
-                return <JobReview key={key} review={review}/>;
-            })}
+                className="pt-12 pb-4 text-2xl text-nebula-grey-800">Reviews</h2>
+            {(reviews == null || reviews.length === 0) &&
+          <Placeholder
+              image={NoReviewsPlaceholder}
+              heading="User doesn't have any reviews"
+              body="Performance review from the jobs user has worked on will appear here"
+          />
+            }
+            {(reviews != null || reviews.length !== 0) &&
+          reviews.map((review, key) => {
+              return <JobReview key={key} review={review}/>;
+          })
+            }
         </div>
     );
 };
-
 
 export default (Profile);
