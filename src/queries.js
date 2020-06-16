@@ -166,7 +166,6 @@ export const GET_JOB_APPLICANTS = gql`
                         role
                         photoUrl
                     }
-                    status
                 }      
             }	
         }

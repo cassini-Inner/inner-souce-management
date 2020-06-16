@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import * as Icons from "react-feather";
 import Avatar from "../../Common/Avatar/Avatar";
 import { useMutation, useQuery } from "@apollo/client";
@@ -9,12 +9,18 @@ import {
     REJECT_JOB_APPLICATION,
 } from "../../../mutations";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
-
+import ConfirmDialogue from "../../Common/ConfirmDialogue/ConfirmDialogue";
 const UserList = (props) => {
     // To check if userlist is empty
     var isEmptyList = true;
     //Only for version 1  v1
     var applicationIdList = [];
+    const [confirmDialogue, setConfirmDialogue] = useState({
+        isOpen:false,
+        title: "",
+        msg: "",
+        onConfirm: "",
+    });
 
     const { loading, error, data } = useQuery(GET_JOB_APPLICANTS, {
         variables: { jobId: props.jobId },
@@ -57,16 +63,29 @@ const UserList = (props) => {
     };
 
     const rejectOnClick = (e, applicantId) => {
-        const confirm = window.confirm("Are you sure you want to reject this application?");
-        if (confirm) {
-            rejectApplication({
-                variables: {
-                    applicantId: applicantId,
-                    jobId: props.jobId,
-                    note: "",
-                },
-            }).catch(() => alert("Failed to reject application"));
+        const onConfirm = (confirmBool) => {
+            setConfirmDialogue({
+                isOpen: false,
+                msg: "",
+                onConfirm: "",
+            });
+            if(confirmBool) {
+                rejectApplication({
+                    variables: {
+                        applicantId: applicantId,
+                        jobId: props.jobId,
+                        note: "",
+                    },
+                }).catch(() => alert("Failed to reject application"));
+            }
         }
+        const application = data["Job"]["applications"]["applications"].find((application) => application.applicant.id == applicantId); 
+        setConfirmDialogue({
+            isOpen: true,
+            title:"Reject "+ application.applicant.name +"'s Application?",
+            msg: "",
+            onConfirm: onConfirm,
+        });
     };
 
     const applications = data["Job"]["applications"]["applications"];
@@ -131,7 +150,12 @@ const UserList = (props) => {
             );
         //To ensure user list is not empty
         if (!isEmptyList) {
-            return (userList);
+            return (
+                <Fragment>
+                    { userList }
+                    <ConfirmDialogue isOpen={confirmDialogue.isOpen} title={confirmDialogue.title} msg={confirmDialogue.msg} onConfirm={confirmDialogue.onConfirm} />
+                </Fragment>
+            );
         }
     }
 

@@ -16,6 +16,7 @@ import { useMutation } from "@apollo/client";
 import { UPDATE_JOB } from "../../../mutations";
 import { ArrowLeft } from "react-feather";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
+import ConfirmDialogue from "../../Common/ConfirmDialogue/ConfirmDialogue";
 const EditJob = (props) => {
 
     const initialState = {
@@ -43,6 +44,13 @@ const EditJob = (props) => {
             errorMessages: {}
         }
     };
+
+    const [confirmDialogue, setConfirmDialogue] = useState({
+        isOpen:false,
+        title: "",
+        msg: "",
+        onConfirm: "",
+    });
 
     const [state, setState] = useState(initialState);
     const [loading, setLoading] = useState(true);
@@ -194,33 +202,30 @@ const EditJob = (props) => {
     };
 
     const deleteMilestone = () => {
-        const confirmed = window.confirm("Are you sure you want to delete milestone " + (state.editMilestoneIndex + 1) + "?");
-        if (confirmed) {
-            const newMilestoneList = [
-                ...state.job.milestones.slice(0, state.editMilestoneIndex),
-                ...state.job.milestones.slice(state.editMilestoneIndex + 1)
-            ];
-            setState({
-                ...state,
-                editMilestoneState: false,
-                milestoneModal: false,
-                editMilestoneIndex: -1,
-                milestoneCount: state.milestoneCount - 1,
-                job: {
-                    ...state.job,
-                    milestones: [...newMilestoneList]
-                },
-                milestone: {
-                    title: "",
-                    description: "",
-                    duration: "",
-                    durationUnit: "Weeks",
-                    skills: [],
-                    resolution: "",
-                    errorMessages: {}
-                }
-            });
-        }
+        const newMilestoneList = [
+            ...state.job.milestones.slice(0, state.editMilestoneIndex),
+            ...state.job.milestones.slice(state.editMilestoneIndex + 1)
+        ];
+        setState({
+            ...state,
+            editMilestoneState: false,
+            milestoneModal: false,
+            editMilestoneIndex: -1,
+            milestoneCount: state.milestoneCount - 1,
+            job: {
+                ...state.job,
+                milestones: [...newMilestoneList]
+            },
+            milestone: {
+                title: "",
+                description: "",
+                duration: "",
+                durationUnit: "Weeks",
+                skills: [],
+                resolution: "",
+                errorMessages: {}
+            }
+        });
     };
 
     const editMilestoneOpen = (event) => {
@@ -328,10 +333,22 @@ const EditJob = (props) => {
 
 
     const goBack = () => {
-        const cancel = window.confirm("Are you sure you want cancel the job update?");
-        if (cancel) {
-            props.history.goBack();
+        const onConfirm = (confirmBool) => {
+            setConfirmDialogue({
+                isOpen: false,
+                msg: "",
+                onConfirm: "",
+            });
+            if(confirmBool) {
+                props.history.goBack();
+            }
         }
+        setConfirmDialogue({
+            isOpen: true,
+            title:"Cancel Job Update?",
+            msg: "Note that all the changes made will be lost",
+            onConfirm: onConfirm,
+        });
     };
 
     const ButtonRow = [
@@ -363,6 +380,7 @@ const EditJob = (props) => {
                     }
                 </div>
             </div>
+            <ConfirmDialogue isOpen={confirmDialogue.isOpen} title={confirmDialogue.title} msg={confirmDialogue.msg} onConfirm={confirmDialogue.onConfirm} />
             <Portal isOpen={state.milestoneModal} >
                 <ModalViewWithScrim>
                     <MilestoneModal

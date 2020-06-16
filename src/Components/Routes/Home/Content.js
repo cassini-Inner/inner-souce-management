@@ -4,6 +4,7 @@ import React, {
     useEffect,
     useRef,
     useState,
+    Fragment,
 } from "react";
 import JobList from "../../Jobs/JobList";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
@@ -63,6 +64,7 @@ const Content = (props) => {
  
 
     return (
+        <Fragment>
         <div className="h-auto">
             <OngoingJobsGrid maxCount={2} location="home" title="Ongoing Jobs"
                 jobs={ongoingJobs} placeholder={(<div></div>)} />
@@ -81,6 +83,7 @@ const Content = (props) => {
             <div ref={loadMoreRef} className=""></div>
             
         </div>
+        </Fragment>
     );
 };
 
