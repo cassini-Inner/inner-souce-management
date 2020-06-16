@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import Card from "../Common/Card/Card";
 import React from "react";
 import { MilestoneReview } from "./milestone_review";
+import Avatar from "../Common/Avatar/Avatar";
+import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 
 export const JobReview = ({ review }) => {
     console.log(review);
@@ -27,6 +29,13 @@ export const JobReview = ({ review }) => {
                                 />;
                             })
                     }
+                    <hr className="my-4"/>
+                    <AuthorInfo
+                        img={review.job.createdBy.photoUrl}
+                        name={review.job.createdBy.name}
+                        iconClass="w-8 h-8"
+                        department={review.job.createdBy.department}
+                    />
                 </Card>
             </Link>
         </div>

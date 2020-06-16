@@ -124,6 +124,12 @@ export const GET_USER_PROFILE = gql`
                 job {
                     title
                     id
+                    createdBy {
+                        id
+                        name
+                        photoUrl
+                        department
+                    }
                 }
                 milestoneReview {
                     review {
