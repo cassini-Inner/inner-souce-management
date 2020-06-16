@@ -83,7 +83,7 @@ const UserList = (props) => {
         setConfirmDialogue({
             isOpen: true,
             title:"Reject "+ application.applicant.name +"'s Application?",
-            msg: " Note that this process cannot be undone",
+            msg: "",
             onConfirm: onConfirm,
         });
     };
