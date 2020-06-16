@@ -120,6 +120,30 @@ export const GET_USER_PROFILE = gql`
                 id
                 value
             }
+            reviews {
+                job {
+                    title
+                    id
+                    createdBy {
+                        id
+                        name
+                        photoUrl
+                        department
+                    }
+                }
+                milestoneReview {
+                    review {
+                        id
+                        rating
+                        remark
+                        timeCreated
+                    }
+                    milestone {
+                        id
+                        title
+                    }
+                }
+            }
         }
     }
 `;

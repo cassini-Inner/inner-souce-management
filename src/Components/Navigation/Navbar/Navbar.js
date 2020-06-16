@@ -77,8 +77,7 @@ const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, 
     const modalRef = useRef();
     return (
         <CSSTransition
-
-            in={profileModalOpen}
+            in={profileModalOpen }
             timeout={150}
             appear
             unmountOnExit

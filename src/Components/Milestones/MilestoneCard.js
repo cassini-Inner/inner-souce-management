@@ -172,8 +172,8 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
                         milestoneNumber={index}
                     />
                     }
-                    {milestone.review == null && isJobAuthor && milestone.assignedTo &&
-                        <AddReviewButton milestone={milestone} jobId={jobId}/>
+                    {milestone.review == null && isJobAuthor && milestone.assignedTo && milestone.status==="COMPLETED" &&
+                        <AddReviewButton milestone={milestone} jobId={jobId} milestoneNumber={index}/>
                     }
 
                     {isExpanded &&
