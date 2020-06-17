@@ -24,11 +24,17 @@ import {
     WITHDRAW_JOB_APPLICATION,
 } from "../../../mutations";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
-
+import ConfirmDialogue from "../../Common/ConfirmDialogue/ConfirmDialogue";
 const JobDetailsPage = (props) => {
 
     const jobId = props.match.params.id;
 
+    const [confirmDialogue, setConfirmDialogue] = useState({
+        isOpen:false,
+        title: "",
+        msg: "",
+        onConfirm: "",
+    });
     const { user } = useContext(AuthenticationContext);
     const [getJobData, { loading, error, data}] = useLazyQuery(
         GET_JOB_INFO,
@@ -105,36 +111,58 @@ const JobDetailsPage = (props) => {
 
     // ToDo implement Modal for getting password
     const deleteJobHandler = () => {
-        let confirmed = window.confirm(
-            "Are you sure you want to delete this job? Note: all the associated milestones, discussions and applications will be lost.");
-        if (confirmed) {
-            deleteJobMutation({
-                variables: {
-                    jobId: jobId,
-                },
-            }).then(
-                () => {
-                    props.history.push("/");
-                },
-            ).catch((e) => {
-                alert("Could not delete job", e);
+        const onConfirm = (confirmBool) => {
+            setConfirmDialogue({
+                isOpen: false,
+                msg: "",
+                onConfirm: "",
             });
+            if(confirmBool) {
+                deleteJobMutation({
+                    variables: {
+                        jobId: jobId,
+                    },
+                }).then(
+                    () => {
+                        props.history.push("/");
+                    },
+                ).catch((e) => {
+                    alert("Could not delete job", e);
+                });
+            }
         }
+        setConfirmDialogue({
+            isOpen: true,
+            title:"Delete Job?",
+            msg: "Note that this process cannot be undone and all the associated milestones, discussions and applications will be lost.",
+            onConfirm: onConfirm,
+        });
     };
 
     const withdrawApplicationHandler = () => {
-        let confirmed = window.confirm(
-            "Are you sure you want to withdraw from this job?");
-        if (confirmed) {
-            withdrawApplicationMutation({
-                variables: {
-                    jobId: jobId,
-                },
-            },
-            ).catch(() => {
-                alert("Could not delete job");
+        const onConfirm = (confirmBool) => {
+            setConfirmDialogue({
+                isOpen: false,
+                msg: "",
+                onConfirm: "",
             });
+            if(confirmBool) {
+                withdrawApplicationMutation({
+                    variables: {
+                        jobId: jobId,
+                    },
+                },
+                ).catch(() => {
+                    alert("Could not delete job");
+                });
+            }
         }
+        setConfirmDialogue({
+            isOpen: true,
+            title:"Withdraw Application?",
+            msg: "Are you sure you want to withdraw your application from this job",
+            onConfirm: onConfirm,
+        });
     };
 
 
@@ -305,6 +333,7 @@ const JobDetailsPage = (props) => {
                     </div>
                 </div>
             </div>
+            <ConfirmDialogue isOpen={confirmDialogue.isOpen} title={confirmDialogue.title} msg={confirmDialogue.msg} onConfirm={confirmDialogue.onConfirm} />
         </Fragment>
     );
 };
