@@ -22,7 +22,7 @@ const Discussions = (props) => {
 const AddComment = (props) => {
     const commentInputRef = useRef(null);
     //Post Comment Mutation
-    const [postCommentMutation, { error }] = useMutation(POST_COMMENT,
+    const [postCommentMutation, { error, loading }] = useMutation(POST_COMMENT,
         {
             refetchQueries: [
                 {
@@ -60,7 +60,7 @@ const AddComment = (props) => {
                 <TextAreaInput forwardedRef={commentInputRef} id="addComment"
                     placeholder="Add comment" className="mb-6 w-full" />
                 <div className="flex justify-end">
-                    <Button type="submit" label="Post Comment" />
+                    <Button type={loading ? "disabled" : "primary"} label="Post Comment"/>
                 </div>
             </div>
         </form>

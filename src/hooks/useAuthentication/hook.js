@@ -27,7 +27,6 @@ export function useAuthentication() {
     });
 
     useEffect(() => {
-        setLoading(true);
         Axios.get(`${API_URL}/read-cookie`, { withCredentials: true }).then(
             (data) => {
                 getUserInfo({ variables: { userId: data.data.user_id } });
@@ -36,8 +35,7 @@ export function useAuthentication() {
             console.log(e);
             setLoading(false);
         });
-
-    }, [authenticated]);
+    }, []);
 
     const beginAuth = () => {
         window.open(githubAuthUrl, "_self");
@@ -52,7 +50,6 @@ export function useAuthentication() {
             }).then(() => {
                 Axios.get(`${API_URL}/read-cookie`, { withCredentials: true },
                 ).then((data) => {
-                    setAuthenticated(true);
                     getUserInfo({ variables: { userId: data.data.user_id } });
                 }).catch((e) => {
                     console.log(e);
@@ -68,7 +65,7 @@ export function useAuthentication() {
         Axios.post(`${API_URL}/logout`, null, { withCredentials: true }).then(
             () => {
                 setAuthenticated(false);
-                setUser(null);
+                setUser({});
             }
         ).catch((e) => {
             alert("error signing out: " + e);

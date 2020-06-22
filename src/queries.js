@@ -255,6 +255,7 @@ export const GET_JOB_INFO = gql`
         Job(id: $jobId) {
             id
             viewerHasApplied 
+            status
             createdBy {
                 id
                 name

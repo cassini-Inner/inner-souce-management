@@ -40,23 +40,14 @@ const CommentsList = ({ jobId }) => {
                 {
                     comments.map((comment) => {
                         return (
-                            <CSSTransition
-                                key={comment.id}
-                                timeout={200}
-                                classNames={{
-                                    enter: "opacity-0 transition duration-500",
-                                    enterDone: "opacity-100 transition duration-500",
-                                    exit: "opacity-0 transition duration-500",
-                                }}
-                            >
-                                <li className="appearance-none">
-                                    <CommentItem
-                                        comment={comment}
-                                        user={user}
-                                        jobId={jobId}
-                                    />
-                                </li>
-                            </CSSTransition>
+
+                            <li className="appearance-none">
+                                <CommentItem
+                                    comment={comment}
+                                    user={user}
+                                    jobId={jobId}
+                                />
+                            </li>
                         );
                     })
                 }
@@ -140,7 +131,7 @@ const CommentItem = (props) => {
                     },
                 ).catch(() => { alert("Error deleting comment"); });
             }
-        }
+        };
         setConfirmDialogue({
             isOpen: true,
             title:"Delete Comment?",
@@ -157,63 +148,70 @@ const CommentItem = (props) => {
     };
 
     return(
-    <Fragment>
-        <div
-            className={"mt-2 flex w-full  transition duration-150 rounded-md " +
+        <Fragment>
+            <div
+                className={"mt-2 flex w-full  transition duration-150 rounded-md " +
                 (state.editing ? " shadow-md" : "   border-b border-nebula-grey-400 ")}>
-            <div className="flex p-4 flex-row flex-auto items-start ">
-                <Avatar className="h-8 w-8" imagePath={comment.createdBy.photoUrl} />
-                <div className="ml-4 flex-grow ">
-                    <p className="text-md font-medium text-nebula-grey-800">
-                        {comment.createdBy.name}
-                    </p>
-                    <p className="text-sm text-nebula-grey-600">
-                        { "Commented on " + dateTimeString}
-                    </p>
-                    <div>
-                        {
-                            state.editing === true
-                                ?
-                                <form onSubmit={(e) => {
-                                    submitOnClick(e);
-                                }}>
-                                    <TextAreaInput forwardedRef={textInputRef}
-                                        rows={"5"}
-                                        defaultValue={comment.content}
-                                        value={null} className="w-full" />
-                                    <div className="flex justify-between mt-2">
-                                        <div>
-                                            <Button type="submit"
-                                                label={updateCommentLoading
-                                                    ? "Saving"
-                                                    : "Save"} className="mr-2" />
-                                            <Button type="secondary" label="Discard"
-                                                onClick={(e) => discardOnClick(
-                                                    e)} />
+                <div className="flex p-4 flex-row flex-auto items-start ">
+                    <Avatar className="h-8 w-8" imagePath={comment.createdBy.photoUrl} />
+                    <div className="ml-4 flex-grow ">
+                        <p className="text-md font-medium text-nebula-grey-800">
+                            {comment.createdBy.name}
+                        </p>
+                        <p className="text-sm text-nebula-grey-600">
+                            { "Commented on " + dateTimeString}
+                        </p>
+                        <div>
+                            {
+                                state.editing === true
+                                    ?
+                                    <form onSubmit={(e) => {
+                                        submitOnClick(e);
+                                    }}>
+                                        <TextAreaInput forwardedRef={textInputRef}
+                                            rows={"5"}
+                                            defaultValue={comment.content}
+                                            value={null} className="w-full" />
+                                        <div className="flex justify-between mt-2">
+                                            <div>
+                                                <Button
+                                                    type={updateCommentLoading ? "disabled": "submit"}
+                                                    label={updateCommentLoading
+                                                        ? "Saving"
+                                                        : "Save"}
+                                                    className="mr-2"
+                                                />
+                                                <Button
+                                                    type="secondary"
+                                                    label="Discard"
+                                                    onClick={
+                                                        (e) => discardOnClick(e)
+                                                    }
+                                                />
 
+                                            </div>
+                                            <Button type="error" label="Delete"
+                                                onClick={(e) => deleteOnClick(e)} />
                                         </div>
-                                        <Button type="error" label="Delete"
-                                            onClick={(e) => deleteOnClick(e)} />
-                                    </div>
-                                </form>
-                                :
-                                <p
-                                    className="mt-1 text-nebula-grey-800 whitespace-normal break-words whitespace-pre-line">
-                                    {comment.content}
-                                </p>
-                        }
+                                    </form>
+                                    :
+                                    <p
+                                        className="mt-1 text-nebula-grey-800 whitespace-normal break-words whitespace-pre-line">
+                                        {comment.content}
+                                    </p>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            {comment.createdBy.id == user.id && !state.editing &&
+                {comment.createdBy.id == user.id && !state.editing &&
                 <div className="text-nebula-grey-500 mt-2">
                     <button onClick={() => updateState({ editing: true })}>
                         <Icons.Edit />
                     </button>
                 </div>
-            }
-        </div>
-        <ConfirmDialogue isOpen={confirmDialogue.isOpen} title={confirmDialogue.title} msg={confirmDialogue.msg} onConfirm={confirmDialogue.onConfirm} />    
-    </Fragment>);
+                }
+            </div>
+            <ConfirmDialogue isOpen={confirmDialogue.isOpen} title={confirmDialogue.title} msg={confirmDialogue.msg} onConfirm={confirmDialogue.onConfirm} />    
+        </Fragment>);
 };
 export default (CommentsList);

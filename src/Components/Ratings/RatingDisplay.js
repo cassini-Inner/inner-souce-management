@@ -17,7 +17,7 @@ export const RatingDisplay = ({ expanded, rating, setRating, editable, condensed
     }
 
     return (
-        <div className="flex flex-row cursor-pointer" >
+        <div className="flex flex-row cursor-pointer items-center" >
             {expanded &&
           [1, 2, 3, 4, 5].map(value => {
               if (value <= rating) {

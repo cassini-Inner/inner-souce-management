@@ -5,12 +5,13 @@ import Avatar from "../Avatar/Avatar";
 import {Briefcase} from "react-feather";
 import StatusTags from "../StatusTags/StatusTags";
 import { Link } from "react-router-dom";
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
     const searchInputRef = useRef();
     const [jobs, setJobs] = useState([]);
     const [users, setUsers] = useState([]);
     const [typingTimeout, setTypingTimeout] = useState();
-    const [getSearchResults] = useLazyQuery(SEARCH_JOBS_USERS_LIMIT, {
+    const [getSearchResults, {loading}] = useLazyQuery(SEARCH_JOBS_USERS_LIMIT, {
         onCompleted: (data) => {
             setJobs(data.Search.jobs ? data.Search.jobs : []);
             setUsers(data.Search.users ? data.Search.users : []);
@@ -41,12 +42,12 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
                     limit: 3,
                 },
             });
-        }, 500);
+        }, 100);
         setTypingTimeout(timeout);
     };
     return (
-        <div ref={forwardedRef} className="flex-1">
-            <div className="mx-auto pt-8 w-full max-w-screen-md">
+        <div className="flex-1">
+            <div className="mx-auto pt-8 w-full max-w-screen-md" ref={forwardedRef}>
                 <input
                     ref={searchInputRef}
                     onFocus={(event) => {
@@ -61,6 +62,9 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
                           + ( (jobs.length || users.length) ? " border rounded-tr-lg rounded-tl-lg border-nebula-grey-200" : " rounded-lg " )
                     }
                 />
+                {loading &&
+                    <LoadingIndicator/>
+                }
                 <SearchResults users={users} jobs={jobs}/>
             </div>
         </div>

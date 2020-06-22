@@ -48,7 +48,7 @@ const Profile = (props) => {
                 }
             </div>
             <Card key={data["User"].id}>
-                <div className="flex p-4">
+                <div className="flex flex-col md:flex-row p-4">
                     <img src={data["User"].photoUrl}
                         className="flex-0 h-24 w-24 rounded-full"/>
                     <div className="flex flex-col mx-8 my-6  max-w-screen-md">
@@ -59,9 +59,9 @@ const Profile = (props) => {
 
                         <div className="mt-8 mb-4 flex">
                             <GitHub/>
-                            <p className="font-semibold ml-4">
+                            <a href={data["User"].githubUrl} target="_blank" className="font-semibold ml-4 whitespace-normal w-full">
                                 {data["User"].githubUrl}
-                            </p>
+                            </a>
                         </div>
                         <hr className="my-4"/>
                         <div className="mt-2">
