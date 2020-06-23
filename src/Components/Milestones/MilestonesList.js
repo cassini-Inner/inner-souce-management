@@ -5,7 +5,7 @@ import { GET_MILESTONES } from "../../queries";
 import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 
 const MilestonesList = (props) => {
-    const { loading, error, data } = useQuery(GET_MILESTONES, { variables: { jobId: props.jobId } });
+    const { loading, error, data } = useQuery(GET_MILESTONES, { variables: { jobId: props.jobId } , fetchPolicy: "cache-and-network"});
     if (loading) return <LoadingIndicator/>;
     else if (error) alert(`Error! ${error.message}`);
     const sortedMilestones = data["Job"]["milestones"]["milestones"].sort(function(a, b) { return( a.id - b.id ); });

@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Redirect } from "react-router";
 
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import { InitialLoadingPage } from "../../Common/LoadingIndicator/InitialLoadingPage";
 
 export const AuthCompletionHandler = () => {
     const { authenticated, finishAuth, loading } = useContext(AuthenticationContext);
@@ -22,8 +23,6 @@ export const AuthCompletionHandler = () => {
     }
 
     return (
-        <div className="App">
-            Signing you in...
-        </div>
+        <InitialLoadingPage secondaryText="Signing you in"/>
     );
 };

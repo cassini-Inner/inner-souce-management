@@ -115,6 +115,7 @@ export const GET_USER_PROFILE = gql`
             bio
             contact
             email
+            overallRating
             photoUrl
             skills {
                 id
@@ -255,6 +256,7 @@ export const GET_JOB_INFO = gql`
         Job(id: $jobId) {
             id
             viewerHasApplied 
+            status
             createdBy {
                 id
                 name

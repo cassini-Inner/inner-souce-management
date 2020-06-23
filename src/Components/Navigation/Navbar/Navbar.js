@@ -12,6 +12,7 @@ import Button from "../../Common/Button/Button";
 import Portal from "../../Containers/Portal";
 import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
 import { useClickOutside } from "../../../hooks/useClickOutside/hook";
+import { TranslateEnterAnimation } from "../../AnimationHelpers/TranslateMountWidget";
 
 const Navbar = () => {
     const { user } = useContext(AuthenticationContext);
@@ -47,10 +48,12 @@ const Navbar = () => {
     };
 
     return (
-        <div className="sticky bg-white top-0 py-4">
+        <div className="lg:sticky bg-white top-0 py-4">
             <div className="flex items-center justify-end flex-row w-full">
                 <Portal isOpen={searchVisible} scrim={true} >
-                    <SearchBar forwardedRef={searchRef} searchOpen={searchVisible} setSearchOpen={(value)=>setSearchVisible(value)}/>
+                    <TranslateEnterAnimation visible={searchVisible}>
+                        <SearchBar forwardedRef={searchRef} searchOpen={searchVisible} setSearchOpen={(value)=>setSearchVisible(value)}/>
+                    </TranslateEnterAnimation>
                 </Portal>
                 <button onClick={()=> {setSearchVisible(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
                     <Icons.Search className="h-6 w-6 flex-1 hover:text-nebula-blue" />
@@ -87,7 +90,7 @@ const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, 
                 exit: "opacity-0 transition duration-150 transform -translate-y-1/2 translate-x-1/2",
             }}
         >
-            <div ref = {modalRef} className={"z-50 w-96 mt-2 absolute top-0 right-0 inline-block" + className || ""} onMouseOver={() => onMouseOver(true)} onMouseLeave={onMouseLeave}>
+            <div ref = {modalRef} className={"z-30 w-96 mt-2 absolute top-0 right-0 inline-block" + className || ""} onMouseOver={() => onMouseOver(true)} onMouseLeave={onMouseLeave}>
                 <div className="overflow-hidden  w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 bg-white" >
                     <div className="flex p-4" >
                         <Avatar imagePath={user.photoUrl} className="h-10 w-10 " />

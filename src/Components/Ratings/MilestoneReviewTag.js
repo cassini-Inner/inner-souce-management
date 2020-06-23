@@ -52,7 +52,7 @@ export const MilestoneReviewTag = ({
                 {isAuthor && `You rated ${milestone.review.createdFor.name}`}
                 {isRatingReceiver && `${jobAuthorName.split(" ")[0]} rated you`}
             </p>
-            <RatingDisplay expanded={false} rating={milestone.review.rating}/>
+            <RatingDisplay condensed={true} expanded={false} rating={milestone.review.rating}/>
             {isAuthor &&
           <button
               aria-label="edit feedback"
