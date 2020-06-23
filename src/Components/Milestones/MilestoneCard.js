@@ -11,16 +11,9 @@ import {
     GET_MILESTONES, UPDATE_REVIEW_MUTATION,
 } from "../../queries";
 import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
-import PropTypes from "prop-types";
-import { AuthenticationContext } from "../../hooks/useAuthentication/provider";
 import Portal from "../Containers/Portal";
-import ModalViewWithScrim from "../Modals/ModalViewWithScrim";
 import { useClickOutside } from "../../hooks/useClickOutside/hook";
-import Button from "../Common/Button/Button";
-import TextAreaInput from "../Common/InputFields/TextAreaInput";
 import { AddUpdateReviewModal } from "../Modals/AddUpdateReviewModal";
-import { ViewFeedbackModal } from "../Modals/ViewFeedbackModal";
-import { RatingDisplay } from "../Ratings/RatingDisplay";
 import { MilestoneReviewTag } from "../Ratings/MilestoneReviewTag";
 
 const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, className, index, lastIndex, editMilestone, jobAuthorName }) => {
@@ -52,9 +45,10 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
                     variables: { jobId: jobId },
                 },
             ],
-            onCompleted: (data => {
-                setAddReviewModalVisible(true);
-            }),
+            onCompleted: ((data) => {
+                if (data.toggleMilestoneCompleted.assignedTo != null) setAddReviewModalVisible(true);
+            }
+            ),
         },
     );
     if (toggleMilestoneLoading) return <LoadingIndicator/>;
@@ -77,13 +71,13 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
                 milestoneId: milestoneId,
             },
         }).catch((e) => {
-            alert("Could not toggle milestones status: ", e);
+            alert("Could not toggle milestones status: "+ e);
         });
     };
 
     const isExpanded = state.isExpanded;
     const isMilestoneCompleted = milestone.status
-        ? (milestone.status.toUpperCase() == "COMPLETED" ? true : false)
+        ? (milestone.status.toUpperCase() === "COMPLETED")
         : false;
 
     console.log(milestone.review);

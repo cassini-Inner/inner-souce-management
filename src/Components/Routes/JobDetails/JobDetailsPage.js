@@ -17,7 +17,11 @@ import { ArrowLeft } from "react-feather";
 import WorkingUsers from "./WorkingUsers";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
-import { GET_JOB_APPLICANTS, GET_JOB_INFO } from "../../../queries";
+import {
+    GET_JOB_APPLICANTS,
+    GET_JOB_DETAILS,
+    GET_JOB_INFO,
+} from "../../../queries";
 import {
     APPLY_TO_JOB,
     DELETE_JOB,
@@ -25,6 +29,8 @@ import {
 } from "../../../mutations";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 import ConfirmDialogue from "../../Common/ConfirmDialogue/ConfirmDialogue";
+import { useClickOutside } from "../../../hooks/useClickOutside/hook";
+
 const JobDetailsPage = (props) => {
 
     const jobId = props.match.params.id;
@@ -37,7 +43,7 @@ const JobDetailsPage = (props) => {
     });
     const { user } = useContext(AuthenticationContext);
     const [getJobData, { loading, error, data}] = useLazyQuery(
-        GET_JOB_INFO,
+        GET_JOB_DETAILS,
         { variables: { jobId: jobId }, fetchPolicy: "network-only" },
     );
 
@@ -52,7 +58,6 @@ const JobDetailsPage = (props) => {
     const [applyToJobMutation, { applyToJobLoading, applyToJobError }] = useMutation(
         APPLY_TO_JOB, {
             refetchQueries: [
-
                 {
                     query: GET_JOB_APPLICANTS,
                     variables: { jobId: jobId },
@@ -85,12 +90,9 @@ const JobDetailsPage = (props) => {
             ],
         });
 
-    //Query to get the job tabs and primary info(created by, applicant IDs)
-    console.log("loading", loading && data == null && error == null);
     if ((loading || data == null) && !error) {
         return <LoadingIndicator/>;
     }
-
     if (error) {
         return "Error loading job";
     }
@@ -106,7 +108,6 @@ const JobDetailsPage = (props) => {
         });
     };
 
-    // ToDo implement Modal for getting password
     const deleteJobHandler = () => {
         const onConfirm = (confirmBool) => {
             setConfirmDialogue({
@@ -163,6 +164,9 @@ const JobDetailsPage = (props) => {
     };
 
     let viewerApplicationStatus = "";
+    let footerTitle = "";
+    let footerSubtitle = "";
+    const jobStatus = data.Job.status.toLowerCase();
 
     if (data.Job.applications.applications) {
         const application =  data.Job.applications.applications.find(
@@ -176,39 +180,51 @@ const JobDetailsPage = (props) => {
     let userActions = [];
     let authorActions = [];
     let isJobAuthor = false;
-    // If the user has applied to this job and user's application has not been accepted
-    if (data.Job.viewerHasApplied && viewerApplicationStatus ==="PENDING" ) {
-        userActions = [
-            (<Button type="secondary" label="Withdraw application"
-                key="withdrawJobApplication"
-                className=" w-auto mr-4 "
-                onClick={withdrawApplicationHandler}
-            />),
-        ];
+    if (user.id === data.Job.createdBy.id) {
+        isJobAuthor = true;
     }
-
-    // If the user has applied to this job and if the application has been accepted
-    else if (data.Job.applications.applications && viewerApplicationStatus === "ACCEPTED") {
-        userActions = [
-            (<Button type="secondary" label="Leave Job"
-                key="leaveJob"
-                className=" w-auto mr-4 "
-                onClick={withdrawApplicationHandler}
-            />),
-        ];
+    // If the user has applied to this job and user's application has not been accepted
+    if (data.Job.viewerHasApplied) {
+        if (viewerApplicationStatus ==="PENDING" ) {
+            console.log("Hello")
+            userActions = [
+                (<Button type="secondary" label="Withdraw application"
+                    key="withdrawJobApplication"
+                    className=" w-auto mr-4 "
+                    onClick={withdrawApplicationHandler}
+                />),
+            ];
+        } else if (data.Job.applications.applications && viewerApplicationStatus === "ACCEPTED") {
+            userActions = [
+                (<Button type="secondary" label="Leave Job"
+                    key="leaveJob"
+                    className=" w-auto mr-4 "
+                    onClick={withdrawApplicationHandler}
+                />),
+            ];
+        }
     } else {
+        console.log("hi")
         userActions = [
-            (<Button type="primary" label="Apply to Job"
-                key="applyjob"
+            (<Button
+                type="primary" label="Apply to Job"
+                key="applyToJob"
                 className=" w-auto mr-4 "
                 onClick={applyToJobHandler}
             />),
         ];
     }
 
-    //To check if the user is the author of the job
-    if (user.id === data.Job.createdBy.id) {
-        isJobAuthor = true;
+    if (!isJobAuthor && viewerApplicationStatus === "PENDING") {
+        footerTitle = "Successfully applied to the job";
+        footerSubtitle = "Please wait for the author to respond to your application.";
+    }
+    if (!isJobAuthor && viewerApplicationStatus === "ACCEPTED") {
+        footerTitle = "Yay! Your application has been accepted!";
+        footerSubtitle= "Please stay in touch with the author to collaborate.";
+    }
+    if (!isJobAuthor && (jobStatus === "completed" || jobStatus === "ongoing") && viewerApplicationStatus==="") {
+        footerTitle = `Job has ${jobStatus} status and cannot be applied to`;
     }
 
     if(isJobAuthor) {
@@ -276,13 +292,13 @@ const JobDetailsPage = (props) => {
     return (
         <Fragment>
             <div
-                className="px-4 pb-24 max-w-screen-lg min-h-screen mx-auto lg:px-10">
+                className="px-4 pb-24 container min-h-screen mx-auto lg:px-10">
                 <button onClick={() => { props.history.goBack(); }}
                     className="flex py-4 hover:text-nebula-blue">
                     <ArrowLeft/>
                     <p className="px-4">Back</p>
                 </button>
-                < JobInformation jobId={jobId}/>
+                <JobInformation jobData={data["Job"]}/>
                 <TabStrip tabs={tabList}/>
                 {
                     location.pathname === ("/jobDetails/" + jobId) ?
@@ -314,7 +330,7 @@ const JobDetailsPage = (props) => {
             <div className="bottom-0 sticky bg-white">
                 <hr/>
                 <div
-                    className="px-4 flex flex-wrap-reverse items-center max-w-screen-lg mx-auto py-4 lg:px-10">
+                    className="px-4 flex flex-wrap-reverse items-center container mx-auto py-4 lg:px-10">
                     <div className="flex">
                         {isJobAuthor ? authorActions : userActions}
                     </div>
@@ -322,22 +338,12 @@ const JobDetailsPage = (props) => {
                         <p
                             className="text-sm font-semibold text-nebula-blue"
                         >
-                            {(!isJobAuthor && viewerApplicationStatus === "PENDING") &&
-                              "Successfully applied to the job"
-                            }
-                            {(!isJobAuthor && viewerApplicationStatus === "ACCEPTED") &&
-                              "Yay! Your application has been accepted!"
-                            }
+                            {footerTitle}
                         </p>
                         <p
                             className="text-sm font-semibold text-nebula-grey-600"
                         >
-                            {(!isJobAuthor && viewerApplicationStatus === "PENDING") &&
-                            "Please wait for the author to respond to your application."
-                            }
-                            {(!isJobAuthor && viewerApplicationStatus === "ACCEPTED") &&
-                            "Please stay in touch with the author to collaborate."
-                            }
+                            {footerSubtitle}
                         </p>
                     </div>
                 </div>

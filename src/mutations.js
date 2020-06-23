@@ -130,6 +130,9 @@ export const TOGGLE_MILESTONE_COMPLETED = gql`
         toggleMilestoneCompleted(milestoneID: $milestoneId) {
             id
             status
+            assignedTo {
+                id
+            }
         }
     }
 `;

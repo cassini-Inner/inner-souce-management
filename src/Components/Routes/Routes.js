@@ -15,18 +15,21 @@ import Login from "./Login/Login";
 import SearchResults from "../Routes/SearchResults/SearchResults";
 import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 import OnboardingPage from "./Onboarding/OnboardingPage";
-import { JobsFeedProvider } from "../../hooks/JobFeedProvider/JobFeedProvider";
+import { JobsFeedProvider } from "../../hooks/JobFeedProvider/provider";
 import Sidebar from "../Navigation/Sidebar/Sidebar";
+import { InitialLoadingPage } from "../Common/LoadingIndicator/InitialLoadingPage";
 
 const Routes = (props) => {
 
     const { authenticated, loading, user } = useContext(AuthenticationContext);
 
+    console.log("routes.js", authenticated, loading, user);
     if (loading) {
         return (
-            <Route path="/" component={LoadingIndicator} />
+            <Route path="/" component={InitialLoadingPage} />
         );
     }
+    console.log("here");
     return (
         <Switch>
             {
@@ -42,15 +45,14 @@ const Routes = (props) => {
                 <>
                     <JobsFeedProvider>
                         <div
-                            className="bg-white flex flex-row w-full h-full antialiased"
+                            className="bg-white flex  flex-col lg:flex-row w-full h-full antialiased"
                         >
+                            <div className="sticky top-0 border-nebula-grey-400">
+                                <Sidebar />
+                            </div>
 
                             <div
                                 className="flex flex-col lg:flex-row justify-center container w-full mx-auto">
-
-                                <div className="ticky top-0 border-r border-nebula-grey-400">
-                                    <Sidebar />
-                                </div>
                                 <div
                                     className="bg-white lg:flex-row w-full">
                                     <Switch>

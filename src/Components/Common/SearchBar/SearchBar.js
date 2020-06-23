@@ -5,13 +5,14 @@ import Avatar from "../Avatar/Avatar";
 import {Briefcase} from "react-feather";
 import StatusTags from "../StatusTags/StatusTags";
 import { Link } from "react-router-dom";
+import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
     const searchInputRef = useRef();
     const [jobs, setJobs] = useState([]);
     const [queryInput, setQueryInput] = useState("");
     const [users, setUsers] = useState([]);
     const [typingTimeout, setTypingTimeout] = useState();
-    const [getSearchResults] = useLazyQuery(SEARCH_JOBS_USERS_LIMIT, {
+    const [getSearchResults, {loading}] = useLazyQuery(SEARCH_JOBS_USERS_LIMIT, {
         onCompleted: (data) => {
             setJobs(data.Search.jobs ? data.Search.jobs : []);
             setUsers(data.Search.users ? data.Search.users : []);
@@ -45,13 +46,13 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
                     limit: 3,
                 },
             });
-        }, 500);
+        }, 100);
         setTypingTimeout(timeout);
     };
 
     return (
-        <div ref={forwardedRef} className="flex-1">
-            <div className="mx-auto pt-8 w-full max-w-screen-md">
+        <div className="flex-1">
+            <div className="mx-auto pt-8 w-full max-w-screen-md" ref={forwardedRef}>
                 <input
                     ref={searchInputRef}
                     onFocus={(event) => {
@@ -66,6 +67,9 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
                           + ( (jobs.length || users.length) ? " border rounded-tr-lg rounded-tl-lg border-nebula-grey-200" : " rounded-lg " )
                     }
                 />
+                {loading &&
+                    <LoadingIndicator/>
+                }
                 <SearchResults users={users} jobs={jobs} queryInput={queryInput}/>
             </div>
         </div>
@@ -104,6 +108,7 @@ const SearchResults = ({jobs, users, queryInput}) => {
                       id={user.id}
                       key={user.id}
                       name={user.name}
+                      bio={user.bio}
                       photoUrl={user.photoUrl}
                       department={user.department}
                       role={user.role}
@@ -111,21 +116,22 @@ const SearchResults = ({jobs, users, queryInput}) => {
               })}
           </>
             }
-            <div className="flex hover:text-nebula-blue justify-center pt-2 cursor-pointer">
+            <div className="flex text-nebula-blue hover:text-blue-700 justify-center pt-2 cursor-pointer">
                 <Link to={"/searchResults/"+encodeURI(queryInput)}>See all results</Link>
             </div>
         </div>
     );
 };
 
-const UserSearchListing = ({name, role, department, photoUrl,id}) => {
+const UserSearchListing = ({name, bio, role, department, photoUrl,id}) => {
     return (
         <Link to={`/profile/${id}`}>
             <div className="flex flex-row items-start leading-tight ">
                 <Avatar imagePath={photoUrl} className="w-10 h-10 mr-4 mt-4"/>
                 <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
                     <div className="text-sm font-semibold text-nebula-grey-800">{name}</div>
-                    <div className="text-sm text-nebula-grey-600">{role} @ {department} </div>
+                    <div className="text-sm text-nebula-grey-600">{role} @ {department}</div>
+                    <div className="text-sm text-nebula-grey-600">{bio}</div>
                 </div>
             </div>
         </Link>

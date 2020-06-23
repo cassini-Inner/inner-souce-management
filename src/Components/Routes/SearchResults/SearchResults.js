@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import Navbar from "../../Navigation/Navbar/Navbar";
 import TabStrip from "../../Common/TabStrip/TabStrip";
+import UserCardsGrid from "./UserCardsGrid";
 
 const SearchResults = (props) => {
     const query = decodeURI(props.match.params.query);
@@ -30,8 +31,8 @@ const SearchResults = (props) => {
             count: data.Search.jobs ? data.Search.jobs.length : 0,
         },
         {
-            title: "Users",
-            location: "users",
+            title: "People",
+            location: "people",
             count: data.Search.users ? data.Search.users.length : 0,
         },
     ];
@@ -46,10 +47,10 @@ const SearchResults = (props) => {
             }
             <Route exact
                 path={props.match.url + "/jobs"}
-                component={(props) => data.Search.jobs ? <JobList jobs={data.Search.jobs}/>: <p className="p-2">No jobs found matching the query!</p>}
+                component={(props) => data.Search.jobs ? <JobList jobs={data.Search.jobs}/> : <p className="mt-2">No jobs found matching the query!</p>}
             />
-            <Route exact path={props.match.url + "/users"}
-                component={(props) => <Discussions users={data.Search.users}/>}/>
+            <Route exact path={props.match.url + "/people"}
+                component={(props) => <UserCardsGrid users={data.Search.users}/>} />
         </div>
     );
 }

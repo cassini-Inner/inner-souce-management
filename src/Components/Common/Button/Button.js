@@ -46,6 +46,16 @@ const Button = ({type, className, onClick, label, id}) => {
                 {label}
             </button>
         );
+    case "disabled":
+        return (
+            <button
+                id={id?id:null}
+                className={commonStyle + "bg-nebula-blue-light text-white " +
+                className}
+                onClick={onClick}>
+                {label}
+            </button>
+        );
     default:
         return (
             <button

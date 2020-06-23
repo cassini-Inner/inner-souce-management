@@ -11,6 +11,7 @@ import Placeholder from "../../Placeholders/placeholder";
 import LoadingIndicator from "../../Common/LoadingIndicator/LoadingIndicator";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 import CreateJobsPlaceholder from "../../../assets/images/create_jobs_placeholder.svg";
+import Avatar from "../../Common/Avatar/Avatar";
 
 const ManageJobs = (props) => {
     const { user } = useContext(AuthenticationContext);
@@ -128,6 +129,7 @@ const CreatedJobList = (props) => {
     }
     return (
         props.jobs.map((job, index) => {
+            console.log(job.applications.applications)
             return (
                 <div className="my-8 border border-nebula-grey-400 rounded-lg transition duration-300 shadow-none cursor-pointer hover:shadow-lg" key={index}>
                     {
@@ -147,9 +149,7 @@ const CreatedJobList = (props) => {
                                                 job.applications.applications.slice(0, 3).map((application, key) => {
                                                     if (application.status.toUpperCase() == "PENDING") {
                                                         return (
-                                                            <div key={application.applicant.id} className={"self-center rounded-full bg-nebula-blue-light p-1 z-0 absolute " + "ml-"+(key*4)}>
-                                                                <img src={application.applicant.photoUrl} className="flex-0 h-8 w-8 rounded-full" />
-                                                            </div>
+                                                            <Avatar key={application.applicant.id} imagePath={application.applicant.photoUrl} className={"p-0 absolute self-center h-10 w-10 absolute "+"ml-"+(key*4)} />
                                                         );
                                                     }
                                                 })

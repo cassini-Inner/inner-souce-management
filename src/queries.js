@@ -46,6 +46,7 @@ export const GET_JOB_DETAILS = gql`
         Job(id:$jobId){
             id
             title
+            viewerHasApplied
             createdBy {
                 id
                 name
@@ -71,6 +72,12 @@ export const GET_JOB_DETAILS = gql`
             applications {
                 pendingCount
                 acceptedCount
+                applications {
+                    status
+                    applicant{
+                        id
+                    }
+                }
             }
             discussion {
                 totalCount
@@ -115,6 +122,7 @@ export const GET_USER_PROFILE = gql`
             bio
             contact
             email
+            overallRating
             photoUrl
             skills {
                 id
@@ -255,6 +263,7 @@ export const GET_JOB_INFO = gql`
         Job(id: $jobId) {
             id
             viewerHasApplied 
+            status
             createdBy {
                 id
                 name
@@ -378,6 +387,11 @@ export const GET_CREATED_JOBS = gql`
                     applications {
                         id
                         status
+                        milestone {
+                            job {
+                                id
+                            }
+                        }
                         applicant {
                             id
                             photoUrl
@@ -444,6 +458,7 @@ export const SEARCH_JOBS_USERS_LIMIT = gql`
             users {
                 id
                 name
+                bio
                 role
                 department
                 photoUrl
@@ -591,6 +606,8 @@ export const SEARCH_ALL_JOBS_USERS_LIMIT = gql`
             users {
                 id
                 name
+                bio
+                overallRating
                 role
                 department
                 photoUrl
