@@ -152,3 +152,12 @@ export const UPDATE_JOB = gql`
         }
     }
 `;
+
+// To restore jobs backup
+export const RESTORE_JOBS_BACKUP = gql`
+    mutation($jobs: [CreateJobInput!]!){
+        restoreJobsBackup(jobs: $jobs) {
+            id
+        }
+    }
+`;

@@ -212,7 +212,7 @@ const JobDetailsPage = (props) => {
     }
 
     if(isJobAuthor) {
-        if(data.Job.applications.applications.length == 0 || data.Job.applications.applications.find((application) => application.status.toUpperCase() != "REJECTED") == undefined) {
+        if(data.Job.applications.applications && (data.Job.applications.applications.length == 0 || data.Job.applications.applications.find((application) => application.status.toUpperCase() != "REJECTED") == undefined)) {
             authorActions = [
                 (<Button type="secondary" label="Edit Job"
                     key="editjob"
