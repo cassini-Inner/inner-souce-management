@@ -25,7 +25,7 @@ const UserCard = (props) => {
                         <div className="flex items-center">
                             <p>Overall rating</p>
                             <p className="pl-2">
-                                <RatingDisplay expanded={false} condensed={false} rating={5} />
+                                <RatingDisplay expanded={false} condensed={false} rating={user.overallRating} />
                             </p>
                         </div>
                     </div>

@@ -129,7 +129,7 @@ const CreatedJobList = (props) => {
     }
     return (
         props.jobs.map((job, index) => {
-            console.log(job.applications.applications)
+            console.log("applications:",job.applications.applications)
             return (
                 <div className="my-8 border border-nebula-grey-400 rounded-lg transition duration-300 shadow-none cursor-pointer hover:shadow-lg" key={index}>
                     {
