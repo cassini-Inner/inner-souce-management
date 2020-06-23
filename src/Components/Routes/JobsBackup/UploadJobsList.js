@@ -57,7 +57,28 @@ const UploadJobsList = (props) => {
         jobIdList.forEach(id => {
             uploadJobs.push(jobs.find((job) => job.id == id))
         });
-        console.log(uploadJobs);
+        console.log("before:", uploadJobs);
+        // pre - processing before upload
+        const jobsBackup = uploadJobs.map((job, _) => {
+            let milestones = job.milestones.milestones.map((milestone, _) => {
+                let skills = skills = milestone.skills.map((skill, _) => skill.value);
+                return({
+                    title: milestone.title,
+                    desc: milestone.desc,
+                    status: milestone.status,
+                    resolution: milestone.resolution,
+                    duration: milestone.duration,
+                    skills: skills,
+                });
+            });
+            return({
+                title: job.title,
+                desc: job.desc,
+                difficulty: job.difficulty,
+                milestones: milestones
+            });
+        });
+        console.log("After:", jobsBackup);
     }
 
     const jobList = jobs.map( (job, key) => {

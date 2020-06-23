@@ -38,7 +38,7 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
     } = useClickOutside(false);
 
 
-    //Toggle milestone as completed
+
     const [toggleMilestoneMutation, { toggleMilestoneLoading, toggleMilestoneError }] = useMutation(
         TOGGLE_MILESTONE_COMPLETED,
         {
@@ -57,7 +57,6 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
             }),
         },
     );
-
     if (toggleMilestoneLoading) return <LoadingIndicator/>;
     if (toggleMilestoneError) {
         return <p>Toggle milestone mutation
@@ -121,7 +120,7 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
                       {/* <Icons.Delete className="text-nebula-red mx-4" /> */}
                   </div>
                     }
-                    {
+                     {
                         isJobAuthor
                             ?
                             isMilestoneCompleted

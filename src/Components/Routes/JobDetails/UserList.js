@@ -80,10 +80,17 @@ const UserList = (props) => {
             }
         }
         const application = data["Job"]["applications"]["applications"].find((application) => application.applicant.id == applicantId); 
+        let title = props.type == "APPLICATIONS" ? "Reject Application" : "Remove User"
+        let msg =  
+            props.type == "APPLICATIONS" 
+            ? 
+                ("Are you sure you want to reject "+ application.applicant.name +"'s application?") 
+            : 
+                ("Are you sure you want to remove "+ application.applicant.name +"?");
         setConfirmDialogue({
             isOpen: true,
-            title:"Reject "+ application.applicant.name +"'s Application?",
-            msg: "",
+            title: title,
+            msg: msg,
             onConfirm: onConfirm,
         });
     };

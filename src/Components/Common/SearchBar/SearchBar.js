@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
     const searchInputRef = useRef();
     const [jobs, setJobs] = useState([]);
+    const [queryInput, setQueryInput] = useState("");
     const [users, setUsers] = useState([]);
     const [typingTimeout, setTypingTimeout] = useState();
     const [getSearchResults] = useLazyQuery(SEARCH_JOBS_USERS_LIMIT, {
@@ -23,14 +24,17 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
             searchInputRef.current.focus();
         }
     }, [searchOpen]);
+    
     const handleChange = (e) => {
-        const value = e.target.value;
+        var value = e.target.value;
+        setQueryInput(value);
         if (typingTimeout) {
             clearTimeout(typingTimeout);
         }
         if (value === "") {
             setJobs([]);
             setUsers([]);
+            setQueryInput(value);
             return;
         }
 
@@ -44,6 +48,7 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
         }, 500);
         setTypingTimeout(timeout);
     };
+
     return (
         <div ref={forwardedRef} className="flex-1">
             <div className="mx-auto pt-8 w-full max-w-screen-md">
@@ -61,13 +66,13 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
                           + ( (jobs.length || users.length) ? " border rounded-tr-lg rounded-tl-lg border-nebula-grey-200" : " rounded-lg " )
                     }
                 />
-                <SearchResults users={users} jobs={jobs}/>
+                <SearchResults users={users} jobs={jobs} queryInput={queryInput}/>
             </div>
         </div>
     );
 };
 
-const SearchResults = ({jobs, users}) => {
+const SearchResults = ({jobs, users, queryInput}) => {
     if (!jobs.length && !users.length) {
         return (<div/>);
     }
@@ -106,6 +111,9 @@ const SearchResults = ({jobs, users}) => {
               })}
           </>
             }
+            <div className="flex hover:text-nebula-blue justify-center pt-2 cursor-pointer">
+                <Link to={"/searchResults/"+encodeURI(queryInput)}>See all results</Link>
+            </div>
         </div>
     );
 };

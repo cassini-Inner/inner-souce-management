@@ -430,9 +430,9 @@ export const GET_EDIT_JOB_DETAILS = gql`
         }
     }
 `;
-
+// Search jobs & users with limit
 export const SEARCH_JOBS_USERS_LIMIT = gql`
-  query ($query: String!, $limit: Int!) {
+  query ($query: String!, $limit: Int) {
        Search(query: $query, limit: $limit) {
             jobs{
                 id
@@ -553,4 +553,48 @@ export const UPDATE_REVIEW_MUTATION = gql`
             remark
         }
     }
+`;
+// Search jobs & users without limit
+export const SEARCH_ALL_JOBS_USERS_LIMIT = gql`
+  query ($query: String!, $limit: Int) {
+       Search(query: $query, limit: $limit) {
+            jobs{
+                id
+                title
+                createdBy {
+                    id
+                    name
+                    department
+                    photoUrl
+                }
+                description: desc
+                duration
+                difficulty
+                status
+                skills {
+                    id
+                    value
+                }
+                timeCreated
+                viewerHasApplied
+                milestones {
+                    totalCount
+                    milestones {
+                        id
+                        duration
+                    }
+                }
+                applications {
+                    acceptedCount
+                }
+            }
+            users {
+                id
+                name
+                role
+                department
+                photoUrl
+            }   
+       }
+  }
 `;

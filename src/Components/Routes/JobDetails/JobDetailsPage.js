@@ -47,8 +47,6 @@ const JobDetailsPage = (props) => {
     }, [
 
     ]);
-    console.log(data);
-
 
     //Mutation for applying to a job
     const [applyToJobMutation, { applyToJobLoading, applyToJobError }] = useMutation(
@@ -86,7 +84,6 @@ const JobDetailsPage = (props) => {
                 },
             ],
         });
-
 
     //Query to get the job tabs and primary info(created by, applicant IDs)
     console.log("loading", loading && data == null && error == null);
@@ -165,9 +162,6 @@ const JobDetailsPage = (props) => {
         });
     };
 
-
-    const viewerApplied = data.Job.viewerHasApplied;
-
     let viewerApplicationStatus = "";
 
     if (data.Job.applications.applications) {
@@ -178,9 +172,9 @@ const JobDetailsPage = (props) => {
         }
     }
 
-    console.log(viewerApplicationStatus);
     //To check if the user has already applied to this job for buttons
     let userActions = [];
+    let authorActions = [];
     let isJobAuthor = false;
     // If the user has applied to this job and user's application has not been accepted
     if (data.Job.viewerHasApplied && viewerApplicationStatus ==="PENDING" ) {
@@ -212,22 +206,37 @@ const JobDetailsPage = (props) => {
         ];
     }
 
-    const authorActions = [
-        (<Button type="secondary" label="Edit Job"
-            key="editjob"
-            className=" w-auto mr-4 "
-            onClick={() => props.history.push("/editJob/" + jobId)}
-        />),
-        (<Button type="error" label="Delete Job"
-            className=" w-auto mr-4 "
-            key="deletejob"
-            onClick={deleteJobHandler}
-        />),
-    ];
     //To check if the user is the author of the job
     if (user.id === data.Job.createdBy.id) {
         isJobAuthor = true;
     }
+
+    if(isJobAuthor) {
+        if(data.Job.applications.applications.length == 0 || data.Job.applications.applications.find((application) => application.status.toUpperCase() != "REJECTED") == undefined) {
+            authorActions = [
+                (<Button type="secondary" label="Edit Job"
+                    key="editjob"
+                    className=" w-auto mr-4 "
+                    onClick={() => props.history.push("/editJob/" + jobId)}
+                />),
+                (<Button type="error" label="Delete Job"
+                    className=" w-auto mr-4 "
+                    key="deletejob"
+                    onClick={deleteJobHandler}
+                />),
+            ];
+        }
+        else {
+            authorActions = [
+                (<Button type="error" label="Delete Job"
+                    className=" w-auto mr-4 "
+                    key="deletejob"
+                    onClick={deleteJobHandler}
+                />),
+            ];
+        }
+    }
+    
 
     let tabList = [
         {
