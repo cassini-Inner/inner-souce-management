@@ -4,13 +4,14 @@ import { SEARCH_JOBS_USERS_LIMIT } from "../../../queries";
 import Avatar from "../Avatar/Avatar";
 import {Briefcase} from "react-feather";
 import StatusTags from "../StatusTags/StatusTags";
+import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
+const SearchBar = (props) => {
     const searchInputRef = useRef();
     const [jobs, setJobs] = useState([]);
-    const [queryInput, setQueryInput] = useState("");
     const [users, setUsers] = useState([]);
+    const [queryInput, setQueryInput] = useState("");
     const [typingTimeout, setTypingTimeout] = useState();
     const [getSearchResults, {loading}] = useLazyQuery(SEARCH_JOBS_USERS_LIMIT, {
         onCompleted: (data) => {
@@ -24,8 +25,14 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
         if (searchInputRef.current) {
             searchInputRef.current.focus();
         }
-    }, [searchOpen]);
+    }, [props.searchOpen]);
     
+    const viewAllResults = () => {
+        if(queryInput.trim() !== "") {
+            props.history.push("/searchResults/"+encodeURI(queryInput))
+        }
+    }
+
     const handleChange = (e) => {
         var value = e.target.value;
         setQueryInput(value);
@@ -35,7 +42,6 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
         if (value === "") {
             setJobs([]);
             setUsers([]);
-            setQueryInput(value);
             return;
         }
 
@@ -52,14 +58,15 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
 
     return (
         <div className="flex-1">
-            <div className="mx-auto pt-8 w-full max-w-screen-md" ref={forwardedRef}>
+            <div className="mx-auto pt-8 w-full max-w-screen-md" ref={props.forwardedRef}>
                 <input
                     ref={searchInputRef}
                     onFocus={(event) => {
-                        setSearchOpen(true);
+                        props.setSearchOpen(true);
                     }}
                     onChange={(e) => {handleChange(e);}}
                     onClick={(e)=> {e.stopPropagation();}}
+                    onKeyDown={(e) => (e.key === 'Enter') ? viewAllResults() : "" }
                     placeholder="Search for jobs and users by name"
                     className={
                         " appearance-none bg-white transition duration-300 outline-none bg-transparent w-full py-4 px-4 flex-1 mx-auto "
@@ -70,13 +77,13 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
                 {loading &&
                     <LoadingIndicator/>
                 }
-                <SearchResults users={users} jobs={jobs} queryInput={queryInput}/>
+                <SearchResults users={users} jobs={jobs} viewAllResults={viewAllResults}/>
             </div>
         </div>
     );
 };
 
-const SearchResults = ({jobs, users, queryInput}) => {
+const SearchResults = ({jobs, users, viewAllResults}) => {
     if (!jobs.length && !users.length) {
         return (<div/>);
     }
@@ -116,8 +123,8 @@ const SearchResults = ({jobs, users, queryInput}) => {
               })}
           </>
             }
-            <div className="flex text-nebula-blue hover:text-blue-700 justify-center pt-2 cursor-pointer">
-                <Link to={"/searchResults/"+encodeURI(queryInput)}>See all results</Link>
+            <div className="flex text-nebula-blue hover:text-blue-700 justify-center pt-2 cursor-pointer" onClick={viewAllResults}>
+                See all results
             </div>
         </div>
     );
@@ -150,7 +157,7 @@ const JobSearchListing = ({title, status,viewerHasApplied, description, id}) => 
 
     return (
         <Link to={`/jobDetails/${id}`}>
-            <div className="flex flex-row items-start leading-tight ">
+            <div className="flex flex-row items-start leading-tight">
                 <div className="h-10 w-10 rounded-full flex items-center justify-center text-nebula-blue bg-nebula-blue-light mr-4 mt-4">
                     <Briefcase className="w-5 h-5"/>
                 </div>
@@ -164,4 +171,4 @@ const JobSearchListing = ({title, status,viewerHasApplied, description, id}) => 
     );
 };
 
-export default SearchBar;
+export default withRouter(SearchBar);
