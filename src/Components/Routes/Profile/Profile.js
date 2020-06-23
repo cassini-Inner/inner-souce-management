@@ -142,20 +142,20 @@ export const UserReviews = ({ reviews, overallRating }) => {
               body="Performance review from the jobs user has worked on will appear here."
           />
             }
-            {(reviews != null || reviews.length !== 0) &&
-          <div className="grid grid-cols-12 gap-4">
-              <div className="flex flex-col space-y-2 col-span-3 border border-nebula-grey-400 rounded-lg mb-auto mt-2 p-6">
-                  <p className="text-base font-semibold text-nebula-grey-700">Overall Rating</p>
-                  <RatingDisplay rating={overallRating} expanded={false} condensed={false}/>
+            {(overallRating != null && reviews != null || reviews.length !== 0) &&
+              <div className="grid grid-cols-12 gap-4">
+                  <div className="flex flex-col space-y-2 col-span-3 border border-nebula-grey-400 rounded-lg mb-auto mt-2 p-6">
+                      <p className="text-base font-semibold text-nebula-grey-700">Overall Rating</p>
+                      <RatingDisplay rating={overallRating} expanded={false} condensed={false}/>
+                  </div>
+                  <div className="col-span-9">
+                      {
+                          reviews.map((review, key) => {
+                              return <JobReview key={key} review={review}/>;
+                          })
+                      }
+                  </div>
               </div>
-              <div className="col-span-9">
-                  {
-                      reviews.map((review, key) => {
-                          return <JobReview key={key} review={review}/>;
-                      })
-                  }
-              </div>
-          </div>
             }
         </div>
     );
