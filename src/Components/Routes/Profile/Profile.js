@@ -14,6 +14,7 @@ import Navbar from "../../Navigation/Navbar/Navbar";
 import { JobReview } from "../../Ratings/job_review";
 import NoReviewsPlaceholder from "../../../assets/images/reviews.svg";
 import Placeholder from "../../Placeholders/placeholder";
+import { RatingDisplay } from "../../Ratings/RatingDisplay";
 
 const Profile = (props) => {
     //To get the user id from url
@@ -59,7 +60,8 @@ const Profile = (props) => {
 
                         <div className="mt-8 mb-4 flex">
                             <GitHub/>
-                            <a href={data["User"].githubUrl} target="_blank" className="font-semibold ml-4 whitespace-normal w-full">
+                            <a href={data["User"].githubUrl} target="_blank"
+                                className="font-semibold ml-4 whitespace-normal w-full">
                                 {data["User"].githubUrl}
                             </a>
                         </div>
@@ -107,7 +109,7 @@ const Profile = (props) => {
                             {/*</div>*/}
                         </div>
                         {
-                            userId == user.id
+                            userId === user.id
                                 ?
                                 <div className="mt-8">
                                     <JobsBackup/>
@@ -118,18 +120,21 @@ const Profile = (props) => {
                 </div>
             </Card>
             {
-                <UserReviews reviews={data.User.reviews}/>
+                <UserReviews reviews={data.User.reviews}
+                    overallRating={data.User.overallRating}/>
             }
         </div>
     );
 };
 
-export const UserReviews = ({ reviews }) => {
-
+export const UserReviews = ({ reviews, overallRating }) => {
     return (
         <div>
             <h2
-                className="pt-12 pb-4 text-2xl text-nebula-grey-800">Reviews</h2>
+                className="pt-12 pb-4 text-2xl text-nebula-grey-800"
+            >
+                Reviews
+            </h2>
             {(reviews == null || reviews.length === 0) &&
           <Placeholder
               image={NoReviewsPlaceholder}
@@ -138,9 +143,19 @@ export const UserReviews = ({ reviews }) => {
           />
             }
             {(reviews != null || reviews.length !== 0) &&
-          reviews.map((review, key) => {
-              return <JobReview key={key} review={review}/>;
-          })
+          <div className="grid grid-cols-12 gap-4">
+              <div className="flex flex-col space-y-2 col-span-3 border border-nebula-grey-400 rounded-lg mb-auto mt-2 p-6">
+                  <p className="text-base font-semibold text-nebula-grey-700">Overall Rating</p>
+                  <RatingDisplay rating={overallRating} expanded={false} condensed={false}/>
+              </div>
+              <div className="col-span-9">
+                  {
+                      reviews.map((review, key) => {
+                          return <JobReview key={key} review={review}/>;
+                      })
+                  }
+              </div>
+          </div>
             }
         </div>
     );

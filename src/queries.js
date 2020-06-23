@@ -115,6 +115,7 @@ export const GET_USER_PROFILE = gql`
             bio
             contact
             email
+            overallRating
             photoUrl
             skills {
                 id

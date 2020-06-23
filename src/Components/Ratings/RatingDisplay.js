@@ -37,9 +37,9 @@ export const RatingDisplay = ({ expanded, rating, setRating, editable, condensed
           })
             }
             {!expanded &&
-          <div className="flex flex-row space-x-1 items-center">
-              <Icons.Star className={"fill-current h-4 w-4 text-" + color}/>
-              <p className={`text-sm text-${color}`}>{rating}</p>
+          <div className={"flex flex-row items-center " + (condensed ? " space-x-1 " : " space-x-2 ")}>
+              <Icons.Star className={"fill-current text-" + color + (condensed ? "  h-4 w-4 " : " h-5 w-5 ")}/>
+              <p className={`text-${color} ` + (condensed ? " text-sm " : " text-lg ")}>{rating}</p>
           </div>
             }
         </div>
