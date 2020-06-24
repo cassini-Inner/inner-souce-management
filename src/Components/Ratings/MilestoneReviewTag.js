@@ -39,7 +39,6 @@ export const MilestoneReviewTag = ({
             className="text-xs  text-nebula-blue px-2"
             onClick={event => {
                 event.stopPropagation();
-                console.log(milestone.id);
             }}
         >
             Add a review for {milestone.assignedTo.name}

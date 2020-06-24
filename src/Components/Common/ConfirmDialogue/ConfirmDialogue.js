@@ -12,7 +12,7 @@ const ConfirmDialogue = ({ title, msg, isOpen, onConfirm }) => {
         else {
             onConfirm(false);
         }
-    }
+    };
     return(
         <Portal isOpen={isOpen} >
             <ModalViewWithScrim>
@@ -35,8 +35,8 @@ const ConfirmDialogue = ({ title, msg, isOpen, onConfirm }) => {
                 </ModalContainer>
             </ModalViewWithScrim>
         </Portal>
-    )
-}
+    );
+};
 
 
 export default ConfirmDialogue;

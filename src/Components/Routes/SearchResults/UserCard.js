@@ -13,9 +13,9 @@ const UserCard = (props) => {
             <Link to={"/profile/" + user.id} >
                 <div className="p-6">
                     <div className="flex flex-col h-full mt-6 flex-1 justify-between">
-                            <h2 className="text-lg font-semibold">{user.name}</h2>
-                            <h2 className="text-nebula-blue">{user.role}</h2>
-                            <h2 className="text-base text-nebula-grey-600">@{user.department}</h2>
+                        <h2 className="text-lg font-semibold">{user.name}</h2>
+                        <h2 className="text-nebula-blue">{user.role}</h2>
+                        <h2 className="text-base text-nebula-grey-600">@{user.department}</h2>
                     </div>
                     <p className="text-nebula-grey-600 mt-3">{user.bio}</p>
                 </div>

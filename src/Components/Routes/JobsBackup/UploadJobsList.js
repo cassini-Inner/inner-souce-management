@@ -18,7 +18,7 @@ const UploadJobsList = (props) => {
         alert("Some error occured! No jobs to upload found");
         props.history.goBack();
     } 
-    const initialJobIdList = jobs.map(job => job.id)
+    const initialJobIdList = jobs.map(job => job.id);
     const [ jobIdList, setJobIdList ] = useState(initialJobIdList);
     const [ milestoneModalState, setMilestoneModalState ] = useState(null);
     const [uploadJobsMutation, { error }] = useMutation(RESTORE_JOBS_BACKUP,
@@ -38,35 +38,35 @@ const UploadJobsList = (props) => {
         else {
             setJobIdList(initialJobIdList);
         }
-    }
+    };
 
     const toggleSelectJob = (e) => {
         let id = e.currentTarget.id.toString().trim();
         let index = jobIdList.indexOf(id);
         let newList = [...jobIdList];
         if(index == -1) {
-            newList.push(id)
+            newList.push(id);
         }
         else {
-            newList.splice(index, 1)
+            newList.splice(index, 1);
         }
         setJobIdList(newList);
-    }
+    };
 
     const openMilestoneModal = (e) => {
         let id = e.currentTarget.dataset.id.trim().toString();
-        let job = jobs.find((job) => job.id == id)
+        let job = jobs.find((job) => job.id == id);
         setMilestoneModalState(job);
-    }
+    };
 
     const closeMilestoneModal = () => {
         setMilestoneModalState(null);
-    }
+    };
 
     const uploadJobs = () => {
         let uploadJobs = [];
         jobIdList.forEach(id => {
-            uploadJobs.push(jobs.find((job) => job.id == id))
+            uploadJobs.push(jobs.find((job) => job.id == id));
         });
         // pre - processing before upload
         const jobsBackup = uploadJobs.map((job, _) => {
@@ -88,20 +88,18 @@ const UploadJobsList = (props) => {
                 milestones: milestones
             });
         });
-        console.log("After:", jobsBackup);
         uploadJobsMutation({
             variables: {
                 jobs: jobsBackup,
             },
         }).then((result) => {
-            console.log("Successfully uploaded!");
             alert("Upload Successfull!");
-            props.history.push("/profile/"+user.id)
+            props.history.push("/profile/"+user.id);
         })
-        .catch((e) => {
-            alert("Could not upload jobs backup: ", e);
-        });
-    }
+            .catch((e) => {
+                alert("Could not upload jobs backup: ", e);
+            });
+    };
 
     const jobList = jobs.map( (job, key) => {
         return (
@@ -125,7 +123,7 @@ const UploadJobsList = (props) => {
                                 <p onClick={toggleSelectAll} className="cursor-pointer hover:text-black"><CheckSquare/></p> 
                                 <p className="ml-3">All {jobIdList.length} jobs selected</p>
                             </div>
-                        : 
+                            : 
                             <div className="flex mx-2">
                                 <p onClick={toggleSelectAll} className="hover:text-nebula-blue cursor-pointer"><Square/></p> 
                                 <p className="ml-3">{jobIdList.length} jobs selected</p>

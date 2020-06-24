@@ -17,12 +17,12 @@ const MilestoneModal = (props) => {
                     props.data.milestones.milestones.map(
                         (milestone, index) => {
                             return (
-                                    <MilestoneCard 
-                                        key={milestone.id}
-                                        milestone = { milestone } 
-                                        index = { index } 
-                                        lastIndex = { props.data.milestones.totalCount } 
-                                    />
+                                <MilestoneCard 
+                                    key={milestone.id}
+                                    milestone = { milestone } 
+                                    index = { index } 
+                                    lastIndex = { props.data.milestones.totalCount } 
+                                />
                             );
                         })
                 }

@@ -8,7 +8,6 @@ const GITHUB_DOMAIN = process.env.GITHUB_DOMAIN;
 const API_URL = process.env.API_URL;
 const githubAuthUrl = `https://${GITHUB_DOMAIN}/login/oauth/authorize?client_id=${CLIENT_ID}&scope=read:user user:email`;
 
-console.log(API_URL);
 export function useAuthentication() {
     const [authenticated, setAuthenticated] = useState(false);
     const [user, setUser] = useState({});
@@ -42,7 +41,6 @@ export function useAuthentication() {
     };
 
     const finishAuth = (code) => {
-        console.log("finish auth");
         if (code !== "") {
             setLoading(true);
             Axios.post(`${API_URL}/authenticate`, { "code": code }, {

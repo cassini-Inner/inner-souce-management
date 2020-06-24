@@ -23,7 +23,6 @@ const SearchResults = (props) => {
     if (error) {
         return "Error loading job";
     }
-    console.log(data)
     let tabList = [
         {
             title: "Jobs",
@@ -53,6 +52,6 @@ const SearchResults = (props) => {
                 component={(props) => <UserCardsGrid users={data.Search.users}/>} />
         </div>
     );
-}
+};
 
 export default withRouter(SearchResults);

@@ -6,12 +6,10 @@ import Avatar from "../Common/Avatar/Avatar";
 import AuthorInfo from "../Common/AuthorInfo/AuthorInfo";
 
 export const JobReview = ({ review }) => {
-    console.log(review);
 
     return (
         <div className="pb-2 pt-2">
             <Link to={`/jobDetails/${review.job.id}`}>
-
                 <Card isInteractive={true}>
                     <div className="px-2">
                         <p

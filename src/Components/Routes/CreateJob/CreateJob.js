@@ -297,7 +297,7 @@ const CreateJob = (props) => {
             if(confirmBool) {
                 props.history.goBack();
             }
-        }
+        };
         setConfirmDialogue({
             isOpen: true,
             title:"Cancel Job Creation?",

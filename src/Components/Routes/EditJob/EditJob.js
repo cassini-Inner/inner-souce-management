@@ -342,7 +342,7 @@ const EditJob = (props) => {
             if(confirmBool) {
                 props.history.goBack();
             }
-        }
+        };
         setConfirmDialogue({
             isOpen: true,
             title:"Cancel Job Update?",

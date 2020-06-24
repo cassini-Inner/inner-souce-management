@@ -128,7 +128,7 @@ const JobDetailsPage = (props) => {
                     alert("Could not delete job", e);
                 });
             }
-        }
+        };
         setConfirmDialogue({
             isOpen: true,
             title:"Delete Job?",
@@ -154,7 +154,7 @@ const JobDetailsPage = (props) => {
                     alert("Could not delete job");
                 });
             }
-        }
+        };
         setConfirmDialogue({
             isOpen: true,
             title:"Withdraw Application?",
@@ -186,7 +186,6 @@ const JobDetailsPage = (props) => {
     // If the user has applied to this job and user's application has not been accepted
     if (data.Job.viewerHasApplied) {
         if (viewerApplicationStatus ==="PENDING" ) {
-            console.log("Hello")
             userActions = [
                 (<Button type="secondary" label="Withdraw application"
                     key="withdrawJobApplication"
@@ -204,7 +203,6 @@ const JobDetailsPage = (props) => {
             ];
         }
     } else {
-        console.log("hi")
         userActions = [
             (<Button
                 type="primary" label="Apply to Job"

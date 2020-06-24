@@ -29,9 +29,9 @@ const SearchBar = (props) => {
     
     const viewAllResults = () => {
         if(queryInput.trim() !== "") {
-            props.history.push("/searchResults/"+encodeURI(queryInput))
+            props.history.push("/searchResults/"+encodeURI(queryInput));
         }
-    }
+    };
 
     const handleChange = (e) => {
         var value = e.target.value;
@@ -66,7 +66,7 @@ const SearchBar = (props) => {
                     }}
                     onChange={(e) => {handleChange(e);}}
                     onClick={(e)=> {e.stopPropagation();}}
-                    onKeyDown={(e) => (e.key === 'Enter') ? viewAllResults() : "" }
+                    onKeyDown={(e) => (e.key === "Enter") ? viewAllResults() : "" }
                     placeholder="Search for jobs and users by name"
                     className={
                         " appearance-none bg-white transition duration-300 outline-none bg-transparent w-full py-4 px-4 flex-1 mx-auto "

@@ -129,7 +129,6 @@ const CreatedJobList = (props) => {
     }
     return (
         props.jobs.map((job, index) => {
-            console.log("applications:",job.applications.applications)
             return (
                 <div className="my-8 border border-nebula-grey-400 rounded-lg transition duration-300 shadow-none cursor-pointer hover:shadow-lg" key={index}>
                     {
@@ -150,15 +149,15 @@ const CreatedJobList = (props) => {
                                                     //To extract unique applicants' photoURLs
                                                     const uniqueApplicantIdArray = Array.from(new Set(job.applications.applications.map((application) => application.applicant.id))).slice(0,3);
                                                     const uniqueApplicationArray = uniqueApplicantIdArray.map((id) => {
-                                                        return job.applications.applications.find(application => application.applicant.id == id)
-                                                    })
+                                                        return job.applications.applications.find(application => application.applicant.id == id);
+                                                    });
                                                     return uniqueApplicationArray.map((application, key) => {
                                                         if (application.status.toUpperCase() == "PENDING") {
                                                             return (
                                                                 <Avatar key={application.applicant.id} imagePath={application.applicant.photoUrl} className={"p-0 absolute self-center h-10 w-10 absolute "+"ml-"+(key*4)} />
                                                             );
                                                         }
-                                                    })
+                                                    });
                                                 })()
                                                 :
                                                 ""

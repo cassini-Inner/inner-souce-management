@@ -7,7 +7,7 @@ const UploadJobCard = (props) => {
     return (
         <div className="w-full bg-white mt-4 rounded-lg transition duration-300 shadow-none cursor-pointer border border-nebula-grey-400"
             key={props.data.id}
-            >
+        >
             {
                 props.isSelected ?
                     <div className="flex text-nebula-blue items-center m-2">
