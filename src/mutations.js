@@ -137,10 +137,29 @@ export const TOGGLE_MILESTONE_COMPLETED = gql`
     }
 `;
 
+// To toggle job as completed
+export const TOGGLE_JOB_COMPLETED = gql`
+    mutation($jobId: String!){
+        toggleJobCompleted(jobID: $jobId) {
+            id
+            status
+        }
+    }
+`;
+
 // To update a job
 export const UPDATE_JOB = gql`
     mutation($job: UpdateJobInput){
         updateJob(job: $job) {
+            id
+        }
+    }
+`;
+
+// To restore jobs backup
+export const RESTORE_JOBS_BACKUP = gql`
+    mutation($jobs: [CreateJobInput!]!){
+        restoreJobsBackup(jobs: $jobs) {
             id
         }
     }

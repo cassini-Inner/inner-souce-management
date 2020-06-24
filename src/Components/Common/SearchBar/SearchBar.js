@@ -4,12 +4,14 @@ import { SEARCH_JOBS_USERS_LIMIT } from "../../../queries";
 import Avatar from "../Avatar/Avatar";
 import {Briefcase} from "react-feather";
 import StatusTags from "../StatusTags/StatusTags";
+import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
-const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
+const SearchBar = (props) => {
     const searchInputRef = useRef();
     const [jobs, setJobs] = useState([]);
     const [users, setUsers] = useState([]);
+    const [queryInput, setQueryInput] = useState("");
     const [typingTimeout, setTypingTimeout] = useState();
     const [getSearchResults, {loading}] = useLazyQuery(SEARCH_JOBS_USERS_LIMIT, {
         onCompleted: (data) => {
@@ -23,9 +25,17 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
         if (searchInputRef.current) {
             searchInputRef.current.focus();
         }
-    }, [searchOpen]);
+    }, [props.searchOpen]);
+    
+    const viewAllResults = () => {
+        if(queryInput.trim() !== "") {
+            props.history.push("/searchResults/"+encodeURI(queryInput))
+        }
+    }
+
     const handleChange = (e) => {
-        const value = e.target.value;
+        var value = e.target.value;
+        setQueryInput(value);
         if (typingTimeout) {
             clearTimeout(typingTimeout);
         }
@@ -45,16 +55,18 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
         }, 100);
         setTypingTimeout(timeout);
     };
+
     return (
         <div className="flex-1">
-            <div className="mx-auto pt-8 w-full max-w-screen-md" ref={forwardedRef}>
+            <div className="mx-auto pt-8 w-full max-w-screen-md" ref={props.forwardedRef}>
                 <input
                     ref={searchInputRef}
                     onFocus={(event) => {
-                        setSearchOpen(true);
+                        props.setSearchOpen(true);
                     }}
                     onChange={(e) => {handleChange(e);}}
                     onClick={(e)=> {e.stopPropagation();}}
+                    onKeyDown={(e) => (e.key === 'Enter') ? viewAllResults() : "" }
                     placeholder="Search for jobs and users by name"
                     className={
                         " appearance-none bg-white transition duration-300 outline-none bg-transparent w-full py-4 px-4 flex-1 mx-auto "
@@ -65,22 +77,22 @@ const SearchBar = ({searchOpen,setSearchOpen, forwardedRef}) => {
                 {loading &&
                     <LoadingIndicator/>
                 }
-                <SearchResults users={users} jobs={jobs}/>
+                <SearchResults users={users} jobs={jobs} viewAllResults={viewAllResults}/>
             </div>
         </div>
     );
 };
 
-const SearchResults = ({jobs, users}) => {
+const SearchResults = ({jobs, users, viewAllResults}) => {
     if (!jobs.length && !users.length) {
         return (<div/>);
     }
     return (
         <div
-            className="px-4 py-4 shadow-lg border border-nebula-grey-300 rounded-bl-lg rounded-br-lg bg-white w-full max-w-screen-md">
+            className="py-4 shadow-lg border border-nebula-grey-300 rounded-bl-lg rounded-br-lg bg-white w-full max-w-screen-md">
             {jobs && jobs.length > 0 &&
           <>
-              <p className="text-xs font-semibold text-nebula-grey-600">Jobs</p>
+              <p className="text-xs px-4 font-semibold text-nebula-grey-600">Jobs</p>
               <div>
                   {jobs.map((job) => {
                       return <JobSearchListing
@@ -97,12 +109,13 @@ const SearchResults = ({jobs, users}) => {
             }
             {users && users.length > 0 &&
           <>
-              <p className="text-xs mt-4 font-semibold text-nebula-grey-600">Users</p>
+              <p className="text-xs px-4 mt-4 font-semibold text-nebula-grey-600">Users</p>
               {users.map((user) => {
                   return <UserSearchListing
                       id={user.id}
                       key={user.id}
                       name={user.name}
+                      bio={user.bio}
                       photoUrl={user.photoUrl}
                       department={user.department}
                       role={user.role}
@@ -110,18 +123,24 @@ const SearchResults = ({jobs, users}) => {
               })}
           </>
             }
+            <div className="flex text-nebula-blue hover:text-blue-700 justify-center pt-2 cursor-pointer" onClick={viewAllResults}>
+                See all results
+            </div>
         </div>
     );
 };
 
-const UserSearchListing = ({name, role, department, photoUrl,id}) => {
+const UserSearchListing = ({name, bio, role, department, photoUrl,id}) => {
     return (
         <Link to={`/profile/${id}`}>
-            <div className="flex flex-row items-start leading-tight ">
-                <Avatar imagePath={photoUrl} className="w-10 h-10 mr-4 mt-4"/>
-                <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
-                    <div className="text-sm font-semibold text-nebula-grey-800">{name}</div>
-                    <div className="text-sm text-nebula-grey-600">{role} @ {department} </div>
+            <div className="hover:bg-nebula-grey-200">
+                <div className="flex flex-row items-start leading-tight px-4">
+                    <Avatar imagePath={photoUrl} className="w-10 h-10 mr-4 mt-4"/>
+                    <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
+                        <div className="text-sm font-semibold text-nebula-grey-800">{name}</div>
+                        <div className="text-sm text-nebula-grey-600">{role} @ {department}</div>
+                        <div className="text-sm text-nebula-grey-600">{bio}</div>
+                    </div>
                 </div>
             </div>
         </Link>
@@ -140,18 +159,20 @@ const JobSearchListing = ({title, status,viewerHasApplied, description, id}) => 
 
     return (
         <Link to={`/jobDetails/${id}`}>
-            <div className="flex flex-row items-start leading-tight ">
-                <div className="h-10 w-10 rounded-full flex items-center justify-center text-nebula-blue bg-nebula-blue-light mr-4 mt-4">
-                    <Briefcase className="w-5 h-5"/>
-                </div>
-                <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
-                    <div className=" text-sm font-semibold text-nebula-grey-800 mb-2">{title}</div>
-                    <div className="text-sm text-nebula-grey-700 mb-3">{description.slice(0,200)}</div>
-                    <StatusTags statusTag={tags} />
+            <div className="hover:bg-nebula-grey-200">
+                <div className="flex flex-row items-start leading-tight px-4">
+                    <div className="h-10 w-10 rounded-full flex items-center justify-center text-nebula-blue bg-nebula-blue-light mr-4 mt-4">
+                        <Briefcase className="w-5 h-5"/>
+                    </div>
+                    <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
+                        <div className=" text-sm font-semibold text-nebula-grey-800 mb-2">{title}</div>
+                        <div className="text-sm text-nebula-grey-700 mb-3">{description.slice(0,200)}</div>
+                        <StatusTags statusTag={tags} />
+                    </div>
                 </div>
             </div>
         </Link>
     );
 };
 
-export default SearchBar;
+export default withRouter(SearchBar);

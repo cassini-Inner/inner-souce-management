@@ -1,16 +1,18 @@
-import React, { useState, useRef, Fragment } from "react";
+import React, { useState, useContext, Fragment } from "react";
 import UploadJobCard from "./UploadJobCard";
 import Navbar from "../../Navigation/Navbar/Navbar";
-import {  withRouter, useParams } from "react-router-dom";
+import {  withRouter } from "react-router-dom";
 import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
+import { useMutation } from "@apollo/react-hooks";
 import Portal from "../../Containers/Portal";
 import { Square, CheckSquare } from "react-feather";
+import { GET_YOUR_JOBS } from "../../../queries";
+import { RESTORE_JOBS_BACKUP } from "../../../mutations";
 import Button from "../../Common/Button/Button";
 import MilestoneDetailsModal from "./MilestoneDetailsModal";
-
+import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
 const UploadJobsList = (props) => {
-    const { id } = useParams();
-    const userId = id;
+    const { user } = useContext(AuthenticationContext);
     const jobs = props.location.state.jobs ? props.location.state.jobs : null;
     if(!jobs || jobs == null) {
         alert("Some error occured! No jobs to upload found");
@@ -19,7 +21,16 @@ const UploadJobsList = (props) => {
     const initialJobIdList = jobs.map(job => job.id)
     const [ jobIdList, setJobIdList ] = useState(initialJobIdList);
     const [ milestoneModalState, setMilestoneModalState ] = useState(null);
-
+    const [uploadJobsMutation, { error }] = useMutation(RESTORE_JOBS_BACKUP,
+        {
+            refetchQueries: [
+                {
+                    query: GET_YOUR_JOBS,
+                    variables: { userId: user.id }
+                },
+            ],
+        });
+    if (error) return <p>Post comment mutation Error! {error}</p>;
     const toggleSelectAll = () => {
         if(jobIdList.length == initialJobIdList.length) {
             setJobIdList([]);
@@ -57,7 +68,39 @@ const UploadJobsList = (props) => {
         jobIdList.forEach(id => {
             uploadJobs.push(jobs.find((job) => job.id == id))
         });
-        console.log(uploadJobs);
+        // pre - processing before upload
+        const jobsBackup = uploadJobs.map((job, _) => {
+            let milestones = job.milestones.milestones.map((milestone, _) => {
+                let skills = skills = milestone.skills.map((skill, _) => skill.value);
+                return({
+                    title: milestone.title,
+                    desc: milestone.desc,
+                    status: milestone.status,
+                    resolution: milestone.resolution,
+                    duration: milestone.duration,
+                    skills: skills,
+                });
+            });
+            return({
+                title: job.title,
+                desc: job.desc,
+                difficulty: job.difficulty,
+                milestones: milestones
+            });
+        });
+        console.log("After:", jobsBackup);
+        uploadJobsMutation({
+            variables: {
+                jobs: jobsBackup,
+            },
+        }).then((result) => {
+            console.log("Successfully uploaded!");
+            alert("Upload Successfull!");
+            props.history.push("/profile/"+user.id)
+        })
+        .catch((e) => {
+            alert("Could not upload jobs backup: ", e);
+        });
     }
 
     const jobList = jobs.map( (job, key) => {

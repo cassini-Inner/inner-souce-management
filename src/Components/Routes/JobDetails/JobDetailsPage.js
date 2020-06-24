@@ -28,12 +28,19 @@ import {
     WITHDRAW_JOB_APPLICATION,
 } from "../../../mutations";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
+import ConfirmDialogue from "../../Common/ConfirmDialogue/ConfirmDialogue";
 import { useClickOutside } from "../../../hooks/useClickOutside/hook";
 
 const JobDetailsPage = (props) => {
 
     const jobId = props.match.params.id;
 
+    const [confirmDialogue, setConfirmDialogue] = useState({
+        isOpen:false,
+        title: "",
+        msg: "",
+        onConfirm: "",
+    });
     const { user } = useContext(AuthenticationContext);
     const [getJobData, { loading, error, data}] = useLazyQuery(
         GET_JOB_DETAILS,
@@ -46,7 +53,6 @@ const JobDetailsPage = (props) => {
     }, [
 
     ]);
-    console.log(data);
 
     //Mutation for applying to a job
     const [applyToJobMutation, { applyToJobLoading, applyToJobError }] = useMutation(
@@ -103,38 +109,59 @@ const JobDetailsPage = (props) => {
     };
 
     const deleteJobHandler = () => {
-        let confirmed = window.confirm(
-            "Are you sure you want to delete this job? Note: all the associated milestones, discussions and applications will be lost.");
-        if (confirmed) {
-            deleteJobMutation({
-                variables: {
-                    jobId: jobId,
-                },
-            }).then(
-                () => {
-                    props.history.push("/");
-                },
-            ).catch((e) => {
-                alert("Could not delete job", e);
+        const onConfirm = (confirmBool) => {
+            setConfirmDialogue({
+                isOpen: false,
+                msg: "",
+                onConfirm: "",
             });
+            if(confirmBool) {
+                deleteJobMutation({
+                    variables: {
+                        jobId: jobId,
+                    },
+                }).then(
+                    () => {
+                        props.history.push("/");
+                    },
+                ).catch((e) => {
+                    alert("Could not delete job", e);
+                });
+            }
         }
+        setConfirmDialogue({
+            isOpen: true,
+            title:"Delete Job?",
+            msg: "Note that this process cannot be undone and all the associated milestones, discussions and applications will be lost.",
+            onConfirm: onConfirm,
+        });
     };
 
     const withdrawApplicationHandler = () => {
-        let confirmed = window.confirm(
-            "Are you sure you want to withdraw from this job?");
-        if (confirmed) {
-            withdrawApplicationMutation({
-                variables: {
-                    jobId: jobId,
-                },
-            },
-            ).catch(() => {
-                alert("Could not delete job");
+        const onConfirm = (confirmBool) => {
+            setConfirmDialogue({
+                isOpen: false,
+                msg: "",
+                onConfirm: "",
             });
+            if(confirmBool) {
+                withdrawApplicationMutation({
+                    variables: {
+                        jobId: jobId,
+                    },
+                },
+                ).catch(() => {
+                    alert("Could not delete job");
+                });
+            }
         }
+        setConfirmDialogue({
+            isOpen: true,
+            title:"Withdraw Application?",
+            msg: "Are you sure you want to withdraw your application from this job",
+            onConfirm: onConfirm,
+        });
     };
-
 
     let viewerApplicationStatus = "";
     let footerTitle = "";
@@ -149,9 +176,9 @@ const JobDetailsPage = (props) => {
         }
     }
 
-
-    //To check if the user  already applied to this job for buttons
+    //To check if the user has already applied to this job for buttons
     let userActions = [];
+    let authorActions = [];
     let isJobAuthor = false;
     if (user.id === data.Job.createdBy.id) {
         isJobAuthor = true;
@@ -159,6 +186,7 @@ const JobDetailsPage = (props) => {
     // If the user has applied to this job and user's application has not been accepted
     if (data.Job.viewerHasApplied) {
         if (viewerApplicationStatus ==="PENDING" ) {
+            console.log("Hello")
             userActions = [
                 (<Button type="secondary" label="Withdraw application"
                     key="withdrawJobApplication"
@@ -176,6 +204,7 @@ const JobDetailsPage = (props) => {
             ];
         }
     } else {
+        console.log("hi")
         userActions = [
             (<Button
                 type="primary" label="Apply to Job"
@@ -185,21 +214,6 @@ const JobDetailsPage = (props) => {
             />),
         ];
     }
-
-    const authorActions = [
-        (<Button type="secondary" label="Edit Job"
-            key="editjob"
-            className=" w-auto mr-4 "
-            onClick={() => props.history.push("/editJob/" + jobId)}
-        />),
-        (<Button type="error" label="Delete Job"
-            className=" w-auto mr-4 "
-            key="deletejob"
-            onClick={deleteJobHandler}
-        />),
-    ];
-
-
 
     if (!isJobAuthor && viewerApplicationStatus === "PENDING") {
         footerTitle = "Successfully applied to the job";
@@ -212,6 +226,33 @@ const JobDetailsPage = (props) => {
     if (!isJobAuthor && (jobStatus === "completed" || jobStatus === "ongoing") && viewerApplicationStatus==="") {
         footerTitle = `Job has ${jobStatus} status and cannot be applied to`;
     }
+
+    if(isJobAuthor) {
+        if(data.Job.applications.applications && (data.Job.applications.applications.length == 0 || data.Job.applications.applications.find((application) => application.status.toUpperCase() != "REJECTED") == undefined)) {
+            authorActions = [
+                (<Button type="secondary" label="Edit Job"
+                    key="editjob"
+                    className=" w-auto mr-4 "
+                    onClick={() => props.history.push("/editJob/" + jobId)}
+                />),
+                (<Button type="error" label="Delete Job"
+                    className=" w-auto mr-4 "
+                    key="deletejob"
+                    onClick={deleteJobHandler}
+                />),
+            ];
+        }
+        else {
+            authorActions = [
+                (<Button type="error" label="Delete Job"
+                    className=" w-auto mr-4 "
+                    key="deletejob"
+                    onClick={deleteJobHandler}
+                />),
+            ];
+        }
+    }
+    
 
     let tabList = [
         {
@@ -307,6 +348,7 @@ const JobDetailsPage = (props) => {
                     </div>
                 </div>
             </div>
+            <ConfirmDialogue isOpen={confirmDialogue.isOpen} title={confirmDialogue.title} msg={confirmDialogue.msg} onConfirm={confirmDialogue.onConfirm} />
         </Fragment>
     );
 };

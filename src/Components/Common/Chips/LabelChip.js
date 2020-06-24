@@ -1,4 +1,3 @@
-import * as Icons from "react-feather";
 import React from "react";
 
 export const LabelChip = ({ label, onClick, className }) => {
