@@ -610,3 +610,33 @@ export const SEARCH_ALL_JOBS_USERS_LIMIT = gql`
        }
   }
 `;
+
+export const GET_USER_NOTIFICATIONS = gql`
+query ViewNotifications($limit: Int!, $after:ID) {
+  ViewerNotifications(limit:$limit, after: $after){
+    totalCount
+    edges{
+      node{
+        id
+        timeCreated
+        sender{
+          id
+          name
+          photoUrl
+        }
+        type
+        read
+        job{
+          id
+          title
+        }
+        timeCreated
+      }
+    }
+    pageInfo{
+      hasNextPage
+      endCursor
+    }
+  }
+}
+`;

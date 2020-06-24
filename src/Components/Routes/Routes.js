@@ -18,18 +18,17 @@ import OnboardingPage from "./Onboarding/OnboardingPage";
 import { JobsFeedProvider } from "../../hooks/JobFeedProvider/provider";
 import Sidebar from "../Navigation/Sidebar/Sidebar";
 import { InitialLoadingPage } from "../Common/LoadingIndicator/InitialLoadingPage";
+import { NotificationList } from "../Notifications/notification_list.js";
 
 const Routes = (props) => {
 
     const { authenticated, loading, user } = useContext(AuthenticationContext);
 
-    console.log("routes.js", authenticated, loading, user);
     if (loading) {
         return (
             <Route path="/" component={InitialLoadingPage} />
         );
     }
-    console.log("here");
     return (
         <Switch>
             {

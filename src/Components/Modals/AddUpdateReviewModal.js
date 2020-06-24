@@ -15,7 +15,6 @@ export const AddUpdateReviewModal = ({ forwardedRef, close, milestone, initialRe
         initialReviewData ? initialReviewData.rating : 0);
     const [review, setReview] = useState(
         initialReviewData ? initialReviewData.remark : "");
-    console.log("jobId", jobId);
     const [createReview, { loading: createReviewLoading }] = useMutation(
         CREATE_REVIEW_MUTATION, {
             variables: {
@@ -67,7 +66,6 @@ export const AddUpdateReviewModal = ({ forwardedRef, close, milestone, initialRe
             console.log(e);
             close();
         }).then((data) => {
-            console.log(data);
         });
     };
 

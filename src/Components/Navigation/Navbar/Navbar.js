@@ -1,38 +1,49 @@
-import React, { Component, useContext, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import * as Icons from "react-feather";
 import SearchBar from "../../Common/SearchBar/SearchBar";
 import { Link, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
-import { connect } from "react-redux";
-import Axios from "axios";
 import Avatar from "../../Common/Avatar/Avatar";
 import { AuthenticationContext } from "../../../hooks/useAuthentication/provider";
-import Button from "../../Common/Button/Button";
 import Portal from "../../Containers/Portal";
-import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
 import { useClickOutside } from "../../../hooks/useClickOutside/hook";
 import { TranslateEnterAnimation } from "../../AnimationHelpers/TranslateMountWidget";
-import { getTimeDiffText } from "../../../HelperFunctions/TimeDiffMsg";
+import { useNotifications } from "../../../hooks/useNotifications/hook";
+import { NotificationList } from "../../Notifications/notification_list";
+
 const Navbar = () => {
     const { user } = useContext(AuthenticationContext);
 
     const [profileModalState, setProfileModalState] = useState(false);
-    const [notificationModalState, setNotificationModalState] = useState(false);
     const [mouseInside, setMouseInside] = useState(false);
+
+    const {
+        isComponentVisible: notificationsVisible,
+        setIsComponentVisible: setNotificationsVisible,
+        ref: notificationsRef,
+    } = useClickOutside(false);
+
+    const {
+        loading,
+        notifications,
+        hasNextPage,
+        loadMoreNotifications,
+        markAllRead,
+        refreshNotifications,
+        unreadCount,
+        markNotificationRead,
+    } = useNotifications();
+
     const {
         ref: searchRef,
         setIsComponentVisible: setSearchVisible,
         isComponentVisible: searchVisible,
     } = useClickOutside(false);
-    
+
     const openProfilePopup = (event) => {
         setProfileModalState(true);
         setMouseInside(true);
-    };
-
-    const openNotificationPopup = (event) => {
-        setNotificationModalState(true);
     };
 
     const closePopup = () => {
@@ -42,11 +53,15 @@ const Navbar = () => {
             () => {
                 if (!allowClose) {
                     setProfileModalState(false);
-                    setNotificationModalState(false);
                 }
             },
-            200
+            200,
         );
+    };
+
+    const openNotificationPanel = () => {
+        refreshNotifications();
+        setNotificationsVisible(true);
     };
 
     const handleMouseOver = (value) => {
@@ -56,27 +71,44 @@ const Navbar = () => {
     return (
         <div className="lg:sticky bg-white top-0 py-4">
             <div className="flex items-center justify-end flex-row w-full">
-                <Portal isOpen={searchVisible} scrim={true} >
+                <Portal isOpen={searchVisible} scrim={true}>
                     <TranslateEnterAnimation visible={searchVisible}>
-                        <SearchBar forwardedRef={searchRef} searchOpen={searchVisible} setSearchOpen={(value)=>setSearchVisible(value)}/>
+                        <SearchBar forwardedRef={searchRef}
+                            searchOpen={searchVisible}
+                            setSearchOpen={(value) => setSearchVisible(
+                                value)}/>
                     </TranslateEnterAnimation>
                 </Portal>
-                <button onClick={()=> {setSearchVisible(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
-                    <Icons.Search className="h-6 w-6 flex-1 hover:text-nebula-blue" />
+                <button onClick={() => {setSearchVisible(true);}}
+                    className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
+                    <Icons.Search
+                        className="h-6 w-6 flex-1 hover:text-nebula-blue"/>
                 </button>
-                <button onClick={openNotificationPopup} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center border-0">
-                    <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
+                <button
+                    onClick={openNotificationPanel}
+                    className={"flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center " +
+                (unreadCount > 0
+                    ? "border-solid border-2 border-nebula-blue"
+                    : "")}
+                >
+                    <Icons.Bell
+                        className={"h-6 w-6 flex-1 hover:text-nebula-blue "}/>
                 </button>
                 <NotificationModal
-                    onMouseOver={handleMouseOver}
-                    onMouseLeave={closePopup}
-                    notificationModalOpen={notificationModalState}
+                    notificationModalOpen={notificationsVisible}
+                    forwardedRef={notificationsRef}
+                    closeModal={() => setNotificationsVisible(false)}
+                    loading={loading}
+                    notifications={notifications}
+                    hasNextPage={hasNextPage}
+                    loadMoreNotifications={loadMoreNotifications}
+                    markAllRead={markAllRead}
+                    markNotificationRead={markNotificationRead}
                 />
-                <button onClick={openProfilePopup} >
-                    <Avatar imagePath={user.photoUrl} className="w-10 h-10" />
+                <button onClick={openProfilePopup}>
+                    <Avatar imagePath={user.photoUrl} className="w-10 h-10"/>
                 </button>
                 <ProfileModal
-                    onMouseOver={handleMouseOver}
                     onMouseLeave={closePopup}
                     profileModalOpen={profileModalState}
                 />
@@ -91,29 +123,38 @@ const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, 
     const modalRef = useRef();
     return (
         <CSSTransition
-            in={profileModalOpen }
+            in={profileModalOpen}
             timeout={150}
             appear
             unmountOnExit
             classNames={{
-                enter: "opacity-0 transition duration-150 transform translate-y-2 translate-x-2",
+                enter: "opacity-0 transition duration-150 transform -translate-y-2 translate-x-2",
                 enterDone: "opacity-100 transition duration-150 transform translate-y-0 translate-x-0",
-                exit: "opacity-0 transition duration-150 transform translate-y-2 translate-x-2",
+                exit: "opacity-0 transition duration-150 transform -translate-y-2 translate-x-2",
             }}
         >
-            <div ref = {modalRef} className={"z-30 w-96 mt-2 absolute top-0 right-0 inline-block" + className || ""} onMouseOver={() => onMouseOver(true)} onMouseLeave={onMouseLeave}>
-                <div className="overflow-hidden  w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 bg-white" >
-                    <div className="flex p-4" >
-                        <Avatar imagePath={user.photoUrl} className="h-10 w-10 " />
+            <div ref={modalRef}
+                className={"z-30 w-96 mt-2 absolute top-0 right-0 inline-block" +
+               className || ""} onMouseOver={() => onMouseOver(true)}
+                onMouseLeave={onMouseLeave}>
+                <div
+                    className="overflow-hidden  w-full shadow-lg shadow-2xl rounded-lg p-4 pr-20 bg-white">
+                    <div className="flex p-4">
+                        <Avatar imagePath={user.photoUrl} className="h-10 w-10 "/>
                         <div className="font-semibold leading-tight ml-8">
-                            <p className="text-nebula-grey-600 text-xs">Signed in as</p>
+                            <p className="text-nebula-grey-600 text-xs">Signed in
+                              as</p>
                             <p className="text-lg mb-2">{user.name}</p>
-                            <Link to={"/profile/" + user.id} className="text-xs text-nebula-blue tracking-widest">VIEW PROFILE</Link>
+                            <Link to={"/profile/" + user.id}
+                                className="text-xs text-nebula-blue tracking-widest">VIEW
+                              PROFILE</Link>
                         </div>
                     </div>
-                    <hr />
-                    <div className="flex mt-4 text-nebula-blue font-semibold cursor-pointer" onClick={signOut}>
-                        <Icons.LogOut className="stroke-current ml-4 mr-8" />
+                    <hr/>
+                    <div
+                        className="flex mt-4 text-nebula-blue font-semibold cursor-pointer"
+                        onClick={signOut}>
+                        <Icons.LogOut className="stroke-current ml-4 mr-8"/>
                         <p>Logout</p>
                     </div>
                 </div>
@@ -123,91 +164,64 @@ const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, 
     );
 };
 
-const NotificationModal = ({ notificationModalOpen, className, onMouseOver, onMouseLeave }) => {
-    const { user } = useContext(AuthenticationContext);
-    const modalRef = useRef();
+const NotificationModal = ({ notificationModalOpen, forwardedRef, closeModal, loading, notifications, hasNextPage, loadMoreNotifications, markAllRead, markNotificationRead }) => {
     return (
         <CSSTransition
             in={notificationModalOpen}
-            timeout={150}
+            timeout={300}
             appear
             unmountOnExit
             classNames={{
-                enter: "opacity-0 transition duration-150 transform translate-y-2 translate-x-2",
-                enterDone: "opacity-100 transition duration-150 transform translate-y-0 translate-x-0",
-                exit: "opacity-0 transition duration-150 transform translate-y-2 translate-x-2",
+                enter: "opacity-0 transition duration-300 transform translate-x-2",
+                enterDone: "opacity-100 transition duration-300 transform translate-x-0",
+                exit: "opacity-0 transition duration-300 transform translate-x-2",
             }}
         >
-            <div ref = {modalRef} className={"z-30 w-70 mt-2 absolute top-0 right-0 inline-block p-1 " + className || ""} onMouseOver={() => onMouseOver(true)} onMouseLeave={onMouseLeave}>
-                <div className="w-full shadow-lg shadow-2xl rounded-lg bg-white" >
-                    <div className="flex font-semibold text-xl p-4 text-nebula-blue" >
-                        Notifications
-                    </div>
-                    <hr />
-                    <div className="flex-row mt-1 cursor-pointer overflow-y-auto">
-                        <Link to={"/jobDetails/" + "2"}>
-                            <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
-                                <Avatar imagePath={user.photoUrl} className="h-10 w-10" />
-                                <div className="ml-2 flex flex-col">
-                                    <div className="flex">
-                                        <p className="font-semibold flex">Tushar Paliwal</p>
-                                        <p className="flex">&nbsp;accepted your application for</p>
-                                        <p className="font-semibold flex">&nbsp;Innersource bug fixes</p> 
+            <div className="overflow-hidden fixed inset-0">
+                <div className="absolute inset-0 overflow-hidden">
+                    <div className="absolute inset-0 bg-white opacity-75"/>
+                    <div
+                        className="absolute inset-y-0 right-0 pl-8 max-w-full flex">
+                        <div ref={forwardedRef}
+                            className={"z-30 w-screen max-w-lg inline-block"}>
+                            <div
+                                className="w-full my-auto h-screen overflow-y-auto shadow-lg shadow-2xl bg-white">
+                                <div
+                                    className="flex items-center justify-between bg-nebula-blue-light text-lg p-4 text-nebula-blue">
+                                    <h1>Notifications</h1>
+                                    <button
+                                        aria-label="close-panel"
+                                        onClick={closeModal}
+                                        className="text-current text-nebula-grey mr-2"
+                                    >
+                                        <Icons.X/>
+                                    </button>
+                                </div>
+                                <button className="w-full p-4"
+                                    onClick={markAllRead}>
+                                    <div
+                                        className="flex flex-row justify-end items-center  hover:text-nebula-blue text-nebula-grey-700"
+                                    >
+                                        <h2>Mark all read</h2>
+                                        <Icons.CheckCircle
+                                            className="ml-4 mr-2 text-current"
+                                        />
                                     </div>
-                                    <div className="flex items-center">
-                                        <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
-                                        <p className="text-xs text-nebula-grey-600">{getTimeDiffText((new Date()))}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                        <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
-                            <Avatar imagePath={"https://avatars0.githubusercontent.com/u/64488394?v=4"} className="h-10 w-10" />
-                            <div className="ml-2 flex flex-col">
-                                <div className="flex">
-                                    <p className="font-semibold flex">Lancelot</p>
-                                    <p className="flex">&nbsp;rejected your application for</p>
-                                    <p className="font-semibold flex">&nbsp;Created Jobs open issue</p> 
-                                </div>
-                                <div className="flex items-center">
-                                    <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
-                                    <p className="text-xs text-nebula-grey-600">2 hours ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
-                            <Avatar imagePath={"https://avatars3.githubusercontent.com/u/11810442?s=400&v=4"} className="h-10 w-10" />
-                            <div className="ml-2 flex flex-col">
-                                <div className="flex">
-                                    <p className="font-semibold flex">Alex Hunter</p>
-                                    <p className="flex">&nbsp;commented on your job</p>
-                                    <p className="font-semibold flex">&nbsp;Some other job for innersource</p> 
-                                </div>
-                                <div className="flex items-center">
-                                    <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
-                                    <p className="text-xs text-nebula-grey-600">23 hours ago</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
-                            <Avatar imagePath={"https://avatars2.githubusercontent.com/u/14271519?s=400&v=4"} className="h-10 w-10" />
-                            <div className="ml-2 flex flex-col">
-                                <div className="flex">
-                                    <p className="font-semibold flex">Alex Hunter</p>
-                                    <p className="flex">&nbsp;marked job status as completed for</p>
-                                    <p className="font-semibold flex">&nbsp;Some other job for innersource</p> 
-                                </div>
-                                <div className="flex items-center">
-                                    <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
-                                    <p className="text-xs text-nebula-grey-600">Wed Jun 24 2020 11:40:37 AM</p>
-                                </div>
+                                </button>
+                                <hr/>
+                                <NotificationList
+                                    loading={loading}
+                                    notifications={notifications}
+                                    hasNextPage={hasNextPage}
+                                    loadMoreNotifications={loadMoreNotifications}
+                                    markNotificationRead={markNotificationRead}
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </CSSTransition>
-
     );
 };
 

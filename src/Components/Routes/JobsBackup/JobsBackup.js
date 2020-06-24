@@ -26,10 +26,10 @@ const JobsBackup = (props) => {
     // });
     const [downloadJobsBackup] = useLazyQuery(GET_JOBS_BACKUP, {
         onCompleted: (data) => {
-            data = [...data["User"]["createdJobs"]]
+            data = [...data["User"]["createdJobs"]];
             const content = JSON.stringify(data);
-            const a = document.createElement('a');
-            const blob = new Blob([content], {'type':'application/json'});
+            const a = document.createElement("a");
+            const blob = new Blob([content], {"type":"application/json"});
             a.href = window.URL.createObjectURL(blob);
             a.download = "JobsBackup";
             a.click();
@@ -42,11 +42,11 @@ const JobsBackup = (props) => {
             variables: { 
                 userId: userId
             }
-        })
-    }
+        });
+    };
 
     // to hide the "choose file" input 
-    const uploadJobsOnClick = () => { document.getElementById("uploadJobsInput").click() }
+    const uploadJobsOnClick = () => { document.getElementById("uploadJobsInput").click(); };
 
     //To read the uploaded file 
     const fileUploadHandler = (event) => {
@@ -61,7 +61,7 @@ const JobsBackup = (props) => {
         const reader = new FileReader();
         reader.onload = validateFile;
         reader.readAsText(file);
-    }
+    };
 
     //For parsing the uploaded file to json
     const validateFile = (event) => {
@@ -71,17 +71,17 @@ const JobsBackup = (props) => {
                 return JSON.parse(file);
             }
             catch(err) {
-                return false
+                return false;
             }
         };
         const jsonFile = parse(file);
         if(!jsonFile) {
-            alert("Invalid file! Please ensure that you have uploaded the correct file.")
+            alert("Invalid file! Please ensure that you have uploaded the correct file.");
         }
         else {
-            const jobFields = ["id", "title", "status", "desc", "difficulty", "milestones"]
-            const milestoneFields = ["id", "title", "status", "desc", "duration", "skills", "resolution"]
-            const skillsFields = ["id", "value"]
+            const jobFields = ["id", "title", "status", "desc", "difficulty", "milestones"];
+            const milestoneFields = ["id", "title", "status", "desc", "duration", "skills", "resolution"];
+            const skillsFields = ["id", "value"];
             let isValid = true;
             var BreakException = {};
             try {
@@ -91,20 +91,20 @@ const JobsBackup = (props) => {
                         throw BreakException;
                     }
                     //Check for fields in job
-                    isValid = jobFields.reduce((accumulator, field) => (accumulator && job[field] != null && job[field] != undefined), true)
+                    isValid = jobFields.reduce((accumulator, field) => (accumulator && job[field] != null && job[field] != undefined), true);
                     if(!isValid) throw BreakException;
                     //Check for fields in milestones
                     if(!job["milestones"]["totalCount"]) throw BreakException;
                     const milestones = job["milestones"]["milestones"];
                     milestones.forEach(milestone => {
-                        isValid = milestoneFields.reduce((accumulator, field) => (accumulator && milestone[field] != null && milestone[field] != undefined), true)
+                        isValid = milestoneFields.reduce((accumulator, field) => (accumulator && milestone[field] != null && milestone[field] != undefined), true);
                         if(!isValid) throw BreakException;
                         const skills = milestone["skills"];
                         //Check for fields in skills
                         skills.forEach( skill => {
-                            isValid = skillsFields.reduce((accumulator, field) => (accumulator && skill[field] != null && skill[field] != undefined), true)
+                            isValid = skillsFields.reduce((accumulator, field) => (accumulator && skill[field] != null && skill[field] != undefined), true);
                             if(!isValid) throw BreakException;
-                        })
+                        });
                     });
                     if(!isValid) throw BreakException;
                 });
@@ -119,10 +119,10 @@ const JobsBackup = (props) => {
                 });
             }
             else {
-                alert("Missing fields! The file might be corrupted or modified!")
+                alert("Missing fields! The file might be corrupted or modified!");
             }
         }
-    }
+    };
 
     return (
         <div className="flex flex-col">

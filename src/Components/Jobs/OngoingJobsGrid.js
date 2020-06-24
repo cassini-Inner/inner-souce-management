@@ -18,10 +18,10 @@ const OngoingJobsGrid = (props) => {
             <div className="mb-10">
                 { 
                     props.title?
-                    <div className="text-xl font-semibold flex-1 py-6">
-                        {props.title}
-                    </div>
-                    : ""
+                        <div className="text-xl font-semibold flex-1 py-6">
+                            {props.title}
+                        </div>
+                        : ""
                 }
                 <div className="grid grid-cols-1 md:grid-cols-2 md:col-gap-4 md: row-gap-4">
                     {jobs.map((job) => {

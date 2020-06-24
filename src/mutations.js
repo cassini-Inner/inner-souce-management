@@ -137,6 +137,26 @@ export const TOGGLE_MILESTONE_COMPLETED = gql`
     }
 `;
 
+export const MARK_NOTIFICATION_READ = gql`
+mutation MarkOneNotificationRead($ids: [ID!]!){
+  markViewerNotificationsRead(ids:$ids){
+    id
+    read
+  }
+}
+`;
+
+export const MARK_ALL_NOTIFICATIONS_READ = gql`
+mutation MarkAllNotificationsRead{
+  markAllViewerNotificationsRead{
+    id
+    timeCreated
+    type
+    read
+  }
+}
+`;
+
 // To toggle job as completed
 export const TOGGLE_JOB_COMPLETED = gql`
     mutation($jobId: String!){

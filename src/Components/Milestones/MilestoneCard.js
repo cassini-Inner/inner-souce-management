@@ -80,7 +80,6 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
         ? (milestone.status.toUpperCase() === "COMPLETED")
         : false;
 
-    console.log(milestone.review);
     return (
         <div className={"flex " + className}>
             <div>
@@ -114,7 +113,7 @@ const MilestoneCard = ({ jobId, expanded, isEditMode, isJobAuthor, milestone, cl
                       {/* <Icons.Delete className="text-nebula-red mx-4" /> */}
                   </div>
                     }
-                     {
+                    {
                         isJobAuthor
                             ?
                             isMilestoneCompleted
