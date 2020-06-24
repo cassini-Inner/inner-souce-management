@@ -387,11 +387,6 @@ export const GET_CREATED_JOBS = gql`
                     applications {
                         id
                         status
-                        milestone {
-                            job {
-                                id
-                            }
-                        }
                         applicant {
                             id
                             photoUrl

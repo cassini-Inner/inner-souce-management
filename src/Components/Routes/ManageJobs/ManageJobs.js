@@ -146,13 +146,20 @@ const CreatedJobList = (props) => {
                                         {
                                             job.applications.applications
                                                 ?
-                                                job.applications.applications.slice(0, 3).map((application, key) => {
-                                                    if (application.status.toUpperCase() == "PENDING") {
-                                                        return (
-                                                            <Avatar key={application.applicant.id} imagePath={application.applicant.photoUrl} className={"p-0 absolute self-center h-10 w-10 absolute "+"ml-"+(key*4)} />
-                                                        );
-                                                    }
-                                                })
+                                                (() => {
+                                                    //To extract unique applicants' photoURLs
+                                                    const uniqueApplicantIdArray = Array.from(new Set(job.applications.applications.map((application) => application.applicant.id))).slice(0,3);
+                                                    const uniqueApplicationArray = uniqueApplicantIdArray.map((id) => {
+                                                        return job.applications.applications.find(application => application.applicant.id == id)
+                                                    })
+                                                    return uniqueApplicationArray.map((application, key) => {
+                                                        if (application.status.toUpperCase() == "PENDING") {
+                                                            return (
+                                                                <Avatar key={application.applicant.id} imagePath={application.applicant.photoUrl} className={"p-0 absolute self-center h-10 w-10 absolute "+"ml-"+(key*4)} />
+                                                            );
+                                                        }
+                                                    })
+                                                })()
                                                 :
                                                 ""
                                         }

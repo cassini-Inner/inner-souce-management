@@ -13,11 +13,12 @@ import Portal from "../../Containers/Portal";
 import ModalViewWithScrim from "../../Modals/ModalViewWithScrim";
 import { useClickOutside } from "../../../hooks/useClickOutside/hook";
 import { TranslateEnterAnimation } from "../../AnimationHelpers/TranslateMountWidget";
-
+import { getTimeDiffText } from "../../../HelperFunctions/TimeDiffMsg";
 const Navbar = () => {
     const { user } = useContext(AuthenticationContext);
 
     const [profileModalState, setProfileModalState] = useState(false);
+    const [notificationModalState, setNotificationModalState] = useState(false);
     const [mouseInside, setMouseInside] = useState(false);
     const {
         ref: searchRef,
@@ -30,6 +31,10 @@ const Navbar = () => {
         setMouseInside(true);
     };
 
+    const openNotificationPopup = (event) => {
+        setNotificationModalState(true);
+    };
+
     const closePopup = () => {
         setMouseInside(false);
         const allowClose = !mouseInside;
@@ -37,6 +42,7 @@ const Navbar = () => {
             () => {
                 if (!allowClose) {
                     setProfileModalState(false);
+                    setNotificationModalState(false);
                 }
             },
             200
@@ -58,9 +64,14 @@ const Navbar = () => {
                 <button onClick={()=> {setSearchVisible(true);}} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
                     <Icons.Search className="h-6 w-6 flex-1 hover:text-nebula-blue" />
                 </button>
-                <div className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center">
+                <button onClick={openNotificationPopup} className="flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center border-0">
                     <Icons.Bell className="h-6 w-6 flex-1 hover:text-nebula-blue" />
-                </div>
+                </button>
+                <NotificationModal
+                    onMouseOver={handleMouseOver}
+                    onMouseLeave={closePopup}
+                    notificationModalOpen={notificationModalState}
+                />
                 <button onClick={openProfilePopup} >
                     <Avatar imagePath={user.photoUrl} className="w-10 h-10" />
                 </button>
@@ -104,6 +115,94 @@ const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, 
                     <div className="flex mt-4 text-nebula-blue font-semibold cursor-pointer" onClick={signOut}>
                         <Icons.LogOut className="stroke-current ml-4 mr-8" />
                         <p>Logout</p>
+                    </div>
+                </div>
+            </div>
+        </CSSTransition>
+
+    );
+};
+
+const NotificationModal = ({ notificationModalOpen, className, onMouseOver, onMouseLeave }) => {
+    const { user } = useContext(AuthenticationContext);
+    const modalRef = useRef();
+    return (
+        <CSSTransition
+            in={notificationModalOpen}
+            timeout={150}
+            appear
+            unmountOnExit
+            classNames={{
+                enter: "opacity-0 transition duration-150 transform translate-y-2 translate-x-2",
+                enterDone: "opacity-100 transition duration-150 transform translate-y-0 translate-x-0",
+                exit: "opacity-0 transition duration-150 transform translate-y-2 translate-x-2",
+            }}
+        >
+            <div ref = {modalRef} className={"z-30 w-70 mt-2 absolute top-0 right-0 inline-block p-1 " + className || ""} onMouseOver={() => onMouseOver(true)} onMouseLeave={onMouseLeave}>
+                <div className="w-full shadow-lg shadow-2xl rounded-lg bg-white" >
+                    <div className="flex font-semibold text-xl p-4 text-nebula-blue" >
+                        Notifications
+                    </div>
+                    <hr />
+                    <div className="flex-row mt-1 cursor-pointer overflow-y-auto">
+                        <Link to={"/jobDetails/" + "2"}>
+                            <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
+                                <Avatar imagePath={user.photoUrl} className="h-10 w-10" />
+                                <div className="ml-2 flex flex-col">
+                                    <div className="flex">
+                                        <p className="font-semibold flex">Tushar Paliwal</p>
+                                        <p className="flex">&nbsp;accepted your application for</p>
+                                        <p className="font-semibold flex">&nbsp;Innersource bug fixes</p> 
+                                    </div>
+                                    <div className="flex items-center">
+                                        <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
+                                        <p className="text-xs text-nebula-grey-600">{getTimeDiffText((new Date()))}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                        <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
+                            <Avatar imagePath={"https://avatars0.githubusercontent.com/u/64488394?v=4"} className="h-10 w-10" />
+                            <div className="ml-2 flex flex-col">
+                                <div className="flex">
+                                    <p className="font-semibold flex">Lancelot</p>
+                                    <p className="flex">&nbsp;rejected your application for</p>
+                                    <p className="font-semibold flex">&nbsp;Created Jobs open issue</p> 
+                                </div>
+                                <div className="flex items-center">
+                                    <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
+                                    <p className="text-xs text-nebula-grey-600">2 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
+                            <Avatar imagePath={"https://avatars3.githubusercontent.com/u/11810442?s=400&v=4"} className="h-10 w-10" />
+                            <div className="ml-2 flex flex-col">
+                                <div className="flex">
+                                    <p className="font-semibold flex">Alex Hunter</p>
+                                    <p className="flex">&nbsp;commented on your job</p>
+                                    <p className="font-semibold flex">&nbsp;Some other job for innersource</p> 
+                                </div>
+                                <div className="flex items-center">
+                                    <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
+                                    <p className="text-xs text-nebula-grey-600">23 hours ago</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex hover:bg-nebula-grey-200 border-1 border-b p-3">
+                            <Avatar imagePath={"https://avatars2.githubusercontent.com/u/14271519?s=400&v=4"} className="h-10 w-10" />
+                            <div className="ml-2 flex flex-col">
+                                <div className="flex">
+                                    <p className="font-semibold flex">Alex Hunter</p>
+                                    <p className="flex">&nbsp;marked job status as completed for</p>
+                                    <p className="font-semibold flex">&nbsp;Some other job for innersource</p> 
+                                </div>
+                                <div className="flex items-center">
+                                    <Icons.Clock className="stroke-current mr-1 w-3 h-3" />
+                                    <p className="text-xs text-nebula-grey-600">Wed Jun 24 2020 11:40:37 AM</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
