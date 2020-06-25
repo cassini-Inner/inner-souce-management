@@ -184,3 +184,30 @@ export const RESTORE_JOBS_BACKUP = gql`
         }
     }
 `;
+
+export const CREATE_REVIEW_MUTATION = gql`
+    mutation CreateReview($review: ReviewInput!, $milestoneId: ID!) {
+        createMilestonePerformanceReview(review: $review, milestoneId: $milestoneId) {
+            id
+            rating
+            createdFor {
+                name
+                id
+            }
+        }
+    }
+`;
+
+export const UPDATE_REVIEW_MUTATION = gql`
+    mutation  UpdateReview($review: ReviewInput!, $id: ID!) {
+        updateMilestonePerformanceReview(review:$review, id: $id) {
+            id
+            rating
+            createdFor {
+                id
+                name
+            }
+            remark
+        }
+    }
+`;

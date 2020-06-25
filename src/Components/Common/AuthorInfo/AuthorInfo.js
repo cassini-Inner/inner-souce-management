@@ -20,11 +20,11 @@ const AuthorInfo = ({ className, img, iconClass, name, department, redirectUrl }
 
     if (redirectUrl) {
         return (
-            <Link to={"/profile/" + redirectUrl}>
-                <div className="hover:text-nebula-blue">
-                    {authorInfo}
-                </div>
-            </Link>
+            <div className="hover:text-nebula-blue w-64">
+                <Link to={"/profile/" + redirectUrl}>
+                {authorInfo}
+                </Link>
+            </div>
         );
     } else {
         return (authorInfo);

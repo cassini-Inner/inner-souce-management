@@ -1,7 +1,6 @@
 import React from "react";
 import TextInput from "../Common/InputFields/TextInput";
 import TextAreaInput from "../Common/InputFields/TextAreaInput";
-import SearchTagsInput from "../Common/InputFields/SearchTagsInput";
 import Dropdown from "../Common/Dropdown/Dropdown";
 import Button from "../Common/Button/Button";
 import ModalContainer from "./ModalContainer";

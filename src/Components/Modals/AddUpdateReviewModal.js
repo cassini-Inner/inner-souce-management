@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import {
-    CREATE_REVIEW_MUTATION,
-    GET_MILESTONES,
-    UPDATE_REVIEW_MUTATION,
-} from "../../queries";
+import { GET_MILESTONES } from "../../queries";
+import { CREATE_REVIEW_MUTATION, UPDATE_REVIEW_MUTATION } from "../../mutations";
+
 import ModalViewWithScrim from "./ModalViewWithScrim";
 import TextAreaInput from "../Common/InputFields/TextAreaInput";
 import Button from "../Common/Button/Button";

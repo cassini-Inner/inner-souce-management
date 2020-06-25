@@ -1,5 +1,4 @@
 export const validateProfileUpdate = ({ name, email, bio, position, skills, department, contact }) => {
-    // console.log("Edit Job Validation");
     if (!name || !name.trim()) return false;
     if (!email || !email.trim() || !validateEmail(email)) return false;
     if (!bio || !bio.trim()) return false;
