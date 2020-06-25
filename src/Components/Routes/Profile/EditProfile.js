@@ -199,14 +199,6 @@ const EditProfileBody = (props) => {
                                 value={state.bio}
                                 onChange={onInputChangeHandler}
                             />
-                            {/* <SearchTagsInput
-                                id="skills"
-                                label="Skills"
-                                className="mt-8"
-                                placeholder="Type and press Enter to add skills"
-                                initialList={state.skills}
-                                getTagList={getTagList}
-                            /> */}
                             <SkillsInput
                                 skills={skills}
                                 addSkill={addSkill}

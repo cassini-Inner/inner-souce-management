@@ -59,9 +59,9 @@ const JobDetailsPage = (props) => {
         APPLY_TO_JOB, {
             refetchQueries: [
                 {
-                    query: GET_JOB_APPLICANTS,
+                    query: GET_JOB_DETAILS,
                     variables: { jobId: jobId },
-                },
+                }
             ],
         });
     //Mutation for deleting a job
@@ -80,13 +80,9 @@ const JobDetailsPage = (props) => {
         {
             refetchQueries: [
                 {
-                    query: GET_JOB_APPLICANTS,
+                    query: GET_JOB_DETAILS,
                     variables: { jobId: jobId },
-                },
-                {
-                    query: GET_JOB_INFO,
-                    variables: { jobId: jobId },
-                },
+                }
             ],
         });
 

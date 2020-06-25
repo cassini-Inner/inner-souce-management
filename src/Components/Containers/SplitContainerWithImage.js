@@ -2,18 +2,16 @@ import React from "react";
 import LoginImage from "../../assets/images/login_bg.svg";
 const SplitContainerWithImage = (props) => {
     return (
-        <div className="flex flex-row w-full    bg-nebula-blue-light">
-            <div className="w-1/2 flex overflow-y-auto flex-col items-center bg-white justify-end min-h-full">
-                <div className="bg-white my-auto">
+        <div className="flex flex-row bg-nebula-blue-light overflow-hidden h-screen w-full">
+            <div className="bg-white w-full flex h-full md:w-2/3 lg:w-1/2">
+                <div className="ml-auto overflow-y-auto h-full">
                     {props.body}
                 </div>
             </div>
-            {/*<div className="w-1/2 bg-nebula-blue-light flex flex-col items-start justify-center bg-no-repeat bg-left" style={{backgroundImage: "url(\"../../../assets/images/login_bg.svg\")"}}/>*/}
-            <div className=" flex flex-row hidden md:block md:1/3 lg:w-1/2">
-                <img src={LoginImage} className="h-screen w-full object-cover" />
+            <div className="hidden md:block md:w-1/2">
+                <img src={LoginImage} className="w-full h-full object-cover" />
             </div>
         </div>
     );
 };
-
 export default SplitContainerWithImage;

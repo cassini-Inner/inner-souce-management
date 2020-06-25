@@ -12,7 +12,7 @@ import { TranslateEnterAnimation } from "../../AnimationHelpers/TranslateMountWi
 import { useNotifications } from "../../../hooks/useNotifications/hook";
 import { NotificationList } from "../../Notifications/notification_list";
 
-const Navbar = () => {
+const Navbar = React.memo(() => {
     const { user } = useContext(AuthenticationContext);
 
     const [profileModalState, setProfileModalState] = useState(false);
@@ -84,16 +84,17 @@ const Navbar = () => {
                     <Icons.Search
                         className="h-6 w-6 flex-1 hover:text-nebula-blue"/>
                 </button>
-                <button
+                <div
                     onClick={openNotificationPanel}
-                    className={"flex-0 bg-nebula-grey-300 mr-4 rounded-full h-10 w-10 flex items-center " +
+                    style={{"minWidth":"2.5rem"}}
+                    className={"flex-0 cursor-pointer mr-4 bg-nebula-grey-300 p-2 rounded-full h-10 flex items-center " +
                 (unreadCount > 0
-                    ? "border-solid border-2 border-nebula-blue"
+                    ? "text-nebula-blue bg-nebula-blue-light"
                     : "")}
                 >
-                    <Icons.Bell
-                        className={"h-6 w-6 flex-1 hover:text-nebula-blue "}/>
-                </button>
+                    <Icons.Bell className={"h-6 w-6 flex-1 hover:text-nebula-blue "}/>
+                    {unreadCount > 0 ? <p className="px-1 font-semibold">{unreadCount}</p>: ""}
+                </div>
                 <NotificationModal
                     notificationModalOpen={notificationsVisible}
                     forwardedRef={notificationsRef}
@@ -116,7 +117,7 @@ const Navbar = () => {
         </div>
 
     );
-};
+});
 
 const ProfileModal = ({ profileModalOpen, className, onMouseOver, onMouseLeave, handleMouseOver }) => {
     const { user, signOut } = useContext(AuthenticationContext);

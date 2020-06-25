@@ -538,32 +538,6 @@ export const GET_JOBS_BACKUP = gql`
     }
 `;
 
-export const CREATE_REVIEW_MUTATION = gql`
-    mutation CreateReview($review: ReviewInput!, $milestoneId: ID!) {
-        createMilestonePerformanceReview(review: $review, milestoneId: $milestoneId) {
-            id
-            rating
-            createdFor {
-                name
-                id
-            }
-        }
-    }
-`;
-
-export const UPDATE_REVIEW_MUTATION = gql`
-    mutation  UpdateReview($review: ReviewInput!, $id: ID!) {
-        updateMilestonePerformanceReview(review:$review, id: $id) {
-            id
-            rating
-            createdFor {
-                id
-                name
-            }
-            remark
-        }
-    }
-`;
 // Search jobs & users without limit
 export const SEARCH_ALL_JOBS_USERS_LIMIT = gql`
   query ($query: String!, $limit: Int) {
@@ -610,33 +584,42 @@ export const SEARCH_ALL_JOBS_USERS_LIMIT = gql`
        }
   }
 `;
-
+// To get all the user notifications
 export const GET_USER_NOTIFICATIONS = gql`
-query ViewNotifications($limit: Int!, $after:ID) {
-  ViewerNotifications(limit:$limit, after: $after){
-    totalCount
-    edges{
-      node{
-        id
-        timeCreated
-        sender{
-          id
-          name
-          photoUrl
+    query ViewNotifications($limit: Int!, $after:ID) {
+    ViewerNotifications(limit:$limit, after: $after){
+        totalCount
+        edges{
+        node{
+            id
+            timeCreated
+            sender{
+            id
+            name
+            photoUrl
+            }
+            type
+            read
+            job{
+            id
+            title
+            }
+            timeCreated
         }
-        type
-        read
-        job{
-          id
-          title
         }
-        timeCreated
-      }
+        pageInfo{
+        hasNextPage
+        endCursor
+        }
     }
-    pageInfo{
-      hasNextPage
-      endCursor
     }
-  }
-}
+`;
+
+//To get the unread notifications count
+export const GET_UNREAD_NOTIFICATIONS_COUNT = gql`
+    query ViewNotifications($limit: Int!, $after:ID){
+        ViewerNotifications(limit:$limit, after: $after){
+           unreadCount    
+        }
+    }
 `;

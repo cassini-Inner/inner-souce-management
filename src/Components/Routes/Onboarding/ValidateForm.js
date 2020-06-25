@@ -1,6 +1,6 @@
 import * as EmailValidator from "email-validator";
 
-export const validateOnboarding = (userDetails) => {
+export const validateOnboarding = (userDetails, skills) => {
     var isvalid = true;
     const errorMessages = {
         nameErr: "",
@@ -35,7 +35,7 @@ export const validateOnboarding = (userDetails) => {
         errorMessages.contactErr = "Enter your contact";
         isvalid = false;
     }
-    if (!userDetails.skills || !userDetails.skills.length) {
+    if (!skills || !skills.length) {
         errorMessages.skillsErr = "Type a skill and press Enter key";
         isvalid = false;
     }

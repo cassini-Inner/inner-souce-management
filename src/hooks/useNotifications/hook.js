@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import { GET_USER_NOTIFICATIONS } from "../../queries";
+import { GET_USER_NOTIFICATIONS, GET_UNREAD_NOTIFICATIONS_COUNT } from "../../queries";
 import {
     MARK_ALL_NOTIFICATIONS_READ,
     MARK_NOTIFICATION_READ,
@@ -28,20 +28,30 @@ export function useNotifications () {
                 );
                 const updatedNotifications = [...notificationData.notifications];
                 updatedNotifications.push(...fetchedNotifications);
-                const unreadCount = updatedNotifications.filter(
-                    (element) => element.read === false).length;
                 setNotificationData(
                     {
                         ...notificationData,
                         notifications: updatedNotifications,
                         loading: false,
-                        unreadCount: unreadCount,
                         hasNextPage: data.ViewerNotifications.pageInfo.hasNextPage,
                         endCursor: data.ViewerNotifications.pageInfo.endCursor,
                     },
                 );
             }
         },
+    });
+
+    const [getUnreadNotificationCount] = useLazyQuery(GET_UNREAD_NOTIFICATIONS_COUNT, {
+        fetchPolicy: "cache-and-network",
+        onCompleted: (data) => {
+            setNotificationData(
+                {
+                    ...notificationData,
+                    loading: false,
+                    unreadCount: data.ViewerNotifications.unreadCount,
+                },
+            );
+        }
     });
 
     const [markAllRead] = useMutation(
@@ -88,7 +98,7 @@ export function useNotifications () {
             },
         },
     );
-
+    
     const markNotificationRead = (notificationId) => {
         markNotificationReadMutation({
             variables: {
@@ -103,6 +113,7 @@ export function useNotifications () {
                 ...notificationData,
                 notifications: [],
             });
+            getUnreadNotificationCount({variables: { limit: 1 }});
             getNotifications({ variables: { limit: NOTIFICATION_LOAD_LIMIT } });
         }, []);
 
@@ -122,6 +133,7 @@ export function useNotifications () {
             ...notificationData,
             loading: true,
         });
+        getUnreadNotificationCount({variables: { limit: 1 }});
         getNotifications({ variables: { limit: NOTIFICATION_LOAD_LIMIT } });
         return () => {};
     }, []);

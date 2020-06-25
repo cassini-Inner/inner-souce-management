@@ -6,10 +6,10 @@ import { DurationParser } from "../../HelperFunctions/DurationParser";
 import { TOGGLE_MILESTONE_COMPLETED } from "../../mutations";
 import { useMutation } from "@apollo/client";
 import {
-    CREATE_REVIEW_MUTATION,
     GET_JOB_DETAILS,
-    GET_MILESTONES, UPDATE_REVIEW_MUTATION,
+    GET_MILESTONES,
 } from "../../queries";
+import { CREATE_REVIEW_MUTATION, UPDATE_REVIEW_MUTATION } from "../../mutations";
 import LoadingIndicator from "../Common/LoadingIndicator/LoadingIndicator";
 import Portal from "../Containers/Portal";
 import { useClickOutside } from "../../hooks/useClickOutside/hook";
