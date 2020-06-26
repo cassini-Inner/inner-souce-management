@@ -84,7 +84,7 @@ const OnboardingPage = (props) => {
     };
 
     const body = (
-        <div className=" w-full h-full max-w-screen-md  pt-12 px-10 font-semibold">
+        <div className=" w-full h-full  pt-12 px-10 font-semibold">
             <div className="flex h-full flex-col">
                 <div className="flex-1">
                     <div>
