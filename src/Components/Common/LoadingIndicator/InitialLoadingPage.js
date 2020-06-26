@@ -18,7 +18,7 @@ export const InitialLoadingPage = ({secondaryText}) => {
         <TranslateEnterAnimation visible={loaderVisible}>
             <div className="w-screen h-screen relative flex justify-center items-center">
                 <div className="mx-auto p-12 leading-tight flex flex-col items-center">
-                    <p className="text-4xl font-semibold text-nebula-blue">Innersource</p>
+                    <p className="text-4xl font-semibold text-nebula-blue">Nebula</p>
                     {
                         secondaryText &&
                           <p className="text-lg text-nebula-grey-700 mt-8">{secondaryText}</p>
