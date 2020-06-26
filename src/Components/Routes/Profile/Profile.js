@@ -94,20 +94,20 @@ const Profile = (props) => {
                             <p className="font-semibold mb-4 ">Skills</p>
                             <LabelChipBuilder labels={userSkills}/>
                         </div>
-                        <div className="mt-4">
-                            <p className="font-semibold mb-4 ">Job Stats</p>
-                            {/*TODO: Implement*/}
-                            {/*<div className="flex flex-row">*/}
-                            {/*    <InfoTag className="mr-4" title="Jobs completed"*/}
-                            {/*        data={profileData.jobStats.completed +*/}
-                            {/*           " Jobs"}*/}
-                            {/*    />*/}
-                            {/*    <InfoTag title="Ongoing Jobs"*/}
-                            {/*        data={profileData.jobStats.ongoing +*/}
-                            {/*           " Ongoing"}*/}
-                            {/*    />*/}
-                            {/*</div>*/}
-                        </div>
+                        {/*<div className="mt-4">*/}
+                        {/*    <p className="font-semibold mb-4 ">Job Stats</p>*/}
+                        {/*    /!*TODO: Implement*!/*/}
+                        {/*    /!*<div className="flex flex-row">*!/*/}
+                        {/*    /!*    <InfoTag className="mr-4" title="Jobs completed"*!/*/}
+                        {/*    /!*        data={profileData.jobStats.completed +*!/*/}
+                        {/*    /!*           " Jobs"}*!/*/}
+                        {/*    /!*    />*!/*/}
+                        {/*    /!*    <InfoTag title="Ongoing Jobs"*!/*/}
+                        {/*    /!*        data={profileData.jobStats.ongoing +*!/*/}
+                        {/*    /!*           " Ongoing"}*!/*/}
+                        {/*    /!*    />*!/*/}
+                        {/*    /!*</div>*!/*/}
+                        {/*</div>*/}
                         {
                             userId === user.id
                                 ?
