@@ -84,14 +84,14 @@ const OnboardingPage = (props) => {
     };
 
     const body = (
-        <div className=" w-full h-full pt-12 px-10 font-semibold">
+        <div className=" w-full h-full max-w-screen-md  pt-12 px-10 font-semibold">
             <div className="flex h-full flex-col">
                 <div className="flex-1">
                     <div>
                         <p className="text-lg text-nebula-grey-600 mb-4">Hello,</p>
                         <p className="text-3xl">{user.githubName}</p>
                         <p className="text-lg text-nebula-grey-600 mt-2 mb-8">Before we get
-            started, we'd like get to know you a little better.</p>
+            started, we&apos;d like get to know you a little better.</p>
                     </div>
                     <div>
                         <TextInput id="name" label="Your Full Name" placeholder="Full Name" onChange={onInputChangeHandler} value={state.name} />

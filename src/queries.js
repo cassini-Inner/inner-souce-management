@@ -589,6 +589,7 @@ export const GET_USER_NOTIFICATIONS = gql`
     query ViewNotifications($limit: Int!, $after:ID) {
     ViewerNotifications(limit:$limit, after: $after){
         totalCount
+        unreadCount
         edges{
         node{
             id
