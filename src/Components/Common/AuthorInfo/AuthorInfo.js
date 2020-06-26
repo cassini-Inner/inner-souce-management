@@ -22,7 +22,7 @@ const AuthorInfo = ({ className, img, iconClass, name, department, redirectUrl }
         return (
             <div className="hover:text-nebula-blue w-64">
                 <Link to={"/profile/" + redirectUrl}>
-                {authorInfo}
+                    {authorInfo}
                 </Link>
             </div>
         );

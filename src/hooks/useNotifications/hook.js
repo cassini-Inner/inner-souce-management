@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useLazyQuery, useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
 import { GET_USER_NOTIFICATIONS, GET_UNREAD_NOTIFICATIONS_COUNT } from "../../queries";
 import {
     MARK_ALL_NOTIFICATIONS_READ,
@@ -7,6 +7,7 @@ import {
 } from "../../mutations";
 
 const NOTIFICATION_LOAD_LIMIT = 10;
+
 
 export function useNotifications () {
     const [notificationData, setNotificationData] = useState(
@@ -19,8 +20,9 @@ export function useNotifications () {
         },
     );
 
+
     const [getNotifications] = useLazyQuery(GET_USER_NOTIFICATIONS, {
-        fetchPolicy: "cache-and-network",
+        fetchPolicy: "network-only",
         onCompleted: (data) => {
             if (data.ViewerNotifications && data.ViewerNotifications.edges) {
                 const fetchedNotifications = data.ViewerNotifications.edges.map(
@@ -31,6 +33,7 @@ export function useNotifications () {
                 setNotificationData(
                     {
                         ...notificationData,
+                        unreadCount: data.ViewerNotifications.unreadCount,
                         notifications: updatedNotifications,
                         loading: false,
                         hasNextPage: data.ViewerNotifications.pageInfo.hasNextPage,
@@ -41,18 +44,44 @@ export function useNotifications () {
         },
     });
 
-    const [getUnreadNotificationCount] = useLazyQuery(GET_UNREAD_NOTIFICATIONS_COUNT, {
-        fetchPolicy: "cache-and-network",
+    const [getFreshNotifications] = useLazyQuery(GET_USER_NOTIFICATIONS, {
+        fetchPolicy: "network-only",
         onCompleted: (data) => {
-            setNotificationData(
-                {
-                    ...notificationData,
-                    loading: false,
-                    unreadCount: data.ViewerNotifications.unreadCount,
-                },
-            );
-        }
+            if (data.ViewerNotifications && data.ViewerNotifications.edges) {
+                const fetchedNotifications = data.ViewerNotifications.edges.map(
+                    (edge) => edge.node,
+                );
+                setNotificationData(
+                    {
+                        ...notificationData,
+                        unreadCount: data.ViewerNotifications.unreadCount,
+                        notifications: fetchedNotifications,
+                        loading: false,
+                        hasNextPage: data.ViewerNotifications.pageInfo.hasNextPage,
+                        endCursor: data.ViewerNotifications.pageInfo.endCursor,
+                    },
+                );
+            }
+        },
     });
+
+    const { data:notificationCountData, loading: loadingNotificationCountData } = useQuery(GET_UNREAD_NOTIFICATIONS_COUNT, {
+        fetchPolicy: "network-only",
+        pollInterval: 60000,
+        variables: {
+            limit: 1,
+        },
+        onError: (e) => console.log(e),
+    });
+
+    useEffect(()=> {
+        if (notificationCountData != null && notificationCountData.ViewerNotifications != null) {
+            setNotificationData({
+                ...notificationData,
+                unreadCount: notificationCountData.ViewerNotifications.unreadCount,
+            });
+        }
+    }, [notificationCountData, loadingNotificationCountData]);
 
     const [markAllRead] = useMutation(
         MARK_ALL_NOTIFICATIONS_READ,
@@ -109,12 +138,7 @@ export function useNotifications () {
 
     const refreshNotifications = useCallback(
         () => {
-            setNotificationData({
-                ...notificationData,
-                notifications: [],
-            });
-            getUnreadNotificationCount({variables: { limit: 1 }});
-            getNotifications({ variables: { limit: NOTIFICATION_LOAD_LIMIT } });
+            getFreshNotifications({variables: {limit: NOTIFICATION_LOAD_LIMIT}});
         }, []);
 
     const loadMoreNotifications = useCallback(() => {
@@ -133,10 +157,10 @@ export function useNotifications () {
             ...notificationData,
             loading: true,
         });
-        getUnreadNotificationCount({variables: { limit: 1 }});
         getNotifications({ variables: { limit: NOTIFICATION_LOAD_LIMIT } });
         return () => {};
     }, []);
+
     return {
         ...notificationData,
         loadMoreNotifications,
