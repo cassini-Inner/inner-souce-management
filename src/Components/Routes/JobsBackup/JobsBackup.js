@@ -11,7 +11,6 @@ const JobsBackup = (props) => {
 
     const [downloadJobsBackup] = useLazyQuery(GET_JOBS_BACKUP, {
         onCompleted: (data) => {
-            console.log("Inside")
             if(data && data["User"]["createdJobs"] && data["User"]["createdJobs"].length > 0) {
                 data = [...data["User"]["createdJobs"]];
                 const content = JSON.stringify(data);
@@ -30,7 +29,6 @@ const JobsBackup = (props) => {
     });
 
     const downloadJobsOnClick = () => {
-        console.log("heyy:", userId)
         downloadJobsBackup({
             variables: { 
                 userId: userId
