@@ -1,9 +1,7 @@
 import React from "react";
 import Button from "../../Common/Button/Button";
 import { useLazyQuery } from "@apollo/client";
-import { useMutation } from "@apollo/client";
 import { GET_JOBS_BACKUP } from "../../../queries";
-// import { UPLOAD_JOBS } from "../../../mutations";
 import { DownloadCloud } from "react-feather";
 import {  withRouter, useParams, BrowserRouter } from "react-router-dom";
 
@@ -11,29 +9,22 @@ const JobsBackup = (props) => {
     const { id } = useParams();
     const userId = id;
 
-    // const [uploadJobsMutation, { uploadJobsLoading, uploadJobsError }] = useMutation(UPLOAD_JOBS, {
-    //     refetchQueries: [
-    //         {
-    //             query: GET_JOB_DETAILS,
-    //             variables: { jobId: props.jobId },
-    //         },
-    //         {
-    //             query: GET_MILESTONES,
-    //             variables: { jobId: props.jobId },
-    //         },
-    //     ],
-
-    // });
     const [downloadJobsBackup] = useLazyQuery(GET_JOBS_BACKUP, {
         onCompleted: (data) => {
-            data = [...data["User"]["createdJobs"]];
-            const content = JSON.stringify(data);
-            const a = document.createElement("a");
-            const blob = new Blob([content], {"type":"application/json"});
-            a.href = window.URL.createObjectURL(blob);
-            a.download = "JobsBackup";
-            a.click();
+            if(data && data["User"]["createdJobs"] && data["User"]["createdJobs"].length > 0) {
+                data = [...data["User"]["createdJobs"]];
+                const content = JSON.stringify(data);
+                const a = document.createElement("a");
+                const blob = new Blob([content], {"type":"application/json"});
+                a.href = window.URL.createObjectURL(blob);
+                a.download = "JobsBackup";
+                a.click();
+            }
+            else {
+                alert("No created jobs found!");
+            }
         },
+        fetchPolicy: "cache-and-network",
         onError: (error => {console.log(error);}),
     });
 
