@@ -11,7 +11,7 @@ const NOTIFICATION_LOAD_LIMIT = 10;
 export function useNotifications () {
     const [notificationData, setNotificationData] = useState(
         {
-            notifications: [],
+            notifications: [], 
             unreadCount: 0,
             endCursor: "",
             hasNextPage: true,
