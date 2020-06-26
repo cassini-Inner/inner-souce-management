@@ -77,7 +77,7 @@ export const AddUpdateReviewModal = ({ forwardedRef, close, milestone, initialRe
                         className="text-grey-900">{milestone.assignedTo.name}</strong> on their work for <strong
                         className="text-grey-900">Milestone #{milestoneNumber +
               1}</strong>.
-                    This will be reflected on their profile and will help other Innersource members judge them in a better way.</span>
+                    This will be reflected on their profile and will help other Nebula members judge them in a better way.</span>
                 <p className="text-sm text-nebula-grey-600 pt-6">Overall
                   Rating</p>
                 <RatingDisplay

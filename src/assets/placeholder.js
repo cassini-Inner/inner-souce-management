@@ -164,7 +164,7 @@ export const jobApplication = [
     }
 ];
 
-export const appName = "Innersource";
+export const appName = "Nebula";
 export const home = "Home";
 export const yourJobs = "Your Jobs";
 export const ongoing = "Ongoing";

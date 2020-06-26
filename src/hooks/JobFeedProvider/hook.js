@@ -195,7 +195,7 @@ export function useJobsFeed () {
     };
 
     const resetFilter = () => {
-        dispatch({type: actions.RESET, value: {
+        dispatch({type: actions.RESET, value:{
             skills: user.skills != null
                 ? user.skills.map(({ value }) => value)
                 : [],
@@ -205,7 +205,8 @@ export function useJobsFeed () {
                 after: null,
                 hasNextPage: true,
             },
-        }});
+        }
+        });
     };
 
     return {

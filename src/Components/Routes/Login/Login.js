@@ -10,11 +10,11 @@ const LoginPage = () => {
             <div className="my-auto">
                 <div className="leading-none font-semibold">
                     <p className="text-4xl">Welcome to</p>
-                    <p className="text-5xl text-nebula-blue">Innersource</p>
+                    <p className="text-5xl text-nebula-blue">Nebula</p>
                 </div>
                 <p
                     className="text-nebula-grey-600 mt-5 font-semibold text-lg">
-                Innersource helps you find awesome projects and collaboration opportunities within your organisation.
+                Nebula helps you find awesome projects and collaboration opportunities within your organisation.
                 </p>
                 {
                     <p className="mt-12 mb-6 text-nebula-grey-600">To get started, sign in with your GitHub account</p>

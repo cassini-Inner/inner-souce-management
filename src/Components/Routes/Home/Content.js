@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef } from "react";
+import React, { useCallback, useContext, useEffect, useRef } from "react";
 import JobList from "../../Jobs/JobList";
 import OngoingJobsGrid from "../../Jobs/OngoingJobsGrid";
 import { GET_YOUR_JOBS } from "../../../queries";
@@ -20,10 +20,11 @@ const Content = (props) => {
     const { loading: OngoingJobsLoad, error: OngoingJobsError, data: OngoingJobsData } = useQuery(
         GET_YOUR_JOBS, {
             variables: { userId: user.id },
-
         });
 
-    const { jobData, loading, loadMoreJobs } = useContext(JobsFeedContext);
+    const { jobData, loading, loadMoreJobs, getAllJobs } = useContext(JobsFeedContext);
+
+
     const observer = useRef();
     const loadMoreRef = useCallback(node => {
         if (observer.current) observer.current.disconnect();
@@ -65,7 +66,8 @@ const Content = (props) => {
                     type="primary"/></Link>
             </div>
             <div>
-                <div className="flex flex-col-reverse lg:grid lg:gap-4 lg:grid-cols-12">
+                <div
+                    className="flex flex-col-reverse lg:grid lg:gap-4 lg:grid-cols-12">
                     <div className="lg:col-span-8">
                         <JobList
                             jobs={jobData.jobs}
@@ -83,12 +85,11 @@ const Content = (props) => {
     );
 };
 
-
 const SidebarReactiveFilter = (props) => {
     const skillsFilterRef = useRef();
 
-    const {skills, status, addSkill, removeSkill, resetFilter, addStatus, removeStatus} = React.useContext(JobsFeedContext);
-
+    const { skills, status, addSkill, removeSkill, resetFilter, addStatus, removeStatus } = React.useContext(
+        JobsFeedContext);
 
     const inputOnKeyDown = (e) => {
         if (e.keyCode === 13 && skillsFilterRef.current.value !== "") {
@@ -99,9 +100,9 @@ const SidebarReactiveFilter = (props) => {
 
     const checkboxOnChange = (e) => {
         if (e.currentTarget.checked) {
-            addStatus( e.currentTarget.id );
+            addStatus(e.currentTarget.id);
         } else {
-            removeStatus( e.currentTarget.id );
+            removeStatus(e.currentTarget.id);
         }
     };
 
@@ -109,12 +110,18 @@ const SidebarReactiveFilter = (props) => {
     const ongoingChecked = status.includes("ONGOING");
     const completedChecked = status.includes("COMPLETED");
     return (
-        <div className="bg-white border border-nebula-grey-400 rounded-lg mt-4 my-auto lg:max-w-xs">
-            <h4 className="text-md font-semibold text-nebula-blue border-b border-gray-300 rounded-tl-lg rounded-tr-lg bg-white py-4 pl-4">Filters</h4>
+        <div
+            className="bg-white border border-nebula-grey-400 rounded-lg mt-4 my-auto lg:max-w-xs">
+            <h4
+                className="text-md font-semibold text-nebula-blue border-b border-gray-300 rounded-tl-lg rounded-tr-lg bg-white py-4 pl-4">Filters</h4>
             <div className="px-4 py-2">
-                <h4 className="text-sm font-semibold text-nebula-grey-800 mt-4">Skills</h4>
-                <TextInput className="w-full my-2" placeholder="Add job skill filters" forwardedRef={skillsFilterRef} onKeyDown={(e) => inputOnKeyDown(e)} />
-                <div className="flex flex-row flex-wrap" >
+                <h4
+                    className="text-sm font-semibold text-nebula-grey-800 mt-4">Skills</h4>
+                <TextInput className="w-full my-2"
+                    placeholder="Add job skill filters"
+                    forwardedRef={skillsFilterRef}
+                    onKeyDown={(e) => inputOnKeyDown(e)}/>
+                <div className="flex flex-row flex-wrap">
                     {
                         skills.map((skill, key) => (<div key={key}>
                             {
@@ -129,27 +136,34 @@ const SidebarReactiveFilter = (props) => {
                         </div>))
                     }
                 </div>
-                <h4 className="text-sm font-semibold text-nebula-grey-800 mt-4">Job State</h4>
+                <h4
+                    className="text-sm font-semibold text-nebula-grey-800 mt-4">Job
+                  State</h4>
                 <div className="flex items-center my-1 py-1">
-                    <input type="checkbox" id="OPEN" onChange={(e) => checkboxOnChange(e)} checked={openChecked} />
+                    <input type="checkbox" id="OPEN"
+                        onChange={(e) => checkboxOnChange(e)}
+                        checked={openChecked}/>
                     <label htmlFor="OPEN" className="ml-2">Open</label>
                 </div>
                 <div className="flex items-center my-1 py-1">
-                    <input type="checkbox" id="ONGOING" onChange={(e) => checkboxOnChange(e)} checked={ongoingChecked} />
+                    <input type="checkbox" id="ONGOING"
+                        onChange={(e) => checkboxOnChange(e)}
+                        checked={ongoingChecked}/>
                     <label htmlFor="ONGOING" className="ml-2">Ongoing</label>
                 </div>
                 <div className="flex items-center my-1 py-1">
-                    <input type="checkbox" id="COMPLETED" onChange={(e) => checkboxOnChange(e)} checked={completedChecked} />
+                    <input type="checkbox" id="COMPLETED"
+                        onChange={(e) => checkboxOnChange(e)}
+                        checked={completedChecked}/>
                     <label htmlFor="COMPLETED" className="ml-2">Completed</label>
                 </div>
                 <div className="flex items-center my-1 py-1">
-                    <Button type="secondary" label="Reset" onClick={resetFilter} />
+                    <Button type="secondary" label="Reset" onClick={resetFilter}/>
                 </div>
             </div>
         </div>
 
     );
 };
-
 
 export default (Content);
