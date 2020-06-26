@@ -68,7 +68,7 @@ const Profile = (props) => {
                         <hr className="my-4"/>
                         <div className="mt-2">
                             <p className="font-semibold ">Bio</p>
-                            <p className="text-sm text-nebula-grey-700">
+                            <p className="text-sm text-nebula-grey-700 break-all">
                                 {data["User"].bio}
                             </p>
                         </div>
