@@ -38,7 +38,7 @@ const SearchResults = (props) => {
     return (
         <div className=" px-4 lg:px-10 bg-white w-full ">
             <Navbar />
-            <h1 className="p-2 text-xl">Search Results</h1>
+            <h1 className="py-6 text-xl">Search Results for &quot;{query}&quot;</h1>
             <TabStrip tabs={tabList}/>
             {
                 location.pathname === ("/searchResults/" + encodeURI(query)) ?

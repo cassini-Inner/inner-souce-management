@@ -57,27 +57,31 @@ const SearchBar = (props) => {
     };
 
     return (
-        <div className="flex-1">
-            <div className="mx-auto pt-8 w-full max-w-screen-md" ref={props.forwardedRef}>
-                <input
-                    ref={searchInputRef}
-                    onFocus={(event) => {
-                        props.setSearchOpen(true);
-                    }}
-                    onChange={(e) => {handleChange(e);}}
-                    onClick={(e)=> {e.stopPropagation();}}
-                    onKeyDown={(e) => (e.key === "Enter") ? viewAllResults() : "" }
-                    placeholder="Search for jobs and users by name"
-                    className={
-                        " appearance-none bg-white transition duration-300 outline-none bg-transparent w-full py-4 px-4 flex-1 mx-auto "
-                          + " focus:shadow-lg focus:border focus:border-nebula-grey-200 "
-                          + ( (jobs.length || users.length) ? " border rounded-tr-lg rounded-tl-lg border-nebula-grey-200" : " rounded-lg " )
-                    }
-                />
-                {loading &&
-                    <LoadingIndicator/>
-                }
-                <SearchResults users={users} jobs={jobs} viewAllResults={viewAllResults}/>
+        <div className="fixed inset-0 overflow-hidden">
+            <div className="relative h-screen w-full inset-0">
+                <div className="absolute inset-0 overflow-y-auto flex-1 px-4">
+                    <div className="mx-auto pt-8 pb-8 w-full max-w-screen-md" ref={props.forwardedRef}>
+                        <input
+                            ref={searchInputRef}
+                            onFocus={(event) => {
+                                props.setSearchOpen(true);
+                            }}
+                            onChange={(e) => {handleChange(e);}}
+                            onClick={(e)=> {e.stopPropagation();}}
+                            onKeyDown={(e) => (e.key === "Enter") ? viewAllResults() : "" }
+                            placeholder="Search for jobs and users by name"
+                            className={
+                                " appearance-none bg-white transition duration-300 outline-none bg-transparent w-full py-4 px-4 flex-1 mx-auto "
+                              + " focus:shadow-lg focus:border focus:border-nebula-grey-200 "
+                              + ( (jobs.length || users.length) ? " border rounded-tr-lg rounded-tl-lg border-nebula-grey-200" : " rounded-lg " )
+                            }
+                        />
+                        {loading &&
+                        <LoadingIndicator/>
+                        }
+                        <SearchResults users={users} jobs={jobs} viewAllResults={viewAllResults}/>
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -123,7 +127,7 @@ const SearchResults = ({jobs, users, viewAllResults}) => {
               })}
           </>
             }
-            <div className="flex text-nebula-blue hover:text-blue-700 justify-center pt-2 cursor-pointer" onClick={viewAllResults}>
+            <div className="flex text-nebula-blue hover:text-blue-700 justify-center pt-4 cursor-pointer" onClick={viewAllResults}>
                 See all results
             </div>
         </div>
@@ -139,7 +143,7 @@ const UserSearchListing = ({name, bio, role, department, photoUrl,id}) => {
                     <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
                         <div className="text-sm font-semibold text-nebula-grey-800">{name}</div>
                         <div className="text-sm text-nebula-grey-600">{role} @ {department}</div>
-                        <div className="text-sm text-nebula-grey-600">{bio}</div>
+                        <div className="text-sm text-nebula-grey-600 break-all">{bio}</div>
                     </div>
                 </div>
             </div>
@@ -166,7 +170,7 @@ const JobSearchListing = ({title, status,viewerHasApplied, description, id}) => 
                     </div>
                     <div className="flex-1 pt-4 pb-4 border-b border-nebula-grey-300">
                         <div className=" text-sm font-semibold text-nebula-grey-800 mb-2">{title}</div>
-                        <div className="text-sm text-nebula-grey-700 mb-3">{description.slice(0,200)}</div>
+                        <div className="text-sm text-nebula-grey-700 mb-3 break-all">{description.slice(0,200)}</div>
                         <StatusTags statusTag={tags} />
                     </div>
                 </div>
