@@ -73,8 +73,7 @@ function reducer (state, action) {
     }
     case actions.RESET: {
         return {
-            ...state,
-            ...initialState,
+            ...action.value
         };
     }
     case actions.UPDATE_JOBS: {
@@ -195,6 +194,20 @@ export function useJobsFeed () {
         });
     };
 
+    const resetFilter = () => {
+        dispatch({type: actions.RESET, value: {
+            skills: user.skills != null
+                ? user.skills.map(({ value }) => value)
+                : [],
+            status: ["OPEN", "ONGOING"],
+            jobData: {
+                jobs: [],
+                after: null,
+                hasNextPage: true,
+            },
+        }});
+    };
+
     return {
         skills,
         jobData,
@@ -205,5 +218,6 @@ export function useJobsFeed () {
         addStatus,
         removeStatus,
         loadMoreJobs,
+        resetFilter,
     };
 }
